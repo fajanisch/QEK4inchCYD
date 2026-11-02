@@ -192,6 +192,7 @@ binary_sensor:
         - component.update: my_display
 
   # Touchzone B: Modus-Button Seite 1 (10..155, 42..88) -> Umschalten Auto / Manual
+  # Touchzone B: Modus-Button Seite 1 (10..155, 42..88)
   - platform: touchscreen
     touchscreen_id: cyd_touch
     name: "CYD Mode Toggle"
@@ -205,11 +206,7 @@ binary_sensor:
       then:
         - lambda: |-
             if (id(current_page) == 0) {
-              if (id(ha_power_mode).state == "Manual") {
-                id(set_mode_auto).execute();
-              } else {
-                id(set_mode_manual).execute();
-              }
+              id(cycle_power_mode).execute();
             }
 
   # Touchzone C: Infeed-Relais Seite 1 (165..310, 42..88) -> Schalten nur im Manual-Modus
@@ -238,21 +235,13 @@ binary_sensor:
 # 4. Skripte für Home Assistant Service Calls
 # ==============================================================================
 script:
-  - id: set_mode_auto
+  - id: cycle_power_mode
     then:
       - homeassistant.service:
-          service: input_select.select_option
+          service: input_select.select_next
           data:
             entity_id: input_select.power_source_mode
-            option: Auto
-
-  - id: set_mode_manual
-    then:
-      - homeassistant.service:
-          service: input_select.select_option
-          data:
-            entity_id: input_select.power_source_mode
-            option: Manual
+            cycle: "true"
 
 # ==============================================================================
 # 5. Farbdefinitionen
