@@ -19,10 +19,6 @@ logger:
 web_server:
   port: 80
 
-#wifi:
-#  ssid: !secret wifi_ssid
-#  password: !secret wifi_password
-#  power_save_mode: NONE
 wifi:
   networks:
     - ssid: "HollyShort"
@@ -32,10 +28,11 @@ wifi:
       password: "Die Trulla rennt fuer Whiskas!"
       priority: 5.0
 
-  # Fallback-AP aktiv lassen, falls gar kein Netz greift
+  # Fallback-AP
   ap:
     ssid: "QEK-CYD-Fallback"
     password: "fallbackpassword"
+
 api:
   encryption:
     key: !secret api_encryption_key
@@ -51,7 +48,18 @@ spi:
     mosi_pin: GPIO13
     miso_pin: GPIO12
 
+# ==============================================================================
+# Globale Variablen
+# ==============================================================================
+globals:
+  - id: current_page
+    type: int
+    restore_value: no
+    initial_value: '0'
+
+# ==============================================================================
 # 1. Touchscreen Controller (XPT2046)
+# ==============================================================================
 touchscreen:
   - platform: xpt2046
     id: cyd_touch
@@ -69,46 +77,92 @@ touchscreen:
       mirror_x: false
       mirror_y: false
 
-# 2. Touch-Bereich für Zuleitung (Rechte untere Kachel: x=170..310, y=135..225)
-binary_sensor:
-  - platform: touchscreen
-    touchscreen_id: cyd_touch
-    name: "Sonoff Einspeisung Touch"
-    x_min: 165
-    x_max: 310
-    y_min: 135
-    y_max: 230
-    filters:
-      - delayed_off: 300ms
-    on_press:
-      then:
-        - lambda: |-
-            ESP_LOGI("touch_action", "Button Pressed: Sonoff Einspeisung Toggle");
-        - switch.toggle: sonoff_einspeisung_switch
+# ==============================================================================
+# 2. Home Assistant Entitäten (Sensoren & Switche)
+# ==============================================================================
+text_sensor:
+  - platform: homeassistant
+    id: ha_power_mode
+    entity_id: input_select.power_source_mode
+    on_value:
+      - component.update: my_display
 
-# 3. Importierte Sensoren aus Home Assistant
+  - platform: wifi_info
+    ip_address:
+      name: "CYD IP Address"
+      id: ip_address_sensor
+
+switch:
+  - platform: homeassistant
+    id: infeed_relay_switch
+    entity_id: switch.matter_over_wifi_smart_switch
+    on_state:
+      - component.update: my_display
+
 sensor:
   - platform: homeassistant
-    id: solix_soc
-    entity_id: sensor.anker_solix_c1000_battery_percentage
+    id: p_mains
+    entity_id: sensor.matter_over_wifi_smart_switch_power
     on_value:
       - component.update: my_display
 
   - platform: homeassistant
-    id: solar_power
-    entity_id: sensor.solix_solar_input_power
+    id: p_c1000_ac_in
+    entity_id: sensor.anker_solix_c1000_ac_power_in
     on_value:
       - component.update: my_display
 
   - platform: homeassistant
-    id: solar_daily_yield
-    entity_id: sensor.solix_solar_daily_yield
+    id: p_c1000_solar_in
+    entity_id: sensor.anker_solix_c1000_solar_power_in
     on_value:
       - component.update: my_display
 
   - platform: homeassistant
-    id: grid_daily_energy
-    entity_id: sensor.sonoff_einspeisung_daily_energy
+    id: p_c1000_total_out
+    entity_id: sensor.anker_solix_c1000_total_power_out
+    on_value:
+      - component.update: my_display
+
+  - platform: homeassistant
+    id: p_c1000_ac_out
+    entity_id: sensor.anker_solix_c1000_ac_power_out
+    on_value:
+      - component.update: my_display
+
+  - platform: homeassistant
+    id: p_c1000_dc_out
+    entity_id: sensor.anker_solix_c1000_dc_power_out
+    on_value:
+      - component.update: my_display
+
+  - platform: homeassistant
+    id: p_c1000_usba1
+    entity_id: sensor.anker_solix_c1000_usb_a1_power
+    on_value:
+      - component.update: my_display
+
+  - platform: homeassistant
+    id: p_c1000_usba2
+    entity_id: sensor.anker_solix_c1000_usb_a2_power
+    on_value:
+      - component.update: my_display
+
+  - platform: homeassistant
+    id: p_c1000_usbc1
+    entity_id: sensor.anker_solix_c1000_usb_c1_power
+    on_value:
+      - component.update: my_display
+
+  - platform: homeassistant
+    id: p_c1000_usbc2
+    entity_id: sensor.anker_solix_c1000_usb_c2_power
+    on_value:
+      - component.update: my_display
+
+  - platform: homeassistant
+    id: e_grid_cons
+    entity_id: sensor.qek_matter_over_wifi_smart_switch_grid_consumption
     on_value:
       - component.update: my_display
 
@@ -117,75 +171,150 @@ sensor:
     id: wifi_dbm
     update_interval: 60s
 
-text_sensor:
-  - platform: wifi_info
-    ip_address:
-      name: "CYD IP Address"
-      id: ip_address_sensor
+# ==============================================================================
+# 3. Touch-Zonen Definitionen
+# ==============================================================================
+binary_sensor:
+  # Touchzone A: Kopfzeile getippt -> Seitenwechsel (0..320, 0..36)
+  - platform: touchscreen
+    touchscreen_id: cyd_touch
+    name: "CYD Page Toggle"
+    x_min: 0
+    x_max: 320
+    y_min: 0
+    y_max: 38
+    filters:
+      - delayed_off: 250ms
+    on_press:
+      then:
+        - lambda: |-
+            id(current_page) = (id(current_page) == 0) ? 1 : 0;
+        - component.update: my_display
 
-# 4. Importierter Schalter für das Sonoff-Relais
-switch:
-  - platform: homeassistant
-    id: sonoff_einspeisung_switch
-    entity_id: switch.sonoff_einspeisung_hutschiene
-    on_state:
-      - component.update: my_display
+  # Touchzone B: Modus-Button Seite 1 (10..155, 42..88) -> Umschalten Auto / Manual
+  - platform: touchscreen
+    touchscreen_id: cyd_touch
+    name: "CYD Mode Toggle"
+    x_min: 10
+    x_max: 155
+    y_min: 42
+    y_max: 88
+    filters:
+      - delayed_off: 250ms
+    on_press:
+      then:
+        - lambda: |-
+            if (id(current_page) == 0) {
+              if (id(ha_power_mode).state == "Manual") {
+                id(set_mode_auto).execute();
+              } else {
+                id(set_mode_manual).execute();
+              }
+            }
 
+  # Touchzone C: Infeed-Relais Seite 1 (165..310, 42..88) -> Schalten nur im Manual-Modus
+  - platform: touchscreen
+    touchscreen_id: cyd_touch
+    name: "CYD Infeed Relay Touch"
+    x_min: 165
+    x_max: 310
+    y_min: 42
+    y_max: 88
+    filters:
+      - delayed_off: 250ms
+    on_press:
+      then:
+        - lambda: |-
+            if (id(current_page) == 0) {
+              if (id(ha_power_mode).state == "Manual") {
+                ESP_LOGI("touch_action", "Manual Infeed Relay Toggle executed");
+                id(infeed_relay_switch).toggle();
+              } else {
+                ESP_LOGW("touch_action", "Relay toggle blocked: Mode is Auto");
+              }
+            }
+
+# ==============================================================================
+# 4. Skripte für Home Assistant Service Calls
+# ==============================================================================
+script:
+  - id: set_mode_auto
+    then:
+      - homeassistant.service:
+          service: input_select.select_option
+          data:
+            entity_id: input_select.power_source_mode
+            option: Auto
+
+  - id: set_mode_manual
+    then:
+      - homeassistant.service:
+          service: input_select.select_option
+          data:
+            entity_id: input_select.power_source_mode
+            option: Manual
+
+# ==============================================================================
 # 5. Farbdefinitionen
+# ==============================================================================
 color:
   - id: my_black
-    red: 0%
-    green: 0%
-    blue: 0%
+    red: 0.05
+    green: 0.05
+    blue: 0.07
   - id: my_white
-    red: 100%
-    green: 100%
-    blue: 100%
+    red: 0.95
+    green: 0.95
+    blue: 0.95
   - id: my_green
-    red: 0%
-    green: 80%
-    blue: 20%
+    red: 0.15
+    green: 0.80
+    blue: 0.25
   - id: my_red
-    red: 80%
-    green: 10%
-    blue: 10%
+    red: 0.85
+    green: 0.15
+    blue: 0.15
   - id: my_card_bg
-    red: 12%
-    green: 12%
-    blue: 12%
+    red: 0.12
+    green: 0.13
+    blue: 0.16
   - id: my_border
-    red: 25%
-    green: 25%
-    blue: 25%
-  - id: my_solar_yellow
-    red: 100%
-    green: 75%
-    blue: 0%
-  - id: my_grid_blue
-    red: 25%
-    green: 70%
-    blue: 100%
+    red: 0.22
+    green: 0.24
+    blue: 0.28
+  - id: my_amber
+    red: 1.00
+    green: 0.75
+    blue: 0.00
+  - id: my_blue
+    red: 0.20
+    green: 0.60
+    blue: 1.00
   - id: my_gray
-    red: 60%
-    green: 60%
-    blue: 60%
+    red: 0.55
+    green: 0.58
+    blue: 0.62
 
+# ==============================================================================
 # 6. Schriftarten
+# ==============================================================================
 font:
   - file: "gfonts://Roboto"
     id: font_title
-    size: 16
+    size: 15
   - file: "gfonts://Roboto"
     id: font_header
-    size: 12
+    size: 11
   - file: "gfonts://Roboto"
     id: font_val_large
-    size: 26
+    size: 20
   - file: "gfonts://Roboto"
     id: font_val_small
-    size: 14
+    size: 13
 
+# ==============================================================================
 # 7. Display-Konfiguration (ST7789V 240x320 @ 90° = 320x240)
+# ==============================================================================
 display:
   - platform: mipi_spi
     model: ST7789V
@@ -203,59 +332,148 @@ display:
     color_order: RGB
     rotation: 90
     lambda: |-
-      // Hintergrund und Kopfzeile
       it.fill(id(my_black));
-      it.print(160, 14, id(font_title), id(my_white), TextAlign::CENTER, "QEK ENERGIE MONITOR");
 
-      // --- KACHEL 1: AKKU C1000X (Oben Links) ---
-      it.filled_rectangle(10, 32, 140, 90, id(my_card_bg));
-      it.rectangle(10, 32, 140, 90, id(my_border));
-      it.print(18, 40, id(font_header), id(my_gray), TextAlign::TOP_LEFT, "AKKU C1000X");
+      // -----------------------------------------------------------------------
+      // HEADER: Seitenindikator & Touch-Bereich (0..36 px)
+      // -----------------------------------------------------------------------
+      it.filled_rectangle(0, 0, 320, 36, id(my_card_bg));
+      it.horizontal_line(0, 36, 320, id(my_border));
 
-      if (isnan(id(solix_soc).state)) {
-        it.print(80, 80, id(font_val_large), id(my_gray), TextAlign::CENTER, "-- %");
+      if (id(current_page) == 0) {
+        it.print(12, 10, id(font_title), id(my_amber), TextAlign::TOP_LEFT, "Power + Charge [1/2]");
+        it.print(308, 11, id(font_val_small), id(my_gray), TextAlign::TOP_RIGHT, "Outputs >");
       } else {
-        float soc = id(solix_soc).state;
-        Color soc_color = (soc < 20.0f) ? id(my_red) : id(my_green);
-        it.printf(80, 80, id(font_val_large), soc_color, TextAlign::CENTER, "%.0f%%", soc);
+        it.print(12, 10, id(font_title), id(my_blue), TextAlign::TOP_LEFT, "C1000 Out Details [2/2]");
+        it.print(308, 11, id(font_val_small), id(my_gray), TextAlign::TOP_RIGHT, "< Control");
       }
 
-      // --- KACHEL 2: SOLAR DACH (Oben Rechts) ---
-      it.filled_rectangle(170, 32, 140, 90, id(my_card_bg));
-      it.rectangle(170, 32, 140, 90, id(my_border));
-      it.print(178, 40, id(font_header), id(my_gray), TextAlign::TOP_LEFT, "SOLAR (400Wp)");
+      // =======================================================================
+      // SEITE 1: STEUERUNG & HAUPT-LEISTUNGEN
+      // =======================================================================
+      if (id(current_page) == 0) {
+        // --- 1. Modus Button (Links) ---
+        bool is_manual = (id(ha_power_mode).state == "Manual");
+        it.filled_rectangle(10, 42, 145, 46, id(my_card_bg));
+        it.rectangle(10, 42, 145, 46, is_manual ? id(my_amber) : id(my_border));
+        it.print(16, 46, id(font_header), id(my_gray), TextAlign::TOP_LEFT, "MODE (TAP TO SWAP)");
+        it.print(16, 62, id(font_val_large), is_manual ? id(my_amber) : id(my_white), 
+                 TextAlign::TOP_LEFT, id(ha_power_mode).state.c_str());
 
-      float p_solar = isnan(id(solar_power).state) ? 0.0f : id(solar_power).state;
-      float e_solar = isnan(id(solar_daily_yield).state) ? 0.0f : id(solar_daily_yield).state;
-      it.printf(240, 70, id(font_val_large), id(my_solar_yellow), TextAlign::CENTER, "%.0f W", p_solar);
-      it.printf(240, 102, id(font_val_small), id(my_white), TextAlign::CENTER, "Heute: %.2f kWh", e_solar);
+        // --- 2. Infeed Relais Button (Rechts) ---
+        bool rel_on = id(infeed_relay_switch).state;
+        Color rel_border = is_manual ? id(my_amber) : id(my_border);
+        Color rel_status = rel_on ? id(my_green) : (is_manual ? id(my_red) : id(my_gray));
 
-      // --- KACHEL 3: NETZ / AUTO BEZUG (Unten Links) ---
-      it.filled_rectangle(10, 135, 140, 90, id(my_card_bg));
-      it.rectangle(10, 135, 140, 90, id(my_border));
-      it.print(18, 143, id(font_header), id(my_gray), TextAlign::TOP_LEFT, "NETZ / AUTO BEZUG");
+        it.filled_rectangle(165, 42, 145, 46, id(my_card_bg));
+        it.rectangle(165, 42, 145, 46, rel_border);
+        it.print(171, 46, id(font_header), is_manual ? id(my_amber) : id(my_gray), 
+                 TextAlign::TOP_LEFT, is_manual ? "INFEED (MANUAL TAP)" : "INFEED (AUTO-LOCK)");
+        it.print(171, 62, id(font_val_large), rel_status, TextAlign::TOP_LEFT, 
+                 rel_on ? "ON / CLOSED" : "OFF / OPEN");
 
-      float e_grid = isnan(id(grid_daily_energy).state) ? 0.0f : id(grid_daily_energy).state;
-      it.printf(80, 175, id(font_val_large), id(my_grid_blue), TextAlign::CENTER, "%.2f", e_grid);
-      it.print(80, 204, id(font_val_small), id(my_white), TextAlign::CENTER, "kWh heute");
+        // --- 3. Grid-Kacheln (Mitte & Unten) ---
+        // Kachel: Mains / V2L Power
+        it.filled_rectangle(10, 94, 96, 46, id(my_card_bg));
+        it.rectangle(10, 94, 96, 46, id(my_border));
+        it.print(15, 98, id(font_header), id(my_gray), TextAlign::TOP_LEFT, "MAINS / V2L");
+        it.printf(15, 114, id(font_val_large), id(my_white), TextAlign::TOP_LEFT, "%.0f W", 
+                  isnan(id(p_mains).state) ? 0.0f : id(p_mains).state);
 
-      // --- KACHEL 4: ZULEITUNG SCHALTER (Unten Rechts) ---
-      bool grid_on = id(sonoff_einspeisung_switch).state;
-      Color btn_bg = grid_on ? id(my_green) : id(my_red);
+        // Kachel: C1000 AC In
+        it.filled_rectangle(112, 94, 96, 46, id(my_card_bg));
+        it.rectangle(112, 94, 96, 46, id(my_border));
+        it.print(117, 98, id(font_header), id(my_gray), TextAlign::TOP_LEFT, "C1000 AC IN");
+        it.printf(117, 114, id(font_val_large), id(my_white), TextAlign::TOP_LEFT, "%.0f W", 
+                  isnan(id(p_c1000_ac_in).state) ? 0.0f : id(p_c1000_ac_in).state);
 
-      it.filled_rectangle(170, 135, 140, 90, btn_bg);
-      it.rectangle(170, 135, 140, 90, id(my_white));
-      it.print(240, 148, id(font_header), id(my_white), TextAlign::CENTER, "ZULEITUNG");
+        // Kachel: Solar In
+        it.filled_rectangle(214, 94, 96, 46, id(my_card_bg));
+        it.rectangle(214, 94, 96, 46, id(my_border));
+        it.print(219, 98, id(font_header), id(my_gray), TextAlign::TOP_LEFT, "SOLAR DC IN");
+        it.printf(219, 114, id(font_val_large), id(my_amber), TextAlign::TOP_LEFT, "%.0f W", 
+                  isnan(id(p_c1000_solar_in).state) ? 0.0f : id(p_c1000_solar_in).state);
 
-      if (grid_on) {
-        it.print(240, 175, id(font_val_large), id(my_white), TextAlign::CENTER, "EIN");
-        it.print(240, 204, id(font_val_small), id(my_white), TextAlign::CENTER, "[Tippen: AUS]");
-      } else {
-        it.print(240, 175, id(font_val_large), id(my_white), TextAlign::CENTER, "AUS");
-        it.print(240, 204, id(font_val_small), id(my_white), TextAlign::CENTER, "[Tippen: EIN]");
+        // Kachel: C1000 AC Out
+        it.filled_rectangle(10, 146, 96, 46, id(my_card_bg));
+        it.rectangle(10, 146, 96, 46, id(my_border));
+        it.print(15, 150, id(font_header), id(my_gray), TextAlign::TOP_LEFT, "C1000 AC OUT");
+        it.printf(15, 166, id(font_val_large), id(my_white), TextAlign::TOP_LEFT, "%.0f W", 
+                  isnan(id(p_c1000_ac_out).state) ? 0.0f : id(p_c1000_ac_out).state);
+
+        // Kachel: C1000 Total Out
+        it.filled_rectangle(112, 146, 96, 46, id(my_card_bg));
+        it.rectangle(112, 146, 96, 46, id(my_border));
+        it.print(117, 150, id(font_header), id(my_gray), TextAlign::TOP_LEFT, "TOTAL OUT");
+        it.printf(117, 166, id(font_val_large), id(my_blue), TextAlign::TOP_LEFT, "%.0f W", 
+                  isnan(id(p_c1000_total_out).state) ? 0.0f : id(p_c1000_total_out).state);
+
+        // Kachel: Grid / V2L Gesamtverbrauch
+        it.filled_rectangle(214, 146, 96, 46, id(my_card_bg));
+        it.rectangle(214, 146, 96, 46, id(my_border));
+        it.print(219, 150, id(font_header), id(my_gray), TextAlign::TOP_LEFT, "GRID CONSUMP");
+        it.printf(219, 166, id(font_val_large), id(my_green), TextAlign::TOP_LEFT, "%.1f kWh", 
+                  isnan(id(e_grid_cons).state) ? 0.0f : id(e_grid_cons).state);
+
+        // Fußzeile
+        it.print(160, 212, id(font_val_small), id(my_gray), TextAlign::CENTER, 
+                 "QEK Autarkie System | Tap Header for Details");
       }
 
+      // =======================================================================
+      // SEITE 2: C1000 AUSGANGS-DETAILS (12V & USB)
+      // =======================================================================
+      if (id(current_page) == 1) {
+        // 12V DC Port
+        it.filled_rectangle(10, 46, 145, 50, id(my_card_bg));
+        it.rectangle(10, 46, 145, 50, id(my_border));
+        it.print(16, 52, id(font_header), id(my_gray), TextAlign::TOP_LEFT, "12V KFZ AUSGANG");
+        it.printf(16, 68, id(font_val_large), id(my_white), TextAlign::TOP_LEFT, "%.1f W", 
+                  isnan(id(p_c1000_dc_out).state) ? 0.0f : id(p_c1000_dc_out).state);
+
+        // Total Out Summe
+        it.filled_rectangle(165, 46, 145, 50, id(my_card_bg));
+        it.rectangle(165, 46, 145, 50, id(my_border));
+        it.print(171, 52, id(font_header), id(my_gray), TextAlign::TOP_LEFT, "GESAMTLAST OUT");
+        it.printf(171, 68, id(font_val_large), id(my_blue), TextAlign::TOP_LEFT, "%.0f W", 
+                  isnan(id(p_c1000_total_out).state) ? 0.0f : id(p_c1000_total_out).state);
+
+        // USB-A 1
+        it.filled_rectangle(10, 102, 145, 50, id(my_card_bg));
+        it.rectangle(10, 102, 145, 50, id(my_border));
+        it.print(16, 108, id(font_header), id(my_gray), TextAlign::TOP_LEFT, "USB-A PORT 1");
+        it.printf(16, 124, id(font_val_large), id(my_white), TextAlign::TOP_LEFT, "%.1f W", 
+                  isnan(id(p_c1000_usba1).state) ? 0.0f : id(p_c1000_usba1).state);
+
+        // USB-A 2
+        it.filled_rectangle(165, 102, 145, 50, id(my_card_bg));
+        it.rectangle(165, 102, 145, 50, id(my_border));
+        it.print(171, 108, id(font_header), id(my_gray), TextAlign::TOP_LEFT, "USB-A PORT 2");
+        it.printf(171, 124, id(font_val_large), id(my_white), TextAlign::TOP_LEFT, "%.1f W", 
+                  isnan(id(p_c1000_usba2).state) ? 0.0f : id(p_c1000_usba2).state);
+
+        // USB-C 1
+        it.filled_rectangle(10, 158, 145, 50, id(my_card_bg));
+        it.rectangle(10, 158, 145, 50, id(my_border));
+        it.print(16, 164, id(font_header), id(my_gray), TextAlign::TOP_LEFT, "USB-C PORT 1");
+        it.printf(16, 180, id(font_val_large), id(my_amber), TextAlign::TOP_LEFT, "%.1f W", 
+                  isnan(id(p_c1000_usbc1).state) ? 0.0f : id(p_c1000_usbc1).state);
+
+        // USB-C 2
+        it.filled_rectangle(165, 158, 145, 50, id(my_card_bg));
+        it.rectangle(165, 158, 145, 50, id(my_border));
+        it.print(171, 164, id(font_header), id(my_gray), TextAlign::TOP_LEFT, "USB-C PORT 2");
+        it.printf(171, 180, id(font_val_large), id(my_amber), TextAlign::TOP_LEFT, "%.1f W", 
+                  isnan(id(p_c1000_usbc2).state) ? 0.0f : id(p_c1000_usbc2).state);
+
+        // Fußzeile
+        it.print(160, 218, id(font_header), id(my_gray), TextAlign::CENTER, 
+                 "Tap Header to return to Main View");
+      }
+
+# ==============================================================================
 # 8. Display-Hintergrundbeleuchtung (GPIO27)
+# ==============================================================================
 output:
   - platform: ledc
     pin: GPIO27
