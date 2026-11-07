@@ -1,17 +1,7 @@
 # ======================================================================
-# Erzeugt von CYD Studio (Generator 0.8.0) – ESPHome >= 2026.9.0
-# Projekt: QEK-CYD · Board: ESP32-2432S028R (Cheap Yellow Display 2,8″)
-# Stand: 2026-11-07T17:08:06+00:00
-#
-# Änderungen bitte in CYD Studio vornehmen – sonst werden sie beim
-# nächsten Export überschrieben.
-#
-# WLAN-Zugangsdaten kommen aus secrets.yaml (wifi_ssid, wifi_password).
-# In Home Assistant beim ESPHome-Gerät „Dem Gerät erlauben,
-# Home-Assistant-Aktionen auszuführen“ aktivieren – sonst reagieren
-# die Schalter nicht.
-#
-# Hardware-Grundkonfiguration nach github.com/akuehlewind/ESPHome-touch-display-mount (MIT, (c) 2023 Adrian Kuehlewind)
+# QEK-CYD – Vollständig gemergte Konfiguration
+# Hardware: ST7789V @ GPIO27 Backlight · Gemeinsamer SPI · Touch XPT2046
+# UI: CYD Studio (LVGL)
 # ======================================================================
 
 substitutions:
@@ -29,12 +19,17 @@ esphome:
   friendly_name: "${friendly_name}"
   min_version: 2026.9.0
   on_boot:
-    priority: -100
-    then:
-      - light.turn_on:
-          id: backlight
-          brightness: "100%"
-      - script.execute: cyd_update_time
+    - priority: 1000.0
+      then:
+        - lambda: |-
+            pinMode(33, OUTPUT);
+            digitalWrite(33, HIGH);
+    - priority: -100.0
+      then:
+        - light.turn_on:
+            id: backlight
+            brightness: "100%"
+        - script.execute: cyd_update_time
 
 esp32:
   board: esp32dev
@@ -42,6 +37,8 @@ esp32:
     type: arduino
 
 logger:
+  baud_rate: 115200
+  level: DEBUG
 
 api:
   encryption:
@@ -117,8 +114,8 @@ api:
 
 ota:
   - platform: esphome
-    id: cyd_ota
     encryption:
+    id: cyd_ota
 
 wifi:
   ssid: !secret wifi_ssid
@@ -144,8 +141,6 @@ globals:
       [](lv_obj_t *tile, lv_obj_t *icon, lv_obj_t *title, lv_obj_t *label, lv_obj_t *circle,
           const std::string &x, float value, int kind, const char *text_on, const char *text_off,
           const uint32_t *c) {
-        // Tile state: checked when on/open, disabled when unavailable; colors c[] = on/off pairs of
-        // icon, title, state text, icon circle. kind: 1 = brightness 0..255, 2/3 = percent, 0 = text only
         const bool on = x == "on" || x == "open" || x == "opening" || x == "unlocked" || x == "home" || x == "playing";
         const int k = on ? 0 : 1;
         if (tile != nullptr) {
@@ -191,48 +186,50 @@ time:
         then:
           - script.execute: cyd_update_time
 
+# Gemeinsamer SPI Bus für ST7789V und XPT2046
 spi:
-  - id: spi_display
+  - id: cyd_spi
     clk_pin: GPIO14
     mosi_pin: GPIO13
-  - id: spi_touch
-    clk_pin: GPIO25
-    mosi_pin: GPIO32
-    miso_pin: GPIO39
+    miso_pin: GPIO12
 
 display:
   - platform: mipi_spi
     id: cyd_display
-    spi_id: spi_display
-    model: ILI9341
-    color_order: BGR
-    data_rate: 10MHz
+    spi_id: cyd_spi
+    model: ST7789V
+    color_order: RGB
+    data_rate: 20MHz
+    dimensions:
+      width: 240
+      height: 320
+      offset_height: 0
+      offset_width: 0
     cs_pin:
       number: 15
       ignore_strapping_warning: true
     dc_pin:
       number: 2
       ignore_strapping_warning: true
-    invert_colors: false
+    invert_colors: true
     update_interval: never
     auto_clear_enabled: false
 
 touchscreen:
   - platform: xpt2046
     id: cyd_touch
-    spi_id: spi_touch
+    spi_id: cyd_spi
     cs_pin: 33
-    interrupt_pin: 36
     update_interval: 20ms
-    threshold: 300
+    threshold: 400
     calibration:
-      x_min: 280
-      x_max: 3860
-      y_min: 340
-      y_max: 3860
+      x_min: 300
+      x_max: 3800
+      y_min: 300
+      y_max: 3800
     transform:
       swap_xy: false
-      mirror_x: true
+      mirror_x: false
       mirror_y: false
     on_touch:
       - if:
@@ -248,20 +245,23 @@ touchscreen:
 
 output:
   - platform: ledc
-    pin: GPIO21
+    pin: GPIO27
     id: backlight_pwm
   - platform: ledc
     id: led_red
-    pin: GPIO4
-    inverted: true
+    pin:
+      number: GPIO4
+      inverted: true
   - platform: ledc
     id: led_green
-    pin: GPIO16
-    inverted: true
+    pin:
+      number: GPIO16
+      inverted: true
   - platform: ledc
     id: led_blue
-    pin: GPIO17
-    inverted: true
+    pin:
+      number: GPIO17
+      inverted: true
 
 light:
   - platform: monochromatic
@@ -460,7 +460,7 @@ lvgl:
   touchscreens:
     - touchscreen_id: cyd_touch
   rotation: 90
-  page_wrap: true
+  page_wrap: false
   theme:
     button:
       bg_color: 0x000000
@@ -634,6 +634,7 @@ lvgl:
                       text: ""
   pages:
     - id: page_home
+      skip: false
       bg_color: 0x000000
       bg_opa: COVER
       pad_all: 0
@@ -641,7 +642,7 @@ lvgl:
         - script.execute:
             id: cyd_on_page
             page: 0
-            root: 0
+            root: -1
       widgets:
         - button:
             id: w_home_w1
@@ -887,27 +888,3 @@ lvgl:
                   long_mode: DOT
                   styles: cyd_text_3
                   text: "–"
-# cyd_studio_checksum: fd1a443da5542820
-
-# Projektdaten für den Import in CYD Studio (nicht bearbeiten)
-# cyd_studio_project: H4sIAAAAAAAC/61WbW/bNhD+Lyz2qXYhyS+xBexDkTbAsKHrugFBNwTESaIkLhSpkVQUL/B/351E
-#   27KbDAE26ItEHu/ueZ6j7p5YZsAWLGXCtYtkniwXiYuSjWWzcYc/gJWgPUt1p9SMFeJB5oJraAQe
-#   +kvcz/NdgcaVMhkolj6x0hgvLL0JDZkS6LwE5cSM1UJWNXparGesl0UlvGPpH3d72oHi4oy33eRI
-#   spkeeWKgZKUxASVKj9H9rqV0WqgE99Irwfazk5EdfBytcmXye7a/22PgysqCwuZGoeMlLkDLUgzW
-#   QlFIXQ3v1vS4uUBzMmZRJmATRfl2VcbLJZTbApJtfLVYFIkorpYJRmqEh8GtFeAJDUuiZD2P43l0
-#   9Vu8SuMkXcZvoyiNIrTu2uIZq6s02qTROlhh8MD5Lx9/nF9//cBo4UFW4KXRFKs2jeDEANrQOxq4
-#   2vRc5ka7A5/DioJMqNOS3yk6o40ezvSSWBr3PGQZWN4aJ8cwWBTem4bItKCPq07Jgg73FloO1nQ6
-#   KIhpGyuF9iFNpkAXLoeWrCnZUU6SgZsHYS35CaVGieOJppBpDk1LagQFAjyp+ZSCMWUFO9NhxYzS
-#   TlkbIlpxquWBjEPpBcCyEXicu4PNtOjwqPQ7gttLn9fvsPq5q4VSO57HURRxyHleg60EXZ+apXHI
-#   t48ptjWtC7VmLEdw3pqTDBO0reoI6iATLl1ff6QvoyveWuHcgW97UNghu+JM4QdQnTgqEBR+GmJw
-#   J/8mQhyVVLgR3lSVopujBhHxus3YI0ujGUO0EV2lE3ShnbH/Bh2rpf+GgGRKQCFy2QBBj89wlwpc
-#   Pc+lzYc8zvHrrhFW5geYnZYk8i17Db4x6cDKBGDyMkDQ9wjFGSUfA8IMPP7XdrwVNqeCrsQFxsVr
-#   MAYv80YUsmsmKH811y+i/O4/oRxljF+H0hsPapSQS32BcPkiwtExT17rmq7oCfsP+vAxePj5tMkX
-#   +M0mco+vg9nxY7A58dB0ysuXxI7/J7FXz1MRXQraAIZGl/iGdNJ+gHImaaj5Q6MspSIPb6I8WRbl
-#   BFoFXRVAxRNtkzNQmdSAqU9uajw+FxDWUwighPWcyjTkMKnZXpZyotbt+0/0/xePaF+WuFCYXh9X
-#   6FDXnqHLKm5aCDRcQA1h3qyX9LDZRXUHr89Ue0ApdSFz8MZOWYkDK3f7O4Ro2q4dBg1MKa9FA4OB
-#   E95jSxnBt5LfC+JO3L7dfvm8aG7W3c58Ljaxqb/qvtj229XNh9/9KtvdLH769Gd/9fj+exqRhtFC
-#   40+ZF7ALCCeLOkwvq+PgBDk1K3fqVrrqxp4tiMPhAG9MIcZhaJR0bEWlxcaLM0IyTg1SY7/0RyKd
-#   6bBUcZ80QZZqbBW1Uah08g7nLW9oclmni2GUsMJ3VvNhZIDSU/HjgIO52yrjw/j1zSR27DSdCzFJ
-#   YhxwsMzgYRzeRnBUEZJ+bUfP8SaanfvbU2fFqhrI5+hOZYBD2eG35wSWL/r2gSga1TxKN4xv1DjB
-#   DQMdLR3nBpJyv/8HdgCCL9IKAAA=
