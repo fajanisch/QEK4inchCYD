@@ -1,7 +1,7 @@
 # ======================================================================
 # Erzeugt von CYD Studio (Generator 0.8.0) – ESPHome >= 2026.9.0
 # Projekt: QEK-CYD · Board: ESP32-2432S028R (Cheap Yellow Display 2,8″)
-# Stand: 2026-11-07T17:02:14+00:00
+# Stand: 2026-11-07T17:08:06+00:00
 #
 # Änderungen bitte in CYD Studio vornehmen – sonst werden sie beim
 # nächsten Export überschrieben.
@@ -460,7 +460,7 @@ lvgl:
   touchscreens:
     - touchscreen_id: cyd_touch
   rotation: 90
-  page_wrap: false
+  page_wrap: true
   theme:
     button:
       bg_color: 0x000000
@@ -634,7 +634,6 @@ lvgl:
                       text: ""
   pages:
     - id: page_home
-      skip: true
       bg_color: 0x000000
       bg_opa: COVER
       pad_all: 0
@@ -642,7 +641,7 @@ lvgl:
         - script.execute:
             id: cyd_on_page
             page: 0
-            root: -1
+            root: 0
       widgets:
         - button:
             id: w_home_w1
@@ -888,27 +887,27 @@ lvgl:
                   long_mode: DOT
                   styles: cyd_text_3
                   text: "–"
-# cyd_studio_checksum: 90b1992422df066e
+# cyd_studio_checksum: fd1a443da5542820
 
 # Projektdaten für den Import in CYD Studio (nicht bearbeiten)
-# cyd_studio_project: H4sIAAAAAAAC/61WbW/bNhD+Lyz2qXYhyS+JBexDkTbAsKHrugFBNwTESaIkLhSpkZQVL/B/351E
-#   27KbDAE26ItEHe/ueZ4j755YZsAWLGXCtYtkniwXiYuSa8tm4x++BStBe5bqTqkZK8RW5oJraARu
-#   +ks8zPNdgcaVMhkolj6x0hgvLL0JDZkS6LwE5cSM1UJWNXparGesl0UlvGPpH/d7+gPFxR5vu8mW
-#   5Hq65YmBkpXGBJQoPUb3u5bSaaES3EuvBNvPTkZ28HG0ypXJH9j+fo+BKysLCpsbhY6XuAAtSzFY
-#   C0UhdTW8W9PjzwWakzGLMgHXUZRvVmW8XEK5KSDZxFeLRZGI4mqZYKRGeBjcWgGe0LAkStbzOJ5H
-#   V7/FqzRO0mX8NorSKELrri2esbpKoySNl8EKgwfOf/n44/zm6wdGC1tZgZdGU6zaNIITA2hD72jg
-#   atNzmRvtDnwOKwoyoU5LfqdojzZ62NNLYilI5iHLwPLWODnGwarw3jTEpgV9XHVKFrS7t9BysKbT
-#   B9kxcWOl0D4kyhTowuXQkjmlOwpKQnCzFdaSo1BslDruaAqZ5tC0pEfQIACUmk9JCEkr2JkOi2ZU
-#   d0rcENKKUzkPfByqb+TDy0bgdu4ONtO6w63S7whwL31ev8MDwF0tlNrxPI6iiEPO8xpsJegE1SyN
-#   Q8J9TLGtaV0oN2M5ovPWnJSYwG1VR1gHpXDp5uYjfRld8dYK5w6M24PIDukVZyJvQXVhZX8U+WmI
-#   wZ38mwhxVFXhUHhTVYoOjxpkxBM3Y48sjWYM0UZ0mk7QhXbG/ht0rJf+GwKSKQGFyGUDBD0+w10q
-#   cPU8lzYf8jjHr7tGWJkfYHZaksh37DX4xqQDKxOAycsAQT8gFGeUfAwIM/B4te14K2xOFV2JC4yL
-#   12AMXuaNKGTXTFD+am5eRPndf0I5yhi/DqU3HtQoIZf6AuHyRYSjY5681jUd0RP2H/ThY/Dw8+kn
-#   X+A3m8g9vg5mx4/B5sRD0ykvXxI7/p/EXj1PRXQpaAMYGl3iG9JJ/wOUM0lDzR/usFIq8vAmypNl
-#   UU6gVdBVAVQ80TY5A5VJDZj65KTG43MBYT2FAEpYzyf36KRme1nKiVp37z9RBxCPaF+WuFCYXh9X
-#   aFPXnqHLKm5aCDRcQA1h3qyX9LDZRXUHr89Ue0ApdSFz8MZOWYkDK/f7e4Ro2q4dZg1MKa9FA4OB
-#   E95jTxnBt5I/COJO3L3dfPm8aG7X3c58Lq5jU3/VfbHpN6vbD7/7Vba7Xfz06c/+6vH99zQlDdOF
-#   xkuZF7ALCCeLOgwwq+PsBDl1q+Otj/2w6sa2LYjDYQNvTCHGeWiUdGxFpcXWi2NCMg4OUmPD9Eci
-#   nemwVPE/aYIs1dgqaqNQ6eQdjlze0PCyThfDNGGF76zmw9QApafixxkHc7dVxocJ7Jth7NhpOndq
-#   7g5nHCwz2I7z2wiOKkLS1Xb0HF9Hs3N/e+qsWFUD+RzdqQxwLjtce05g+aJvH4iiac2jdMMER40T
-#   3DDT0dJxcCAp9/t/AFqWVPLVCgAA
+# cyd_studio_project: H4sIAAAAAAAC/61WbW/bNhD+Lyz2qXYhyS+xBexDkTbAsKHrugFBNwTESaIkLhSpkVQUL/B/351E
+#   27KbDAE26ItEHu/ueZ6j7p5YZsAWLGXCtYtkniwXiYuSjWWzcYc/gJWgPUt1p9SMFeJB5oJraAQe
+#   +kvcz/NdgcaVMhkolj6x0hgvLL0JDZkS6LwE5cSM1UJWNXparGesl0UlvGPpH3d72oHi4oy33eRI
+#   spkeeWKgZKUxASVKj9H9rqV0WqgE99Irwfazk5EdfBytcmXye7a/22PgysqCwuZGoeMlLkDLUgzW
+#   QlFIXQ3v1vS4uUBzMmZRJmATRfl2VcbLJZTbApJtfLVYFIkorpYJRmqEh8GtFeAJDUuiZD2P43l0
+#   9Vu8SuMkXcZvoyiNIrTu2uIZq6s02qTROlhh8MD5Lx9/nF9//cBo4UFW4KXRFKs2jeDEANrQOxq4
+#   2vRc5ka7A5/DioJMqNOS3yk6o40ezvSSWBr3PGQZWN4aJ8cwWBTem4bItKCPq07Jgg73FloO1nQ6
+#   KIhpGyuF9iFNpkAXLoeWrCnZUU6SgZsHYS35CaVGieOJppBpDk1LagQFAjyp+ZSCMWUFO9NhxYzS
+#   TlkbIlpxquWBjEPpBcCyEXicu4PNtOjwqPQ7gttLn9fvsPq5q4VSO57HURRxyHleg60EXZ+apXHI
+#   t48ptjWtC7VmLEdw3pqTDBO0reoI6iATLl1ff6QvoyveWuHcgW97UNghu+JM4QdQnTgqEBR+GmJw
+#   J/8mQhyVVLgR3lSVopujBhHxus3YI0ujGUO0EV2lE3ShnbH/Bh2rpf+GgGRKQCFy2QBBj89wlwpc
+#   Pc+lzYc8zvHrrhFW5geYnZYk8i17Db4x6cDKBGDyMkDQ9wjFGSUfA8IMPP7XdrwVNqeCrsQFxsVr
+#   MAYv80YUsmsmKH811y+i/O4/oRxljF+H0hsPapSQS32BcPkiwtExT17rmq7oCfsP+vAxePj5tMkX
+#   +M0mco+vg9nxY7A58dB0ysuXxI7/J7FXz1MRXQraAIZGl/iGdNJ+gHImaaj5Q6MspSIPb6I8WRbl
+#   BFoFXRVAxRNtkzNQmdSAqU9uajw+FxDWUwighPWcyjTkMKnZXpZyotbt+0/0/xePaF+WuFCYXh9X
+#   6FDXnqHLKm5aCDRcQA1h3qyX9LDZRXUHr89Ue0ApdSFz8MZOWYkDK3f7O4Ro2q4dBg1MKa9FA4OB
+#   E95jSxnBt5LfC+JO3L7dfvm8aG7W3c58Ljaxqb/qvtj229XNh9/9KtvdLH769Gd/9fj+exqRhtFC
+#   40+ZF7ALCCeLOkwvq+PgBDk1K3fqVrrqxp4tiMPhAG9MIcZhaJR0bEWlxcaLM0IyTg1SY7/0RyKd
+#   6bBUcZ80QZZqbBW1Uah08g7nLW9oclmni2GUsMJ3VvNhZIDSU/HjgIO52yrjw/j1zSR27DSdCzFJ
+#   YhxwsMzgYRzeRnBUEZJ+bUfP8SaanfvbU2fFqhrI5+hOZYBD2eG35wSWL/r2gSga1TxKN4xv1DjB
+#   DQMdLR3nBpJyv/8HdgCCL9IKAAA=
