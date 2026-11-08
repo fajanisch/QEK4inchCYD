@@ -150,8 +150,8 @@ display:
       height: 320
       offset_height: 0
       offset_width: 0
-    invert_colors: true
-    color_order: BGR
+    invert_colors: false
+    color_order: RGB
     update_interval: never
     auto_clear_enabled: false
 
