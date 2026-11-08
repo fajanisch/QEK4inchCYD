@@ -39,7 +39,6 @@ api:
 
 ota:
   - platform: esphome
-    encryption:
 
 # Hardware SPI Bus
 spi:
@@ -58,7 +57,7 @@ globals:
     initial_value: '0'
 
 # ==============================================================================
-# 1. Touchscreen Controller (XPT2046)
+# 1. Touchscreen Controller (XPT2046) - ACHSEN FÜR QUERFORMAT ANGEPASST
 # ==============================================================================
 touchscreen:
   - platform: xpt2046
@@ -73,8 +72,8 @@ touchscreen:
       y_min: 300
       y_max: 3800
     transform:
-      swap_xy: false
-      mirror_x: false
+      swap_xy: true
+      mirror_x: true
       mirror_y: false
 
 # ==============================================================================
@@ -175,7 +174,7 @@ sensor:
 # 3. Touch-Zonen Definitionen
 # ==============================================================================
 binary_sensor:
-  # Touchzone A: Kopfzeile getippt -> Seitenwechsel (0..320, 0..36)
+  # Touchzone A: Kopfzeile getippt -> Seitenwechsel (0..320, 0..38)
   - platform: touchscreen
     touchscreen_id: cyd_touch
     name: "CYD Page Toggle"
@@ -192,8 +191,6 @@ binary_sensor:
         - component.update: my_display
 
   # Touchzone B: Modus-Button Seite 1 (10..155, 42..88) -> Umschalten Auto / Manual
-  # Touchzone B: Modus-Button Seite 1 (10..155, 42..88)
-#binary_sensor:
   - platform: touchscreen
     touchscreen_id: cyd_touch
     name: "CYD Mode Toggle"
@@ -218,7 +215,6 @@ binary_sensor:
                 id(set_mode_to).execute("Grid");
               }
             }
-        # Display sofort lokal zum Neuzeichnen auffordern
         - delay: 150ms
         - component.update: my_display
 
@@ -318,7 +314,7 @@ font:
     size: 13
 
 # ==============================================================================
-# 7. Display-Konfiguration (ST7789V 240x320 @ 90° = 320x240)
+# 7. Display-Konfiguration (KORRIGIERT: invert_colors & color_order)
 # ==============================================================================
 display:
   - platform: mipi_spi
@@ -333,8 +329,8 @@ display:
       height: 320
       offset_height: 0
       offset_width: 0
-    invert_colors: true
-    color_order: RGB
+    invert_colors: false
+    color_order: BGR
     rotation: 90
     lambda: |-
       it.fill(id(my_black));
