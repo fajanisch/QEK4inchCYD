@@ -68,3 +68,9 @@ sensor:
     id: uptime_sensor
     entity_category: diagnostic
     update_interval: 15s
+
+switch:
+  - platform: gpio
+    name: touchdisplay1 Relay 1
+    id: relay1
+    pin: 40
