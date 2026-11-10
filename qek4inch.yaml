@@ -4,8 +4,23 @@ esphome:
 
 esp32:
   board: esp32-s3-devkitc-1
+  flash_size: 16MB
   framework:
     type: esp-idf
+    sdkconfig_options:
+      # 16MB Flash mit Octal-Mode (OPI)
+      CONFIG_ESPTOOLPY_FLASHSIZE_16MB: "y"
+      CONFIG_ESPTOOLPY_FLASHMODE_OPI: "y"
+      # 8MB Octal PSRAM (OPI) aktivieren
+      CONFIG_SPIRAM: "y"
+      CONFIG_SPIRAM_MODE_OCT: "y"
+      CONFIG_SPIRAM_SPEED_80M: "y"
+      # Ermöglicht LVGL und Treibern transparente Speicherallokation im PSRAM
+      CONFIG_SPIRAM_USE_MALLOC: "y"
+
+psram:
+  mode: octal
+  speed: 80MHz
 
 logger:
 
