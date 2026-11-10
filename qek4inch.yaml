@@ -78,7 +78,7 @@ light:
   - platform: esp32_rmt_led_strip
     pin: GPIO42
     num_leds: 1
-    rgb_order: GRB
+    channel_colors: GRB
     chipset: ws2812
     name: "Board Status LED"
     id: cyd_rgb_led
@@ -104,7 +104,16 @@ i2c:
   scan: true
   frequency: 400kHz
 
-# 5. Kapazitiver Touchscreen (FT6336U)
+# 3. Import des Home Assistant Sensors
+binary_sensor:
+  - platform: homeassistant
+    id: auto_dim_flag
+    entity_id: binary_sensor.qek_qek_dashboard_4_0_cyd_auto_dim
+    on_state:
+      then:
+        - script.execute: handle_activity
+
+# 4. Touchscreen-Trigger
 touchscreen:
   - platform: ft63x6
     id: my_touch
@@ -112,9 +121,32 @@ touchscreen:
     interrupt_pin: GPIO17
     reset_pin: GPIO18
     on_touch:
-      - lambda: |-
-          ESP_LOGI("touch", "Berührung bei X=%d, Y=%d", touch.x, touch.y);
+      then:
+        - script.execute: handle_activity
           
+# 5. Lokales Timer- & Dimm-Skript
+script:
+  - id: handle_activity
+    mode: restart  # Resettet den Timer bei jedem Touch
+    then:
+      # Sofort voll aufblenden (80% spart bereits spürbar Strom gegenüber 100%)
+      - light.turn_on:
+          id: cyd_backlight
+          brightness: 80%
+          transition_length: 150ms
+
+      # Nur herunterfaden, wenn HA 'on' meldet (Nacht oder Batterie)
+      - if:
+          condition:
+            binary_sensor.is_on: auto_dim_flag
+          then:
+            - delay: 60s
+            # Sanft auf 5% Nachtlicht absenken (oder 0% / light.turn_off)
+            - light.turn_on:
+                id: cyd_backlight
+                brightness: 5%
+                transition_length: 1.5s
+                
 # 6. LVGL-Konfiguration mit Querformat-Drehung
 lvgl:
   displays:
