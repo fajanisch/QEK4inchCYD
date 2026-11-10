@@ -27,3 +27,7 @@ wifi:
     password: "zIt8Dk2nyR5J"
 
 captive_portal:
+
+spi:
+  - clk_pin: 48
+    mosi_pin: 47
