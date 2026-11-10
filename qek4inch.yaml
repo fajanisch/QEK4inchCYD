@@ -56,3 +56,10 @@ output:
   - platform: ledc
     id: backlight
     pin: 38
+
+sensor:
+  - platform: wifi_signal
+    name: touchdisplay1 WiFi Signal
+    id: sensor_wifi
+    entity_category: diagnostic
+    update_interval: 60s
