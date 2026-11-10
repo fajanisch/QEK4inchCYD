@@ -1,85 +1,69 @@
-# Board: ESP32-S3 4.0 Inch Smart Display
-# Definition: definitions/boards/esp32_s3_4_0_inch_smart_display/manifest.yaml
-
 esphome:
-  name: qek4inch
-  friendly_name: QEK4INCH
+  name: qek-cyd-40
+  friendly_name: "QEK Dashboard 4.0"
 
 esp32:
-  variant: esp32s3
+  board: esp32-s3-devkitc-1
   framework:
-    type: esp-idf
+    type: esp-idf # esp-idf wird für ESP32-S3 und PSRAM-Support dringend empfohlen
+
+psram:
+  mode: octal # oder quad, je nach Modul – meist octal beim N16R8
 
 logger:
 
-api:
-  encryption:
-    key: "nWo3Rw3PHqkIXwkiLQpJ3mtEahmSupOUaMgci4MCG/8="
+# I2C-Bus für den kapazitiven Touch (FT6336U)
+i2c:
+  sda: GPIO18
+  scl: GPIO8
+  scan: true
+  frequency: 400kHz
 
-ota:
-  - platform: esphome
-    encryption:
-
-wifi:
-  ssid: !secret wifi_ssid
-  password: !secret wifi_password
-  ap:
-    ssid: QEK4INCH Fallback Hotspot
-    password: "zIt8Dk2nyR5J"
-
-captive_portal:
-
+# SPI-Bus für das Display
 spi:
-  - clk_pin: 48
-    mosi_pin: 47
+  - id: spi_display
+    clk_pin: GPIO12
+    mosi_pin: GPIO13
+    miso_pin: GPIO11
 
-psram:
-  mode: octal
-  speed: 80MHz
-
+# Korrekte Display-Plattform über mipi_spi
 display:
-  - platform: st7701s
-    id: display_st7701s_1
-    color_order: RGB
-    cs_pin: 39
-    data_pins: [46, 9, 10, 11, 12, 13, 14, 0, 4, 5, 6, 7, 15, 8, 20, 3]
-    data_rate: 40MHz
-    de_pin: 18
+  - platform: mipi_spi
+    id: my_display
+    spi_id: spi_display
+    model: ST7796
     dimensions:
+      width: 320
       height: 480
-      width: 480
-    hsync_pin: 16
-    init_sequence: [[1], [255, 119, 1, 0, 0, 16], [192, 59, 0], [193, 13, 2], [194, 49, 5], [205, 0], [176, 0, 17, 24, 14, 17, 6, 7, 8, 7, 34, 4, 18, 15, 170, 49, 24], [177, 0, 17, 25, 14, 18, 7, 8, 8, 8, 34, 4, 17, 17, 169, 50, 24], [255, 119, 1, 0, 0, 17], [176, 96], [177, 50], [178, 7], [179, 128], [181, 73], [183, 133], [184, 33], [193, 120], [194, 120], [224, 0, 27, 2], [225, 8, 160, 0, 0, 7, 160, 0, 0, 0, 68, 68], [226, 17, 17, 68, 68, 237, 160, 0, 0, 236, 160, 0, 0], [227, 0, 0, 17, 17], [228, 68, 68], [229, 10, 233, 216, 160, 12, 235, 216, 160, 14, 237, 216, 160, 16, 239, 216, 160], [230, 0, 0, 17, 17], [231, 68, 68], [232, 9, 232, 216, 160, 11, 234, 216, 160, 13, 236, 216, 160, 15, 238, 216, 160], [235, 2, 0, 228, 228, 136, 0, 64], [236, 60, 0], [237, 171, 137, 118, 84, 2, 255, 255, 255, 255, 255, 255, 32, 69, 103, 152, 186], [255, 119, 1, 0, 0, 19], [229, 228], [58, 96]]
-    pclk_pin: 21
-    vsync_pin: 17
+    rotation: 90
+    cs_pin: GPIO10
+    dc_pin: GPIO4
+    # reset_pin: GPIO0  # Bei Problemen auskommentiert lassen
+    data_rate: 40MHz
+    auto_clear_enabled: false
 
+# Kapazitiver Touchscreen (FT6336U)
+touchscreen:
+  - platform: ft63x6
+    id: my_touch
+    display: my_display
+    interrupt_pin: GPIO3 # INT Pin laut LCDWiki Tabelle
+    reset_pin: GPIO2     # RST Pin laut LCDWiki Tabelle
+    transform:
+      swap_xy: true
+      mirror_x: false
+      mirror_y: true
+
+# Hintergrundbeleuchtung (Backlight)
 output:
   - platform: ledc
-    id: backlight
-    pin: 38
+    pin: GPIO38 # LCD-Backlight Pin laut LCDWiki
+    id: backlight_pwm
+    frequency: 1000Hz
 
-sensor:
-  - platform: wifi_signal
-    name: touchdisplay1 WiFi Signal
-    id: sensor_wifi
-    entity_category: diagnostic
-    update_interval: 60s
-  - platform: uptime
-    name: touchdisplay1 Uptime
-    id: uptime_sensor
-    entity_category: diagnostic
-    update_interval: 15s
-
-switch:
-  - platform: gpio
-    name: touchdisplay1 Relay 1
-    id: relay1
-    pin: 40
-  - platform: gpio
-    name: touchdisplay1 Relay 2
-    id: relay2
-    pin: 2
-  - platform: gpio
-    name: touchdisplay1 Relay 3
-    id: relay3
-    pin: 1
+light:
+  - platform: monochromatic
+    output: backlight_pwm
+    name: "Display Backlight"
+    id: cyd_backlight
+    restore_mode: ALWAYS_ON
