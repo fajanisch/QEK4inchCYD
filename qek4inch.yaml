@@ -74,3 +74,7 @@ switch:
     name: touchdisplay1 Relay 1
     id: relay1
     pin: 40
+  - platform: gpio
+    name: touchdisplay1 Relay 2
+    id: relay2
+    pin: 2
