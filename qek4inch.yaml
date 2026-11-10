@@ -230,7 +230,6 @@ lvgl:
                   y: -18
                   text: "SHORE POWER"
                   text_color: 0xFFFFFF
-
             on_click:
               - switch.toggle: sonoff_switch
 
