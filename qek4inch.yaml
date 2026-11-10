@@ -161,21 +161,11 @@ script:
                 transition_length: 1.5s      
 
 # main power switch
-# 1. Schalter zum Auslösen der Aktion
 switch:
   - platform: homeassistant
     id: sonoff_switch
     entity_id: switch.matter_over_wifi_smart_switch
-    # Button optisch einrasten (Checked), wenn eingeschaltet
-    on_turn_on:
-      - lambda: |-
-          lv_obj_add_state(id(btn_shore_power), LV_STATE_CHECKED);
-    # Button optisch lösen, wenn ausgeschaltet
-    on_turn_off:
-      - lambda: |-
-          lv_obj_clear_state(id(btn_shore_power), LV_STATE_CHECKED);
 
-# 2. Text-Sensor zur Prüfung auf "unavailable"
 text_sensor:
   - platform: homeassistant
     id: sonoff_raw_state
@@ -184,20 +174,36 @@ text_sensor:
       then:
         - lambda: |-
             if (x == "unavailable" || x == "unknown") {
-              // Kein Landstrom: Button sperren und abdunkeln
+              // Zustand 1: UNAVAILABLE (Grau, Klicksperre)
               lv_obj_add_state(id(btn_shore_power), LV_STATE_DISABLED);
-              lv_label_set_text(id(label_plug_text), "NO SHORE POWER");
+              lv_obj_clear_state(id(btn_shore_power), LV_STATE_CHECKED);
               lv_obj_set_style_text_color(id(label_plug_icon), lv_color_hex(0x555555), LV_PART_MAIN);
-              lv_obj_set_style_text_color(id(label_plug_text), lv_color_hex(0x555555), LV_PART_MAIN);
-            } else {
-              // Landstrom vorhanden: Button freigeben und weiß färben
+
+            } else if (x == "on") {
+              // Zustand 2: AVAILABLE & ON (Gelb, klickbar, checked)
               lv_obj_clear_state(id(btn_shore_power), LV_STATE_DISABLED);
-              lv_label_set_text(id(label_plug_text), "SHORE POWER");
-              lv_obj_set_style_text_color(id(label_plug_icon), lv_color_hex(0xFFFFFF), LV_PART_MAIN);
-              lv_obj_set_style_text_color(id(label_plug_text), lv_color_hex(0xFFFFFF), LV_PART_MAIN);
+              lv_obj_add_state(id(btn_shore_power), LV_STATE_CHECKED);
+              lv_obj_set_style_text_color(id(label_plug_icon), lv_color_hex(0xFFD54F), LV_PART_MAIN);
+
+            } else {
+              // Zustand 3: AVAILABLE & OFF (Hellblau, klickbar, unchecked)
+              lv_obj_clear_state(id(btn_shore_power), LV_STATE_DISABLED);
+              lv_obj_clear_state(id(btn_shore_power), LV_STATE_CHECKED);
+              lv_obj_set_style_text_color(id(label_plug_icon), lv_color_hex(0x4FC3F7), LV_PART_MAIN);
             }
             
 # 6. LVGL-Konfiguration mit Querformat-Drehung
+font:
+  - file: "gfonts://Roboto"
+    id: font_text
+    size: 14
+
+  - file: "https://raw.githubusercontent.com/Templarian/MaterialDesign-Webfont/master/fonts/materialdesignicons-webfont.ttf"
+    id: font_icon_plug
+    size: 40  # Passende Icon-Größe (z.B. 36 bis 44px)
+    glyphs:
+      - "\U000F06A5"  # mdi-power-plug
+
 lvgl:
   displays:
     - my_display
@@ -211,28 +217,19 @@ lvgl:
       widgets:
         - button:
             id: btn_shore_power
-            width: 120
-            height: 120
+            width: 230
+            height: 145
             checkable: true
             widgets:
-              # Stecker-Symbol zentriert oben
               - label:
                   id: label_plug_icon
-                  align: TOP_MID
-                  y: 18
-                  text: "\xEF\x87\xA6"
-                  text_color: 0xFFFFFF
-
-              # Beschriftung darunter
-              - label:
-                  id: label_plug_text
-                  align: BOTTOM_MID
-                  y: -18
-                  text: "SHORE POWER"
-                  text_color: 0xFFFFFF
+                  align: CENTER
+                  text_font: font_icon_plug
+                  text: "\U000F06A5"
+                  text_color: 0x555555  # Default vor erstem HA-Sync
             on_click:
               - switch.toggle: sonoff_switch
-
+                
 # Transparenter Klickblocker ganz am Ende der widgets-Liste:
         - obj:
             id: touch_blocker
