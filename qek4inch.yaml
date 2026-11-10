@@ -1,7 +1,11 @@
 esphome:
   name: qek-cyd-40
   friendly_name: "QEK Dashboard 4.0"
-
+  on_boot:
+    priority: -100
+    then:
+      - lvgl.widget.hide: touch_blocker
+        
 esp32:
   board: esp32-s3-devkitc-1
   flash_size: 16MB
@@ -31,6 +35,8 @@ wifi:
     ssid: "QEK-Display-Fallback"
 
 api:
+  encryption:
+    key: !secret qek_cyd_40__encryption_key
 
 ota:
   - platform: esphome
@@ -127,25 +133,30 @@ touchscreen:
 # 5. Lokales Timer- & Dimm-Skript
 script:
   - id: handle_activity
-    mode: restart  # Resettet den Timer bei jedem Touch
+    mode: restart
     then:
-      # Sofort voll aufblenden (80% spart bereits spürbar Strom gegenüber 100%)
+      # 1. Overlay sofort verstecken, damit folgende Klicks die Buttons treffen
+      - lvgl.widget.hide: touch_blocker
+
+      # 2. Backlight aufwachen lassen
       - light.turn_on:
           id: cyd_backlight
           brightness: 80%
           transition_length: 150ms
 
-      # Nur herunterfaden, wenn HA 'on' meldet (Nacht oder Batterie)
+      # 3. Dimm-Bedingung prüfen
       - if:
           condition:
             binary_sensor.is_on: auto_dim_flag
           then:
             - delay: 60s
-            # Sanft auf 5% Nachtlicht absenken (oder 0% / light.turn_off)
+            # Vor dem eigentlichen Abdimmen die Sperre wieder einblenden
+            - lvgl.widget.show: touch_blocker
+            # Sanft herunterfaden
             - light.turn_on:
                 id: cyd_backlight
                 brightness: 5%
-                transition_length: 1.5s
+                transition_length: 1.5s      
                 
 # 6. LVGL-Konfiguration mit Querformat-Drehung
 lvgl:
@@ -171,3 +182,15 @@ lvgl:
             on_click:
               - logger.log: "Klick registriert!"
               - light.toggle: cyd_rgb_led
+# Transparenter Klickblocker ganz am Ende der widgets-Liste:
+        - obj:
+            id: touch_blocker
+            width: 100%
+            height: 100%
+            align: TOP_LEFT
+            bg_opa: TRANSP
+            border_width: 0
+            pad_all: 0
+            clickable: true
+            on_click:
+              - script.execute: handle_activity
