@@ -137,6 +137,7 @@ script:
     mode: restart
     then:
       # 1. Overlay sofort verstecken, damit folgende Klicks die Buttons treffen
+      - delay: 500ms
       - lvgl.widget.hide: touch_blocker
 
       # 2. Backlight aufwachen lassen
