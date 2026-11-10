@@ -63,3 +63,8 @@ sensor:
     id: sensor_wifi
     entity_category: diagnostic
     update_interval: 60s
+  - platform: uptime
+    name: touchdisplay1 Uptime
+    id: uptime_sensor
+    entity_category: diagnostic
+    update_interval: 15s
