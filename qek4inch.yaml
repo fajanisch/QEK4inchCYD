@@ -31,3 +31,7 @@ captive_portal:
 spi:
   - clk_pin: 48
     mosi_pin: 47
+
+psram:
+  mode: octal
+  speed: 80MHz
