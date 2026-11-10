@@ -211,8 +211,8 @@ lvgl:
       widgets:
         - button:
             id: btn_shore_power
-            width: 40
-            height: 40
+            width: 120
+            height: 120
             checkable: true
             widgets:
               # Stecker-Symbol zentriert oben
