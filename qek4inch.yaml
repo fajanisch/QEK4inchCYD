@@ -158,7 +158,44 @@ script:
                 id: cyd_backlight
                 brightness: 5%
                 transition_length: 1.5s      
-                
+
+# main power switch
+# 1. Schalter zum Auslösen der Aktion
+switch:
+  - platform: homeassistant
+    id: sonoff_switch
+    entity_id: switch.matter_over_wifi_smart_switch
+    # Button optisch einrasten (Checked), wenn eingeschaltet
+    on_turn_on:
+      - lambda: |-
+          lv_obj_add_state(id(btn_shore_power), LV_STATE_CHECKED);
+    # Button optisch lösen, wenn ausgeschaltet
+    on_turn_off:
+      - lambda: |-
+          lv_obj_clear_state(id(btn_shore_power), LV_STATE_CHECKED);
+
+# 2. Text-Sensor zur Prüfung auf "unavailable"
+text_sensor:
+  - platform: homeassistant
+    id: sonoff_raw_state
+    entity_id: switch.matter_over_wifi_smart_switch
+    on_value:
+      then:
+        - lambda: |-
+            if (x == "unavailable" || x == "unknown") {
+              // Kein Landstrom: Button sperren und abdunkeln
+              lv_obj_add_state(id(btn_shore_power), LV_STATE_DISABLED);
+              lv_label_set_text(id(label_plug_text), "NO SHORE POWER");
+              lv_obj_set_style_text_color(id(label_plug_icon), lv_color_hex(0x555555), LV_PART_MAIN);
+              lv_obj_set_style_text_color(id(label_plug_text), lv_color_hex(0x555555), LV_PART_MAIN);
+            } else {
+              // Landstrom vorhanden: Button freigeben und weiß färben
+              lv_obj_clear_state(id(btn_shore_power), LV_STATE_DISABLED);
+              lv_label_set_text(id(label_plug_text), "SHORE POWER");
+              lv_obj_set_style_text_color(id(label_plug_icon), lv_color_hex(0xFFFFFF), LV_PART_MAIN);
+              lv_obj_set_style_text_color(id(label_plug_text), lv_color_hex(0xFFFFFF), LV_PART_MAIN);
+            }
+            
 # 6. LVGL-Konfiguration mit Querformat-Drehung
 lvgl:
   displays:
@@ -172,17 +209,30 @@ lvgl:
       bg_color: 0x000000
       widgets:
         - button:
-            align: CENTER
-            width: 240
-            height: 70
+            id: btn_shore_power
+            width: 40
+            height: 40
+            checkable: true
             widgets:
+              # Stecker-Symbol zentriert oben
               - label:
-                  align: CENTER
-                  text: "Drück mich"
+                  id: label_plug_icon
+                  align: TOP_MID
+                  y: 18
+                  text: "\xEF\x87\xA6"
                   text_color: 0xFFFFFF
+
+              # Beschriftung darunter
+              - label:
+                  id: label_plug_text
+                  align: BOTTOM_MID
+                  y: -18
+                  text: "SHORE POWER"
+                  text_color: 0xFFFFFF
+
             on_click:
-              - logger.log: "Klick registriert!"
-              - light.toggle: cyd_rgb_led
+              - switch.toggle: sonoff_switch
+
 # Transparenter Klickblocker ganz am Ende der widgets-Liste:
         - obj:
             id: touch_blocker
