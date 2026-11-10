@@ -1,0 +1,29 @@
+# Board: ESP32-S3 4.0 Inch Smart Display
+# Definition: definitions/boards/esp32_s3_4_0_inch_smart_display/manifest.yaml
+
+esphome:
+  name: qek4inch
+  friendly_name: QEK4INCH
+
+esp32:
+  variant: esp32s3
+  framework:
+    type: esp-idf
+
+logger:
+
+api:
+  encryption:
+    key: "nWo3Rw3PHqkIXwkiLQpJ3mtEahmSupOUaMgci4MCG/8="
+
+ota:
+  - platform: esphome
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  ap:
+    ssid: QEK4INCH Fallback Hotspot
+    password: "zIt8Dk2nyR5J"
+
+captive_portal:
