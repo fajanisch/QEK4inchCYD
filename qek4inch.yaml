@@ -5,28 +5,29 @@ esphome:
 esp32:
   board: esp32-s3-devkitc-1
   framework:
-    type: esp-idf # esp-idf wird für ESP32-S3 und PSRAM-Support dringend empfohlen
-
-psram:
-  mode: octal # oder quad, je nach Modul – meist octal beim N16R8
+    type: esp-idf
 
 logger:
 
-# I2C-Bus für den kapazitiven Touch (FT6336U)
-i2c:
-  sda: GPIO18
-  scl: GPIO8
-  scan: true
-  frequency: 400kHz
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  ap:
+    ssid: "QEK-Display-Fallback"
 
-# SPI-Bus für das Display
+api:
+
+ota:
+  - platform: esphome
+
+# 1. SPI-Bus für das ST7796S Display
 spi:
   - id: spi_display
     clk_pin: GPIO12
-    mosi_pin: GPIO13
-    miso_pin: GPIO11
+    mosi_pin: GPIO11
+    miso_pin: GPIO13
 
-# Korrekte Display-Plattform über mipi_spi
+# 2. ST7796S Display
 display:
   - platform: mipi_spi
     id: my_display
@@ -37,27 +38,14 @@ display:
       height: 480
     rotation: 90
     cs_pin: GPIO10
-    dc_pin: GPIO4
-    # reset_pin: GPIO0  # Bei Problemen auskommentiert lassen
+    dc_pin: GPIO46
     data_rate: 40MHz
     auto_clear_enabled: false
 
-# Kapazitiver Touchscreen (FT6336U)
-touchscreen:
-  - platform: ft63x6
-    id: my_touch
-    display: my_display
-    interrupt_pin: GPIO3 # INT Pin laut LCDWiki Tabelle
-    reset_pin: GPIO2     # RST Pin laut LCDWiki Tabelle
-    transform:
-      swap_xy: true
-      mirror_x: false
-      mirror_y: true
-
-# Hintergrundbeleuchtung (Backlight)
+# 3. Hintergrundbeleuchtung (Backlight auf IO45, aktiv HIGH)
 output:
   - platform: ledc
-    pin: GPIO38 # LCD-Backlight Pin laut LCDWiki
+    pin: GPIO45
     id: backlight_pwm
     frequency: 1000Hz
 
@@ -67,3 +55,18 @@ light:
     name: "Display Backlight"
     id: cyd_backlight
     restore_mode: ALWAYS_ON
+
+# 4. I2C-Bus für den Touchscreen
+i2c:
+  sda: GPIO16
+  scl: GPIO15
+  scan: true
+  frequency: 400kHz
+
+# 5. Kapazitiver Touchscreen (FT6336U)
+touchscreen:
+  - platform: ft63x6
+    id: my_touch
+    display: my_display
+    interrupt_pin: GPIO17
+    reset_pin: GPIO18
