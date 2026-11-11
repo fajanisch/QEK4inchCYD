@@ -368,7 +368,7 @@ lvgl:
                     text_font: font_icons
                     styles: style_icon_inactive   # Startfarbe: Slate-Grau
                     align: right_mid
-                    x: -40                        # Sitzt mittig zwischen GPS (-98) und PWR (-24)
+                    x: -48                        # Sitzt mittig zwischen GPS (-98) und PWR (-24)
 
                 # GPS Status (Platzhalter: Gelb = Suche/Fix)
                 - label:
@@ -377,7 +377,7 @@ lvgl:
                     text_font: font_icons
                     styles: style_icon_inactive
                     align: right_mid
-                    x: -64
+                    x: -80
 
           # ==========================================
           # KACHEL 1: Oben Links (Externe Power)
