@@ -37,6 +37,7 @@ api:
 
 ota:
   - platform: esphome
+    encryption:
 
 # 1. SPI-Bus für das ST7796S Display
 spi:
