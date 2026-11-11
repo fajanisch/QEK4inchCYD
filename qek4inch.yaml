@@ -270,8 +270,9 @@ lvgl:
         width: 100%
         height: 100%
         bg_color: 0x0F172A        # Slate 900
-        border_width: 0
-        pad_all: 0
+        border_width: 0           # Kein Rahmen
+        outline_width: 0          # Keine Outline
+        radius: 0                 # Ecken exakt rechtwinklig (keine weißen Punkte mehr)pad_all: 0
         widgets:
 
           # ==========================================
@@ -303,7 +304,7 @@ lvgl:
                     id: badge_pwr
                     text: "\uE63C" # power (EXT PWR)
                     text_font: font_icons
-                    styles: style_txt_normal
+                    styles: style_icon_inactive
                     align: right_mid
                     x: -6
 
@@ -312,7 +313,7 @@ lvgl:
                     id: badge_wan
                     text: "\uE63E" #wifi
                     text_font: font_icons
-                    styles: style_txt_normal
+                    styles: style_icon_inactive
                     align: right_mid
                     x: -54
 
@@ -321,7 +322,7 @@ lvgl:
                     id: badge_gps
                     text: "\uEB3A" #sat
                     text_font: font_icons
-                    styles: style_txt_inactive
+                    styles: style_icon_inactive
                     align: right_mid
                     x: -98
 
