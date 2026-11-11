@@ -319,8 +319,8 @@ lvgl:
   widgets:
     - obj:
         id: main_screen
-        width: 100%
-        height: 100%
+        width: 480
+        height: 320
         bg_color: 0x0F172A        # Slate 900
         border_width: 0           # Kein Rahmen
         outline_width: 0          # Keine Outline
@@ -358,7 +358,7 @@ lvgl:
                     text_font: font_icons
                     styles: style_icon_inactive
                     align: right_mid
-                    x: -6
+                    x: -16
 
                 # WAN Status (Platzhalter: Blau = Verbunden)
                 - label:
@@ -367,7 +367,7 @@ lvgl:
                     text_font: font_icons
                     styles: style_icon_inactive   # Startfarbe: Slate-Grau
                     align: right_mid
-                    x: -62                        # Sitzt mittig zwischen GPS (-98) und PWR (-24)
+                    x: -40                        # Sitzt mittig zwischen GPS (-98) und PWR (-24)
 
                 # GPS Status (Platzhalter: Gelb = Suche/Fix)
                 - label:
@@ -376,7 +376,7 @@ lvgl:
                     text_font: font_icons
                     styles: style_icon_inactive
                     align: right_mid
-                    x: -98
+                    x: -64
 
           # ==========================================
           # KACHEL 1: Oben Links (Externe Power)
