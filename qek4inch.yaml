@@ -346,7 +346,7 @@ lvgl:
                 - label:
                     id: lbl_status_datetime
                     text: "Wed, 11. Nov  14:55"
-                    text_color: 0xE2E8F0
+                    styles: style_txt_normal
                     text_font: font_bar
                     align: left_mid
                     x: 6
