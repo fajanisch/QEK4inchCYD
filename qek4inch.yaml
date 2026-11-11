@@ -45,6 +45,9 @@ spi:
     clk_pin: GPIO12
     mosi_pin: GPIO11
     miso_pin: GPIO13
+  - id: featured_esp32_s3_4_0_inch_smart_display_spi_bus_1
+    clk_pin: 48
+    mosi_pin: 47
 
 # 2. ST7796S Display (DEIN ORIGINAL: 320x480, unberührt)
 display:
