@@ -135,7 +135,15 @@ touchscreen:
     display: my_display
     interrupt_pin: GPIO17
     reset_pin: GPIO18
-
+    on_touch:
+      then:
+        - if:
+            condition:
+              binary_sensor.is_on: ha_auto_dim
+            then:
+              # Jeder Fingertipp im Normalbetrieb schiebt das Dimmen um 60 s nach hinten
+              - script.execute: dim_inactivity_timer
+                
 script:
   - id: dim_inactivity_timer
     mode: restart
