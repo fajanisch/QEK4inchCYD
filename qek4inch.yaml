@@ -55,6 +55,7 @@ display:
     dimensions:
       width: 320
       height: 480
+    rotation: 90
     cs_pin: GPIO10
     dc_pin: GPIO46
     data_rate: 40MHz
