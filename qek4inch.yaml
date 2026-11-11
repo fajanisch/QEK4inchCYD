@@ -2,10 +2,16 @@ esphome:
   name: qek-cyd-40
   friendly_name: "QEK Dashboard 4.0"
   on_boot:
-    priority: -100
+    priority: -200.0  # Wartet, bis WLAN und Home Assistant API verbunden sind
     then:
-#      - lvgl.widget.hide: touch_blocker
-
+      - delay: 5s     # Kurzer Puffer für den ersten Status-Sync aus HA
+      - if:
+          condition:
+            binary_sensor.is_on: ha_auto_dim
+          then:
+            - logger.log: "Boot-Sync: Auto-Dim ist ON -> Starte Timer"
+            - script.execute: dim_inactivity_timer
+              
 esp32:
   board: esp32-s3-devkitc-1
   flash_size: 16MB
