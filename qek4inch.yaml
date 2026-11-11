@@ -119,6 +119,40 @@ touchscreen:
     display: my_display
     interrupt_pin: GPIO17
     reset_pin: GPIO18
+
+# ==========================================
+# Zeit-Synchronisation via Home Assistant
+# ==========================================
+time:
+  - platform: homeassistant
+    id: ha_time
+    on_time_sync:
+      then:
+        - lvgl.label.update:
+            id: lbl_status_datetime
+            text: !lambda |-
+              auto now = id(ha_time).now();
+              if (!now.is_valid()) return std::string("--, -- ---  --:--");
+              char buf[32];
+              time_t t = now.timestamp;
+              struct tm *timeinfo = localtime(&t);
+              strftime(buf, sizeof(buf), "%a, %d %b  %H:%M", timeinfo);
+              return std::string(buf);
+    on_time:
+      - seconds: 0
+        then:
+          - lvgl.label.update:
+              id: lbl_status_datetime
+              text: !lambda |-
+                auto now = id(ha_time).now();
+                if (!now.is_valid()) return std::string("--, -- ---  --:--");
+                char buf[32];
+                time_t t = now.timestamp;
+                struct tm *timeinfo = localtime(&t);
+                strftime(buf, sizeof(buf), "%a, %d %b  %H:%M", timeinfo);
+                return std::string(buf);
+
+
     
 # 5. Typografie (Inter)
 font:
@@ -138,6 +172,8 @@ font:
     id: font_sub
     size: 12
     glyphs: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 /:.-°%|'
+
+
 
 # 6. LVGL UI-Aufbau (Vollständig passiv & modular)
 lvgl:
