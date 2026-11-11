@@ -472,31 +472,32 @@ lvgl:
                     align: bottom_mid
 
           # ==========================================
-          # KACHEL 2: Oben Rechts (Batterie C1000)
+          # KACHEL 2: BATTERIE (C1000)
           # ==========================================
           - obj:
+              id: card_battery
               x: 244
               y: 44
               width: 228
               height: 130
               styles: style_card
               widgets:
+                # Kachel Header
                 - label:
+                    text: "\uE1A4  BATTERIE"
+                    text_font: font_card_header
                     styles: style_txt_normal
-                    text: "BATTERIE (C1000)"
                     align: top_left
+
+                # Großer Hero-SoC (zentriert in der Kachel)
                 - label:
                     id: lbl_bat_soc
+                    text: "--%"
+                    text_font: font_val_hero
                     styles: style_val_blue
-                    text: "85%"
                     align: center
-                    y: -2
-                - label:
-                    id: lbl_bat_sub
-                    styles: style_sub_gray
-                    text: "In: 180W | Out: 45W"
-                    align: bottom_mid
-
+                    y: 6
+                    
           # ==========================================
           # KACHEL 3: Unten Links (Licht & Wasser)
           # ==========================================
