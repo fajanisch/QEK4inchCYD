@@ -37,7 +37,6 @@ api:
 
 ota:
   - platform: esphome
-    encryption:
 
 # 1. SPI-Bus für das ST7796S Display
 spi:
@@ -46,7 +45,7 @@ spi:
     mosi_pin: GPIO11
     miso_pin: GPIO13
 
-# 2. ST7796S Display (Native Auflösung, keine verbotenen Keys)
+# 2. ST7796S Display (DEIN ORIGINAL: 320x480, unberührt)
 display:
   - platform: mipi_spi
     id: my_display
@@ -105,7 +104,7 @@ i2c:
   scan: true
   frequency: 400kHz
 
-# 5. Touchscreen-Treiber & Home Assistant Trigger
+# 5. Touchscreen-Treiber & Home Assistant Trigger (DEIN ORIGINAL)
 touchscreen:
   - platform: ft63x6
     id: my_touch
@@ -165,7 +164,7 @@ font:
     size: 12
     glyphs: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 :.-'
 
-# 7. LVGL Display & Touch Bindung (Reine String-Listen)
+# 7. LVGL Display & Touch Bindung (DEIN ORIGINAL)
 lvgl:
   displays:
     - my_display
@@ -195,8 +194,8 @@ lvgl:
   widgets:
     - obj:
         id: main_screen
-        width: 480
-        height: 320
+        width: 100%
+        height: 100%
         bg_color: 0x0F172A
         pad_all: 0
         widgets:
@@ -328,8 +327,8 @@ lvgl:
               id: touch_blocker
               x: 0
               y: 0
-              width: 480
-              height: 320
+              width: 100%
+              height: 100%
               bg_opa: transp
               border_width: 0
               pad_all: 0
