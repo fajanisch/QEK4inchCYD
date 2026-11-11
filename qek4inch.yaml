@@ -55,7 +55,7 @@ display:
     dimensions:
       width: 320
       height: 480
-    rotation: 90
+    #rotation: 90
     cs_pin: GPIO10
     dc_pin: GPIO46
     data_rate: 40MHz
@@ -112,7 +112,6 @@ binary_sensor:
     entity_id: binary_sensor.qek_qek_dashboard_4_0_cyd_auto_dim
     on_state:
       then:
-#        - script.execute: handle_activity
 
 touchscreen:
   - platform: ft63x6
@@ -120,6 +119,235 @@ touchscreen:
     display: my_display
     interrupt_pin: GPIO17
     reset_pin: GPIO18
-    on_touch:
-      then:
-#        - script.execute: handle_activity
+    
+# 5. Typografie (Inter)
+font:
+  - file: "gfonts://Inter"
+    id: font_bar
+    size: 13
+    glyphs: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 /:.-°%|'
+  - file: "gfonts://Inter"
+    id: font_card_header
+    size: 12
+    glyphs: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 /:.-°%'
+  - file: "gfonts://Inter"
+    id: font_val_hero
+    size: 28
+    glyphs: '0123456789.-%°CWAV'
+  - file: "gfonts://Inter"
+    id: font_sub
+    size: 12
+    glyphs: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 /:.-°%|'
+
+# 6. LVGL UI-Aufbau (Vollständig passiv & modular)
+lvgl:
+  displays:
+    - my_display
+  touchscreens:
+    - my_touch
+  rotation: 90
+
+  # Globale Style-Definitionen
+  style_definitions:
+    # Kachel-Hintergrund
+    - id: style_card
+      bg_color: 0x1E293B
+      border_width: 1
+      border_color: 0x334155
+      radius: 10
+      pad_all: 8
+
+    # Status-Badge Hintergrund
+    - id: style_badge
+      bg_color: 0x1E293B
+      border_width: 1
+      border_color: 0x334155
+      radius: 6
+      pad_all: 4
+
+    # Text-Styles / Farbkodierung
+    - id: style_txt_normal
+      text_color: 0x38BDF8       # Helles Blau (Normal)
+      text_font: font_card_header
+
+    - id: style_txt_inactive
+      text_color: 0x64748B       # Grau (Aus / Inaktiv)
+      text_font: font_card_header
+
+    - id: style_txt_warn
+      text_color: 0xFBBF24       # Orangegelb (Warnung / Fehler)
+      text_font: font_card_header
+
+    - id: style_val_blue
+      text_color: 0x38BDF8       # Helles Blau für Werte
+      text_font: font_val_hero
+
+    - id: style_val_warn
+      text_color: 0xFBBF24       # Orangegelb für Werte
+      text_font: font_val_hero
+
+    - id: style_sub_gray
+      text_color: 0x94A3B8       # Helles Grau für Beschriftung
+      text_font: font_sub
+
+  widgets:
+    - obj:
+        id: main_screen
+        width: 100%
+        height: 100%
+        bg_color: 0x0F172A        # Slate 900
+        pad_all: 0
+        widgets:
+
+          # ==========================================
+          # STATUSZEILE (Höhe 36px)
+          # ==========================================
+          - obj:
+              x: 8
+              y: 6
+              width: 464
+              height: 30
+              bg_color: 0x131D31
+              border_width: 1
+              border_color: 0x1E293B
+              radius: 6
+              pad_all: 4
+              widgets:
+                # Datum & Uhrzeit
+                - label:
+                    id: lbl_status_datetime
+                    text: "Mi, 11. Nov  14:55"
+                    text_color: 0xE2E8F0
+                    text_font: font_bar
+                    align: left_mid
+                    x: 6
+
+                # Badges rechts
+                # EXT PWR Status (Platzhalter: Blau = Aktiv)
+                - label:
+                    id: badge_pwr
+                    text: "PWR"
+                    styles: style_txt_normal
+                    align: right_mid
+                    x: -6
+
+                # WAN Status (Platzhalter: Blau = Verbunden)
+                - label:
+                    id: badge_wan
+                    text: "WAN"
+                    styles: style_txt_normal
+                    align: right_mid
+                    x: -54
+
+                # GPS Status (Platzhalter: Gelb = Suche/Fix)
+                - label:
+                    id: badge_gps
+                    text: "GPS"
+                    styles: style_txt_warn
+                    align: right_mid
+                    x: -98
+
+          # ==========================================
+          # KACHEL 1: Oben Links (Externe Power)
+          # ==========================================
+          - obj:
+              x: 8
+              y: 44
+              width: 228
+              height: 130
+              styles: style_card
+              widgets:
+                - label:
+                    styles: style_txt_normal
+                    text: "EXTERNE POWER"
+                    align: top_left
+                - label:
+                    id: lbl_ext_pwr_status
+                    styles: style_val_blue
+                    text: "230 V"
+                    align: center
+                    y: -2
+                - label:
+                    id: lbl_ext_pwr_sub
+                    styles: style_sub_gray
+                    text: "Landstrom aktiv | 16A"
+                    align: bottom_mid
+
+          # ==========================================
+          # KACHEL 2: Oben Rechts (Batterie C1000)
+          # ==========================================
+          - obj:
+              x: 244
+              y: 44
+              width: 228
+              height: 130
+              styles: style_card
+              widgets:
+                - label:
+                    styles: style_txt_normal
+                    text: "BATTERIE (C1000)"
+                    align: top_left
+                - label:
+                    id: lbl_bat_soc
+                    styles: style_val_blue
+                    text: "85%"
+                    align: center
+                    y: -2
+                - label:
+                    id: lbl_bat_sub
+                    styles: style_sub_gray
+                    text: "In: 180W | Out: 45W"
+                    align: bottom_mid
+
+          # ==========================================
+          # KACHEL 3: Unten Links (Licht & Wasser)
+          # ==========================================
+          - obj:
+              x: 8
+              y: 182
+              width: 228
+              height: 130
+              styles: style_card
+              widgets:
+                - label:
+                    styles: style_txt_normal
+                    text: "LICHT & WASSER"
+                    align: top_left
+                - label:
+                    id: lbl_light_water_main
+                    styles: style_val_blue
+                    text: "BEREIT"
+                    align: center
+                    y: -2
+                - label:
+                    id: lbl_light_water_sub
+                    styles: style_sub_gray
+                    text: "Licht: AN | Pumpe: STANDBY"
+                    align: bottom_mid
+
+          # ==========================================
+          # KACHEL 4: Unten Rechts (Klima)
+          # ==========================================
+          - obj:
+              x: 244
+              y: 182
+              width: 228
+              height: 130
+              styles: style_card
+              widgets:
+                - label:
+                    styles: style_txt_normal
+                    text: "KLIMA"
+                    align: top_left
+                - label:
+                    id: lbl_climate_temp
+                    styles: style_val_blue
+                    text: "21.4°C"
+                    align: center
+                    y: -2
+                - label:
+                    id: lbl_climate_sub
+                    styles: style_sub_gray
+                    text: "52% rH | Taupunkt: 11.2°C"
+                    align: bottom_mid
+
