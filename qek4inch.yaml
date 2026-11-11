@@ -108,10 +108,26 @@ i2c:
 
 binary_sensor:
   - platform: homeassistant
-    id: auto_dim_flag
+    id: ha_auto_dim
     entity_id: binary_sensor.qek_qek_dashboard_4_0_cyd_auto_dim
     on_state:
       then:
+        - if:
+            condition:
+              binary_sensor.is_on: ha_auto_dim
+            then:
+              # Auto-Dim aktiviert: 60s Countdown starten
+              - script.execute: dim_inactivity_timer
+            else:
+              # Auto-Dim deaktiviert: Timer stoppen, Display auf 80 % und Guard weg
+              - script.stop: dim_inactivity_timer
+              - light.turn_on:
+                  id: cyd_backlight
+                  brightness: 80%
+              - lvgl.widget.update:
+                  id: dim_guard_overlay
+                  clickable: false
+                  hidden: true
 
 touchscreen:
   - platform: ft63x6
@@ -120,6 +136,19 @@ touchscreen:
     interrupt_pin: GPIO17
     reset_pin: GPIO18
 
+script:
+  - id: dim_inactivity_timer
+    mode: restart
+    then:
+      - delay: 60s
+      # Nach 60 s ohne Touch: Display dimmen und Guard scharf schalten
+      - light.turn_on:
+          id: cyd_backlight
+          brightness: 5%
+      - lvgl.widget.update:
+          id: dim_guard_overlay
+          hidden: false
+          clickable: true    
 # ==========================================
 # Zeit-Synchronisation via Home Assistant
 # ==========================================
