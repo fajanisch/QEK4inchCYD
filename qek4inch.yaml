@@ -152,7 +152,24 @@ time:
                 strftime(buf, sizeof(buf), "%a, %d %b  %H:%M", timeinfo);
                 return std::string(buf);
 
-
+#GPS link?
+text_sensor:
+  - platform: homeassistant
+    id: qek_status_gps
+    entity_id: sensor.qek_status_gps
+    on_value:
+      then:
+        - lambda: |-
+            if (x == "ok") {
+              // Helles Blau (#38BDF8) -> 3D Fix stabil
+              lv_obj_set_style_text_color(id(badge_gps), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+            } else if (x == "warn") {
+              // Gelb-Orange (#FBBF24) -> Suche / Ungünstig / 2D Fix
+              lv_obj_set_style_text_color(id(badge_gps), lv_color_hex(0xFBBF24), LV_PART_MAIN);
+            } else {
+              // Slate-Grau (#64748B) -> Aus / Getrennt / Nicht verfügbar
+              lv_obj_set_style_text_color(id(badge_gps), lv_color_hex(0x64748B), LV_PART_MAIN);
+            }
     
 # 5. Typografie (Inter)
 font:
@@ -304,7 +321,7 @@ lvgl:
                     id: badge_gps
                     text: "\uEB3A" #sat
                     text_font: font_icons
-                    styles: style_txt_warn
+                    styles: style_txt_inactive
                     align: right_mid
                     x: -98
 
