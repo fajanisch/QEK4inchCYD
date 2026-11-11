@@ -159,11 +159,11 @@ font:
   - file: "gfonts://Inter"
     id: font_bar
     size: 13
-    glyphs: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 /:.-°%|'
+    glyphs: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 /:.-°%|,'
   - file: "gfonts://Inter"
     id: font_card_header
     size: 12
-    glyphs: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 /:.-°%'
+    glyphs: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 /:.-°%,'
   - file: "gfonts://Inter"
     id: font_val_hero
     size: 28
@@ -172,8 +172,17 @@ font:
     id: font_sub
     size: 12
     glyphs: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 /:.-°%|'
-
-
+  - file: "gfonts://Material+Symbols+Outlined"
+    id: font_icons
+    size: 18
+    glyphs:
+      - "\uEB3A" # satellite_alt (GPS)
+      - "\uE63E" # wifi (WAN)
+      - "\uE63C" # power (EXT PWR)
+      - "\uE1A4" # battery_full
+      - "\uE0F0" # lightbulb
+      - "\uE798" # water_drop
+      - "\uF076" # thermostat
 
 # 6. LVGL UI-Aufbau (Vollständig passiv & modular)
 lvgl:
@@ -225,13 +234,26 @@ lvgl:
     - id: style_sub_gray
       text_color: 0x94A3B8       # Helles Grau für Beschriftung
       text_font: font_sub
+      
+# Icon-Styles für Statusleiste
+    - id: style_icon_normal
+      text_color: 0x38BDF8       # Helles Blau (Fix / Aktiv)
+      text_font: font_icons
 
+    - id: style_icon_warn
+      text_color: 0xFBBF24       # Orangegelb (Suche / Ungünstig)
+      text_font: font_icons
+
+    - id: style_icon_inactive
+      text_color: 0x64748B       # Grau (Kein Empfang / Aus)
+      text_font: font_icons
   widgets:
     - obj:
         id: main_screen
         width: 100%
         height: 100%
         bg_color: 0x0F172A        # Slate 900
+        border_width: 0
         pad_all: 0
         widgets:
 
@@ -252,7 +274,7 @@ lvgl:
                 # Datum & Uhrzeit
                 - label:
                     id: lbl_status_datetime
-                    text: "Mi, 11. Nov  14:55"
+                    text: "Wed, 11. Nov  14:55"
                     text_color: 0xE2E8F0
                     text_font: font_bar
                     align: left_mid
@@ -262,7 +284,8 @@ lvgl:
                 # EXT PWR Status (Platzhalter: Blau = Aktiv)
                 - label:
                     id: badge_pwr
-                    text: "PWR"
+                    text: "\uE63C" # power (EXT PWR)
+                    text_font: font_icons
                     styles: style_txt_normal
                     align: right_mid
                     x: -6
@@ -270,7 +293,8 @@ lvgl:
                 # WAN Status (Platzhalter: Blau = Verbunden)
                 - label:
                     id: badge_wan
-                    text: "WAN"
+                    text: "\uE63E" #wifi
+                    text_font: font_icons
                     styles: style_txt_normal
                     align: right_mid
                     x: -54
@@ -278,7 +302,8 @@ lvgl:
                 # GPS Status (Platzhalter: Gelb = Suche/Fix)
                 - label:
                     id: badge_gps
-                    text: "GPS"
+                    text: "\uEB3A" #sat
+                    text_font: font_icons
                     styles: style_txt_warn
                     align: right_mid
                     x: -98
