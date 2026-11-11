@@ -220,6 +220,7 @@ font:
       - "\uEB3A" # satellite_alt (GPS)
       - "\uE63E" # wifi (WAN)
       - "\uE63C" # power (EXT PWR)
+      - "\uE646" # power_off (Durchgestrichener Stecker)
       - "\uE1A4" # battery_full
       - "\uE0F0" # lightbulb
       - "\uE798" # water_drop
