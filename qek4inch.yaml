@@ -195,6 +195,31 @@ text_sensor:
               lv_obj_set_style_text_color(id(badge_pwr), lv_color_hex(0x38BDF8), LV_PART_MAIN);
             }
             lv_obj_invalidate(id(badge_pwr));    
+#WiFi WAN quality
+  - platform: homeassistant
+    id: qek_status_wan
+    entity_id: sensor.qek_status_wan
+    on_value:
+      then:
+        - lambda: |-
+            std::string val = x;
+            for (auto &c : val) c = tolower(c);
+
+            if (val == "none") {
+              // Kein Internet / getrennt: wifi_off + Slate-Grau
+              lv_label_set_text(id(badge_wan), "\uE648");
+              lv_obj_set_style_text_color(id(badge_wan), lv_color_hex(0x64748B), LV_PART_MAIN);
+            } else if (val == "fair_warn" || val == "poor_warn") {
+              // Repeater failing / instabil: 2 Balken + Gelb
+              lv_label_set_text(id(badge_wan), "\uE4D9");
+              lv_obj_set_style_text_color(id(badge_wan), lv_color_hex(0xFBBF24), LV_PART_MAIN);
+            } else {
+              // good_ok: Volles Signal + Primär-Blau
+              lv_label_set_text(id(badge_wan), "\uE63E");
+              lv_obj_set_style_text_color(id(badge_wan), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+            }
+            lv_obj_invalidate(id(badge_wan));
+            
 # 5. Typografie (Inter)
 font:
   - file: "gfonts://Inter"
@@ -218,7 +243,9 @@ font:
     size: 18
     glyphs:
       - "\uEB3A" # satellite_alt (GPS)
-      - "\uE63E" # wifi (WAN)
+      - "\uE63E" # wifi (Voll / normal)
+      - "\uE4D9" # wifi_2_bar (failing / Warnung)
+      - "\uE648" # wifi_off (Offline / kein Ping)
       - "\uE63C" # power (EXT PWR)
       - "\uE646" # power_off (Durchgestrichener Stecker)
       - "\uE1A4" # battery_full
@@ -336,11 +363,11 @@ lvgl:
                 # WAN Status (Platzhalter: Blau = Verbunden)
                 - label:
                     id: badge_wan
-                    text: "\uE63E" #wifi
+                    text: "\uE648"               # Startzustand: getrennt
                     text_font: font_icons
-                    styles: style_icon_inactive
+                    styles: style_icon_inactive   # Startfarbe: Slate-Grau
                     align: right_mid
-                    x: -54
+                    x: -62                        # Sitzt mittig zwischen GPS (-98) und PWR (-24)
 
                 # GPS Status (Platzhalter: Gelb = Suche/Fix)
                 - label:
