@@ -346,6 +346,10 @@ lvgl:
     - id: style_sub_gray
       text_color: 0x94A3B8       # Helles Grau für Beschriftung
       text_font: font_sub
+
+    - id: style_val_red
+      text_color: 0xEF4444       # Kräftiges Signalrot (Red 500)
+      text_font: font_val_hero
       
 # Icon-Styles für Statusleiste
     - id: style_icon_normal
