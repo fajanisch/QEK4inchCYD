@@ -139,7 +139,7 @@ touchscreen:
   - platform: ft63x6
     id: my_touch
     display: my_display
-    interrupt_pin: GPIO17
+    #interrupt_pin: GPIO17
     reset_pin: GPIO18
     on_touch:
       then:
@@ -529,22 +529,22 @@ lvgl:
     # ==========================================
     # DIM GUARD OVERLAY (Vollflächig 480x320)
     # ==========================================
-    - obj:
-            id: dim_guard_overlay
-            x: 0
-            y: 0
-            width: 480
-            height: 320
-            bg_opa: TRANSP
-            border_width: 0
-            radius: 0
-            pad_all: 0
-            scrollbar_mode: "off"
-            scrollable: false
-            hidden: true
-            clickable: false
-            on_click:
-              then:
+          - obj:
+              id: dim_guard_overlay
+              x: 0
+              y: 0
+              width: 480
+              height: 320
+              bg_opa: TRANSP
+              border_width: 0
+              radius: 0
+              pad_all: 0
+              scrollbar_mode: "off"
+              scrollable: false
+              hidden: true
+              clickable: false
+              on_click:
+                then:
                 # 1. Overlay sofort taub schalten
                 - lvgl.widget.update:
                     id: dim_guard_overlay
