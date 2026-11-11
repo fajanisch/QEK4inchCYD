@@ -5,21 +5,18 @@ esphome:
     priority: -100
     then:
       - lvgl.widget.hide: touch_blocker
-        
+
 esp32:
   board: esp32-s3-devkitc-1
   flash_size: 16MB
   framework:
     type: esp-idf
     sdkconfig_options:
-      # 16MB Flash mit Octal-Mode (OPI)
       CONFIG_ESPTOOLPY_FLASHSIZE_16MB: "y"
       CONFIG_ESPTOOLPY_FLASHMODE_OPI: "y"
-      # 8MB Octal PSRAM (OPI) aktivieren
       CONFIG_SPIRAM: "y"
       CONFIG_SPIRAM_MODE_OCT: "y"
       CONFIG_SPIRAM_SPEED_80M: "y"
-      # Ermöglicht LVGL und Treibern transparente Speicherallokation im PSRAM
       CONFIG_SPIRAM_USE_MALLOC: "y"
 
 psram:
@@ -40,7 +37,6 @@ api:
 
 ota:
   - platform: esphome
-    encryption:
 
 # 1. SPI-Bus für das ST7796S Display
 spi:
@@ -49,7 +45,7 @@ spi:
     mosi_pin: GPIO11
     miso_pin: GPIO13
 
-# 2. ST7796S Display
+# 2. ST7796S Display (Native Auflösung, keine verbotenen Keys)
 display:
   - platform: mipi_spi
     id: my_display
@@ -58,7 +54,6 @@ display:
     dimensions:
       width: 320
       height: 480
-    #rotation: 90
     cs_pin: GPIO10
     dc_pin: GPIO46
     data_rate: 40MHz
@@ -73,7 +68,6 @@ output:
     frequency: 1000Hz
 
 light:
-  # Stufenlos dimmbares Backlight
   - platform: monochromatic
     output: backlight_pwm
     name: "Display Backlight"
@@ -81,7 +75,6 @@ light:
     restore_mode: ALWAYS_ON
     default_transition_length: 250ms
 
-  # Stufenlos dimmbare & farblich regelbare RGB-LED auf IO42
   - platform: esp32_rmt_led_strip
     pin: GPIO42
     num_leds: 1
@@ -111,16 +104,7 @@ i2c:
   scan: true
   frequency: 400kHz
 
-# 3. Import des Home Assistant Sensors
-binary_sensor:
-  - platform: homeassistant
-    id: auto_dim_flag
-    entity_id: binary_sensor.qek_qek_dashboard_4_0_cyd_auto_dim
-    on_state:
-      then:
-        - script.execute: handle_activity
-
-# 4. Touchscreen-Trigger
+# 5. Touchscreen-Treiber & Home Assistant Trigger
 touchscreen:
   - platform: ft63x6
     id: my_touch
@@ -130,115 +114,224 @@ touchscreen:
     on_touch:
       then:
         - script.execute: handle_activity
-          
-# 5. Lokales Timer- & Dimm-Skript
+
+binary_sensor:
+  - platform: homeassistant
+    id: auto_dim_flag
+    entity_id: binary_sensor.qek_qek_dashboard_4_0_cyd_auto_dim
+    on_state:
+      then:
+        - script.execute: handle_activity
+
 script:
   - id: handle_activity
     mode: restart
     then:
-      # 1. Overlay sofort verstecken, damit folgende Klicks die Buttons treffen
-      - delay: 500ms
+      - delay: 300ms
       - lvgl.widget.hide: touch_blocker
-
-      # 2. Backlight aufwachen lassen
       - light.turn_on:
           id: cyd_backlight
           brightness: 80%
           transition_length: 150ms
-
-      # 3. Dimm-Bedingung prüfen
       - if:
           condition:
             binary_sensor.is_on: auto_dim_flag
           then:
             - delay: 60s
-            # Vor dem eigentlichen Abdimmen die Sperre wieder einblenden
             - lvgl.widget.show: touch_blocker
-            # Sanft herunterfaden
             - light.turn_on:
                 id: cyd_backlight
                 brightness: 5%
-                transition_length: 1.5s      
+                transition_length: 1.5s
 
-# main power switch
 switch:
   - platform: homeassistant
     id: sonoff_switch
     entity_id: switch.matter_over_wifi_smart_switch
 
-text_sensor:
-  - platform: homeassistant
-    id: sonoff_raw_state
-    entity_id: switch.matter_over_wifi_smart_switch
-    on_value:
-      then:
-        - lambda: |-
-            if (x == "unavailable" || x == "unknown") {
-              // Zustand 1: UNAVAILABLE (Grau, Klicksperre)
-              lv_obj_add_state(id(btn_shore_power), LV_STATE_DISABLED);
-              lv_obj_clear_state(id(btn_shore_power), LV_STATE_CHECKED);
-              lv_obj_set_style_text_color(id(label_plug_icon), lv_color_hex(0x555555), LV_PART_MAIN);
-
-            } else if (x == "on") {
-              // Zustand 2: AVAILABLE & ON (Gelb, klickbar, checked)
-              lv_obj_clear_state(id(btn_shore_power), LV_STATE_DISABLED);
-              lv_obj_add_state(id(btn_shore_power), LV_STATE_CHECKED);
-              lv_obj_set_style_text_color(id(label_plug_icon), lv_color_hex(0xFFD54F), LV_PART_MAIN);
-
-            } else {
-              // Zustand 3: AVAILABLE & OFF (Hellblau, klickbar, unchecked)
-              lv_obj_clear_state(id(btn_shore_power), LV_STATE_DISABLED);
-              lv_obj_clear_state(id(btn_shore_power), LV_STATE_CHECKED);
-              lv_obj_set_style_text_color(id(label_plug_icon), lv_color_hex(0x4FC3F7), LV_PART_MAIN);
-            }
-            
-# 6. LVGL-Konfiguration mit Querformat-Drehung
+# 6. Typografie
 font:
-  - file: "gfonts://Roboto"
-    id: font_text
-    size: 14
+  - file: "gfonts://Inter"
+    id: font_title
+    size: 13
+    glyphs: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 /:.-°%'
+  - file: "gfonts://Inter"
+    id: font_val_large
+    size: 32
+    glyphs: '0123456789.-%°CW'
+  - file: "gfonts://Inter"
+    id: font_sub
+    size: 12
+    glyphs: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 :.-'
 
-  - file: "https://raw.githubusercontent.com/Templarian/MaterialDesign-Webfont/master/fonts/materialdesignicons-webfont.ttf"
-    id: font_icon_plug
-    size: 40  # Passende Icon-Größe (z.B. 36 bis 44px)
-    glyphs:
-      - "\U000F06A5"  # mdi-power-plug
-
+# 7. LVGL Display & Touch Bindung (Reine String-Listen)
 lvgl:
   displays:
     - my_display
   touchscreens:
-    - touchscreen_id: my_touch
-  rotation: 90
-  buffer_size: 100%
-  pages:
-    - id: main_page
-      bg_color: 0x000000
-      widgets:
-        - button:
-            id: btn_shore_power
-            width: 230
-            height: 145
-            checkable: true
-            widgets:
-              - label:
-                  id: label_plug_icon
-                  align: CENTER
-                  text_font: font_icon_plug
-                  text: "\U000F06A5"
-                  text_color: 0x555555  # Default vor erstem HA-Sync
-            on_click:
-              - switch.toggle: sonoff_switch
-                
-# Transparenter Klickblocker ganz am Ende der widgets-Liste:
-        - obj:
-            id: touch_blocker
-            width: 100%
-            height: 100%
-            align: TOP_LEFT
-            bg_opa: TRANSP
-            border_width: 0
-            pad_all: 0
-            clickable: true
-            on_click:
-              - script.execute: handle_activity
+    - my_touch
+
+  style_definitions:
+    - id: style_card
+      bg_color: 0x1E293B
+      border_width: 1
+      border_color: 0x334155
+      radius: 12
+      pad_all: 10
+
+    - id: style_label_muted
+      text_color: 0x94A3B8
+      text_font: font_title
+
+    - id: style_value_hero
+      text_color: 0xF8FAFC
+      text_font: font_val_large
+
+    - id: style_subtext
+      text_color: 0x64748B
+      text_font: font_sub
+
+  widgets:
+    - obj:
+        id: main_screen
+        width: 480
+        height: 320
+        bg_color: 0x0F172A
+        pad_all: 0
+        widgets:
+
+          # ==========================================
+          # KACHEL 1: Oben Links (Anker C1000)
+          # ==========================================
+          - obj:
+              x: 8
+              y: 8
+              width: 228
+              height: 148
+              styles: style_card
+              widgets:
+                - label:
+                    styles: style_label_muted
+                    text: "ANKER C1000"
+                    align: top_left
+                - label:
+                    id: lbl_c1000_soc
+                    styles: style_value_hero
+                    text: "85%"
+                    align: center
+                    y: -4
+                - label:
+                    id: lbl_c1000_flow
+                    styles: style_subtext
+                    text: "In: 180W | Out: 45W"
+                    align: bottom_mid
+
+          # ==========================================
+          # KACHEL 2: Oben Rechts (Beleuchtung)
+          # ==========================================
+          - obj:
+              x: 244
+              y: 8
+              width: 228
+              height: 148
+              styles: style_card
+              widgets:
+                - label:
+                    styles: style_label_muted
+                    text: "BELEUCHTUNG"
+                    align: top_left
+                - button:
+                    width: 190
+                    height: 58
+                    align: center
+                    y: 10
+                    bg_color: 0x334155
+                    radius: 8
+                    widgets:
+                      - label:
+                          id: lbl_light_state
+                          text_color: 0xFBBF24
+                          text_font: font_title
+                          text: "Licht: AN"
+                          align: center
+                    on_click:
+                      - homeassistant.service:
+                          service: light.toggle
+                          data:
+                            entity_id: light.qek_innenbeleuchtung
+
+          # ==========================================
+          # KACHEL 3: Unten Links (Wasser & Pumpe)
+          # ==========================================
+          - obj:
+              x: 8
+              y: 164
+              width: 228
+              height: 148
+              styles: style_card
+              widgets:
+                - label:
+                    styles: style_label_muted
+                    text: "WASSERVERSORGUNG"
+                    align: top_left
+                - button:
+                    width: 190
+                    height: 58
+                    align: center
+                    y: 10
+                    bg_color: 0x0369A1
+                    radius: 8
+                    widgets:
+                      - label:
+                          id: lbl_pump_state
+                          text_color: 0xFFFFFF
+                          text_font: font_title
+                          text: "Pumpe: BEREIT"
+                          align: center
+                    on_click:
+                      - homeassistant.service:
+                          service: switch.toggle
+                          data:
+                            entity_id: switch.qek_wasserpumpe
+
+          # ==========================================
+          # KACHEL 4: Unten Rechts (QEK Klima)
+          # ==========================================
+          - obj:
+              x: 244
+              y: 164
+              width: 228
+              height: 148
+              styles: style_card
+              widgets:
+                - label:
+                    styles: style_label_muted
+                    text: "QEK KLIMA"
+                    align: top_left
+                - label:
+                    id: lbl_qek_temp
+                    styles: style_value_hero
+                    text: "21.4°C"
+                    align: center
+                    y: -4
+                - label:
+                    id: lbl_qek_hum
+                    styles: style_subtext
+                    text: "Luftfeuchte: 52% rH"
+                    align: bottom_mid
+
+          # ==========================================
+          # Transparenter Touch-Blocker für Dimmer
+          # ==========================================
+          - obj:
+              id: touch_blocker
+              x: 0
+              y: 0
+              width: 480
+              height: 320
+              bg_opa: transp
+              border_width: 0
+              pad_all: 0
+              clickable: true
+              on_click:
+                - script.execute: handle_activity
