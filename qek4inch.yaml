@@ -170,7 +170,31 @@ text_sensor:
               // Slate-Grau (#64748B) -> Aus / Getrennt / Nicht verfügbar
               lv_obj_set_style_text_color(id(badge_gps), lv_color_hex(0x64748B), LV_PART_MAIN);
             }
-    
+  # Extenal Power?
+  - platform: homeassistant
+    id: qek_status_pwr
+    entity_id: sensor.qek_status_pwr
+    on_value:
+      then:
+        - lambda: |-
+            if (x == "disconnected") {
+              // Kein Landstrom: Durchgestrichener Stecker + Grau
+              lv_label_set_text(id(badge_pwr), "\uE646");
+              lv_obj_set_style_text_color(id(badge_pwr), lv_color_hex(0x64748B), LV_PART_MAIN);
+            } else if (x == "off") {
+              // Landstrom vorhanden, Relais aus: Normaler Stecker + Grau
+              lv_label_set_text(id(badge_pwr), "\uE63C");
+              lv_obj_set_style_text_color(id(badge_pwr), lv_color_hex(0x64748B), LV_PART_MAIN);
+            } else if (x == "warn") {
+              // Überlast (> 8A): Normaler Stecker + Gelb-Orange
+              lv_label_set_text(id(badge_pwr), "\uE63C");
+              lv_obj_set_style_text_color(id(badge_pwr), lv_color_hex(0xFBBF24), LV_PART_MAIN);
+            } else {
+              // Normalbetrieb (ok): Normaler Stecker + Blau
+              lv_label_set_text(id(badge_pwr), "\uE63C");
+              lv_obj_set_style_text_color(id(badge_pwr), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+            }
+            lv_obj_invalidate(id(badge_pwr));    
 # 5. Typografie (Inter)
 font:
   - file: "gfonts://Inter"
@@ -302,7 +326,7 @@ lvgl:
                 # EXT PWR Status (Platzhalter: Blau = Aktiv)
                 - label:
                     id: badge_pwr
-                    text: "\uE63C" # power (EXT PWR)
+                    text: "\uE646" # power (EXT PWR) off
                     text_font: font_icons
                     styles: style_icon_inactive
                     align: right_mid
