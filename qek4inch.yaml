@@ -262,7 +262,26 @@ text_sensor:
               lv_obj_set_style_text_color(id(badge_wan), lv_color_hex(0x38BDF8), LV_PART_MAIN);
             }
             lv_obj_invalidate(id(badge_wan));
-            
+
+sensor:
+  - platform: homeassistant
+    id: c1000_soc
+    entity_id: sensor.anker_solix_c1000_battery_percentage
+    on_value:
+      then:
+        - lambda: |-
+            int soc = (int)x;
+            lv_label_set_text_fmt(id(lbl_bat_soc), "%d%%", soc);
+
+            // Dynamische Farbcodierung
+            if (soc < 20) {
+              lv_obj_set_style_text_color(id(lbl_bat_soc), lv_color_hex(0xEF4444), LV_PART_MAIN); // Alarm Rot
+            } else if (soc < 30) {
+              lv_obj_set_style_text_color(id(lbl_bat_soc), lv_color_hex(0xFBBF24), LV_PART_MAIN); // Warn Gelb
+            } else {
+              lv_obj_set_style_text_color(id(lbl_bat_soc), lv_color_hex(0x38BDF8), LV_PART_MAIN); // Normal Blau
+            }
+            lv_obj_invalidate(id(lbl_bat_soc));
 # 5. Typografie (Inter)
 font:
   - file: "gfonts://Inter"
