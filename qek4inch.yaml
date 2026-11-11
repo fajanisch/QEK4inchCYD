@@ -4,7 +4,7 @@ esphome:
   on_boot:
     priority: -100
     then:
-      - lvgl.widget.hide: touch_blocker
+#      - lvgl.widget.hide: touch_blocker
 
 esp32:
   board: esp32-s3-devkitc-1
@@ -45,11 +45,8 @@ spi:
     clk_pin: GPIO12
     mosi_pin: GPIO11
     miso_pin: GPIO13
-  - id: featured_esp32_s3_4_0_inch_smart_display_spi_bus_1
-    clk_pin: 48
-    mosi_pin: 47
 
-# 2. ST7796S Display (DEIN ORIGINAL: 320x480, unberührt)
+# 2. ST7796S Display
 display:
   - platform: mipi_spi
     id: my_display
@@ -108,7 +105,14 @@ i2c:
   scan: true
   frequency: 400kHz
 
-# 5. Touchscreen-Treiber & Home Assistant Trigger (DEIN ORIGINAL)
+binary_sensor:
+  - platform: homeassistant
+    id: auto_dim_flag
+    entity_id: binary_sensor.qek_qek_dashboard_4_0_cyd_auto_dim
+    on_state:
+      then:
+#        - script.execute: handle_activity
+
 touchscreen:
   - platform: ft63x6
     id: my_touch
@@ -117,225 +121,4 @@ touchscreen:
     reset_pin: GPIO18
     on_touch:
       then:
-        - script.execute: handle_activity
-
-binary_sensor:
-  - platform: homeassistant
-    id: auto_dim_flag
-    entity_id: binary_sensor.qek_qek_dashboard_4_0_cyd_auto_dim
-    on_state:
-      then:
-        - script.execute: handle_activity
-
-script:
-  - id: handle_activity
-    mode: restart
-    then:
-      - delay: 300ms
-      - lvgl.widget.hide: touch_blocker
-      - light.turn_on:
-          id: cyd_backlight
-          brightness: 80%
-          transition_length: 150ms
-      - if:
-          condition:
-            binary_sensor.is_on: auto_dim_flag
-          then:
-            - delay: 60s
-            - lvgl.widget.show: touch_blocker
-            - light.turn_on:
-                id: cyd_backlight
-                brightness: 5%
-                transition_length: 1.5s
-
-switch:
-  - platform: homeassistant
-    id: sonoff_switch
-    entity_id: switch.matter_over_wifi_smart_switch
-
-# 6. Typografie
-font:
-  - file: "gfonts://Inter"
-    id: font_title
-    size: 13
-    glyphs: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 /:.-°%'
-  - file: "gfonts://Inter"
-    id: font_val_large
-    size: 32
-    glyphs: '0123456789.-%°CW'
-  - file: "gfonts://Inter"
-    id: font_sub
-    size: 12
-    glyphs: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 :.-'
-
-# 7. LVGL Display & Touch Bindung (DEIN ORIGINAL)
-lvgl:
-  displays:
-    - my_display
-  touchscreens:
-    - my_touch
-
-  style_definitions:
-    - id: style_card
-      bg_color: 0x1E293B
-      border_width: 1
-      border_color: 0x334155
-      radius: 12
-      pad_all: 10
-
-    - id: style_label_muted
-      text_color: 0x94A3B8
-      text_font: font_title
-
-    - id: style_value_hero
-      text_color: 0xF8FAFC
-      text_font: font_val_large
-
-    - id: style_subtext
-      text_color: 0x64748B
-      text_font: font_sub
-
-  widgets:
-    - obj:
-        id: main_screen
-        width: 100%
-        height: 100%
-        bg_color: 0x0F172A
-        pad_all: 0
-        widgets:
-
-          # ==========================================
-          # KACHEL 1: Oben Links (Anker C1000)
-          # ==========================================
-          - obj:
-              x: 8
-              y: 8
-              width: 228
-              height: 148
-              styles: style_card
-              widgets:
-                - label:
-                    styles: style_label_muted
-                    text: "ANKER C1000"
-                    align: top_left
-                - label:
-                    id: lbl_c1000_soc
-                    styles: style_value_hero
-                    text: "85%"
-                    align: center
-                    y: -4
-                - label:
-                    id: lbl_c1000_flow
-                    styles: style_subtext
-                    text: "In: 180W | Out: 45W"
-                    align: bottom_mid
-
-          # ==========================================
-          # KACHEL 2: Oben Rechts (Beleuchtung)
-          # ==========================================
-          - obj:
-              x: 244
-              y: 8
-              width: 228
-              height: 148
-              styles: style_card
-              widgets:
-                - label:
-                    styles: style_label_muted
-                    text: "BELEUCHTUNG"
-                    align: top_left
-                - button:
-                    width: 190
-                    height: 58
-                    align: center
-                    y: 10
-                    bg_color: 0x334155
-                    radius: 8
-                    widgets:
-                      - label:
-                          id: lbl_light_state
-                          text_color: 0xFBBF24
-                          text_font: font_title
-                          text: "Licht: AN"
-                          align: center
-                    on_click:
-                      - homeassistant.service:
-                          service: light.toggle
-                          data:
-                            entity_id: light.qek_innenbeleuchtung
-
-          # ==========================================
-          # KACHEL 3: Unten Links (Wasser & Pumpe)
-          # ==========================================
-          - obj:
-              x: 8
-              y: 164
-              width: 228
-              height: 148
-              styles: style_card
-              widgets:
-                - label:
-                    styles: style_label_muted
-                    text: "WASSERVERSORGUNG"
-                    align: top_left
-                - button:
-                    width: 190
-                    height: 58
-                    align: center
-                    y: 10
-                    bg_color: 0x0369A1
-                    radius: 8
-                    widgets:
-                      - label:
-                          id: lbl_pump_state
-                          text_color: 0xFFFFFF
-                          text_font: font_title
-                          text: "Pumpe: BEREIT"
-                          align: center
-                    on_click:
-                      - homeassistant.service:
-                          service: switch.toggle
-                          data:
-                            entity_id: switch.qek_wasserpumpe
-
-          # ==========================================
-          # KACHEL 4: Unten Rechts (QEK Klima)
-          # ==========================================
-          - obj:
-              x: 244
-              y: 164
-              width: 228
-              height: 148
-              styles: style_card
-              widgets:
-                - label:
-                    styles: style_label_muted
-                    text: "QEK KLIMA"
-                    align: top_left
-                - label:
-                    id: lbl_qek_temp
-                    styles: style_value_hero
-                    text: "21.4°C"
-                    align: center
-                    y: -4
-                - label:
-                    id: lbl_qek_hum
-                    styles: style_subtext
-                    text: "Luftfeuchte: 52% rH"
-                    align: bottom_mid
-
-          # ==========================================
-          # Transparenter Touch-Blocker für Dimmer
-          # ==========================================
-          - obj:
-              id: touch_blocker
-              x: 0
-              y: 0
-              width: 100%
-              height: 100%
-              bg_opa: transp
-              border_width: 0
-              pad_all: 0
-              clickable: true
-              on_click:
-                - script.execute: handle_activity
+#        - script.execute: handle_activity
