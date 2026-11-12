@@ -2,16 +2,16 @@ esphome:
   name: qek-cyd-40
   friendly_name: "QEK Dashboard 4.0"
   on_boot:
-    priority: -200.0  # Wartet, bis WLAN und Home Assistant API verbunden sind
+    priority: -200.0 # Wartet, bis WLAN und Home Assistant API verbunden sind
     then:
-      - delay: 5s     # Kurzer Puffer für den ersten Status-Sync aus HA
+      - delay: 5s # Kurzer Puffer für den ersten Status-Sync aus HA
       - if:
           condition:
             binary_sensor.is_on: ha_auto_dim
           then:
             - logger.log: "Boot-Sync: Auto-Dim ist ON -> Starte Timer"
             - script.execute: dim_inactivity_timer
-              
+
 esp32:
   board: esp32-s3-devkitc-1
   flash_size: 16MB
@@ -149,7 +149,7 @@ touchscreen:
             then:
               # Jeder Fingertipp im Normalbetrieb schiebt das Dimmen um 60 s nach hinten
               - script.execute: dim_inactivity_timer
-                
+
 script:
   - id: dim_inactivity_timer
     mode: restart
@@ -162,7 +162,7 @@ script:
       - lvgl.widget.update:
           id: dim_guard_overlay
           hidden: false
-          clickable: true    
+          clickable: true
 # ==========================================
 # Zeit-Synchronisation via Home Assistant
 # ==========================================
@@ -237,8 +237,8 @@ text_sensor:
               lv_label_set_text(id(badge_pwr), "\uE63C");
               lv_obj_set_style_text_color(id(badge_pwr), lv_color_hex(0x38BDF8), LV_PART_MAIN);
             }
-            lv_obj_invalidate(id(badge_pwr));    
-#WiFi WAN quality
+            lv_obj_invalidate(id(badge_pwr));
+  #WiFi WAN quality
   - platform: homeassistant
     id: qek_status_wan
     entity_id: sensor.qek_status_wan
@@ -271,8 +271,8 @@ text_sensor:
       then:
         - lvgl.label.update:
             id: lbl_bat_remaining
-            text: !lambda 'return x.c_str();'   
-            
+            text: !lambda "return x.c_str();"
+
 sensor:
   - platform: homeassistant
     id: c1000_soc
@@ -292,7 +292,6 @@ sensor:
               lv_obj_set_style_text_color(id(lbl_bat_soc), lv_color_hex(0x38BDF8), LV_PART_MAIN); // Normal Blau
             }
             lv_obj_invalidate(id(lbl_bat_soc));
-
 
   # 2. Solar Input (W) -> Setzt Sonne-Icon wenn > 2W
   - platform: homeassistant
@@ -337,10 +336,10 @@ sensor:
     id: c1000_out
     entity_id: sensor.anker_solix_c1000_output_power # <-- Entity-ID prüfen
     on_value:
-        then:
-          - lambda: |-
-              lv_label_set_text_fmt(id(lbl_bat_out), "Out: %d W", (int)x);
-              lv_obj_invalidate(id(lbl_bat_out));
+      then:
+        - lambda: |-
+            lv_label_set_text_fmt(id(lbl_bat_out), "Out: %d W", (int)x);
+            lv_obj_invalidate(id(lbl_bat_out));
 
   # 5. 1h-Trend Rate (%/h) -> Steuert Ziel-Icon (Volle Batterie Blau vs. Leere Batterie Gelb)
   - platform: homeassistant
@@ -363,25 +362,25 @@ sensor:
               lv_obj_set_style_text_color(id(icon_bat_target), lv_color_hex(0x64748B), LV_PART_MAIN);
             }
             lv_obj_invalidate(id(icon_bat_target));
-            
+
 # 5. Typografie (Inter)
 font:
   - file: "gfonts://Inter"
     id: font_bar
     size: 13
-    glyphs: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 /:.-°%|,'
+    glyphs: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 /:.-°%|,"
   - file: "gfonts://Inter"
     id: font_card_header
     size: 12
-    glyphs: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 /:.-°%,'
+    glyphs: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 /:.-°%,"
   - file: "gfonts://Inter"
     id: font_val_hero
     size: 28
-    glyphs: '0123456789.-%°CWAV'
+    glyphs: "0123456789.-%°CWAV"
   - file: "gfonts://Inter"
     id: font_sub
     size: 12
-    glyphs: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 /:.-°%|'
+    glyphs: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 /:.-°%|"
   - file: "gfonts://Material+Symbols+Outlined"
     id: font_icons
     size: 18
@@ -426,57 +425,56 @@ lvgl:
 
     # Text-Styles / Farbkodierung
     - id: style_txt_normal
-      text_color: 0x38BDF8       # Helles Blau (Normal)
+      text_color: 0x38BDF8 # Helles Blau (Normal)
       text_font: font_card_header
 
     - id: style_txt_inactive
-      text_color: 0x64748B       # Grau (Aus / Inaktiv)
+      text_color: 0x64748B # Grau (Aus / Inaktiv)
       text_font: font_card_header
 
     - id: style_txt_warn
-      text_color: 0xFBBF24       # Orangegelb (Warnung / Fehler)
+      text_color: 0xFBBF24 # Orangegelb (Warnung / Fehler)
       text_font: font_card_header
 
     - id: style_val_blue
-      text_color: 0x38BDF8       # Helles Blau für Werte
+      text_color: 0x38BDF8 # Helles Blau für Werte
       text_font: font_val_hero
 
     - id: style_val_warn
-      text_color: 0xFBBF24       # Orangegelb für Werte
+      text_color: 0xFBBF24 # Orangegelb für Werte
       text_font: font_val_hero
 
     - id: style_sub_gray
-      text_color: 0x94A3B8       # Helles Grau für Beschriftung
+      text_color: 0x94A3B8 # Helles Grau für Beschriftung
       text_font: font_sub
 
     - id: style_val_red
-      text_color: 0xEF4444       # Kräftiges Signalrot (Red 500)
+      text_color: 0xEF4444 # Kräftiges Signalrot (Red 500)
       text_font: font_val_hero
-      
-# Icon-Styles für Statusleiste
+
+    # Icon-Styles für Statusleiste
     - id: style_icon_normal
-      text_color: 0x38BDF8       # Helles Blau (Fix / Aktiv)
+      text_color: 0x38BDF8 # Helles Blau (Fix / Aktiv)
       text_font: font_icons
 
     - id: style_icon_warn
-      text_color: 0xFBBF24       # Orangegelb (Suche / Ungünstig)
+      text_color: 0xFBBF24 # Orangegelb (Suche / Ungünstig)
       text_font: font_icons
 
     - id: style_icon_inactive
-      text_color: 0x64748B       # Grau (Kein Empfang / Aus)
+      text_color: 0x64748B # Grau (Kein Empfang / Aus)
       text_font: font_icons
   widgets:
     - obj:
         id: main_screen
         width: 480
         height: 320
-        bg_color: 0x0F172A        # Slate 900
-        border_width: 0           # Kein Rahmen
-        outline_width: 0          # Keine Outline
-        radius: 0                 # Ecken exakt rechtwinklig (keine weißen Punkte mehr)pad_all: 0
+        bg_color: 0x0F172A # Slate 900
+        border_width: 0 # Kein Rahmen
+        outline_width: 0 # Keine Outline
+        radius: 0 # Ecken exakt rechtwinklig (keine weißen Punkte mehr)pad_all: 0
         pad_all: 0
         widgets:
-
           # ==========================================
           # STATUSZEILE (Höhe 36px)
           # ==========================================
@@ -513,11 +511,11 @@ lvgl:
                 # WAN Status (Platzhalter: Blau = Verbunden)
                 - label:
                     id: badge_wan
-                    text: "\uE648"               # Startzustand: getrennt
+                    text: "\uE648" # Startzustand: getrennt
                     text_font: font_icons
-                    styles: style_icon_inactive   # Startfarbe: Slate-Grau
+                    styles: style_icon_inactive # Startfarbe: Slate-Grau
                     align: right_mid
-                    x: -48                        # Sitzt mittig zwischen GPS (-98) und PWR (-24)
+                    x: -48 # Sitzt mittig zwischen GPS (-98) und PWR (-24)
 
                 # GPS Status (Platzhalter: Gelb = Suche/Fix)
                 - label:
@@ -598,16 +596,16 @@ lvgl:
                     text_font: font_sub
                     styles: style_txt_normal
                     align: top_right
-                    x: -24              # Rechtsbündig an der Text-Fluchtlinie
+                    x: -24 # Rechtsbündig an der Text-Fluchtlinie
                     y: 34
 
                 - label:
                     id: icon_bat_source
-                    text: "\uE646"      # Start: Inaktiv
+                    text: "\uE646" # Start: Inaktiv
                     text_font: font_icons
                     styles: style_icon_inactive
                     align: top_right
-                    x: -2               # Rechts außen in der Icon-Spalte
+                    x: -2 # Rechts außen in der Icon-Spalte
                     y: 31
 
                 # --- RECHTS ZEILE 2: Output ---
@@ -617,7 +615,7 @@ lvgl:
                     text_font: font_sub
                     styles: style_txt_normal
                     align: top_right
-                    x: -24              # Exakt auf derselben vertikalen Linie wie "In:"
+                    x: -24 # Exakt auf derselben vertikalen Linie wie "In:"
                     y: 58
 
                 # --- RECHTS ZEILE 3: Restzeit + Ziel-Icon ---
@@ -627,17 +625,17 @@ lvgl:
                     text_font: font_sub
                     styles: style_txt_normal
                     align: top_right
-                    x: -24              # Ebenfalls rechtsbündig auf derselben Linie
+                    x: -24 # Ebenfalls rechtsbündig auf derselben Linie
                     y: 82
 
                 - label:
                     id: icon_bat_target
-                    text: "\uEBD2"      # Start: Neutral/Standby
+                    text: "\uEBD2" # Start: Neutral/Standby
                     text_font: font_icons
                     styles: style_icon_inactive
                     align: top_right
-                    x: -2               # Exakt unter dem Quellen-Icon
-                    y: 79                    
+                    x: -2 # Exakt unter dem Quellen-Icon
+                    y: 79
           # ==========================================
           # KACHEL 3: Unten Links (Licht & Wasser)
           # ==========================================
@@ -690,9 +688,9 @@ lvgl:
                     text: "52% rH | Taupunkt: 11.2°C"
                     align: bottom_mid
 
-    # ==========================================
-    # DIM GUARD OVERLAY (Vollflächig 480x320)
-    # ==========================================
+          # ==========================================
+          # DIM GUARD OVERLAY (Vollflächig 480x320)
+          # ==========================================
           - obj:
               id: dim_guard_overlay
               x: 0
@@ -709,21 +707,21 @@ lvgl:
               clickable: false
               on_click:
                 then:
-                # 1. Overlay sofort taub schalten
-                - lvgl.widget.update:
-                    id: dim_guard_overlay
-                    clickable: false
+                  # 1. Overlay sofort taub schalten
+                  - lvgl.widget.update:
+                      id: dim_guard_overlay
+                      clickable: false
 
-                # 2. Helligkeit auf 80 % wecken
-                - light.turn_on:
-                    id: cyd_backlight
-                    brightness: 80%
+                  # 2. Helligkeit auf 80 % wecken
+                  - light.turn_on:
+                      id: cyd_backlight
+                      brightness: 80%
 
-                # 3. 60-Sekunden-Countdown wieder von vorn starten
-                - script.execute: dim_inactivity_timer
+                  # 3. 60-Sekunden-Countdown wieder von vorn starten
+                  - script.execute: dim_inactivity_timer
 
-                # 4. Nach 500 ms Schutzzeit Overlay ausblenden
-                - delay: 500ms
-                - lvgl.widget.update:
-                    id: dim_guard_overlay
-                    hidden: true
+                  # 4. Nach 500 ms Schutzzeit Overlay ausblenden
+                  - delay: 500ms
+                  - lvgl.widget.update:
+                      id: dim_guard_overlay
+                      hidden: true
