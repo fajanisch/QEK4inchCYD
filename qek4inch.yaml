@@ -2,11 +2,9 @@ esphome:
   name: qek-cyd-40
   friendly_name: "QEK Dashboard 4.0"
   on_boot:
-    priority: 600
-    then:
-      - output.turn_on: audio_amp_enable
     priority: -200.0 # Wartet, bis WLAN und Home Assistant API verbunden sind
     then:
+      - output.turn_on: audio_amp_enable
       - delay: 5s # Kurzer Puffer für den ersten Status-Sync aus HA
       - if:
           condition:
@@ -172,7 +170,7 @@ speaker:
     id: cyd_speaker
     dac_type: external
     i2s_audio_id: i2s_audio_bus
-    i2s_dout_pin: GPIO17
+    i2s_dout_pin: GPIO6
     channel: mono
 
 media_player:
