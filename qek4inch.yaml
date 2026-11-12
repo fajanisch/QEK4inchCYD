@@ -446,7 +446,7 @@ font:
   - file: "gfonts://Inter"
     id: font_sub
     size: 12
-    glyphs: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 /:.-°%|"
+    glyphs: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 /:.-°%|,>"
   - file: "gfonts://Material+Symbols+Outlined"
     id: font_icons
     size: 18
