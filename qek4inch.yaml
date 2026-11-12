@@ -438,7 +438,7 @@ font:
   - file: "gfonts://Inter"
     id: font_card_header
     size: 12
-    glyphs: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 /:.-°%,"
+    glyphs: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 /:.-°%,>"
   - file: "gfonts://Inter"
     id: font_val_hero
     size: 28
