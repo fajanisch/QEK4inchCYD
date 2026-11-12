@@ -317,7 +317,7 @@ text_sensor:
             text: !lambda "return x.c_str();"
 
 sensor:
-# Temp&humidity sensor AM2302
+  # Temp&humidity sensor AM2302
   - platform: dht
     pin: GPIO21
     model: AM2302
@@ -330,10 +330,40 @@ sensor:
         - sliding_window_moving_average:
             window_size: 3
             send_every: 1
+      on_value:
+        then:
+          - lambda: |-
+              lv_label_set_text_fmt(id(lbl_climate_temp), "%.1f°C", x);
+              // Color coding: Red > 28°C, Warn < 12°C, Normal Blue otherwise
+              if (x >= 28.0) {
+                lv_obj_set_style_text_color(id(lbl_climate_temp), lv_color_hex(0xEF4444), LV_PART_MAIN);
+                lv_obj_set_style_text_color(id(icon_climate_card), lv_color_hex(0xEF4444), LV_PART_MAIN);
+              } else if (x <= 12.0) {
+                lv_obj_set_style_text_color(id(lbl_climate_temp), lv_color_hex(0xFBBF24), LV_PART_MAIN);
+                lv_obj_set_style_text_color(id(icon_climate_card), lv_color_hex(0xFBBF24), LV_PART_MAIN);
+              } else {
+                lv_obj_set_style_text_color(id(lbl_climate_temp), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+                lv_obj_set_style_text_color(id(icon_climate_card), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+              }
+              lv_obj_invalidate(id(lbl_climate_temp));
+              lv_obj_invalidate(id(icon_climate_card));
+
     humidity:
       name: "CYD QEK Luftfeuchtigkeit"
       id: cyd_qek_luftfeuchtigkeit
       accuracy_decimals: 1
+      on_value:
+        then:
+          - lambda: |-
+              lv_label_set_text_fmt(id(lbl_climate_hum), "Hum: %.0f%%", x);
+              // Warn (Yellow) if humidity > 70% in caravan, else normal blue
+              if (x >= 70.0) {
+                lv_obj_set_style_text_color(id(icon_climate_hum), lv_color_hex(0xFBBF24), LV_PART_MAIN);
+              } else {
+                lv_obj_set_style_text_color(id(icon_climate_hum), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+              }
+              lv_obj_invalidate(id(lbl_climate_hum));
+              lv_obj_invalidate(id(icon_climate_hum));
 
 
   # 1. C1000 SoC (Rot < 20%, Gelb < 30%, sonst Blau)
