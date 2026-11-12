@@ -171,7 +171,7 @@ audio_dac:
     address: 0x18
     bits_per_sample: 16bit
     sample_rate: 16000
-    use_mclk: false
+    use_mclk: true
 
 speaker:
   - platform: i2s_audio
