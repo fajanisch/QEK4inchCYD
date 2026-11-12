@@ -263,6 +263,16 @@ text_sensor:
             }
             lv_obj_invalidate(id(badge_wan));
 
+  # 6. Formatierte Restzeit aus Home Assistant
+  - platform: homeassistant
+    id: c1000_time_rem
+    entity_id: sensor.qek_c1000_time_remaining
+    on_value:
+      then:
+        - lvgl.label.update:
+            id: lbl_bat_remaining
+            text: !lambda 'return x;'      
+            
 sensor:
   - platform: homeassistant
     id: c1000_soc
@@ -282,6 +292,78 @@ sensor:
               lv_obj_set_style_text_color(id(lbl_bat_soc), lv_color_hex(0x38BDF8), LV_PART_MAIN); // Normal Blau
             }
             lv_obj_invalidate(id(lbl_bat_soc));
+
+
+  # 2. Solar Input (W) -> Setzt Sonne-Icon wenn > 2W
+  - platform: homeassistant
+    id: c1000_sol_in
+    entity_id: sensor.anker_solix_c1000_solar_input_power # <-- Entity-ID prüfen
+    on_value:
+      then:
+        - lambda: |-
+            if (x > 2.0) {
+              lv_label_set_text_fmt(id(lbl_bat_in), "In: %d W", (int)x);
+              lv_label_set_text(id(icon_bat_source), "\uE81A"); // Sonne
+              lv_obj_set_style_text_color(id(icon_bat_source), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+            } else if (id(c1000_ac_in).state <= 2.0) {
+              lv_label_set_text(id(lbl_bat_in), "In: 0 W");
+              lv_label_set_text(id(icon_bat_source), "\uE646"); // Inaktiv
+              lv_obj_set_style_text_color(id(icon_bat_source), lv_color_hex(0x64748B), LV_PART_MAIN);
+            }
+            lv_obj_invalidate(id(lbl_bat_in));
+            lv_obj_invalidate(id(icon_bat_source));
+
+  # 3. AC Input (W) -> Setzt Stecker-Icon wenn > 2W
+  - platform: homeassistant
+    id: c1000_ac_in
+    entity_id: sensor.anker_solix_c1000_ac_input_power # <-- Entity-ID prüfen
+    on_value:
+      then:
+        - lambda: |-
+            if (x > 2.0) {
+              lv_label_set_text_fmt(id(lbl_bat_in), "In: %d W", (int)x);
+              lv_label_set_text(id(icon_bat_source), "\uE63C"); // Stecker
+              lv_obj_set_style_text_color(id(icon_bat_source), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+            } else if (id(c1000_sol_in).state <= 2.0) {
+              lv_label_set_text(id(lbl_bat_in), "In: 0 W");
+              lv_label_set_text(id(icon_bat_source), "\uE646"); // Inaktiv
+              lv_obj_set_style_text_color(id(icon_bat_source), lv_color_hex(0x64748B), LV_PART_MAIN);
+            }
+            lv_obj_invalidate(id(lbl_bat_in));
+            lv_obj_invalidate(id(icon_bat_source));
+
+  # 4. Entladeleistung Total Out (W) -> Immer Blau
+  - platform: homeassistant
+    id: c1000_out
+    entity_id: sensor.anker_solix_c1000_output_power # <-- Entity-ID prüfen
+    on_value:
+      then:
+        - lvgl.label.update:
+            id: lbl_bat_out
+            text: !lambda 'return "Out: " + to_string((int)x) + " W";'
+
+  # 5. 1h-Trend Rate (%/h) -> Steuert Ziel-Icon (Volle Batterie Blau vs. Leere Batterie Gelb)
+  - platform: homeassistant
+    id: c1000_soc_rate
+    entity_id: sensor.qek_c1000_soc_rate
+    on_value:
+      then:
+        - lambda: |-
+            if (x > 0.5) {
+              // Netto-Gewinn: Lädt bis voll -> Volle Batterie in Blau
+              lv_label_set_text(id(icon_bat_target), "\uE1A4");
+              lv_obj_set_style_text_color(id(icon_bat_target), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+            } else if (x < -0.2) {
+              // Netto-Verlust: Entlädt bis leer -> Leere Batterie in Gelb
+              lv_label_set_text(id(icon_bat_target), "\uEBDC");
+              lv_obj_set_style_text_color(id(icon_bat_target), lv_color_hex(0xFBBF24), LV_PART_MAIN);
+            } else {
+              // Standby / ausgeglichen -> Grau
+              lv_label_set_text(id(icon_bat_target), "\uEBD2");
+              lv_obj_set_style_text_color(id(icon_bat_target), lv_color_hex(0x64748B), LV_PART_MAIN);
+            }
+            lv_obj_invalidate(id(icon_bat_target));
+            
 # 5. Typografie (Inter)
 font:
   - file: "gfonts://Inter"
@@ -311,6 +393,7 @@ font:
       - "\uE63C" # power (EXT PWR)
       - "\uE646" # power_off (Durchgestrichener Stecker)
       - "\uE1A4" # battery_full
+      - "\uEBDC" # battery_0_bar (Indikator: Entlädt bis leer)
       - "\uE0F0" # lightbulb
       - "\uE798" # water_drop
       - "\uF076" # thermostat
@@ -482,21 +565,79 @@ lvgl:
               height: 130
               styles: style_card
               widgets:
-                # Kachel Header
+                # Kachel-Header
                 - label:
-                    text: "\uE1A4  BATTERIE"
+                    id: icon_bat_card
+                    text: "\uEBD2"
+                    text_font: font_icons
+                    styles: style_icon_normal
+                    align: top_left
+
+                - label:
+                    text: "BATTERIE"
                     text_font: font_card_header
                     styles: style_txt_normal
                     align: top_left
+                    x: 24
+                    y: 2
 
-                # Großer Hero-SoC (zentriert in der Kachel)
+                # --- LINKS: Großer SoC ---
                 - label:
                     id: lbl_bat_soc
                     text: "--%"
                     text_font: font_val_hero
                     styles: style_val_blue
-                    align: center
-                    y: 6
+                    align: top_left
+                    x: 4
+                    y: 30
+
+                # --- RECHTS OBEN: Ladeleistung + Quellen-Icon ---
+                - label:
+                    id: lbl_bat_in
+                    text: "In: -- W"
+                    text_font: font_sub
+                    styles: style_txt_normal
+                    align: top_right
+                    x: -24              # Lässt rechts Platz für das Icon
+                    y: 32
+
+                - label:
+                    id: icon_bat_source
+                    text: "\uE646"      # Start: Inaktiv (power_off)
+                    text_font: font_icons
+                    styles: style_icon_inactive
+                    align: top_right
+                    x: -2
+                    y: 29
+
+                # --- RECHTS MITTE: Entladeleistung ---
+                - label:
+                    id: lbl_bat_out
+                    text: "Out: -- W"
+                    text_font: font_sub
+                    styles: style_txt_normal
+                    align: top_right
+                    x: -24
+                    y: 54
+
+                # --- UNTEN: Zeit bis voll/leer + Ziel-Icon ---
+                - label:
+                    id: icon_bat_target
+                    text: "\uEBDC"      # Start: Leere Batterie
+                    text_font: font_icons
+                    styles: style_icon_inactive
+                    align: bottom_left
+                    x: 4
+                    y: -2
+
+                - label:
+                    id: lbl_bat_remaining
+                    text: "--h --m"
+                    text_font: font_sub
+                    styles: style_txt_normal
+                    align: bottom_left
+                    x: 26
+                    y: -4
                     
           # ==========================================
           # KACHEL 3: Unten Links (Licht & Wasser)
