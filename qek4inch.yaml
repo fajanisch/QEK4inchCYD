@@ -168,12 +168,11 @@ i2s_audio:
 audio_dac:
   - platform: es8311
     id: es8311_dac
-    i2c_id: internal_i2c
     address: 0x18
     bits_per_sample: 16bit
     sample_rate: 16000
     use_mclk: true
-    
+
 speaker:
   - platform: i2s_audio
     id: cyd_speaker
