@@ -362,7 +362,7 @@ sensor:
               lv_obj_set_style_text_color(id(icon_bat_target), lv_color_hex(0x64748B), LV_PART_MAIN);
             }
             lv_obj_invalidate(id(icon_bat_target));
-# 3. Solar Input (W) -> Setzt Sonne-Icon wenn > 2 W
+  # 3. Solar Input (W) -> Setzt Sonne-Icon wenn > 2 W
   - platform: homeassistant
     id: bat_sol_in
     entity_id: sensor.anker_solix_c1000_solar_power_in
