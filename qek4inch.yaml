@@ -866,7 +866,8 @@ lvgl:
                     styles: style_icon_inactive
                     align: top_right
                     x: -2 # Exakt unter dem Tropfen-Icon
-                    y: 55                    
+                    y: 55
+                                        
           # ==========================================
           # DIM GUARD OVERLAY (Vollflächig 480x320)
           # ==========================================
