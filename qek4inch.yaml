@@ -760,33 +760,63 @@ lvgl:
                     text: "Licht: AN | Pumpe: STANDBY"
                     align: bottom_mid
 
-          # ==========================================
-          # KACHEL 4: Unten Rechts (Klima)
+# ==========================================
+          # KACHEL 4: CLIMATE (Unten Rechts)
           # ==========================================
           - obj:
+              id: card_climate
               x: 244
               y: 182
               width: 228
               height: 130
               styles: style_card
               widgets:
+                # Kachel-Header (Thermostat-Icon + CLIMATE)
                 - label:
-                    styles: style_txt_normal
-                    text: "KLIMA"
+                    id: icon_climate_card
+                    text: "\uF076" # thermostat
+                    text_font: font_icons
+                    styles: style_icon_normal
                     align: top_left
+
+                - label:
+                    text: "CLIMATE"
+                    text_font: font_card_header
+                    styles: style_txt_normal
+                    align: top_left
+                    x: 24
+                    y: 2
+
+                # --- LINKS: Großer Hero-Wert Innentemperatur ---
                 - label:
                     id: lbl_climate_temp
+                    text: "--.-°C"
+                    text_font: font_val_hero
                     styles: style_val_blue
-                    text: "21.4°C"
-                    align: center
-                    y: -2
-                - label:
-                    id: lbl_climate_sub
-                    styles: style_sub_gray
-                    text: "52% rH | Taupunkt: 11.2°C"
-                    align: bottom_mid
+                    align: left_mid
+                    x: 4
+                    y: 10
 
-          # ==========================================
+                # --- RECHTS ZEILE 1: Indoor Humidity + Tropfen-Icon ---
+                - label:
+                    id: lbl_climate_hum
+                    text: "Hum: --%"
+                    text_font: font_sub
+                    styles: style_txt_normal
+                    align: top_right
+                    x: -24 # Exakt gleiche Text-Fluchtlinie wie Battery-Kachel
+                    y: 34
+
+                - label:
+                    id: icon_climate_hum
+                    text: "\uE798" # water_drop
+                    text_font: font_icons
+                    styles: style_icon_normal
+                    align: top_right
+                    x: -2 # Exakt in der rechten Icon-Spalte
+                    y: 31
+                    
+                              # ==========================================
           # DIM GUARD OVERLAY (Vollflächig 480x320)
           # ==========================================
           - obj:
