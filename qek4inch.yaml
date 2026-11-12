@@ -398,7 +398,6 @@ font:
       - "\uF076" # thermostat
       - "\uEBD2" # battery_4_bar (Header & Standby)
       - "\uE81A" # wb_sunny (Sonne für Solar-Ladung)
-      - "\uE63C" # power (Stecker für AC-Ladung)
 
 # 6. LVGL UI-Aufbau (Vollständig passiv & modular)
 lvgl:
