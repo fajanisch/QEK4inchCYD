@@ -2,6 +2,9 @@ esphome:
   name: qek-cyd-40
   friendly_name: "QEK Dashboard 4.0"
   on_boot:
+    priority: 600
+    then:
+      - output.turn_on: audio_amp_enable
     priority: -200.0 # Wartet, bis WLAN und Home Assistant API verbunden sind
     then:
       - delay: 5s # Kurzer Puffer für den ersten Status-Sync aus HA
@@ -70,11 +73,18 @@ display:
 
 # 3. PWM-Generator für das Backlight auf IO45
 output:
+#backfacing LED
   - platform: ledc
     pin: GPIO45
     id: backlight_pwm
     frequency: 1000Hz
-
+#audio
+  - platform: gpio
+    pin:
+      number: GPIO1
+      inverted: true
+    id: audio_amp_enable
+#display backlight
 light:
   - platform: monochromatic
     output: backlight_pwm
@@ -153,8 +163,9 @@ touchscreen:
 # I2S audio bus configuration (verify against your board pinout if silent)
 i2s_audio:
   - id: i2s_audio_bus
-    i2s_lrclk_pin: GPIO18
-    i2s_bclk_pin: GPIO0
+    i2s_mclk_pin: GPIO4
+    i2s_bclk_pin: GPIO5
+    i2s_lrclk_pin: GPIO7
 
 speaker:
   - platform: i2s_audio
