@@ -20,9 +20,12 @@ logger:
 remote_receiver:
   pin:
     number: GPIO4
+    mode:
+      input: true
+      pullup: true
   dump:
     - rc_switch
     - raw
   tolerance: 50%
-  filter: 250us
+  filter: 50us
   idle: 4ms
