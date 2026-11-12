@@ -365,7 +365,9 @@ sensor:
               lv_label_set_text(id(icon_bat_target), "\uEBD2");
               lv_obj_set_style_text_color(id(icon_bat_target), lv_color_hex(0x64748B), LV_PART_MAIN);
             }
-            lv_obj_invalidate(id(icon_bat_target));# 5. Typografie (Inter)
+            lv_obj_invalidate(id(icon_bat_target));
+            
+            # 5. Typografie (Inter)
 font:
   - file: "gfonts://Inter"
     id: font_bar
