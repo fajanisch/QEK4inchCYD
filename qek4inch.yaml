@@ -316,6 +316,24 @@ text_sensor:
             id: lbl_bat_remaining
             text: !lambda "return x.c_str();"
 
+# Kondensations-Status GFK-Wand (ok / warn / alarm)
+  - platform: homeassistant
+    id: qek_status_dew
+    entity_id: sensor.qek_status_dew
+    on_value:
+      then:
+        - lambda: |-
+            if (x == "alarm") {
+              lv_obj_set_style_text_color(id(icon_climate_dew), lv_color_hex(0xEF4444), LV_PART_MAIN);
+            } else if (x == "warn") {
+              lv_obj_set_style_text_color(id(icon_climate_dew), lv_color_hex(0xFBBF24), LV_PART_MAIN);
+            } else if (x == "ok") {
+              lv_obj_set_style_text_color(id(icon_climate_dew), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+            } else {
+              lv_obj_set_style_text_color(id(icon_climate_dew), lv_color_hex(0x64748B), LV_PART_MAIN);
+            }
+            lv_obj_invalidate(id(icon_climate_dew));
+            
 sensor:
   # Temp&humidity sensor AM2302
   - platform: dht
@@ -472,7 +490,7 @@ sensor:
               lv_label_set_text(id(lbl_climate_dew), "Dew: --.-°C");
             }
             lv_obj_invalidate(id(lbl_climate_dew));
-                        
+
 # 5. Typografie (Inter)
 font:
   - file: "gfonts://Inter"
