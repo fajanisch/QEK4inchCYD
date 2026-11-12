@@ -274,6 +274,7 @@ text_sensor:
             text: !lambda "return x.c_str();"
 
 sensor:
+  # 1. C1000 SoC (Rot < 20%, Gelb < 30%, sonst Blau)
   - platform: homeassistant
     id: c1000_soc
     entity_id: sensor.anker_solix_c1000_battery_percentage
@@ -283,86 +284,20 @@ sensor:
             int soc = (int)x;
             lv_label_set_text_fmt(id(lbl_bat_soc), "%d%%", soc);
 
-            // Dynamische Farbcodierung
             if (soc < 20) {
-              lv_obj_set_style_text_color(id(lbl_bat_soc), lv_color_hex(0xEF4444), LV_PART_MAIN); // Alarm Rot
+              lv_obj_set_style_text_color(id(lbl_bat_soc), lv_color_hex(0xEF4444), LV_PART_MAIN);
+              lv_obj_set_style_text_color(id(icon_bat_card), lv_color_hex(0xEF4444), LV_PART_MAIN);
             } else if (soc < 30) {
-              lv_obj_set_style_text_color(id(lbl_bat_soc), lv_color_hex(0xFBBF24), LV_PART_MAIN); // Warn Gelb
+              lv_obj_set_style_text_color(id(lbl_bat_soc), lv_color_hex(0xFBBF24), LV_PART_MAIN);
+              lv_obj_set_style_text_color(id(icon_bat_card), lv_color_hex(0xFBBF24), LV_PART_MAIN);
             } else {
-              lv_obj_set_style_text_color(id(lbl_bat_soc), lv_color_hex(0x38BDF8), LV_PART_MAIN); // Normal Blau
+              lv_obj_set_style_text_color(id(lbl_bat_soc), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+              lv_obj_set_style_text_color(id(icon_bat_card), lv_color_hex(0x38BDF8), LV_PART_MAIN);
             }
             lv_obj_invalidate(id(lbl_bat_soc));
+            lv_obj_invalidate(id(icon_bat_card));
 
-  # 2. Solar Input (W) -> Setzt Sonne-Icon wenn > 2W
-  - platform: homeassistant
-    id: c1000_sol_in
-    entity_id: sensor.anker_solix_c1000_solar_input_power # <-- Entity-ID prüfen
-    on_value:
-      then:
-        - lambda: |-
-            if (x > 2.0) {
-              lv_label_set_text_fmt(id(lbl_bat_in), "In: %d W", (int)x);
-              lv_label_set_text(id(icon_bat_source), "\uE81A"); // Sonne
-              lv_obj_set_style_text_color(id(icon_bat_source), lv_color_hex(0x38BDF8), LV_PART_MAIN);
-            } else if (id(c1000_ac_in).state <= 2.0) {
-              lv_label_set_text(id(lbl_bat_in), "In: 0 W");
-              lv_label_set_text(id(icon_bat_source), "\uE646"); // Inaktiv
-              lv_obj_set_style_text_color(id(icon_bat_source), lv_color_hex(0x64748B), LV_PART_MAIN);
-            }
-            lv_obj_invalidate(id(lbl_bat_in));
-            lv_obj_invalidate(id(icon_bat_source));
-
-  # 3. AC Input (W) -> Setzt Stecker-Icon wenn > 2W
-  - platform: homeassistant
-    id: c1000_ac_in
-    entity_id: sensor.anker_solix_c1000_ac_input_power # <-- Entity-ID prüfen
-    on_value:
-      then:
-        - lambda: |-
-            if (x > 2.0) {
-              lv_label_set_text_fmt(id(lbl_bat_in), "In: %d W", (int)x);
-              lv_label_set_text(id(icon_bat_source), "\uE63C"); // Stecker
-              lv_obj_set_style_text_color(id(icon_bat_source), lv_color_hex(0x38BDF8), LV_PART_MAIN);
-            } else if (id(c1000_sol_in).state <= 2.0) {
-              lv_label_set_text(id(lbl_bat_in), "In: 0 W");
-              lv_label_set_text(id(icon_bat_source), "\uE646"); // Inaktiv
-              lv_obj_set_style_text_color(id(icon_bat_source), lv_color_hex(0x64748B), LV_PART_MAIN);
-            }
-            lv_obj_invalidate(id(lbl_bat_in));
-            lv_obj_invalidate(id(icon_bat_source));
-
-  # 4. Entladeleistung Total Out (W) -> Immer Blau
-  - platform: homeassistant
-    id: c1000_out
-    entity_id: sensor.anker_solix_c1000_output_power # <-- Entity-ID prüfen
-    on_value:
-      then:
-        - lambda: |-
-            lv_label_set_text_fmt(id(lbl_bat_out), "Out: %d W", (int)x);
-            lv_obj_invalidate(id(lbl_bat_out));
-
-  # 5. 1h-Trend Rate (%/h) -> Steuert Ziel-Icon (Volle Batterie Blau vs. Leere Batterie Gelb)
-  - platform: homeassistant
-    id: c1000_soc_rate
-    entity_id: sensor.qek_c1000_soc_rate
-    on_value:
-      then:
-        - lambda: |-
-            if (x > 0.5) {
-              // Netto-Gewinn: Lädt bis voll -> Volle Batterie in Blau
-              lv_label_set_text(id(icon_bat_target), "\uE1A4");
-              lv_obj_set_style_text_color(id(icon_bat_target), lv_color_hex(0x38BDF8), LV_PART_MAIN);
-            } else if (x < -0.2) {
-              // Netto-Verlust: Entlädt bis leer -> Leere Batterie in Gelb
-              lv_label_set_text(id(icon_bat_target), "\uEBDC");
-              lv_obj_set_style_text_color(id(icon_bat_target), lv_color_hex(0xFBBF24), LV_PART_MAIN);
-            } else {
-              // Standby / ausgeglichen -> Grau
-              lv_label_set_text(id(icon_bat_target), "\uEBD2");
-              lv_obj_set_style_text_color(id(icon_bat_target), lv_color_hex(0x64748B), LV_PART_MAIN);
-            }
-            lv_obj_invalidate(id(icon_bat_target));
-  # 3. Solar Input (W) -> Setzt Sonne-Icon wenn > 2 W
+  # 2. Solar Input (W) -> Setzt Sonne-Icon wenn > 2 W
   - platform: homeassistant
     id: bat_sol_in
     entity_id: sensor.anker_solix_c1000_solar_power_in
@@ -381,7 +316,7 @@ sensor:
             lv_obj_invalidate(id(lbl_bat_in));
             lv_obj_invalidate(id(icon_bat_source));
 
-  # 4. AC Input (W) -> Setzt Stecker-Icon wenn > 2 W
+  # 3. AC Input (W) -> Setzt Stecker-Icon wenn > 2 W
   - platform: homeassistant
     id: bat_ac_in
     entity_id: sensor.anker_solix_c1000_ac_power_in
@@ -400,7 +335,7 @@ sensor:
             lv_obj_invalidate(id(lbl_bat_in));
             lv_obj_invalidate(id(icon_bat_source));
 
-  # 5. Entladeleistung Total Out (W)
+  # 4. Entladeleistung Total Out (W) -> Immer Blau
   - platform: homeassistant
     id: bat_out
     entity_id: sensor.anker_solix_c1000_total_power_out
@@ -409,7 +344,28 @@ sensor:
         - lambda: |-
             lv_label_set_text_fmt(id(lbl_bat_out), "Out: %d W", (int)x);
             lv_obj_invalidate(id(lbl_bat_out));
-# 5. Typografie (Inter)
+
+  # 5. 1h-Trend Rate (%/h) -> Steuert Ziel-Icon (Volle Batterie Blau vs. Leere Batterie Gelb)
+  - platform: homeassistant
+    id: c1000_soc_rate
+    entity_id: sensor.qek_solix_c300ac_qek_prediction_battery
+    on_value:
+      then:
+        - lambda: |-
+            if (x > 0.3) {
+              // Netto-Gewinn: Lädt bis voll -> Volle Batterie in Blau
+              lv_label_set_text(id(icon_bat_target), "\uE1A4");
+              lv_obj_set_style_text_color(id(icon_bat_target), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+            } else if (x < -0.2) {
+              // Netto-Verlust: Entlädt bis leer -> Leere Batterie in Gelb
+              lv_label_set_text(id(icon_bat_target), "\uEBDC");
+              lv_obj_set_style_text_color(id(icon_bat_target), lv_color_hex(0xFBBF24), LV_PART_MAIN);
+            } else {
+              // Standby / ausgeglichen -> Grau
+              lv_label_set_text(id(icon_bat_target), "\uEBD2");
+              lv_obj_set_style_text_color(id(icon_bat_target), lv_color_hex(0x64748B), LV_PART_MAIN);
+            }
+            lv_obj_invalidate(id(icon_bat_target));# 5. Typografie (Inter)
 font:
   - file: "gfonts://Inter"
     id: font_bar
