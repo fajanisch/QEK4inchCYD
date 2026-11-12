@@ -458,7 +458,21 @@ sensor:
               lv_obj_set_style_text_color(id(icon_bat_target), lv_color_hex(0x64748B), LV_PART_MAIN);
             }
             lv_obj_invalidate(id(icon_bat_target));
-            
+
+# 7. Berechneter Taupunkt aus Home Assistant
+  - platform: homeassistant
+    id: qek_dew_point
+    entity_id: sensor.qek_dew_point
+    on_value:
+      then:
+        - lambda: |-
+            if (!isnan(x)) {
+              lv_label_set_text_fmt(id(lbl_climate_dew), "Dew: %.1f°C", x);
+            } else {
+              lv_label_set_text(id(lbl_climate_dew), "Dew: --.-°C");
+            }
+            lv_obj_invalidate(id(lbl_climate_dew));
+                        
 # 5. Typografie (Inter)
 font:
   - file: "gfonts://Inter"
