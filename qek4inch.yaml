@@ -337,10 +337,10 @@ sensor:
     id: c1000_out
     entity_id: sensor.anker_solix_c1000_output_power # <-- Entity-ID prüfen
     on_value:
-      then:
-        - lvgl.label.update:
-            id: lbl_bat_out
-            text: !lambda 'return "Out: " + to_string((int)x) + " W";'
+        then:
+          - lambda: |-
+              lv_label_set_text_fmt(id(lbl_bat_out), "Out: %d W", (int)x);
+              lv_obj_invalidate(id(lbl_bat_out));
 
   # 5. 1h-Trend Rate (%/h) -> Steuert Ziel-Icon (Volle Batterie Blau vs. Leere Batterie Gelb)
   - platform: homeassistant
