@@ -333,7 +333,7 @@ text_sensor:
               lv_obj_set_style_text_color(id(icon_climate_dew), lv_color_hex(0x64748B), LV_PART_MAIN);
             }
             lv_obj_invalidate(id(icon_climate_dew));
-            
+
 sensor:
   # Temp&humidity sensor AM2302
   - platform: dht
@@ -793,7 +793,7 @@ lvgl:
                     text: "Licht: AN | Pumpe: STANDBY"
                     align: bottom_mid
 
-# ==========================================
+          # ==========================================
           # KACHEL 4: CLIMATE (Unten Rechts)
           # ==========================================
           - obj:
