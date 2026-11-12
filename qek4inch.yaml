@@ -399,7 +399,7 @@ font:
       - "\uEBD2" # battery_4_bar (Header & Standby)
       - "\uE81A" # wb_sunny (Sonne für Solar-Ladung)
       - "\uE63C" # power (Stecker für AC-Ladung)
-      - "\uE646" # power_off (Kein Input)
+
 
       - "\uEBDC" # battery_0_bar (Ziel-Indikator: Entlädt bis leer -> Gelb)
 
