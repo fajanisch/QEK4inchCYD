@@ -578,7 +578,7 @@ lvgl:
                     align: top_left
 
                 - label:
-                    text: "BATTERIE"
+                    text: "BATTERY"
                     text_font: font_card_header
                     styles: style_txt_normal
                     align: top_left
