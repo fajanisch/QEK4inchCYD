@@ -265,13 +265,13 @@ text_sensor:
 
   # 6. Formatierte Restzeit aus Home Assistant
   - platform: homeassistant
-    id: c1000_time_rem
-    entity_id: sensor.qek_c1000_time_remaining
+    id: bat_time_remaining
+    entity_id: sensor.qek_battery_time_remaining
     on_value:
       then:
         - lvgl.label.update:
             id: lbl_bat_remaining
-            text: !lambda 'return x;'      
+            text: !lambda 'return x.c_str();'   
             
 sensor:
   - platform: homeassistant
