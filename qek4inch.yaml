@@ -362,7 +362,53 @@ sensor:
               lv_obj_set_style_text_color(id(icon_bat_target), lv_color_hex(0x64748B), LV_PART_MAIN);
             }
             lv_obj_invalidate(id(icon_bat_target));
+# 3. Solar Input (W) -> Setzt Sonne-Icon wenn > 2 W
+  - platform: homeassistant
+    id: bat_sol_in
+    entity_id: sensor.anker_solix_c1000_solar_power_in
+    on_value:
+      then:
+        - lambda: |-
+            if (x > 2.0) {
+              lv_label_set_text_fmt(id(lbl_bat_in), "In: %d W", (int)x);
+              lv_label_set_text(id(icon_bat_source), "\uE81A"); // Sonne
+              lv_obj_set_style_text_color(id(icon_bat_source), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+            } else if (isnan(id(bat_ac_in).state) || id(bat_ac_in).state <= 2.0) {
+              lv_label_set_text(id(lbl_bat_in), "In: 0 W");
+              lv_label_set_text(id(icon_bat_source), "\uE646"); // Inaktiv
+              lv_obj_set_style_text_color(id(icon_bat_source), lv_color_hex(0x64748B), LV_PART_MAIN);
+            }
+            lv_obj_invalidate(id(lbl_bat_in));
+            lv_obj_invalidate(id(icon_bat_source));
 
+  # 4. AC Input (W) -> Setzt Stecker-Icon wenn > 2 W
+  - platform: homeassistant
+    id: bat_ac_in
+    entity_id: sensor.anker_solix_c1000_ac_power_in
+    on_value:
+      then:
+        - lambda: |-
+            if (x > 2.0) {
+              lv_label_set_text_fmt(id(lbl_bat_in), "In: %d W", (int)x);
+              lv_label_set_text(id(icon_bat_source), "\uE63C"); // Stecker
+              lv_obj_set_style_text_color(id(icon_bat_source), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+            } else if (isnan(id(bat_sol_in).state) || id(bat_sol_in).state <= 2.0) {
+              lv_label_set_text(id(lbl_bat_in), "In: 0 W");
+              lv_label_set_text(id(icon_bat_source), "\uE646"); // Inaktiv
+              lv_obj_set_style_text_color(id(icon_bat_source), lv_color_hex(0x64748B), LV_PART_MAIN);
+            }
+            lv_obj_invalidate(id(lbl_bat_in));
+            lv_obj_invalidate(id(icon_bat_source));
+
+  # 5. Entladeleistung Total Out (W)
+  - platform: homeassistant
+    id: bat_out
+    entity_id: sensor.anker_solix_c1000_total_power_out
+    on_value:
+      then:
+        - lambda: |-
+            lv_label_set_text_fmt(id(lbl_bat_out), "Out: %d W", (int)x);
+            lv_obj_invalidate(id(lbl_bat_out));
 # 5. Typografie (Inter)
 font:
   - file: "gfonts://Inter"
