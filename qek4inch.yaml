@@ -848,7 +848,25 @@ lvgl:
                     align: top_right
                     x: -2 # Exakt in der rechten Icon-Spalte
                     y: 31
-                    
+
+# --- RECHTS ZEILE 2: Dew Point + Taupunkt-Icon ---
+                - label:
+                    id: lbl_climate_dew
+                    text: "Dew: --.-°C"
+                    text_font: font_sub
+                    styles: style_txt_normal
+                    align: top_right
+                    x: -24 # Exakt unter "Hum:"
+                    y: 58
+
+                - label:
+                    id: icon_climate_dew
+                    text: "\uF879" # dew_point
+                    text_font: font_icons
+                    styles: style_icon_inactive
+                    align: top_right
+                    x: -2 # Exakt unter dem Tropfen-Icon
+                    y: 55                    
           # ==========================================
           # DIM GUARD OVERLAY (Vollflächig 480x320)
           # ==========================================
