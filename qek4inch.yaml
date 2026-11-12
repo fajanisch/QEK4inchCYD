@@ -581,64 +581,63 @@ lvgl:
                     x: 24
                     y: 2
 
-                # --- LINKS: Großer SoC ---
+                # --- LINKS: Großer Hero-SoC ---
                 - label:
                     id: lbl_bat_soc
                     text: "--%"
                     text_font: font_val_hero
                     styles: style_val_blue
-                    align: top_left
+                    align: left_mid
                     x: 4
-                    y: 30
+                    y: 10
 
-                # --- RECHTS OBEN: Ladeleistung + Quellen-Icon ---
+                # --- RECHTS ZEILE 1: Input + Quellen-Icon ---
                 - label:
                     id: lbl_bat_in
                     text: "In: -- W"
                     text_font: font_sub
                     styles: style_txt_normal
                     align: top_right
-                    x: -24              # Lässt rechts Platz für das Icon
-                    y: 32
+                    x: -24              # Rechtsbündig an der Text-Fluchtlinie
+                    y: 34
 
                 - label:
                     id: icon_bat_source
-                    text: "\uE646"      # Start: Inaktiv (power_off)
+                    text: "\uE646"      # Start: Inaktiv
                     text_font: font_icons
                     styles: style_icon_inactive
                     align: top_right
-                    x: -2
-                    y: 29
+                    x: -2               # Rechts außen in der Icon-Spalte
+                    y: 31
 
-                # --- RECHTS MITTE: Entladeleistung ---
+                # --- RECHTS ZEILE 2: Output ---
                 - label:
                     id: lbl_bat_out
                     text: "Out: -- W"
                     text_font: font_sub
                     styles: style_txt_normal
                     align: top_right
-                    x: -24
-                    y: 54
+                    x: -24              # Exakt auf derselben vertikalen Linie wie "In:"
+                    y: 58
 
-                # --- UNTEN: Zeit bis voll/leer + Ziel-Icon ---
-                - label:
-                    id: icon_bat_target
-                    text: "\uEBDC"      # Start: Leere Batterie
-                    text_font: font_icons
-                    styles: style_icon_inactive
-                    align: bottom_left
-                    x: 4
-                    y: -2
-
+                # --- RECHTS ZEILE 3: Restzeit + Ziel-Icon ---
                 - label:
                     id: lbl_bat_remaining
                     text: "--h --m"
                     text_font: font_sub
                     styles: style_txt_normal
-                    align: bottom_left
-                    x: 26
-                    y: -4
-                    
+                    align: top_right
+                    x: -24              # Ebenfalls rechtsbündig auf derselben Linie
+                    y: 82
+
+                - label:
+                    id: icon_bat_target
+                    text: "\uEBD2"      # Start: Neutral/Standby
+                    text_font: font_icons
+                    styles: style_icon_inactive
+                    align: top_right
+                    x: -2               # Exakt unter dem Quellen-Icon
+                    y: 79                    
           # ==========================================
           # KACHEL 3: Unten Links (Licht & Wasser)
           # ==========================================
