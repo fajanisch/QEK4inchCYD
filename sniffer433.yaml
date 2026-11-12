@@ -9,6 +9,7 @@ esp32:
 
 logger:
   level: DEBUG
+  baud_rate: 115200
 
 # 433MHz SRX882S superheterodyne receiver on GPIO27
 remote_receiver:
