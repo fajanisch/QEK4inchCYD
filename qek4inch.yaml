@@ -367,7 +367,7 @@ sensor:
             }
             lv_obj_invalidate(id(icon_bat_target));
             
-            # 5. Typografie (Inter)
+# 5. Typografie (Inter)
 font:
   - file: "gfonts://Inter"
     id: font_bar
@@ -478,7 +478,7 @@ lvgl:
         bg_color: 0x0F172A # Slate 900
         border_width: 0 # Kein Rahmen
         outline_width: 0 # Keine Outline
-        radius: 0 # Ecken exakt rechtwinklig (keine weißen Punkte mehr)pad_all: 0
+        radius: 0 # Ecken exakt rechtwinklig (keine weißen Punkte mehr)
         pad_all: 0
         widgets:
           # ==========================================
