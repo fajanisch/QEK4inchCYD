@@ -409,7 +409,7 @@ lvgl:
     - my_display
   touchscreens:
     - my_touch
-  rotation: 90
+  rotation: 270
 
   # Globale Style-Definitionen
   style_definitions:
