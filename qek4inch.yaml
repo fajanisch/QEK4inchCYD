@@ -1494,9 +1494,9 @@ lvgl:
                           align: center
                     on_click:
                       - lvgl.widget.update:
-                        id: screen_power_detail
-                    hidden: true
-            
+                          id: screen_power_detail
+                          hidden: true
+                      - script.stop: power_detail_timeout
 
           # ==========================================
           # DIM GUARD OVERLAY (Vollflächig 480x320)
