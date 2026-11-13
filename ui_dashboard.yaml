@@ -387,13 +387,14 @@ lvgl:
                     y: 79
 
           - obj:
+              id: card_light
               x: 8
-                y: 182
-                width: 228
-                height: 130
-                styles: style_card
-                clickable: true
-                widgets:
+              y: 182
+              width: 228
+              height: 130
+              styles: style_card
+              clickable: true
+              widgets:
                 - label:
                     id: icon_light
                     text: "\uE63E"
