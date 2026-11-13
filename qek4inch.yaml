@@ -744,7 +744,7 @@ sensor:
             lv_obj_invalidate(id(lbl_ext_climate));
             lv_obj_invalidate(id(icon_ext_climate));
 
-text_sensor:
+
   - platform: homeassistant
     id: ext_bat_switch_state
     entity_id: switch.qek_shelly_c1000_ac_charger
