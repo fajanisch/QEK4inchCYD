@@ -757,6 +757,7 @@ text_sensor:
   - platform: homeassistant
     id: ext_climate_switch_state
     entity_id: switch.qek_shelly_climate_co
+    
 # 5. Typografie (Inter)
 font:
   - file: "gfonts://Inter"
