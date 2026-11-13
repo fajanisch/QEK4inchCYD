@@ -1496,7 +1496,7 @@ lvgl:
                       - lvgl.widget.update:
                     id: screen_power_detail
                     hidden: faltruese
-                - script.execute: power_detail_timeout
+            
 
           # ==========================================
           # DIM GUARD OVERLAY (Vollflächig 480x320)
