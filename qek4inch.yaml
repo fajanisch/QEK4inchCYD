@@ -1031,19 +1031,18 @@ lvgl:
                 # --- RECHTS ZEILE 1: Battery Charger (y: 22) ---
                 - label:
                     id: lbl_ext_bat
-                    text: "Bat: 0 W"
+                    text: "Bat: --"
                     text_font: font_sub
-                    styles: style_val_blue
+                    styles: style_txt_inactive
                     align: top_right
                     x: -24
                     y: 22
-                    hidden: true
 
                 - label:
                     id: icon_ext_bat
-                    text: "\uE646" # power_off (Start: Durchgestrichener Stecker)
+                    text: "\uE1A4" # battery_full
                     text_font: font_icons
-                    text_color: 0x64748B
+                    styles: style_icon_inactive
                     align: top_right
                     x: -2
                     y: 19
@@ -1051,19 +1050,18 @@ lvgl:
                 # --- RECHTS ZEILE 2: Kitchen (y: 43) ---
                 - label:
                     id: lbl_ext_kitchen
-                    text: "Kitch: 0 W"
+                    text: "Kitch: --"
                     text_font: font_sub
-                    styles: style_val_blue
+                    styles: style_txt_inactive
                     align: top_right
                     x: -24
                     y: 43
-                    hidden: true
 
                 - label:
                     id: icon_ext_kitchen
-                    text: "\uE646" # power_off
+                    text: "\uE56C" # kitchen
                     text_font: font_icons
-                    text_color: 0x64748B
+                    styles: style_icon_inactive
                     align: top_right
                     x: -2
                     y: 40
@@ -1071,19 +1069,18 @@ lvgl:
                 # --- RECHTS ZEILE 3: Cooker (y: 64) ---
                 - label:
                     id: lbl_ext_cooker
-                    text: "Cook: 0 W"
+                    text: "Cook: --"
                     text_font: font_sub
-                    styles: style_val_blue
+                    styles: style_txt_inactive
                     align: top_right
                     x: -24
                     y: 64
-                    hidden: true
 
                 - label:
                     id: icon_ext_cooker
-                    text: "\uE646" # power_off
+                    text: "\uF543" # skillet
                     text_font: font_icons
-                    text_color: 0x64748B
+                    styles: style_icon_inactive
                     align: top_right
                     x: -2
                     y: 61
@@ -1091,23 +1088,23 @@ lvgl:
                 # --- RECHTS ZEILE 4: Climate (y: 85) ---
                 - label:
                     id: lbl_ext_climate
-                    text: "Clim: 0 W"
+                    text: "Clim: --"
                     text_font: font_sub
-                    styles: style_val_blue
+                    styles: style_txt_inactive
                     align: top_right
                     x: -24
                     y: 85
-                    hidden: true
 
                 - label:
                     id: icon_ext_climate
-                    text: "\uE646" # power_off
+                    text: "\uF076" # thermostat
                     text_font: font_icons
-                    text_color: 0x64748B
+                    styles: style_icon_inactive
                     align: top_right
                     x: -2
                     y: 82
 
+                    
           # ==========================================
           # KACHEL 2: BATTERIE (C1000)
           # ==========================================
