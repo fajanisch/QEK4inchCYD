@@ -718,7 +718,7 @@ script:
             lv_obj_set_style_text_color(id(lbl_ext_bat), lv_color_hex(0x64748B), LV_PART_MAIN);
             lv_obj_set_style_text_color(id(icon_ext_bat), lv_color_hex(0x64748B), LV_PART_MAIN);
           }
-          lv_obj_invalidate(id(name_ext_bat));
+          
           lv_obj_invalidate(id(lbl_ext_bat));
           lv_obj_invalidate(id(icon_ext_bat));
 
