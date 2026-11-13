@@ -21,7 +21,7 @@ font:
       weight: 600
     id: font_sub_title
     size: 16
-    glyphs: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 /:.-°%|,>()<-"
+    glyphs: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 /:.-°%|,>()<"
 
   - file: "gfonts://Material+Symbols+Outlined"
     id: font_icons
