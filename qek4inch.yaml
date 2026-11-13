@@ -1347,7 +1347,150 @@ lvgl:
                     align: bottom_right
                     x: -2
                     y: 0
-                                                          
+
+ # ==========================================
+          # SUBSCREEN: POWER DETAIL & CONTROL (480x320)
+          # ==========================================
+          - obj:
+              id: screen_power_detail
+              x: 0
+              y: 0
+              width: 480
+              height: 320
+              styles: style_bg # Hintergrundfarbe deines Dashboards
+              hidden: true    # Standardmäßig ausgeblendet
+              widgets:
+
+                # --- Header / Titel ---
+                - label:
+                    text: "POWER MANAGEMENT"
+                    text_font: font_card_header
+                    styles: style_txt_normal
+                    align: top_mid
+                    y: 10
+
+                # ==========================================
+                # REIHE 1: Battery & Kitchen (y: 50)
+                # ==========================================
+                - button:
+                    id: btn_sub_bat
+                    x: 20
+                    y: 50
+                    width: 210
+                    height: 70
+                    styles: style_card
+                    widgets:
+                      - label:
+                          text: "Battery"
+                          text_font: font_card_header
+                          styles: style_txt_normal
+                          align: center
+                    on_click:
+                      - homeassistant.service:
+                          service: switch.toggle
+                          data:
+                            entity_id: switch.qek_shelly_c1000_ac_charger # Entsprechende Entity anpassen
+
+                - button:
+                    id: btn_sub_kitchen
+                    x: 250
+                    y: 50
+                    width: 210
+                    height: 70
+                    styles: style_card
+                    widgets:
+                      - label:
+                          text: "Kitchen"
+                          text_font: font_card_header
+                          styles: style_txt_normal
+                          align: center
+                    on_click:
+                      - homeassistant.service:
+                          service: switch.toggle
+                          data:
+                            entity_id: switch.qek_shelly_kitchen # Entsprechende Entity anpassen
+
+                # ==========================================
+                # REIHE 2: Cooker & Climate (y: 135)
+                # ==========================================
+                - button:
+                    id: btn_sub_cooker
+                    x: 20
+                    y: 135
+                    width: 210
+                    height: 70
+                    styles: style_card
+                    widgets:
+                      - label:
+                          text: "Cooker"
+                          text_font: font_card_header
+                          styles: style_txt_normal
+                          align: center
+                    on_click:
+                      - homeassistant.service:
+                          service: switch.toggle
+                          data:
+                            entity_id: switch.qek_shelly_cooker # Entsprechende Entity anpassen
+
+                - button:
+                    id: btn_sub_climate
+                    x: 250
+                    y: 135
+                    width: 210
+                    height: 70
+                    styles: style_card
+                    widgets:
+                      - label:
+                          text: "Climate"
+                          text_font: font_card_header
+                          styles: style_txt_normal
+                          align: center
+                    on_click:
+                      - homeassistant.service:
+                          service: switch.toggle
+                          data:
+                            entity_id: switch.qek_shelly_climate_co # Entsprechende Entity anpassen
+
+                # ==========================================
+                # REIHE 3: Sonoff (Main) & Back (y: 220)
+                # ==========================================
+                - button:
+                    id: btn_sub_sonoff
+                    x: 20
+                    y: 220
+                    width: 210
+                    height: 70
+                    styles: style_card
+                    widgets:
+                      - label:
+                          text: "Sonoff Main"
+                          text_font: font_card_header
+                          styles: style_txt_normal
+                          align: center
+                    on_click:
+                      - homeassistant.service:
+                          service: switch.toggle
+                          data:
+                            entity_id: switch.matter_over_wifi_smart_switch # Entsprechende Entity anpassen
+
+                - button:
+                    id: btn_sub_back
+                    x: 250
+                    y: 220
+                    width: 210
+                    height: 70
+                    styles: style_card
+                    widgets:
+                      - label:
+                          text: "<- Back"
+                          text_font: font_card_header
+                          styles: style_txt_normal
+                          align: center
+                    on_click:
+                      - lvgl.obj.set_hidden:
+                          id: screen_power_detail
+                          hidden: true
+
           # ==========================================
           # DIM GUARD OVERLAY (Vollflächig 480x320)
           # ==========================================
