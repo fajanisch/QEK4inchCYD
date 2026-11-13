@@ -133,7 +133,7 @@ script:
             // ZUSTAND 3: Off
             lv_label_set_text(id(lbl_sub_bat_pwr), "Off");
             lv_label_set_text_fmt(id(lbl_sub_bat_energy), "%d Wh", wh_val);
-            lv_label_set_text(id(icon_sub_bat_state), "\uEBAC"); // Power-Button Icon
+            lv_label_set_text(id(icon_sub_bat_state), "\uE8AC"); // Power-Button Icon
 
             lv_obj_set_style_text_color(id(icon_sub_bat_loc), lv_color_hex(0x64748B), LV_PART_MAIN);
             lv_obj_set_style_text_color(id(lbl_sub_bat_name), lv_color_hex(0x38BDF8), LV_PART_MAIN);
@@ -146,7 +146,7 @@ script:
             // ZUSTAND 4: On
             lv_label_set_text_fmt(id(lbl_sub_bat_pwr), "%d W", val);
             lv_label_set_text_fmt(id(lbl_sub_bat_energy), "%d Wh", wh_val);
-            lv_label_set_text(id(icon_sub_bat_state), "\uEBAC"); // Power-Button Icon
+            lv_label_set_text(id(icon_sub_bat_state), "\uE8AC"); // Power-Button Icon
 
             lv_obj_set_style_text_color(id(icon_sub_bat_loc), lv_color_hex(0x38BDF8), LV_PART_MAIN);
             lv_obj_set_style_text_color(id(lbl_sub_bat_name), lv_color_hex(0x38BDF8), LV_PART_MAIN);
