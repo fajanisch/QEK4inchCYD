@@ -71,7 +71,349 @@ script:
           lv_obj_invalidate(id(icon_ext_pwr_hero));
           lv_obj_invalidate(id(icon_ext_pwr_card));
 
+# ==========================================
+  # 1. BATTERY CHARGER
+  # ==========================================
+  - id: update_shelly_bat
+    mode: restart
+    then:
+      - lambda: |-
+          std::string st = id(ext_bat_switch_state).state;
+          for (auto &c : st) c = tolower(c);
+          float pwr = id(ext_bat_power).state;
+          float wh  = id(ext_bat_wh).state;
+          bool locked = false; // oder id(lock_sub_bat).state falls vorhanden
 
+          int val = (st == "on" && !isnan(pwr) && pwr > 1.0f) ? (int)round(pwr) : 0;
+          int wh_val = (!isnan(wh)) ? (int)round(wh) : 0;
+
+          // Hauptkachel
+          if (st == "on") {
+            lv_label_set_text_fmt(id(lbl_ext_bat), "%d W", val);
+            lv_obj_set_style_text_color(id(lbl_ext_bat), lv_color_hex(0xFBBF24), LV_PART_MAIN);
+            lv_obj_set_style_text_color(id(icon_ext_bat), lv_color_hex(0xFBBF24), LV_PART_MAIN);
+          } else if (st == "off") {
+            lv_label_set_text(id(lbl_ext_bat), "Off");
+            lv_obj_set_style_text_color(id(lbl_ext_bat), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+            lv_obj_set_style_text_color(id(icon_ext_bat), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+          } else {
+            lv_label_set_text(id(lbl_ext_bat), "--");
+            lv_obj_set_style_text_color(id(lbl_ext_bat), lv_color_hex(0x64748B), LV_PART_MAIN);
+            lv_obj_set_style_text_color(id(icon_ext_bat), lv_color_hex(0x64748B), LV_PART_MAIN);
+          }
+
+          // Subscreen Kachel (Variante A)
+          uint32_t fg_col = 0x64748B;
+          uint32_t border_col = 0x334155;
+
+          if (st != "on" && st != "off") {
+            lv_label_set_text(id(lbl_sub_bat_pwr), "-- W");
+            lv_label_set_text(id(lbl_sub_bat_energy), "-- Wh");
+            lv_label_set_text(id(icon_sub_bat_state), "\uE646");
+            fg_col = 0x64748B; border_col = 0x334155;
+            lv_obj_clear_flag(id(btn_sub_bat), LV_OBJ_FLAG_CLICKABLE);
+          } else if (locked) {
+            lv_label_set_text_fmt(id(lbl_sub_bat_pwr), st == "on" ? "%d W" : "Off", val);
+            lv_label_set_text_fmt(id(lbl_sub_bat_energy), "%d Wh", wh_val);
+            lv_label_set_text(id(icon_sub_bat_state), "\uE897");
+            fg_col = 0xEF4444; border_col = 0xEF4444;
+            lv_obj_clear_flag(id(btn_sub_bat), LV_OBJ_FLAG_CLICKABLE);
+          } else if (st == "off") {
+            lv_label_set_text(id(lbl_sub_bat_pwr), "Off");
+            lv_label_set_text_fmt(id(lbl_sub_bat_energy), "%d Wh", wh_val);
+            lv_label_set_text(id(icon_sub_bat_state), "\uE8AC");
+            fg_col = 0x38BDF8; border_col = 0x334155;
+            lv_obj_add_flag(id(btn_sub_bat), LV_OBJ_FLAG_CLICKABLE);
+          } else {
+            lv_label_set_text_fmt(id(lbl_sub_bat_pwr), "%d W", val);
+            lv_label_set_text_fmt(id(lbl_sub_bat_energy), "%d Wh", wh_val);
+            lv_label_set_text(id(icon_sub_bat_state), "\uE8AC");
+            fg_col = 0xFBBF24; border_col = 0xFBBF24;
+            lv_obj_add_flag(id(btn_sub_bat), LV_OBJ_FLAG_CLICKABLE);
+          }
+
+          lv_obj_set_style_border_color(id(btn_sub_bat), lv_color_hex(border_col), LV_PART_MAIN);
+          lv_obj_set_style_text_color(id(icon_sub_bat_loc), lv_color_hex(fg_col), LV_PART_MAIN);
+          lv_obj_set_style_text_color(id(lbl_sub_bat_name), lv_color_hex(fg_col), LV_PART_MAIN);
+          lv_obj_set_style_text_color(id(lbl_sub_bat_pwr), lv_color_hex(fg_col), LV_PART_MAIN);
+          lv_obj_set_style_text_color(id(lbl_sub_bat_energy), lv_color_hex(fg_col), LV_PART_MAIN);
+          lv_obj_set_style_text_color(id(icon_sub_bat_state), lv_color_hex(fg_col), LV_PART_MAIN);
+          lv_obj_invalidate(id(btn_sub_bat));
+
+  # ==========================================
+  # 2. KITCHEN
+  # ==========================================
+  - id: update_shelly_kitchen
+    mode: restart
+    then:
+      - lambda: |-
+          std::string st = id(ext_kitchen_switch_state).state;
+          for (auto &c : st) c = tolower(c);
+          float pwr = id(ext_kitchen_power).state;
+          float wh  = id(ext_kitchen_wh).state;
+          bool locked = false;
+
+          int val = (st == "on" && !isnan(pwr) && pwr > 1.0f) ? (int)round(pwr) : 0;
+          int wh_val = (!isnan(wh)) ? (int)round(wh) : 0;
+
+          if (st == "on") {
+            lv_label_set_text_fmt(id(lbl_ext_kitchen), "%d W", val);
+            lv_obj_set_style_text_color(id(lbl_ext_kitchen), lv_color_hex(0xFBBF24), LV_PART_MAIN);
+            lv_obj_set_style_text_color(id(icon_ext_kitchen), lv_color_hex(0xFBBF24), LV_PART_MAIN);
+          } else if (st == "off") {
+            lv_label_set_text(id(lbl_ext_kitchen), "Off");
+            lv_obj_set_style_text_color(id(lbl_ext_kitchen), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+            lv_obj_set_style_text_color(id(icon_ext_kitchen), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+          } else {
+            lv_label_set_text(id(lbl_ext_kitchen), "--");
+            lv_obj_set_style_text_color(id(lbl_ext_kitchen), lv_color_hex(0x64748B), LV_PART_MAIN);
+            lv_obj_set_style_text_color(id(icon_ext_kitchen), lv_color_hex(0x64748B), LV_PART_MAIN);
+          }
+
+          uint32_t fg_col = 0x64748B;
+          uint32_t border_col = 0x334155;
+
+          if (st != "on" && st != "off") {
+            lv_label_set_text(id(lbl_sub_kitchen_pwr), "-- W");
+            lv_label_set_text(id(lbl_sub_kitchen_energy), "-- Wh");
+            lv_label_set_text(id(icon_sub_kitchen_state), "\uE646");
+            fg_col = 0x64748B; border_col = 0x334155;
+            lv_obj_clear_flag(id(btn_sub_kitchen), LV_OBJ_FLAG_CLICKABLE);
+          } else if (locked) {
+            lv_label_set_text_fmt(id(lbl_sub_kitchen_pwr), st == "on" ? "%d W" : "Off", val);
+            lv_label_set_text_fmt(id(lbl_sub_kitchen_energy), "%d Wh", wh_val);
+            lv_label_set_text(id(icon_sub_kitchen_state), "\uE897");
+            fg_col = 0xEF4444; border_col = 0xEF4444;
+            lv_obj_clear_flag(id(btn_sub_kitchen), LV_OBJ_FLAG_CLICKABLE);
+          } else if (st == "off") {
+            lv_label_set_text(id(lbl_sub_kitchen_pwr), "Off");
+            lv_label_set_text_fmt(id(lbl_sub_kitchen_energy), "%d Wh", wh_val);
+            lv_label_set_text(id(icon_sub_kitchen_state), "\uE8AC");
+            fg_col = 0x38BDF8; border_col = 0x334155;
+            lv_obj_add_flag(id(btn_sub_kitchen), LV_OBJ_FLAG_CLICKABLE);
+          } else {
+            lv_label_set_text_fmt(id(lbl_sub_kitchen_pwr), "%d W", val);
+            lv_label_set_text_fmt(id(lbl_sub_kitchen_energy), "%d Wh", wh_val);
+            lv_label_set_text(id(icon_sub_kitchen_state), "\uE8AC");
+            fg_col = 0xFBBF24; border_col = 0xFBBF24;
+            lv_obj_add_flag(id(btn_sub_kitchen), LV_OBJ_FLAG_CLICKABLE);
+          }
+
+          lv_obj_set_style_border_color(id(btn_sub_kitchen), lv_color_hex(border_col), LV_PART_MAIN);
+          lv_obj_set_style_text_color(id(icon_sub_kitchen_loc), lv_color_hex(fg_col), LV_PART_MAIN);
+          lv_obj_set_style_text_color(id(lbl_sub_kitchen_name), lv_color_hex(fg_col), LV_PART_MAIN);
+          lv_obj_set_style_text_color(id(lbl_sub_kitchen_pwr), lv_color_hex(fg_col), LV_PART_MAIN);
+          lv_obj_set_style_text_color(id(lbl_sub_kitchen_energy), lv_color_hex(fg_col), LV_PART_MAIN);
+          lv_obj_set_style_text_color(id(icon_sub_kitchen_state), lv_color_hex(fg_col), LV_PART_MAIN);
+          lv_obj_invalidate(id(btn_sub_kitchen));
+
+  # ==========================================
+  # 3. COOKER
+  # ==========================================
+  - id: update_shelly_cooker
+    mode: restart
+    then:
+      - lambda: |-
+          std::string st = id(ext_cooker_switch_state).state;
+          for (auto &c : st) c = tolower(c);
+          float pwr = id(ext_cooker_power).state;
+          float wh  = id(ext_cooker_wh).state;
+          bool locked = false;
+
+          int val = (st == "on" && !isnan(pwr) && pwr > 1.0f) ? (int)round(pwr) : 0;
+          int wh_val = (!isnan(wh)) ? (int)round(wh) : 0;
+
+          if (st == "on") {
+            lv_label_set_text_fmt(id(lbl_ext_cooker), "%d W", val);
+            lv_obj_set_style_text_color(id(lbl_ext_cooker), lv_color_hex(0xFBBF24), LV_PART_MAIN);
+            lv_obj_set_style_text_color(id(icon_ext_cooker), lv_color_hex(0xFBBF24), LV_PART_MAIN);
+          } else if (st == "off") {
+            lv_label_set_text(id(lbl_ext_cooker), "Off");
+            lv_obj_set_style_text_color(id(lbl_ext_cooker), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+            lv_obj_set_style_text_color(id(icon_ext_cooker), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+          } else {
+            lv_label_set_text(id(lbl_ext_cooker), "--");
+            lv_obj_set_style_text_color(id(lbl_ext_cooker), lv_color_hex(0x64748B), LV_PART_MAIN);
+            lv_obj_set_style_text_color(id(icon_ext_cooker), lv_color_hex(0x64748B), LV_PART_MAIN);
+          }
+
+          uint32_t fg_col = 0x64748B;
+          uint32_t border_col = 0x334155;
+
+          if (st != "on" && st != "off") {
+            lv_label_set_text(id(lbl_sub_cooker_pwr), "-- W");
+            lv_label_set_text(id(lbl_sub_cooker_energy), "-- Wh");
+            lv_label_set_text(id(icon_sub_cooker_state), "\uE646");
+            fg_col = 0x64748B; border_col = 0x334155;
+            lv_obj_clear_flag(id(btn_sub_cooker), LV_OBJ_FLAG_CLICKABLE);
+          } else if (locked) {
+            lv_label_set_text_fmt(id(lbl_sub_cooker_pwr), st == "on" ? "%d W" : "Off", val);
+            lv_label_set_text_fmt(id(lbl_sub_cooker_energy), "%d Wh", wh_val);
+            lv_label_set_text(id(icon_sub_cooker_state), "\uE897");
+            fg_col = 0xEF4444; border_col = 0xEF4444;
+            lv_obj_clear_flag(id(btn_sub_cooker), LV_OBJ_FLAG_CLICKABLE);
+          } else if (st == "off") {
+            lv_label_set_text(id(lbl_sub_cooker_pwr), "Off");
+            lv_label_set_text_fmt(id(lbl_sub_cooker_energy), "%d Wh", wh_val);
+            lv_label_set_text(id(icon_sub_cooker_state), "\uE8AC");
+            fg_col = 0x38BDF8; border_col = 0x334155;
+            lv_obj_add_flag(id(btn_sub_cooker), LV_OBJ_FLAG_CLICKABLE);
+          } else {
+            lv_label_set_text_fmt(id(lbl_sub_cooker_pwr), "%d W", val);
+            lv_label_set_text_fmt(id(lbl_sub_cooker_energy), "%d Wh", wh_val);
+            lv_label_set_text(id(icon_sub_cooker_state), "\uE8AC");
+            fg_col = 0xFBBF24; border_col = 0xFBBF24;
+            lv_obj_add_flag(id(btn_sub_cooker), LV_OBJ_FLAG_CLICKABLE);
+          }
+
+          lv_obj_set_style_border_color(id(btn_sub_cooker), lv_color_hex(border_col), LV_PART_MAIN);
+          lv_obj_set_style_text_color(id(icon_sub_cooker_loc), lv_color_hex(fg_col), LV_PART_MAIN);
+          lv_obj_set_style_text_color(id(lbl_sub_cooker_name), lv_color_hex(fg_col), LV_PART_MAIN);
+          lv_obj_set_style_text_color(id(lbl_sub_cooker_pwr), lv_color_hex(fg_col), LV_PART_MAIN);
+          lv_obj_set_style_text_color(id(lbl_sub_cooker_energy), lv_color_hex(fg_col), LV_PART_MAIN);
+          lv_obj_set_style_text_color(id(icon_sub_cooker_state), lv_color_hex(fg_col), LV_PART_MAIN);
+          lv_obj_invalidate(id(btn_sub_cooker));
+
+  # ==========================================
+  # 4. CLIMATE
+  # ==========================================
+  - id: update_shelly_climate
+    mode: restart
+    then:
+      - lambda: |-
+          std::string st = id(ext_climate_switch_state).state;
+          for (auto &c : st) c = tolower(c);
+          float pwr = id(ext_climate_power).state;
+          float wh  = id(ext_climate_wh).state;
+          bool locked = false;
+
+          int val = (st == "on" && !isnan(pwr) && pwr > 1.0f) ? (int)round(pwr) : 0;
+          int wh_val = (!isnan(wh)) ? (int)round(wh) : 0;
+
+          if (st == "on") {
+            lv_label_set_text_fmt(id(lbl_ext_climate), "%d W", val);
+            lv_obj_set_style_text_color(id(lbl_ext_climate), lv_color_hex(0xFBBF24), LV_PART_MAIN);
+            lv_obj_set_style_text_color(id(icon_ext_climate), lv_color_hex(0xFBBF24), LV_PART_MAIN);
+          } else if (st == "off") {
+            lv_label_set_text(id(lbl_ext_climate), "Off");
+            lv_obj_set_style_text_color(id(lbl_ext_climate), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+            lv_obj_set_style_text_color(id(icon_ext_climate), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+          } else {
+            lv_label_set_text(id(lbl_ext_climate), "--");
+            lv_obj_set_style_text_color(id(lbl_ext_climate), lv_color_hex(0x64748B), LV_PART_MAIN);
+            lv_obj_set_style_text_color(id(icon_ext_climate), lv_color_hex(0x64748B), LV_PART_MAIN);
+          }
+
+          uint32_t fg_col = 0x64748B;
+          uint32_t border_col = 0x334155;
+
+          if (st != "on" && st != "off") {
+            lv_label_set_text(id(lbl_sub_climate_pwr), "-- W");
+            lv_label_set_text(id(lbl_sub_climate_energy), "-- Wh");
+            lv_label_set_text(id(icon_sub_climate_state), "\uE646");
+            fg_col = 0x64748B; border_col = 0x334155;
+            lv_obj_clear_flag(id(btn_sub_climate), LV_OBJ_FLAG_CLICKABLE);
+          } else if (locked) {
+            lv_label_set_text_fmt(id(lbl_sub_climate_pwr), st == "on" ? "%d W" : "Off", val);
+            lv_label_set_text_fmt(id(lbl_sub_climate_energy), "%d Wh", wh_val);
+            lv_label_set_text(id(icon_sub_climate_state), "\uE897");
+            fg_col = 0xEF4444; border_col = 0xEF4444;
+            lv_obj_clear_flag(id(btn_sub_climate), LV_OBJ_FLAG_CLICKABLE);
+          } else if (st == "off") {
+            lv_label_set_text(id(lbl_sub_climate_pwr), "Off");
+            lv_label_set_text_fmt(id(lbl_sub_climate_energy), "%d Wh", wh_val);
+            lv_label_set_text(id(icon_sub_climate_state), "\uE8AC");
+            fg_col = 0x38BDF8; border_col = 0x334155;
+            lv_obj_add_flag(id(btn_sub_climate), LV_OBJ_FLAG_CLICKABLE);
+          } else {
+            lv_label_set_text_fmt(id(lbl_sub_climate_pwr), "%d W", val);
+            lv_label_set_text_fmt(id(lbl_sub_climate_energy), "%d Wh", wh_val);
+            lv_label_set_text(id(icon_sub_climate_state), "\uE8AC");
+            fg_col = 0xFBBF24; border_col = 0xFBBF24;
+            lv_obj_add_flag(id(btn_sub_climate), LV_OBJ_FLAG_CLICKABLE);
+          }
+
+          lv_obj_set_style_border_color(id(btn_sub_climate), lv_color_hex(border_col), LV_PART_MAIN);
+          lv_obj_set_style_text_color(id(icon_sub_climate_loc), lv_color_hex(fg_col), LV_PART_MAIN);
+          lv_obj_set_style_text_color(id(lbl_sub_climate_name), lv_color_hex(fg_col), LV_PART_MAIN);
+          lv_obj_set_style_text_color(id(lbl_sub_climate_pwr), lv_color_hex(fg_col), LV_PART_MAIN);
+          lv_obj_set_style_text_color(id(lbl_sub_climate_energy), lv_color_hex(fg_col), LV_PART_MAIN);
+          lv_obj_set_style_text_color(id(icon_sub_climate_state), lv_color_hex(fg_col), LV_PART_MAIN);
+          lv_obj_invalidate(id(btn_sub_climate));
+
+  # ==========================================
+  # 5. MAIN (Sonoff)
+  # ==========================================
+  - id: update_ext_pwr_hero
+    mode: restart
+    then:
+      - lambda: |-
+          std::string st = id(ext_pwr_switch_state).state;
+          for (auto &c : st) c = tolower(c);
+          float pwr = id(ext_pwr_watt).state;
+          float cur = id(ext_pwr_current).state;
+          float wh  = id(ext_pwr_wh).state;
+          bool locked = false;
+
+          int pwr_val = (!isnan(pwr) && st == "on") ? (int)round(pwr) : 0;
+          int wh_val  = (!isnan(wh)) ? (int)round(wh) : 0;
+
+          // Hauptkachel
+          if (st == "on") {
+            lv_obj_add_flag(id(icon_ext_pwr_hero), LV_OBJ_FLAG_HIDDEN);
+            lv_obj_clear_flag(id(lbl_ext_pwr_watt), LV_OBJ_FLAG_HIDDEN);
+            lv_label_set_text_fmt(id(lbl_ext_pwr_watt), "%d W", pwr_val);
+            lv_obj_set_style_text_color(id(lbl_ext_pwr_watt), lv_color_hex(0xFBBF24), LV_PART_MAIN);
+            lv_obj_set_style_text_color(id(icon_ext_pwr_card), lv_color_hex(0xFBBF24), LV_PART_MAIN);
+          } else if (st == "off") {
+            lv_obj_add_flag(id(lbl_ext_pwr_watt), LV_OBJ_FLAG_HIDDEN);
+            lv_obj_clear_flag(id(icon_ext_pwr_hero), LV_OBJ_FLAG_HIDDEN);
+            lv_obj_set_style_text_color(id(icon_ext_pwr_hero), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+            lv_obj_set_style_text_color(id(icon_ext_pwr_card), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+          } else {
+            lv_obj_add_flag(id(lbl_ext_pwr_watt), LV_OBJ_FLAG_HIDDEN);
+            lv_obj_clear_flag(id(icon_ext_pwr_hero), LV_OBJ_FLAG_HIDDEN);
+            lv_obj_set_style_text_color(id(icon_ext_pwr_hero), lv_color_hex(0x64748B), LV_PART_MAIN);
+            lv_obj_set_style_text_color(id(icon_ext_pwr_card), lv_color_hex(0x64748B), LV_PART_MAIN);
+          }
+
+          // Subscreen Kachel (Variante A)
+          uint32_t fg_col = 0x64748B;
+          uint32_t border_col = 0x334155;
+
+          if (st != "on" && st != "off") {
+            lv_label_set_text(id(lbl_sub_sonoff_pwr), "-- W");
+            lv_label_set_text(id(lbl_sub_sonoff_energy), "-- Wh");
+            lv_label_set_text(id(icon_sub_sonoff_state), "\uE646");
+            fg_col = 0x64748B; border_col = 0x334155;
+            lv_obj_clear_flag(id(btn_sub_sonoff), LV_OBJ_FLAG_CLICKABLE);
+          } else if (locked) {
+            lv_label_set_text_fmt(id(lbl_sub_sonoff_pwr), st == "on" ? "%d W" : "Off", pwr_val);
+            lv_label_set_text_fmt(id(lbl_sub_sonoff_energy), "%d Wh", wh_val);
+            lv_label_set_text(id(icon_sub_sonoff_state), "\uE897");
+            fg_col = 0xEF4444; border_col = 0xEF4444;
+            lv_obj_clear_flag(id(btn_sub_sonoff), LV_OBJ_FLAG_CLICKABLE);
+          } else if (st == "off") {
+            lv_label_set_text(id(lbl_sub_sonoff_pwr), "Off");
+            lv_label_set_text_fmt(id(lbl_sub_sonoff_energy), "%d Wh", wh_val);
+            lv_label_set_text(id(icon_sub_sonoff_state), "\uE8AC");
+            fg_col = 0x38BDF8; border_col = 0x334155;
+            lv_obj_add_flag(id(btn_sub_sonoff), LV_OBJ_FLAG_CLICKABLE);
+          } else {
+            lv_label_set_text_fmt(id(lbl_sub_sonoff_pwr), "%d W", pwr_val);
+            lv_label_set_text_fmt(id(lbl_sub_sonoff_energy), "%d Wh", wh_val);
+            lv_label_set_text(id(icon_sub_sonoff_state), "\uE8AC");
+            fg_col = 0xFBBF24; border_col = 0xFBBF24;
+            lv_obj_add_flag(id(btn_sub_sonoff), LV_OBJ_FLAG_CLICKABLE);
+          }
+
+          lv_obj_set_style_border_color(id(btn_sub_sonoff), lv_color_hex(border_col), LV_PART_MAIN);
+          lv_obj_set_style_text_color(id(icon_sub_sonoff_loc), lv_color_hex(fg_col), LV_PART_MAIN);
+          lv_obj_set_style_text_color(id(lbl_sub_sonoff_name), lv_color_hex(fg_col), LV_PART_MAIN);
+          lv_obj_set_style_text_color(id(lbl_sub_sonoff_pwr), lv_color_hex(fg_col), LV_PART_MAIN);
+          lv_obj_set_style_text_color(id(lbl_sub_sonoff_energy), lv_color_hex(fg_col), LV_PART_MAIN);
+          lv_obj_set_style_text_color(id(icon_sub_sonoff_state), lv_color_hex(fg_col), LV_PART_MAIN);
+          lv_obj_invalidate(id(btn_sub_sonoff));
 
   - id: update_rest
     mode: restart
