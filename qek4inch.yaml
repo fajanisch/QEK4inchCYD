@@ -335,6 +335,7 @@ text_sensor:
             lv_obj_invalidate(id(icon_climate_dew));
 
   # Weather Condition (drives icon_climate_wx)
+# Weather Condition (drives icon_climate_wx)
   - platform: homeassistant
     id: qek_weather_cond
     entity_id: weather.forecast_home
@@ -343,34 +344,32 @@ text_sensor:
         - lambda: |-
             std::string cond = x;
             for (auto &c : cond) c = tolower(c);
+            std::string sum = id(qek_weather_summary).state;
 
             if (cond == "sunny") {
               lv_label_set_text(id(icon_climate_wx), "\uE81A");
-              lv_obj_set_style_text_color(id(icon_climate_wx), lv_color_hex(0xFBBF24), LV_PART_MAIN);
             } else if (cond == "clear-night") {
               lv_label_set_text(id(icon_climate_wx), "\uE51C");
-              lv_obj_set_style_text_color(id(icon_climate_wx), lv_color_hex(0x38BDF8), LV_PART_MAIN);
             } else if (cond == "partlycloudy") {
               lv_label_set_text(id(icon_climate_wx), "\uF172");
-              lv_obj_set_style_text_color(id(icon_climate_wx), lv_color_hex(0x38BDF8), LV_PART_MAIN);
             } else if (cond == "rainy" || cond == "pouring") {
               lv_label_set_text(id(icon_climate_wx), "\uF176");
-              lv_obj_set_style_text_color(id(icon_climate_wx), lv_color_hex(0x38BDF8), LV_PART_MAIN);
             } else if (cond == "lightning" || cond == "lightning-rainy") {
               lv_label_set_text(id(icon_climate_wx), "\uEBDB");
-              lv_obj_set_style_text_color(id(icon_climate_wx), lv_color_hex(0xFBBF24), LV_PART_MAIN);
             } else if (cond == "snowy" || cond == "snowy-rainy" || cond == "hail") {
               lv_label_set_text(id(icon_climate_wx), "\uEB3B");
-              lv_obj_set_style_text_color(id(icon_climate_wx), lv_color_hex(0x38BDF8), LV_PART_MAIN);
             } else if (cond == "windy" || cond == "windy-variant" || cond == "fog") {
               lv_label_set_text(id(icon_climate_wx), "\uEFD8");
-              lv_obj_set_style_text_color(id(icon_climate_wx), lv_color_hex(0x94A3B8), LV_PART_MAIN);
-            } else if (cond == "cloudy") {
-              lv_label_set_text(id(icon_climate_wx), "\uE2BD");
-              lv_obj_set_style_text_color(id(icon_climate_wx), lv_color_hex(0x94A3B8), LV_PART_MAIN);
             } else {
               lv_label_set_text(id(icon_climate_wx), "\uE2BD");
+            }
+
+            if (sum == "Weather: Offline" || sum == "Offline" || cond == "unavailable" || cond == "unknown") {
               lv_obj_set_style_text_color(id(icon_climate_wx), lv_color_hex(0x64748B), LV_PART_MAIN);
+            } else if (cond == "sunny" || cond == "lightning" || cond == "lightning-rainy") {
+              lv_obj_set_style_text_color(id(icon_climate_wx), lv_color_hex(0xFBBF24), LV_PART_MAIN);
+            } else {
+              lv_obj_set_style_text_color(id(icon_climate_wx), lv_color_hex(0x38BDF8), LV_PART_MAIN);
             }
             lv_obj_invalidate(id(icon_climate_wx));
 
