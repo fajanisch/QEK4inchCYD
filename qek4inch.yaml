@@ -693,7 +693,7 @@ script:
           lv_obj_invalidate(id(icon_ext_pwr_hero));
           lv_obj_invalidate(id(icon_ext_pwr_card));
 
-- id: update_shelly_bat
+    - id: update_shelly_bat
     mode: restart
     then:
       - lambda: |-
