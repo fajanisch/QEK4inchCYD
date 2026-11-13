@@ -976,7 +976,7 @@ lvgl:
                     align: right_mid
                     x: -80
 
-          # ==========================================
+ # ==========================================
           # KACHEL 1: POWER (Oben Links)
           # ==========================================
           - obj:
@@ -1029,16 +1029,17 @@ lvgl:
                     id: lbl_ext_bat
                     text: "Bat: 0 W"
                     text_font: font_sub
-                    styles: style_txt_inactive
+                    styles: style_val_blue
                     align: top_right
                     x: -24
                     y: 22
+                    hidden: true
 
                 - label:
                     id: icon_ext_bat
-                    text: "\uE1A4" # battery_full
+                    text: "\uE646" # power_off (Start: Durchgestrichener Stecker)
                     text_font: font_icons
-                    styles: style_icon_inactive
+                    text_color: 0x64748B
                     align: top_right
                     x: -2
                     y: 19
@@ -1048,16 +1049,17 @@ lvgl:
                     id: lbl_ext_kitchen
                     text: "Kitch: 0 W"
                     text_font: font_sub
-                    styles: style_txt_inactive
+                    styles: style_val_blue
                     align: top_right
                     x: -24
                     y: 43
+                    hidden: true
 
                 - label:
                     id: icon_ext_kitchen
-                    text: "\uE56C" # kitchen
+                    text: "\uE646" # power_off
                     text_font: font_icons
-                    styles: style_icon_inactive
+                    text_color: 0x64748B
                     align: top_right
                     x: -2
                     y: 40
@@ -1067,16 +1069,17 @@ lvgl:
                     id: lbl_ext_cooker
                     text: "Cook: 0 W"
                     text_font: font_sub
-                    styles: style_txt_inactive
+                    styles: style_val_blue
                     align: top_right
                     x: -24
                     y: 64
+                    hidden: true
 
                 - label:
                     id: icon_ext_cooker
-                    text: "\uF543" # skillet
+                    text: "\uE646" # power_off
                     text_font: font_icons
-                    styles: style_icon_inactive
+                    text_color: 0x64748B
                     align: top_right
                     x: -2
                     y: 61
@@ -1086,19 +1089,21 @@ lvgl:
                     id: lbl_ext_climate
                     text: "Clim: 0 W"
                     text_font: font_sub
-                    styles: style_txt_inactive
+                    styles: style_val_blue
                     align: top_right
                     x: -24
                     y: 85
+                    hidden: true
+
                 - label:
                     id: icon_ext_climate
-                    text: "\uF076" # thermostat
+                    text: "\uE646" # power_off
                     text_font: font_icons
-                    styles: style_icon_inactive
+                    text_color: 0x64748B
                     align: top_right
                     x: -2
                     y: 82
-          # ==========================================
+                             # ==========================================
           # KACHEL 2: BATTERIE (C1000)
           # ==========================================
           - obj:
