@@ -1146,7 +1146,7 @@ lvgl:
                     y: 77
                 - label:
                     id: icon_ext_climate
-                    text: "\uF076"
+                    text: "\uF076"Fscript:
                     text_font: font_icons
                     styles: style_icon_inactive
                     align: top_right
@@ -1178,7 +1178,7 @@ lvgl:
                     x: -2
                     y: 93
 
-                    
+
           # ==========================================
           # KACHEL 2: BATTERIE (C1000)
           # ==========================================
