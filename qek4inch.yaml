@@ -792,7 +792,7 @@ script:
           }
           lv_obj_invalidate(id(lbl_ext_climate));
           lv_obj_invalidate(id(icon_ext_climate));
-          
+
   - id: update_rest
     mode: restart
     then:
@@ -1151,7 +1151,7 @@ lvgl:
 
                 # --- RECHTS ZEILE 5: Rest (y: 106) ---
                 - label:
-                    text: "Rest:"
+                    text: "Oth.:"
                     text_font: font_sub
                     styles: style_txt_inactive
                     align: top_right
