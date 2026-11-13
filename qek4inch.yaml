@@ -863,7 +863,7 @@ font:
       - "\uE166" # ac_unit (HVAC Cooling snowflake)
       - "\uE56C" # kitchen (Küche)
       - "\uF543" # skillet (Cooker / Kocher)
-#      - "\uE63C" # power / Steckdose
+- "\uF1D4" # outlet (Steckdose für Rest-Zeile)
 
 
   - file: "gfonts://Material+Symbols+Outlined"
