@@ -599,6 +599,7 @@ font:
     size: 36
     glyphs:
       - "\uE646" # power_off (Durchgestrichener Stecker als Hero)
+      
 # 6. LVGL UI-Aufbau (Vollständig passiv & modular)
 lvgl:
   displays:
