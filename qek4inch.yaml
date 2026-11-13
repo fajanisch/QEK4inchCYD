@@ -617,7 +617,7 @@ sensor:
       then:
         - script.execute: update_shelly_climate
 
-# Other consumption (throug sonoff but not shelly)
+# Other consumption (through sonoff but not shelly)
   - platform: homeassistant
     id: ext_rest_power
     entity_id: sensor.qek_other_power_consumption
