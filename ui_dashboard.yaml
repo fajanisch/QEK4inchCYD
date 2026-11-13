@@ -537,7 +537,7 @@ lvgl:
                     x: 8
                     y: 0
                     width: 228
-                    height: 85
+                    height: 84
                     styles: style_card
                     clickable: true
                     widgets:
@@ -591,7 +591,7 @@ lvgl:
                     x: 244
                     y: 0
                     width: 228
-                    height: 85
+                    height: 84
                     styles: style_card
                     clickable: true
                     widgets:
@@ -643,9 +643,9 @@ lvgl:
                 - obj:
                     id: btn_sub_cooker
                     x: 8
-                    y: 93
+                    y: 92
                     width: 228
-                    height: 85
+                    height: 84
                     styles: style_card
                     clickable: true
                     widgets:
@@ -697,9 +697,9 @@ lvgl:
                 - obj:
                     id: btn_sub_climate
                     x: 244
-                    y: 93
+                    y: 92
                     width: 228
-                    height: 85
+                    height: 84
                     styles: style_card
                     clickable: true
                     widgets:
@@ -751,9 +751,9 @@ lvgl:
                 - obj:
                     id: btn_sub_sonoff
                     x: 8
-                    y: 186
+                    y: 184
                     width: 228
-                    height: 85
+                    height: 84
                     styles: style_card
                     clickable: true
                     widgets:
@@ -805,9 +805,9 @@ lvgl:
                 - obj:
                     id: btn_sub_back
                     x: 244
-                    y: 186
-                    width: 226
-                    height: 79       
+                    y: 184
+                    width: 228
+                    height: 84       
                     styles: style_card
                     bg_color: 0x1E3A8A     # Blauer Hintergrund
                     border_color: 0x3B82F6 # Blauer Rahmen
