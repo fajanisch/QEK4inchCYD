@@ -496,11 +496,11 @@ font:
   - file: "gfonts://Inter"
     id: font_bar
     size: 13
-    glyphs: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 /:.-°%|,>"
+    glyphs: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 /:.-°%|,>()"
   - file: "gfonts://Inter"
     id: font_card_header
     size: 12
-    glyphs: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 /:.-°%,>"
+    glyphs: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 /:.-°%,>()"
   - file: "gfonts://Inter"
     id: font_val_hero
     size: 28
@@ -508,7 +508,7 @@ font:
   - file: "gfonts://Inter"
     id: font_sub
     size: 12
-    glyphs: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 /:.-°%|,>"
+    glyphs: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 /:.-°%|,>()"
   - file: "gfonts://Material+Symbols+Outlined"
     id: font_icons
     size: 18
@@ -526,7 +526,18 @@ font:
       - "\uF076" # thermostat
       - "\uEBD2" # battery_4_bar (Header & Standby)
       - "\uE81A" # wb_sunny (Sonne für Solar-Ladung)
-      - "\uF879" # dew_point (Taupunkt)
+      # --- Weather Forecast Icons ---
+      - "\uF172" # partly_cloudy_day (partlycloudy)
+      - "\uE2BD" # cloud (cloudy)
+      - "\uF176" # rainy (rainy / pouring)
+      - "\uEB3B" # weather_snowy (snowy / snowy-rainy / hail)
+      - "\uEBDB" # thunderstorm (lightning / lightning-rainy)
+      - "\uE51C" # dark_mode (clear-night)
+      - "\uEFD8" # air (windy / windy-variant / fog)
+      # --- Climate / Dew Point / HVAC Icons ---
+      - "\uF879" # dew_point (Dew Point row)
+      - "\uE518" # mode_heat (HVAC Heating flame)
+      - "\uE166" # ac_unit (HVAC Cooling snowflake)
 
 # 6. LVGL UI-Aufbau (Vollständig passiv & modular)
 lvgl:
@@ -867,7 +878,25 @@ lvgl:
                     align: top_right
                     x: -2 # Exakt unter dem Tropfen-Icon
                     y: 55
-                                        
+
+# --- BOTTOM FULL ROW: Weather Icon + Forecast Summary ---
+                - label:
+                    id: icon_climate_wx
+                    text: "\uE2BD" # cloud
+                    text_font: font_icons
+                    styles: style_icon_inactive
+                    align: top_left
+                    x: 2
+                    y: 79
+
+                - label:
+                    id: lbl_climate_wx
+                    text: "Out: --° (--°/--°) --%"
+                    text_font: font_sub
+                    styles: style_sub_gray
+                    align: top_left
+                    x: 26
+                    y: 82                                        
           # ==========================================
           # DIM GUARD OVERLAY (Vollflächig 480x320)
           # ==========================================
