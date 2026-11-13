@@ -693,13 +693,13 @@ script:
           lv_obj_invalidate(id(icon_ext_pwr_hero));
           lv_obj_invalidate(id(icon_ext_pwr_card));
 
- - id: update_shelly_bat
+  - id: update_shelly_bat
     mode: restart
     then:
       - lambda: |-
           std::string st = id(ext_bat_switch_state).state;
           for (auto &c : st) c = tolower(c);
-          float pwr = id(ext_bat_power).state;
+          float pwr = id(ext_bat_power).state; 
 
           if (st == "on") {
             int val = (!isnan(pwr) && pwr > 1.0) ? (int)round(pwr) : 0;
