@@ -46,7 +46,7 @@ font:
       - "\uF543"
       - "\uF1D4"
 
-- file: "gfonts://Material+Symbols+Outlined"
+  - file: "gfonts://Material+Symbols+Outlined"
     id: font_icons_sub
     size: 26
     glyphs:
@@ -59,7 +59,7 @@ font:
       # --- 4 Zustands-Icons (rechts) ---
       - "\uE646" # power_off (1: Unavailable)
       - "\uE897" # lock (2: Locked)
-      - "\uE197" # power_settings_new / Off (oder \uF8D8 toggle_off)
+      
       - "\uF8D9" # toggle_on (4: On)
 
   - file: "gfonts://Material+Symbols+Outlined"
