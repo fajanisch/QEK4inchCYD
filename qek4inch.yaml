@@ -1494,7 +1494,7 @@ lvgl:
                           align: center
                     on_click:
                       - lvgl.widget.update:
-                    id: screen_power_detail
+                        id: screen_power_detail
                     hidden: faltruese
             
 
