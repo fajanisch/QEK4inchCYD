@@ -61,7 +61,7 @@ font:
       - "\uE897" # lock (2: Locked)
       - "\uE197" # power_settings_new / Off (oder \uF8D8 toggle_off)
       - "\uF8D9" # toggle_on (4: On)
-      
+
   - file: "gfonts://Material+Symbols+Outlined"
     id: font_icons_hero
     size: 36
@@ -517,6 +517,9 @@ lvgl:
               radius: 0
               pad_all: 0
               widgets:
+                # ==========================================
+                # REIHE 1 LINKS: Battery (Prototyp-Layout)
+                # ==========================================
                 - obj:
                     id: btn_sub_bat
                     x: 8
@@ -526,35 +529,60 @@ lvgl:
                     styles: style_card
                     clickable: true
                     widgets:
+                      # 1. Links: Gleiches Icon wie Hauptschirm, aber groß (26px)
                       - label:
+                          id: icon_sub_bat_loc
+                          text: "\uE1A4" # battery_full
+                          text_font: font_icons_sub
+                          text_color: 0x64748B
+                          align: left_mid
+                          x: 2
+
+                      # 2. Daneben: Name
+                      - label:
+                          id: lbl_sub_bat_name
                           text: "Battery"
                           text_font: font_card_header
                           styles: style_txt_normal
-                          align: top_left
-                          x: 12
-                          y: 10
+                          align: left_mid
+                          x: 34
+
+                      # 3a. Oben: Aktuelle Power (W)
                       - label:
-                          id: lbl_sub_bat_telemetry
-                          text: "0 W • 0 Wh"
+                          id: lbl_sub_bat_pwr
+                          text: "0 W"
                           text_font: font_sub
                           text_color: 0x64748B
-                          align: bottom_left
-                          x: 12
-                          y: -10
+                          align: top_right
+                          x: -34
+                          y: 12
+
+                      # 3b. Unten: Energie heute bisher (Wh)
+                      - label:
+                          id: lbl_sub_bat_energy
+                          text: "0 Wh"
+                          text_font: font_sub
+                          text_color: 0x64748B
+                          align: bottom_right
+                          x: -34
+                          y: -12
+
+                      # 4. Rechts: Zustands-Icon in derselben Größe (26px)
                       - label:
                           id: icon_sub_bat_state
-                          text: "\uE197"
-                          text_font: font_icons_hero
+                          text: "\uE646" # Start: Unavailable / Off
+                          text_font: font_icons_sub
                           text_color: 0x64748B
                           align: right_mid
-                          x: -12
+                          x: -2
+
                     on_click:
                       - homeassistant.service:
                           service: switch.toggle
                           data:
                             entity_id: switch.qek_shelly_c1000_ac_charger
                       - script.execute: power_detail_timeout
-
+                      
                 - obj:
                     id: btn_sub_kitchen
                     x: 244
