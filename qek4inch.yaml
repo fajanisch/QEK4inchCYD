@@ -386,7 +386,7 @@ text_sensor:
               lv_obj_set_style_text_color(id(lbl_climate_wx), lv_color_hex(0x64748B), LV_PART_MAIN);
               lv_obj_set_style_text_color(id(icon_climate_wx), lv_color_hex(0x64748B), LV_PART_MAIN);
             } else {
-              lv_obj_set_style_text_color(id(lbl_climate_wx), lv_color_hex(0x94A3B8), LV_PART_MAIN);
+              lv_obj_set_style_text_color(id(lbl_climate_wx), lv_color_hex(0x38BDF8), LV_PART_MAIN);
             }
             lv_obj_invalidate(id(lbl_climate_wx));
             lv_obj_invalidate(id(icon_climate_wx));
