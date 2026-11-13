@@ -810,7 +810,7 @@ lvgl:
                     height: 84       
                     styles: style_card
                     bg_color: 0x1E3A8A     # Blauer Hintergrund
-                    border_color: 0x3B82F6 # Blauer Rahmen
+                    border_color: 0x1E3A8A # Blauer Rahmen
                     clickable: true
                     widgets:
                       # Icon zentriert (leicht nach links versetzt)
@@ -830,6 +830,8 @@ lvgl:
                           text_color: 0x94A3B8  # Hellgrau
                           align: center
                           x: 21
-
                     on_click:
                       - script.execute: power_detail_timeout
+                      - lvgl.widget.update:
+                          id: screen_power_detail
+                          hidden: true
