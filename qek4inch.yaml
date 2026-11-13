@@ -1167,7 +1167,7 @@ lvgl:
                     y: 106
                 - label:
                     id: icon_ext_rest
-                    text: "\uE63C" # power / Steckdose
+                    text: "\uF1D4" # power / Steckdose
                     text_font: font_icons
                     styles: style_icon_inactive
                     align: top_right
