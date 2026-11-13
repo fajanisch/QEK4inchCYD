@@ -594,6 +594,11 @@ font:
       - "\uE518" # mode_heat (HVAC Heating flame)
       - "\uE166" # ac_unit (HVAC Cooling snowflake)
 
+- file: "gfonts://Material+Symbols+Outlined"
+    id: font_icons_hero
+    size: 36
+    glyphs:
+      - "\uE646" # power_off (Durchgestrichener Stecker als Hero)
 # 6. LVGL UI-Aufbau (Vollständig passiv & modular)
 lvgl:
   displays:
