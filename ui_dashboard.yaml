@@ -801,22 +801,35 @@ lvgl:
                             entity_id: switch.qek_matter_over_wifi_smart_switch
                       - script.execute: power_detail_timeout
                       
+                # 6. BACK BUTTON (Reihe 3, rechts neben Main)
                 - obj:
                     id: btn_sub_back
                     x: 244
-                    y: 182
+                    y: 168
                     width: 228
-                    height: 85
+                    height: 80
                     styles: style_card
+                    bg_color: 0x1E3A8A     # Dezenter blauer Hintergrund zur Kennzeichnung
+                    border_color: 0x3B82F6 # Blauer Rahmen
                     clickable: true
                     widgets:
+                      # Links: Wendepfeil-Icon (26px, grau)
                       - label:
-                          text: "<- Back"
-                          text_font: font_card_header
-                          styles: style_txt_normal
-                          align: center
+                          id: icon_sub_back
+                          text: "\uE5C4"
+                          text_font: font_icons_sub
+                          text_color: 0x94A3B8
+                          align: left_mid
+                          x: 16
+
+                      # Daneben: Text "Zurück" in 16px (font_sub_title, grau)
+                      - label:
+                          id: lbl_sub_back
+                          text: "Zurück"
+                          text_font: font_sub_title
+                          text_color: 0x94A3B8
+                          align: left_mid
+                          x: 56
+
                     on_click:
-                      - lvgl.widget.update:
-                          id: screen_power_detail
-                          hidden: true
-                      - script.stop: power_detail_timeout
+                      - script.execute: hide_power_detail
