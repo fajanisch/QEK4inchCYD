@@ -546,6 +546,21 @@ sensor:
             }
             lv_obj_invalidate(id(lbl_climate_dew));
 
+# Sonoff Leistung (W)
+  - platform: homeassistant
+    id: ext_pwr_watt
+    entity_id: sensor.matter_over_wifi_smart_switch_power
+    on_value:
+      then:
+        - script.execute: update_ext_pwr_hero
+
+  # Sonoff Stromstärke (A) für Farbwechsel bei 6A / 8.5A
+  - platform: homeassistant
+    id: ext_pwr_current
+    entity_id: sensor.matter_over_wifi_smart_switch_active_current
+    on_value:
+      then:
+        - script.execute: update_ext_pwr_hero
 # 5. Typografie (Inter)
 font:
   - file: "gfonts://Inter"
@@ -599,7 +614,7 @@ font:
     size: 36
     glyphs:
       - "\uE646" # power_off (Durchgestrichener Stecker als Hero)
-      
+
 # 6. LVGL UI-Aufbau (Vollständig passiv & modular)
 lvgl:
   displays:
