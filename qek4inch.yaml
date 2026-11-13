@@ -1149,7 +1149,7 @@ lvgl:
                     x: -2
                     y: 82
 
-                # --- RECHTS ZEILE 5: Rest (y: 106) ---
+                # --- RECHTS ZEILE 5: Other (y: 106) ---
                 - label:
                     text: "Oth.:"
                     text_font: font_sub
