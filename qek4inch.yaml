@@ -743,7 +743,7 @@ script:
             lv_obj_set_style_text_color(id(icon_ext_kitchen), lv_color_hex(0x38BDF8), LV_PART_MAIN);
           } else {
             lv_label_set_text(id(lbl_ext_kitchen), "--");
-            lv_obj_set_style_text_color(id(name_ext_kitchen), lv_color_hex(0x64748B), LV_PART_MAIN);
+           
             lv_obj_set_style_text_color(id(lbl_ext_kitchen), lv_color_hex(0x64748B), LV_PART_MAIN);
             lv_obj_set_style_text_color(id(icon_ext_kitchen), lv_color_hex(0x64748B), LV_PART_MAIN);
           }
