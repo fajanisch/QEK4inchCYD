@@ -1401,7 +1401,7 @@ lvgl:
                       id: dim_guard_overlay
                       hidden: true
 
-# ==========================================
+          # ==========================================
           # SUBSCREEN: POWER DETAIL & CONTROL (480x276)
           # ==========================================
           - obj:
@@ -1411,8 +1411,10 @@ lvgl:
               width: 480
               height: 276
               hidden: true
-              styles: style_card
-              pad_all: 0
+              bg_color: 0x0F172A   # Exakt derselbe dunkle Hintergrund wie der Hauptbildschirm
+              border_width: 0      # Kein Rahmen
+              radius: 0            # Keine Ecken-Abrundung für den Container
+              pad_all: 0           # Kein inneres Padding, damit das Raster perfekt sitzt
               widgets:
 
                 # ==========================================
