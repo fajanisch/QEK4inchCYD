@@ -585,34 +585,6 @@ sensor:
       then:
         - script.execute: update_ext_pwr_hero
 
-  # Shelly (4x)
-  - platform: homeassistant
-    id: ext_bat_switch_state
-    entity_id: switch.qek_shelly_c1000_ac_charger
-    on_value:
-      then:
-        - script.execute: update_shelly_bat
-
-  - platform: homeassistant
-    id: ext_kitchen_switch_state
-    entity_id: switch.qek_shelly_kitchen
-    on_value:
-      then:
-        - script.execute: update_shelly_kitchen
-
-  - platform: homeassistant
-    id: ext_cooker_switch_state
-    entity_id: switch.qek_shelly_cooker
-    on_value:
-      then:
-        - script.execute: update_shelly_cooker
-
-  - platform: homeassistant
-    id: ext_climate_switch_state
-    entity_id: switch.qek_shelly_climate_co
-    on_value:
-      then:
-        - script.execute: update_shelly_climate
 
 # Local chime / alert script callable from Home Assistant automations
 script:
