@@ -792,6 +792,26 @@ script:
           }
           lv_obj_invalidate(id(lbl_ext_climate));
           lv_obj_invalidate(id(icon_ext_climate));
+
+- id: update_rest
+    mode: restart
+    then:
+      - lambda: |-
+          float rest = id(ext_rest_power).state;
+          if (isnan(rest)) rest = 0;
+
+          if (rest > 1.0) {
+            int val = (int)round(rest);
+            lv_label_set_text_fmt(id(lbl_ext_rest), "%d W", val);
+            lv_obj_set_style_text_color(id(lbl_ext_rest), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+            lv_obj_set_style_text_color(id(icon_ext_rest), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+          } else {
+            lv_label_set_text(id(lbl_ext_rest), "0 W");
+            lv_obj_set_style_text_color(id(lbl_ext_rest), lv_color_hex(0x64748B), LV_PART_MAIN);
+            lv_obj_set_style_text_color(id(icon_ext_rest), lv_color_hex(0x64748B), LV_PART_MAIN);
+          }
+          lv_obj_invalidate(id(lbl_ext_rest));
+          lv_obj_invalidate(id(icon_ext_rest));
 # 5. Typografie (Inter)
 font:
   - file: "gfonts://Inter"
