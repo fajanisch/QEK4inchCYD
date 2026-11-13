@@ -206,8 +206,7 @@ script:
           id: dim_guard_overlay
           hidden: false
           clickable: true
-
-script:
+          script:
   - id: dim_inactivity_timer
     mode: restart
     then:
