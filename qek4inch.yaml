@@ -692,7 +692,7 @@ script:
           lv_obj_invalidate(id(lbl_ext_pwr_watt));
           lv_obj_invalidate(id(icon_ext_pwr_hero));
           lv_obj_invalidate(id(icon_ext_pwr_card));
-
+#Shelly 4x
   - id: update_shelly_bat
     mode: restart
     then:
