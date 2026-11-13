@@ -950,7 +950,7 @@ lvgl:
                     text: "Out: --° (--°/--°) --%"
                     text_font: font_sub
                     styles: style_sub_gray
-                    align: bottom_left
+                    align: bottom_right
                     x: 26
                     y: -2
                                                           
