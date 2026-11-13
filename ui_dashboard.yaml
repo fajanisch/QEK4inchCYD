@@ -59,7 +59,6 @@ font:
       # --- 4 Zustands-Icons (rechts) ---
       - "\uE646" # power_off (1: Unavailable)
       - "\uE897" # lock (2: Locked)
-      
       - "\uF8D9" # toggle_on (4: On)
 
   - file: "gfonts://Material+Symbols+Outlined"
