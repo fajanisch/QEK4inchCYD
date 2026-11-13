@@ -1055,23 +1055,15 @@ lvgl:
                     y: 10
                     hidden: true
 
-                # --- RECHTS ZEILE 1: Battery (y: 14) ---
-                - label:
-                    id: name_ext_bat
-                    text: "Bat:"
-                    text_font: font_sub
-                    text_color: 0x38BDF8
-                    align: top_right
-                    x: -65
-                    y: 14
+                # --- RECHTS ZEILE 1: Battery (y: 11) ---
                 - label:
                     id: lbl_ext_bat
                     text: "0 W"
                     text_font: font_sub
                     styles: style_val_blue
                     align: top_right
-                    x: -24
-                    y: 14
+                    x: -26
+                    y: 11
                 - label:
                     id: icon_ext_bat
                     text: "\uE1A4"
@@ -1079,25 +1071,17 @@ lvgl:
                     styles: style_icon_inactive
                     align: top_right
                     x: -2
-                    y: 11
+                    y: 8
 
-                # --- RECHTS ZEILE 2: Kitchen (y: 31) ---
-                - label:
-                    id: name_ext_kitchen
-                    text: "Kitch:"
-                    text_font: font_sub
-                    text_color: 0x38BDF8
-                    align: top_right
-                    x: -65
-                    y: 31
+                # --- RECHTS ZEILE 2: Kitchen (y: 29) ---
                 - label:
                     id: lbl_ext_kitchen
                     text: "0 W"
                     text_font: font_sub
                     styles: style_val_blue
                     align: top_right
-                    x: -24
-                    y: 31
+                    x: -26
+                    y: 29
                 - label:
                     id: icon_ext_kitchen
                     text: "\uE56C"
@@ -1105,25 +1089,17 @@ lvgl:
                     styles: style_icon_inactive
                     align: top_right
                     x: -2
-                    y: 28
+                    y: 26
 
-                # --- RECHTS ZEILE 3: Cooker (y: 48) ---
-                - label:
-                    id: name_ext_cooker
-                    text: "Cook:"
-                    text_font: font_sub
-                    text_color: 0x38BDF8
-                    align: top_right
-                    x: -65
-                    y: 48
+                # --- RECHTS ZEILE 3: Cooker (y: 47) ---
                 - label:
                     id: lbl_ext_cooker
                     text: "0 W"
                     text_font: font_sub
                     styles: style_val_blue
                     align: top_right
-                    x: -24
-                    y: 48
+                    x: -26
+                    y: 47
                 - label:
                     id: icon_ext_cooker
                     text: "\uF543"
@@ -1131,24 +1107,16 @@ lvgl:
                     styles: style_icon_inactive
                     align: top_right
                     x: -2
-                    y: 45
+                    y: 44
 
                 # --- RECHTS ZEILE 4: Climate (y: 65) ---
-                - label:
-                    id: name_ext_climate
-                    text: "Clim:"
-                    text_font: font_sub
-                    text_color: 0x38BDF8
-                    align: top_right
-                    x: -65
-                    y: 65
                 - label:
                     id: lbl_ext_climate
                     text: "0 W"
                     text_font: font_sub
                     styles: style_val_blue
                     align: top_right
-                    x: -24
+                    x: -26
                     y: 65
                 - label:
                     id: icon_ext_climate
@@ -1159,22 +1127,15 @@ lvgl:
                     x: -2
                     y: 62
 
-                # --- RECHTS ZEILE 5: Other (y: 82) ---
-                - label:
-                    text: "Oth:"
-                    text_font: font_sub
-                    text_color: 0x38BDF8
-                    align: top_right
-                    x: -65
-                    y: 82
+                # --- RECHTS ZEILE 5: Other (y: 83) ---
                 - label:
                     id: lbl_ext_rest
                     text: "0 W"
                     text_font: font_sub
                     styles: style_val_blue
                     align: top_right
-                    x: -24
-                    y: 82
+                    x: -26
+                    y: 83
                 - label:
                     id: icon_ext_rest
                     text: "\uF1D4" # outlet / Steckdose
@@ -1182,8 +1143,7 @@ lvgl:
                     text_color: 0x38BDF8
                     align: top_right
                     x: -2
-                    y: 79
-                    
+                    y: 80          
           # ==========================================
           # KACHEL 2: BATTERIE (C1000)
           # ==========================================
