@@ -793,7 +793,7 @@ script:
           lv_obj_invalidate(id(lbl_ext_climate));
           lv_obj_invalidate(id(icon_ext_climate));
 
-   - id: update_rest
+- id: update_rest
     mode: restart
     then:
       - lambda: |-
