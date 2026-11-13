@@ -864,7 +864,7 @@ font:
       - "\uE56C" # kitchen (Küche)
       - "\uF543" # skillet (Cooker / Kocher)
       - "\uE63C" # power / Steckdose
-      - "\" 
+
 
   - file: "gfonts://Material+Symbols+Outlined"
     id: font_icons_hero
