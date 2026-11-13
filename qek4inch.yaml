@@ -1495,7 +1495,7 @@ lvgl:
                     on_click:
                       - lvgl.widget.update:
                         id: screen_power_detail
-                    hidden: faltruese
+                        hidden: true
             
 
           # ==========================================
