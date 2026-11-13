@@ -70,6 +70,7 @@ font:
       - "\uE8AC" # power_settings_new (3 & 4: Off / On)
       - "\uF8D8" # toggle_off (Alternative)
       - "\uF8D9" # toggle_on (Alternative)
+      - "\uE5C4" # arrow_back (Neu: Zurück-Pfeil)
 
   - file: "gfonts://Material+Symbols+Outlined"
     id: font_icons_hero
