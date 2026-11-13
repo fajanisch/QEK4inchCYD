@@ -1362,231 +1362,6 @@ lvgl:
                     x: -2
                     y: 0
 
-          # ==========================================
-          # SUBSCREEN: POWER DETAIL & CONTROL (480x276)
-          # ==========================================
-          - obj:
-              id: screen_power_detail
-              x: 0
-              y: 44
-              width: 480
-              height: 276
-              hidden: true
-              styles: style_card   # Nutzt denselben dunklen Look wie die Kacheln
-              widgets:
-
-                # ==========================================
-                # REIHE 1: Battery & Kitchen (y: 10)
-                # ==========================================
-                - button:
-                    id: btn_sub_bat
-                    x: 8
-                    y: 10
-                    width: 228
-                    height: 78
-                    styles: style_card
-                    widgets:
-                      - label:
-                          text: "Battery"
-                          text_font: font_card_header
-                          styles: style_txt_normal
-                          align: top_left
-                          x: 12
-                          y: 10
-                      - label:
-                          id: lbl_sub_bat_telemetry
-                          text: "-- W  •  -- Wh"
-                          text_font: font_sub
-                          text_color: 0x64748B
-                          align: bottom_left
-                          x: 12
-                          y: -10
-                      - label:
-                          id: icon_sub_bat_state
-                          text: "\uE197"
-                          text_font: font_icons_hero
-                          text_color: 0x64748B
-                          align: right_mid
-                          x: -12
-                    on_click:
-                      - homeassistant.service:
-                          service: switch.toggle
-                          data:
-                            entity_id: switch.qek_shelly_c1000_ac_charger
-                      - script.execute: power_detail_timeout
-
-                - button:
-                    id: btn_sub_kitchen
-                    x: 244
-                    y: 10
-                    width: 228
-                    height: 78
-                    styles: style_card
-                    widgets:
-                      - label:
-                          text: "Kitchen"
-                          text_font: font_card_header
-                          styles: style_txt_normal
-                          align: top_left
-                          x: 12
-                          y: 10
-                      - label:
-                          id: lbl_sub_kitchen_telemetry
-                          text: "-- W  •  -- Wh"
-                          text_font: font_sub
-                          text_color: 0x64748B
-                          align: bottom_left
-                          x: 12
-                          y: -10
-                      - label:
-                          id: icon_sub_kitchen_state
-                          text: "\uE197"
-                          text_font: font_icons_hero
-                          text_color: 0x64748B
-                          align: right_mid
-                          x: -12
-                    on_click:
-                      - homeassistant.service:
-                          service: switch.toggle
-                          data:
-                            entity_id: switch.qek_shelly_kitchen
-                      - script.execute: power_detail_timeout
-
-                # ==========================================
-                # REIHE 2: Cooker & Climate (y: 98)
-                # ==========================================
-                - button:
-                    id: btn_sub_cooker
-                    x: 8
-                    y: 98
-                    width: 228
-                    height: 78
-                    styles: style_card
-                    widgets:
-                      - label:
-                          text: "Cooker"
-                          text_font: font_card_header
-                          styles: style_txt_normal
-                          align: top_left
-                          x: 12
-                          y: 10
-                      - label:
-                          id: lbl_sub_cooker_telemetry
-                          text: "-- W  •  -- Wh"
-                          text_font: font_sub
-                          text_color: 0x64748B
-                          align: bottom_left
-                          x: 12
-                          y: -10
-                      - label:
-                          id: icon_sub_cooker_state
-                          text: "\uE197"
-                          text_font: font_icons_hero
-                          text_color: 0x64748B
-                          align: right_mid
-                          x: -12
-                    on_click:
-                      - homeassistant.service:
-                          service: switch.toggle
-                          data:
-                            entity_id: switch.qek_shelly_cooker
-                      - script.execute: power_detail_timeout
-
-                - button:
-                    id: btn_sub_climate
-                    x: 244
-                    y: 98
-                    width: 228
-                    height: 78
-                    styles: style_card
-                    widgets:
-                      - label:
-                          text: "Climate"
-                          text_font: font_card_header
-                          styles: style_txt_normal
-                          align: top_left
-                          x: 12
-                          y: 10
-                      - label:
-                          id: lbl_sub_climate_telemetry
-                          text: "-- W  •  -- Wh"
-                          text_font: font_sub
-                          text_color: 0x64748B
-                          align: bottom_left
-                          x: 12
-                          y: -10
-                      - label:
-                          id: icon_sub_climate_state
-                          text: "\uE197"
-                          text_font: font_icons_hero
-                          text_color: 0x64748B
-                          align: right_mid
-                          x: -12
-                    on_click:
-                      - homeassistant.service:
-                          service: switch.toggle
-                          data:
-                            entity_id: switch.qek_shelly_climate_co
-                      - script.execute: power_detail_timeout
-
-                # ==========================================
-                # REIHE 3: Sonoff (Main) & Back (y: 186)
-                # ==========================================
-                - button:
-                    id: btn_sub_sonoff
-                    x: 8
-                    y: 186
-                    width: 228
-                    height: 78
-                    styles: style_card
-                    widgets:
-                      - label:
-                          text: "Sonoff Main"
-                          text_font: font_card_header
-                          styles: style_txt_normal
-                          align: top_left
-                          x: 12
-                          y: 10
-                      - label:
-                          id: lbl_sub_sonoff_telemetry
-                          text: "-- W  •  -- Wh"
-                          text_font: font_sub
-                          text_color: 0x64748B
-                          align: bottom_left
-                          x: 12
-                          y: -10
-                      - label:
-                          id: icon_sub_sonoff_state
-                          text: "\uE197"
-                          text_font: font_icons_hero
-                          text_color: 0x64748B
-                          align: right_mid
-                          x: -12
-                    on_click:
-                      - homeassistant.service:
-                          service: switch.toggle
-                          data:
-                            entity_id: switch.matter_over_wifi_smart_switch
-                      - script.execute: power_detail_timeout
-
-                - button:
-                    id: btn_sub_back
-                    x: 244
-                    y: 186
-                    width: 228
-                    height: 78
-                    styles: style_card
-                    widgets:
-                      - label:
-                          text: "<- Back"
-                          text_font: font_card_header
-                          styles: style_txt_normal
-                          align: center
-                    on_click:
-                      - lvgl.widget.update:
-                          id: screen_power_detail
-                          hidden: true
-                      - script.stop: power_detail_timeout
                                             
           # ==========================================
           # DIM GUARD OVERLAY (Vollflächig 480x320)
@@ -1625,3 +1400,236 @@ lvgl:
                   - lvgl.widget.update:
                       id: dim_guard_overlay
                       hidden: true
+
+# ==========================================
+          # SUBSCREEN: POWER DETAIL & CONTROL (480x276)
+          # ==========================================
+          - obj:
+              id: screen_power_detail
+              x: 0
+              y: 44
+              width: 480
+              height: 276
+              hidden: true
+              styles: style_card
+              pad_all: 0
+              widgets:
+
+                # ==========================================
+                # REIHE 1: Battery & Kitchen (y: 10)
+                # ==========================================
+                - obj:
+                    id: btn_sub_bat
+                    x: 8
+                    y: 10
+                    width: 228
+                    height: 78
+                    styles: style_card
+                    clickable: true
+                    widgets:
+                      - label:
+                          text: "Battery"
+                          text_font: font_card_header
+                          styles: style_txt_normal
+                          align: top_left
+                          x: 12
+                          y: 10
+                      - label:
+                          id: lbl_sub_bat_telemetry
+                          text: "0 W • 0 Wh"
+                          text_font: font_sub
+                          text_color: 0x64748B
+                          align: bottom_left
+                          x: 12
+                          y: -10
+                      - label:
+                          id: icon_sub_bat_state
+                          text: "\uE197"
+                          text_font: font_icons_hero
+                          text_color: 0x64748B
+                          align: right_mid
+                          x: -12
+                    on_click:
+                      - homeassistant.service:
+                          service: switch.toggle
+                          data:
+                            entity_id: switch.qek_shelly_c1000_ac_charger
+                      - script.execute: power_detail_timeout
+
+                - obj:
+                    id: btn_sub_kitchen
+                    x: 244
+                    y: 10
+                    width: 228
+                    height: 78
+                    styles: style_card
+                    clickable: true
+                    widgets:
+                      - label:
+                          text: "Kitchen"
+                          text_font: font_card_header
+                          styles: style_txt_normal
+                          align: top_left
+                          x: 12
+                          y: 10
+                      - label:
+                          id: lbl_sub_kitchen_telemetry
+                          text: "0 W • 0 Wh"
+                          text_font: font_sub
+                          text_color: 0x64748B
+                          align: bottom_left
+                          x: 12
+                          y: -10
+                      - label:
+                          id: icon_sub_kitchen_state
+                          text: "\uE197"
+                          text_font: font_icons_hero
+                          text_color: 0x64748B
+                          align: right_mid
+                          x: -12
+                    on_click:
+                      - homeassistant.service:
+                          service: switch.toggle
+                          data:
+                            entity_id: switch.qek_shelly_kitchen
+                      - script.execute: power_detail_timeout
+
+                # ==========================================
+                # REIHE 2: Cooker & Climate (y: 98)
+                # ==========================================
+                - obj:
+                    id: btn_sub_cooker
+                    x: 8
+                    y: 98
+                    width: 228
+                    height: 78
+                    styles: style_card
+                    clickable: true
+                    widgets:
+                      - label:
+                          text: "Cooker"
+                          text_font: font_card_header
+                          styles: style_txt_normal
+                          align: top_left
+                          x: 12
+                          y: 10
+                      - label:
+                          id: lbl_sub_cooker_telemetry
+                          text: "0 W • 0 Wh"
+                          text_font: font_sub
+                          text_color: 0x64748B
+                          align: bottom_left
+                          x: 12
+                          y: -10
+                      - label:
+                          id: icon_sub_cooker_state
+                          text: "\uE197"
+                          text_font: font_icons_hero
+                          text_color: 0x64748B
+                          align: right_mid
+                          x: -12
+                    on_click:
+                      - homeassistant.service:
+                          service: switch.toggle
+                          data:
+                            entity_id: switch.qek_shelly_cooker
+                      - script.execute: power_detail_timeout
+
+                - obj:
+                    id: btn_sub_climate
+                    x: 244
+                    y: 98
+                    width: 228
+                    height: 78
+                    styles: style_card
+                    clickable: true
+                    widgets:
+                      - label:
+                          text: "Climate"
+                          text_font: font_card_header
+                          styles: style_txt_normal
+                          align: top_left
+                          x: 12
+                          y: 10
+                      - label:
+                          id: lbl_sub_climate_telemetry
+                          text: "0 W • 0 Wh"
+                          text_font: font_sub
+                          text_color: 0x64748B
+                          align: bottom_left
+                          x: 12
+                          y: -10
+                      - label:
+                          id: icon_sub_climate_state
+                          text: "\uE197"
+                          text_font: font_icons_hero
+                          text_color: 0x64748B
+                          align: right_mid
+                          x: -12
+                    on_click:
+                      - homeassistant.service:
+                          service: switch.toggle
+                          data:
+                            entity_id: switch.qek_shelly_climate_co
+                      - script.execute: power_detail_timeout
+
+                # ==========================================
+                # REIHE 3: Sonoff (Main) & Back (y: 186)
+                # ==========================================
+                - obj:
+                    id: btn_sub_sonoff
+                    x: 8
+                    y: 186
+                    width: 228
+                    height: 78
+                    styles: style_card
+                    clickable: true
+                    widgets:
+                      - label:
+                          text: "Sonoff Main"
+                          text_font: font_card_header
+                          styles: style_txt_normal
+                          align: top_left
+                          x: 12
+                          y: 10
+                      - label:
+                          id: lbl_sub_sonoff_telemetry
+                          text: "0 W • 0 Wh"
+                          text_font: font_sub
+                          text_color: 0x64748B
+                          align: bottom_left
+                          x: 12
+                          y: -10
+                      - label:
+                          id: icon_sub_sonoff_state
+                          text: "\uE197"
+                          text_font: font_icons_hero
+                          text_color: 0x64748B
+                          align: right_mid
+                          x: -12
+                    on_click:
+                      - homeassistant.service:
+                          service: switch.toggle
+                          data:
+                            entity_id: switch.matter_over_wifi_smart_switch
+                      - script.execute: power_detail_timeout
+
+                - obj:
+                    id: btn_sub_back
+                    x: 244
+                    y: 186
+                    width: 228
+                    height: 78
+                    styles: style_card
+                    clickable: true
+                    widgets:
+                      - label:
+                          text: "<- Back"
+                          text_font: font_card_header
+                          styles: style_txt_normal
+                          align: center
+                    on_click:
+                      - lvgl.widget.update:
+                          id: screen_power_detail
+                          hidden: true
+                      - script.stop: power_detail_timeout
