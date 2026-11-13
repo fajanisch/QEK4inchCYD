@@ -832,6 +832,8 @@ font:
       - "\uF879" # dew_point (Dew Point row)
       - "\uE518" # mode_heat (HVAC Heating flame)
       - "\uE166" # ac_unit (HVAC Cooling snowflake)
+      - "\uE56C" # kitchen (Küche)
+      - "\uF543" # skillet (Cooker / Kocher)
 
   - file: "gfonts://Material+Symbols+Outlined"
     id: font_icons_hero
