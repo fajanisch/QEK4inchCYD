@@ -733,7 +733,7 @@ script:
           if (st == "on") {
             int val = (!isnan(pwr) && pwr > 1.0) ? (int)round(pwr) : 0;
             lv_label_set_text_fmt(id(lbl_ext_kitchen), "%d W", val);
-            lv_obj_set_style_text_color(id(name_ext_kitchen), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+            
             lv_obj_set_style_text_color(id(lbl_ext_kitchen), lv_color_hex(0x38BDF8), LV_PART_MAIN);
             lv_obj_set_style_text_color(id(icon_ext_kitchen), lv_color_hex(0x38BDF8), LV_PART_MAIN);
           } else if (st == "off") {
