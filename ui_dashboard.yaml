@@ -809,8 +809,8 @@ lvgl:
                     width: 228
                     height: 84       
                     styles: style_card
-                    bg_color: 0x1E3A8A     # Blauer Hintergrund
-                    border_color: 0x1E3A8A # Blauer Rahmen
+                    bg_color: 0x38BDF8     # Blauer Hintergrund
+                    border_color: 0x38BDF8 # Blauer Rahmen
                     clickable: true
                     widgets:
                       # Icon zentriert (leicht nach links versetzt)
