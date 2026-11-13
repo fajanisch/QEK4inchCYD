@@ -206,6 +206,8 @@ script:
           id: dim_guard_overlay
           hidden: false
           clickable: true
+
+          
 # ==========================================
 # Zeit-Synchronisation via Home Assistant
 # ==========================================
