@@ -70,7 +70,7 @@ font:
       - "\uE8AC" # power_settings_new (3 & 4: Off / On)
       - "\uF8D8" # toggle_off (Alternative)
       - "\uF8D9" # toggle_on (Alternative)
-      - "\uE5C4" # arrow_back (Neu: Zurück-Pfeil)
+      - "\uE166" # undo (Der geschwungene Rücksprung-Pfeil)
 
   - file: "gfonts://Material+Symbols+Outlined"
     id: font_icons_hero
@@ -809,25 +809,23 @@ lvgl:
                     width: 228
                     height: 80
                     styles: style_card
-                    bg_color: 0x1E3A8A     # Dezenter blauer Hintergrund
-                    border_color: 0x3B82F6 # Blauer Rahmen
                     clickable: true
                     widgets:
-                      # Links: Wendepfeil-Icon (26px, grau)
+                      # Links: Geschwungener Undo-Pfeil (26px)
                       - label:
                           id: icon_sub_back
-                          text: "\uE5C4"
+                          text: "\uE166"
                           text_font: font_icons_sub
-                          text_color: 0x94A3B8
+                          text_color: 0x38BDF8
                           align: left_mid
                           x: 16
 
-                      # Daneben: Text "Zurück" in 16px (font_sub_title, grau)
+                      # Daneben: Text "Back" in 16px (font_sub_title)
                       - label:
                           id: lbl_sub_back
                           text: "Back"
                           text_font: font_sub_title
-                          text_color: 0x94A3B8
+                          text_color: 0x38BDF8
                           align: left_mid
                           x: 56
 
