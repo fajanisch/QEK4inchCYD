@@ -809,7 +809,7 @@ lvgl:
                     width: 228
                     height: 80
                     styles: style_card
-                    bg_color: 0x1E3A8A     # Dezenter blauer Hintergrund zur Kennzeichnung
+                    bg_color: 0x1E3A8A     # Dezenter blauer Hintergrund
                     border_color: 0x3B82F6 # Blauer Rahmen
                     clickable: true
                     widgets:
@@ -832,4 +832,4 @@ lvgl:
                           x: 56
 
                     on_click:
-                      - script.execute: hide_power_detail
+                      - script.execute: power_detail_timeout
