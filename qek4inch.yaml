@@ -812,6 +812,8 @@ script:
           }
           lv_obj_invalidate(id(lbl_ext_rest));
           lv_obj_invalidate(id(icon_ext_rest));
+
+          
 # 5. Typografie (Inter)
 font:
   - file: "gfonts://Inter"
