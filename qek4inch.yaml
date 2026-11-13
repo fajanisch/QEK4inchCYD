@@ -206,13 +206,6 @@ script:
           id: dim_guard_overlay
           hidden: false
           clickable: true
-          
-  - id: dim_inactivity_timer
-    mode: restart
-    then:
-      - delay: 60s
-      # Nach 60 s ohne Touch: Display dimmen und Guard scharf schalten
-      - light.turn_on:
           id: cyd_backlight
           brightness: 5%
       - lvgl.widget.update:
