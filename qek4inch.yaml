@@ -1009,7 +1009,7 @@ lvgl:
               x: 8
               y: 44
               width: 228
-              height: 140 # Erhöht für die 5. Zeile
+              height: 130 # Zurück auf 130px, um den Scrollbar zu verhindern
               styles: style_card
               widgets:
                 # Kachel-Header
@@ -1049,14 +1049,15 @@ lvgl:
                     y: 10
                     hidden: true
 
-                # --- RECHTS ZEILE 1: Battery (y: 22) ---
+                # --- RECHTS ZEILE 1: Battery (y: 20) ---
                 - label:
+                    id: name_ext_bat
                     text: "Bat:"
                     text_font: font_sub
-                    styles: style_txt_inactive
+                    text_color: 0x38BDF8
                     align: top_right
                     x: -65
-                    y: 22
+                    y: 20
                 - label:
                     id: lbl_ext_bat
                     text: "0 W"
@@ -1064,7 +1065,7 @@ lvgl:
                     styles: style_val_blue
                     align: top_right
                     x: -24
-                    y: 22
+                    y: 20
                 - label:
                     id: icon_ext_bat
                     text: "\uE1A4"
@@ -1072,16 +1073,17 @@ lvgl:
                     styles: style_icon_inactive
                     align: top_right
                     x: -2
-                    y: 19
+                    y: 17
 
-                # --- RECHTS ZEILE 2: Kitchen (y: 43) ---
+                # --- RECHTS ZEILE 2: Kitchen (y: 39) ---
                 - label:
+                    id: name_ext_kitchen
                     text: "Kitch:"
                     text_font: font_sub
-                    styles: style_txt_inactive
+                    text_color: 0x38BDF8
                     align: top_right
                     x: -65
-                    y: 43
+                    y: 39
                 - label:
                     id: lbl_ext_kitchen
                     text: "0 W"
@@ -1089,7 +1091,7 @@ lvgl:
                     styles: style_val_blue
                     align: top_right
                     x: -24
-                    y: 43
+                    y: 39
                 - label:
                     id: icon_ext_kitchen
                     text: "\uE56C"
@@ -1097,16 +1099,17 @@ lvgl:
                     styles: style_icon_inactive
                     align: top_right
                     x: -2
-                    y: 40
+                    y: 36
 
-                # --- RECHTS ZEILE 3: Cooker (y: 64) ---
+                # --- RECHTS ZEILE 3: Cooker (y: 58) ---
                 - label:
+                    id: name_ext_cooker
                     text: "Cook:"
                     text_font: font_sub
-                    styles: style_txt_inactive
+                    text_color: 0x38BDF8
                     align: top_right
                     x: -65
-                    y: 64
+                    y: 58
                 - label:
                     id: lbl_ext_cooker
                     text: "0 W"
@@ -1114,7 +1117,7 @@ lvgl:
                     styles: style_val_blue
                     align: top_right
                     x: -24
-                    y: 64
+                    y: 58
                 - label:
                     id: icon_ext_cooker
                     text: "\uF543"
@@ -1122,16 +1125,17 @@ lvgl:
                     styles: style_icon_inactive
                     align: top_right
                     x: -2
-                    y: 61
+                    y: 55
 
-                # --- RECHTS ZEILE 4: Climate (y: 85) ---
+                # --- RECHTS ZEILE 4: Climate (y: 77) ---
                 - label:
+                    id: name_ext_climate
                     text: "Clim:"
                     text_font: font_sub
-                    styles: style_txt_inactive
+                    text_color: 0x38BDF8
                     align: top_right
                     x: -65
-                    y: 85
+                    y: 77
                 - label:
                     id: lbl_ext_climate
                     text: "0 W"
@@ -1139,7 +1143,7 @@ lvgl:
                     styles: style_val_blue
                     align: top_right
                     x: -24
-                    y: 85
+                    y: 77
                 - label:
                     id: icon_ext_climate
                     text: "\uF076"
@@ -1147,16 +1151,16 @@ lvgl:
                     styles: style_icon_inactive
                     align: top_right
                     x: -2
-                    y: 82
+                    y: 74
 
-                # --- RECHTS ZEILE 5: Other (y: 106) ---
+                # --- RECHTS ZEILE 5: Other (y: 96) ---
                 - label:
-                    text: "Oth.:"
+                    text: "Oth:"
                     text_font: font_sub
-                    styles: style_txt_inactive
+                    text_color: 0x38BDF8
                     align: top_right
                     x: -65
-                    y: 106
+                    y: 96
                 - label:
                     id: lbl_ext_rest
                     text: "0 W"
@@ -1164,16 +1168,17 @@ lvgl:
                     styles: style_val_blue
                     align: top_right
                     x: -24
-                    y: 106
+                    y: 96
                 - label:
                     id: icon_ext_rest
-                    text: "\uF1D4" # power / Steckdose
+                    text: "\uF1D4" # outlet / Steckdose
                     text_font: font_icons
-                    styles: style_icon_inactive
+                    text_color: 0x38BDF8 # Immer blau!
                     align: top_right
                     x: -2
-                    y: 103
+                    y: 93
 
+                    
           # ==========================================
           # KACHEL 2: BATTERIE (C1000)
           # ==========================================
