@@ -805,7 +805,7 @@ lvgl:
                 - obj:
                     id: btn_sub_back
                     x: 244
-                    y: 168
+                    y: 186
                     width: 228
                     height: 80
                     styles: style_card
