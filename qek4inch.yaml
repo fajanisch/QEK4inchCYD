@@ -211,7 +211,7 @@ script:
           hidden: false
           clickable: true
 
-# Power 
+# Power Tile
   - id: update_ext_pwr_hero
     mode: restart
     then:
