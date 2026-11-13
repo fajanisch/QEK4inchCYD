@@ -382,3 +382,49 @@ sensor:
     on_value:
       then:
         - script.execute: update_rest
+
+# --- TAGESENERGIE (kWh aus HA -> Wh in ESPHome) ---
+  - platform: homeassistant
+    id: ext_pwr_wh
+    entity_id: sensor.qek_sonoff_energy_daily
+    filters:
+      - multiply: 1000.0
+    on_value:
+      then:
+        - script.execute: update_ext_pwr_hero
+
+  - platform: homeassistant
+    id: ext_bat_wh
+    entity_id: sensor.qek_bat_energy_daily
+    filters:
+      - multiply: 1000.0
+    on_value:
+      then:
+        - script.execute: update_shelly_bat
+
+  - platform: homeassistant
+    id: ext_kitchen_wh
+    entity_id: sensor.qek_kitchen_energy_daily
+    filters:
+      - multiply: 1000.0
+    on_value:
+      then:
+        - script.execute: update_shelly_kitchen
+
+  - platform: homeassistant
+    id: ext_cooker_wh
+    entity_id: sensor.qek_cooker_energy_daily
+    filters:
+      - multiply: 1000.0
+    on_value:
+      then:
+        - script.execute: update_shelly_cooker
+
+  - platform: homeassistant
+    id: ext_climate_wh
+    entity_id: sensor.qek_climate_energy_daily
+    filters:
+      - multiply: 1000.0
+    on_value:
+      then:
+        - script.execute: update_shelly_climate
