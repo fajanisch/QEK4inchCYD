@@ -699,22 +699,26 @@ script:
       - lambda: |-
           std::string st = id(ext_bat_switch_state).state;
           for (auto &c : st) c = tolower(c);
-          float pwr = id(ext_bat_power).state; 
+          float pwr = id(ext_bat_power).state;
 
           if (st == "on") {
             int val = (!isnan(pwr) && pwr > 1.0) ? (int)round(pwr) : 0;
             lv_label_set_text_fmt(id(lbl_ext_bat), "%d W", val);
+            lv_obj_set_style_text_color(id(name_ext_bat), lv_color_hex(0x38BDF8), LV_PART_MAIN);
             lv_obj_set_style_text_color(id(lbl_ext_bat), lv_color_hex(0x38BDF8), LV_PART_MAIN);
             lv_obj_set_style_text_color(id(icon_ext_bat), lv_color_hex(0x38BDF8), LV_PART_MAIN);
           } else if (st == "off") {
             lv_label_set_text(id(lbl_ext_bat), "Off");
+            lv_obj_set_style_text_color(id(name_ext_bat), lv_color_hex(0x38BDF8), LV_PART_MAIN);
             lv_obj_set_style_text_color(id(lbl_ext_bat), lv_color_hex(0x38BDF8), LV_PART_MAIN);
             lv_obj_set_style_text_color(id(icon_ext_bat), lv_color_hex(0x38BDF8), LV_PART_MAIN);
           } else {
             lv_label_set_text(id(lbl_ext_bat), "--");
+            lv_obj_set_style_text_color(id(name_ext_bat), lv_color_hex(0x64748B), LV_PART_MAIN);
             lv_obj_set_style_text_color(id(lbl_ext_bat), lv_color_hex(0x64748B), LV_PART_MAIN);
             lv_obj_set_style_text_color(id(icon_ext_bat), lv_color_hex(0x64748B), LV_PART_MAIN);
           }
+          lv_obj_invalidate(id(name_ext_bat));
           lv_obj_invalidate(id(lbl_ext_bat));
           lv_obj_invalidate(id(icon_ext_bat));
 
@@ -729,17 +733,21 @@ script:
           if (st == "on") {
             int val = (!isnan(pwr) && pwr > 1.0) ? (int)round(pwr) : 0;
             lv_label_set_text_fmt(id(lbl_ext_kitchen), "%d W", val);
+            lv_obj_set_style_text_color(id(name_ext_kitchen), lv_color_hex(0x38BDF8), LV_PART_MAIN);
             lv_obj_set_style_text_color(id(lbl_ext_kitchen), lv_color_hex(0x38BDF8), LV_PART_MAIN);
             lv_obj_set_style_text_color(id(icon_ext_kitchen), lv_color_hex(0x38BDF8), LV_PART_MAIN);
           } else if (st == "off") {
             lv_label_set_text(id(lbl_ext_kitchen), "Off");
+            lv_obj_set_style_text_color(id(name_ext_kitchen), lv_color_hex(0x38BDF8), LV_PART_MAIN);
             lv_obj_set_style_text_color(id(lbl_ext_kitchen), lv_color_hex(0x38BDF8), LV_PART_MAIN);
             lv_obj_set_style_text_color(id(icon_ext_kitchen), lv_color_hex(0x38BDF8), LV_PART_MAIN);
           } else {
             lv_label_set_text(id(lbl_ext_kitchen), "--");
+            lv_obj_set_style_text_color(id(name_ext_kitchen), lv_color_hex(0x64748B), LV_PART_MAIN);
             lv_obj_set_style_text_color(id(lbl_ext_kitchen), lv_color_hex(0x64748B), LV_PART_MAIN);
             lv_obj_set_style_text_color(id(icon_ext_kitchen), lv_color_hex(0x64748B), LV_PART_MAIN);
           }
+          lv_obj_invalidate(id(name_ext_kitchen));
           lv_obj_invalidate(id(lbl_ext_kitchen));
           lv_obj_invalidate(id(icon_ext_kitchen));
 
@@ -754,17 +762,21 @@ script:
           if (st == "on") {
             int val = (!isnan(pwr) && pwr > 1.0) ? (int)round(pwr) : 0;
             lv_label_set_text_fmt(id(lbl_ext_cooker), "%d W", val);
+            lv_obj_set_style_text_color(id(name_ext_cooker), lv_color_hex(0x38BDF8), LV_PART_MAIN);
             lv_obj_set_style_text_color(id(lbl_ext_cooker), lv_color_hex(0x38BDF8), LV_PART_MAIN);
             lv_obj_set_style_text_color(id(icon_ext_cooker), lv_color_hex(0x38BDF8), LV_PART_MAIN);
           } else if (st == "off") {
             lv_label_set_text(id(lbl_ext_cooker), "Off");
+            lv_obj_set_style_text_color(id(name_ext_cooker), lv_color_hex(0x38BDF8), LV_PART_MAIN);
             lv_obj_set_style_text_color(id(lbl_ext_cooker), lv_color_hex(0x38BDF8), LV_PART_MAIN);
             lv_obj_set_style_text_color(id(icon_ext_cooker), lv_color_hex(0x38BDF8), LV_PART_MAIN);
           } else {
             lv_label_set_text(id(lbl_ext_cooker), "--");
+            lv_obj_set_style_text_color(id(name_ext_cooker), lv_color_hex(0x64748B), LV_PART_MAIN);
             lv_obj_set_style_text_color(id(lbl_ext_cooker), lv_color_hex(0x64748B), LV_PART_MAIN);
             lv_obj_set_style_text_color(id(icon_ext_cooker), lv_color_hex(0x64748B), LV_PART_MAIN);
           }
+          lv_obj_invalidate(id(name_ext_cooker));
           lv_obj_invalidate(id(lbl_ext_cooker));
           lv_obj_invalidate(id(icon_ext_cooker));
 
@@ -779,17 +791,21 @@ script:
           if (st == "on") {
             int val = (!isnan(pwr) && pwr > 1.0) ? (int)round(pwr) : 0;
             lv_label_set_text_fmt(id(lbl_ext_climate), "%d W", val);
+            lv_obj_set_style_text_color(id(name_ext_climate), lv_color_hex(0x38BDF8), LV_PART_MAIN);
             lv_obj_set_style_text_color(id(lbl_ext_climate), lv_color_hex(0x38BDF8), LV_PART_MAIN);
             lv_obj_set_style_text_color(id(icon_ext_climate), lv_color_hex(0x38BDF8), LV_PART_MAIN);
           } else if (st == "off") {
             lv_label_set_text(id(lbl_ext_climate), "Off");
+            lv_obj_set_style_text_color(id(name_ext_climate), lv_color_hex(0x38BDF8), LV_PART_MAIN);
             lv_obj_set_style_text_color(id(lbl_ext_climate), lv_color_hex(0x38BDF8), LV_PART_MAIN);
             lv_obj_set_style_text_color(id(icon_ext_climate), lv_color_hex(0x38BDF8), LV_PART_MAIN);
           } else {
             lv_label_set_text(id(lbl_ext_climate), "--");
+            lv_obj_set_style_text_color(id(name_ext_climate), lv_color_hex(0x64748B), LV_PART_MAIN);
             lv_obj_set_style_text_color(id(lbl_ext_climate), lv_color_hex(0x64748B), LV_PART_MAIN);
             lv_obj_set_style_text_color(id(icon_ext_climate), lv_color_hex(0x64748B), LV_PART_MAIN);
           }
+          lv_obj_invalidate(id(name_ext_climate));
           lv_obj_invalidate(id(lbl_ext_climate));
           lv_obj_invalidate(id(icon_ext_climate));
 
@@ -799,20 +815,10 @@ script:
       - lambda: |-
           float rest = id(ext_rest_power).state;
           if (isnan(rest)) rest = 0;
-
-          if (rest > 1.0) {
-            int val = (int)round(rest);
-            lv_label_set_text_fmt(id(lbl_ext_rest), "%d W", val);
-            lv_obj_set_style_text_color(id(lbl_ext_rest), lv_color_hex(0x38BDF8), LV_PART_MAIN);
-            lv_obj_set_style_text_color(id(icon_ext_rest), lv_color_hex(0x38BDF8), LV_PART_MAIN);
-          } else {
-            lv_label_set_text(id(lbl_ext_rest), "0 W");
-            lv_obj_set_style_text_color(id(lbl_ext_rest), lv_color_hex(0x64748B), LV_PART_MAIN);
-            lv_obj_set_style_text_color(id(icon_ext_rest), lv_color_hex(0x64748B), LV_PART_MAIN);
-          }
+          int val = (int)round(rest);
+          lv_label_set_text_fmt(id(lbl_ext_rest), "%d W", val);
+          lv_obj_set_style_text_color(id(lbl_ext_rest), lv_color_hex(0x38BDF8), LV_PART_MAIN);
           lv_obj_invalidate(id(lbl_ext_rest));
-          lv_obj_invalidate(id(icon_ext_rest));
-
 
 # 5. Typografie (Inter)
 font:
