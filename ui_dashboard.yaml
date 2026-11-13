@@ -806,28 +806,30 @@ lvgl:
                     id: btn_sub_back
                     x: 244
                     y: 186
-                    width: 228
-                    height: 80
+                    width: 226
+                    height: 79       
                     styles: style_card
+                    bg_color: 0x1E3A8A     # Blauer Hintergrund
+                    border_color: 0x3B82F6 # Blauer Rahmen
                     clickable: true
                     widgets:
-                      # Links: Geschwungener Undo-Pfeil (26px)
+                      # Icon zentriert (leicht nach links versetzt)
                       - label:
                           id: icon_sub_back
-                          text: "\uE166"
+                          text: "\uE166" # undo (geschwungener Pfeil)
                           text_font: font_icons_sub
-                          text_color: 0x38BDF8
-                          align: left_mid
-                          x: 16
+                          text_color: 0x94A3B8  # Hellgrau
+                          align: center
+                          x: -25
 
-                      # Daneben: Text "Back" in 16px (font_sub_title)
+                      # Label zentriert (leicht nach rechts versetzt)
                       - label:
                           id: lbl_sub_back
                           text: "Back"
                           text_font: font_sub_title
-                          text_color: 0x38BDF8
-                          align: left_mid
-                          x: 56
+                          text_color: 0x94A3B8  # Hellgrau
+                          align: center
+                          x: 21
 
                     on_click:
                       - script.execute: power_detail_timeout
