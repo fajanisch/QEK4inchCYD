@@ -745,30 +745,52 @@ lvgl:
                     x: -80
 
           # ==========================================
-          # KACHEL 1: Oben Links (Externe Power)
+          # KACHEL 1: POWER (Oben Links)
           # ==========================================
           - obj:
+              id: card_ext_pwr
               x: 8
               y: 44
               width: 228
               height: 130
               styles: style_card
               widgets:
+                # Kachel-Header (Stecker-Icon + POWER)
                 - label:
-                    styles: style_txt_normal
-                    text: "EXTERNE POWER"
+                    id: icon_ext_pwr_card
+                    text: "\uE63C" # power
+                    text_font: font_icons
+                    styles: style_icon_inactive
                     align: top_left
+
                 - label:
-                    id: lbl_ext_pwr_status
+                    text: "POWER"
+                    text_font: font_card_header
+                    styles: style_txt_normal
+                    align: top_left
+                    x: 24
+                    y: 2
+
+                # --- LINKS HERO A: Durchgestrichener Stecker (bei unavailable / off) ---
+                - label:
+                    id: icon_ext_pwr_hero
+                    text: "\uE646" # power_off
+                    text_font: font_icons_hero
+                    text_color: 0x64748B
+                    align: left_mid
+                    x: 16
+                    y: 10
+
+                # --- LINKS HERO B: Leistung in Watt (bei on) ---
+                - label:
+                    id: lbl_ext_pwr_watt
+                    text: "0 W"
+                    text_font: font_val_hero
                     styles: style_val_blue
-                    text: "230 V"
-                    align: center
-                    y: -2
-                - label:
-                    id: lbl_ext_pwr_sub
-                    styles: style_sub_gray
-                    text: "Landstrom aktiv | 16A"
-                    align: bottom_mid
+                    align: left_mid
+                    x: 4
+                    y: 10
+                    hidden: true
 
           # ==========================================
           # KACHEL 2: BATTERIE (C1000)
