@@ -411,12 +411,11 @@ lvgl:
                     align: center
                     y: 25
                     clickable: false
-                on_click:
+              on_click:
                 - homeassistant.service:
                     service: script.turn_on
                     data:
-                        entity_id: script.qek_b1
-
+                      entity_id: script.qek_b1
 
           - obj:
               id: card_climate
