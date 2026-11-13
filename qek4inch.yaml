@@ -617,6 +617,13 @@ sensor:
       then:
         - script.execute: update_shelly_climate
 
+
+  - platform: homeassistant
+    id: ext_rest_power
+    entity_id: sensor.qek_other_power_consumption
+    on_value:
+      then:
+        - script.execute: update_rest
 # Local chime / alert script callable from Home Assistant automations
 script:
   - id: dim_inactivity_timer
