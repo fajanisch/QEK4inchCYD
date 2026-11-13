@@ -450,6 +450,42 @@ text_sensor:
     on_value:
       then:
         - script.execute: update_ext_pwr_hero
+
+text_sensor:
+  # ... deine bestehenden text_sensors ...
+
+  - platform: homeassistant
+    id: ext_bat_switch_state
+    entity_id: switch.qek_shelly_c1000_ac_charger
+    on_value:
+      then:
+        - lambda: |-
+            // Erzwingt Neuberechnung, wenn sich der Schalterstatus ändert
+            id(ext_bat_power).publish_state(id(ext_bat_power).state);
+
+  - platform: homeassistant
+    id: ext_kitchen_switch_state
+    entity_id: switch.qek_shelly_kitchen
+    on_value:
+      then:
+        - lambda: |-
+            id(ext_kitchen_power).publish_state(id(ext_kitchen_power).state);
+
+  - platform: homeassistant
+    id: ext_cooker_switch_state
+    entity_id: switch.qek_shelly_cooker
+    on_value:
+      then:
+        - lambda: |-
+            id(ext_cooker_power).publish_state(id(ext_cooker_power).state);
+
+  - platform: homeassistant
+    id: ext_climate_switch_state
+    entity_id: switch.qek_shelly_climate_co
+    on_value:
+      then:
+        - lambda: |-
+            id(ext_climate_switch_state).publish_state(id(ext_climate_switch_state).state);
 sensor:
   # Temp&humidity sensor AM2302
   - platform: dht
