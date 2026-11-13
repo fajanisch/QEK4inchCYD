@@ -443,7 +443,7 @@ text_sensor:
             }
             lv_obj_invalidate(id(lbl_climate_wx));
             lv_obj_invalidate(id(icon_climate_wx));
-
+#
   - platform: homeassistant
     id: ext_pwr_switch_state
     entity_id: switch.matter_over_wifi_smart_switch
