@@ -1363,35 +1363,27 @@ lvgl:
                     y: 0
 
           # ==========================================
-          # SUBSCREEN: POWER DETAIL & CONTROL (480x320)
+          # SUBSCREEN: POWER DETAIL & CONTROL (480x276)
+          # Exaktes Raster wie Hauptbildschirm (228px Breite)
           # ==========================================
           - obj:
               id: screen_power_detail
               x: 0
-              y: 0
+              y: 44
               width: 480
-              height: 320
-              styles: style_card # Hintergrundfarbe deines Dashboards
+              height: 276
               hidden: true    # Standardmäßig ausgeblendet
               widgets:
 
-                # --- Header / Titel ---
-                - label:
-                    text: "POWER MANAGEMENT"
-                    text_font: font_card_header
-                    styles: style_txt_normal
-                    align: top_mid
-                    y: 10
-
                 # ==========================================
-                # REIHE 1: Battery & Kitchen (y: 50)
+                # REIHE 1: Battery & Kitchen (y: 12)
                 # ==========================================
                 - button:
                     id: btn_sub_bat
-                    x: 20
-                    y: 50
-                    width: 210
-                    height: 70
+                    x: 8
+                    y: 12
+                    width: 228
+                    height: 76
                     styles: style_card
                     widgets:
                       - label:
@@ -1403,14 +1395,15 @@ lvgl:
                       - homeassistant.service:
                           service: switch.toggle
                           data:
-                            entity_id: switch.qek_shelly_c1000_ac_charger # Entsprechende Entity anpassen
+                            entity_id: switch.qek_shelly_c1000_ac_charger
+                      - script.execute: power_detail_timeout
 
                 - button:
                     id: btn_sub_kitchen
-                    x: 250
-                    y: 50
-                    width: 210
-                    height: 70
+                    x: 244
+                    y: 12
+                    width: 228
+                    height: 76
                     styles: style_card
                     widgets:
                       - label:
@@ -1422,17 +1415,18 @@ lvgl:
                       - homeassistant.service:
                           service: switch.toggle
                           data:
-                            entity_id: switch.qek_shelly_kitchen # Entsprechende Entity anpassen
+                            entity_id: switch.qek_shelly_kitchen
+                      - script.execute: power_detail_timeout
 
                 # ==========================================
-                # REIHE 2: Cooker & Climate (y: 135)
+                # REIHE 2: Cooker & Climate (y: 98)
                 # ==========================================
                 - button:
                     id: btn_sub_cooker
-                    x: 20
-                    y: 135
-                    width: 210
-                    height: 70
+                    x: 8
+                    y: 98
+                    width: 228
+                    height: 76
                     styles: style_card
                     widgets:
                       - label:
@@ -1444,14 +1438,15 @@ lvgl:
                       - homeassistant.service:
                           service: switch.toggle
                           data:
-                            entity_id: switch.qek_shelly_cooker # Entsprechende Entity anpassen
+                            entity_id: switch.qek_shelly_cooker
+                      - script.execute: power_detail_timeout
 
                 - button:
                     id: btn_sub_climate
-                    x: 250
-                    y: 135
-                    width: 210
-                    height: 70
+                    x: 244
+                    y: 98
+                    width: 228
+                    height: 76
                     styles: style_card
                     widgets:
                       - label:
@@ -1463,17 +1458,18 @@ lvgl:
                       - homeassistant.service:
                           service: switch.toggle
                           data:
-                            entity_id: switch.qek_shelly_climate_co # Entsprechende Entity anpassen
+                            entity_id: switch.qek_shelly_climate_co
+                      - script.execute: power_detail_timeout
 
                 # ==========================================
-                # REIHE 3: Sonoff (Main) & Back (y: 220)
+                # REIHE 3: Sonoff (Main) & Back (y: 184)
                 # ==========================================
                 - button:
                     id: btn_sub_sonoff
-                    x: 20
-                    y: 220
-                    width: 210
-                    height: 70
+                    x: 8
+                    y: 184
+                    width: 228
+                    height: 76
                     styles: style_card
                     widgets:
                       - label:
@@ -1485,14 +1481,15 @@ lvgl:
                       - homeassistant.service:
                           service: switch.toggle
                           data:
-                            entity_id: switch.matter_over_wifi_smart_switch # Entsprechende Entity anpassen
+                            entity_id: switch.matter_over_wifi_smart_switch
+                      - script.execute: power_detail_timeout
 
                 - button:
                     id: btn_sub_back
-                    x: 250
-                    y: 220
-                    width: 210
-                    height: 70
+                    x: 244
+                    y: 184
+                    width: 228
+                    height: 76
                     styles: style_card
                     widgets:
                       - label:
@@ -1505,7 +1502,7 @@ lvgl:
                           id: screen_power_detail
                           hidden: true
                       - script.stop: power_detail_timeout
-
+                      
           # ==========================================
           # DIM GUARD OVERLAY (Vollflächig 480x320)
           # ==========================================
