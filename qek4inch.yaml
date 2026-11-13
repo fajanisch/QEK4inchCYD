@@ -211,7 +211,7 @@ script:
           hidden: false
           clickable: true
 
-# ---> HIER ERGÄNZEN (gleiche Einrückung wie dim_inactivity_timer):
+# Power 
   - id: update_ext_pwr_hero
     mode: restart
     then:
@@ -259,7 +259,7 @@ script:
           lv_obj_invalidate(id(lbl_ext_pwr_watt));
           lv_obj_invalidate(id(icon_ext_pwr_hero));
           lv_obj_invalidate(id(icon_ext_pwr_card));
-          
+
 # ==========================================
 # Zeit-Synchronisation via Home Assistant
 # ==========================================
