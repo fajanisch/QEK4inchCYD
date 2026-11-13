@@ -763,7 +763,7 @@ sensor:
       then:
         - script.execute: update_ext_pwr_hero
 
-  # 1. Battery Charger Shelly
+  # Shelly
   text_sensor:
   - platform: homeassistant
     id: ext_bat_switch_state
@@ -792,7 +792,7 @@ sensor:
     on_value:
       then:
         - script.execute: update_shelly_climate
-          
+
 # 5. Typografie (Inter)
 font:
   - file: "gfonts://Inter"
