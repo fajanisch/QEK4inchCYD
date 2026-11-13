@@ -15,6 +15,14 @@ font:
     id: font_sub
     size: 12
     glyphs: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 /:.-°%|,>()"
+  - file:
+      type: gfonts
+      family: Inter
+      weight: 600
+    id: font_sub_title
+    size: 16
+    glyphs: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 /:.-°%|,>()<-"
+
   - file: "gfonts://Material+Symbols+Outlined"
     id: font_icons
     size: 18
@@ -60,6 +68,16 @@ font:
       - "\uE646" # power_off (1: Unavailable)
       - "\uE897" # lock (2: Locked)
       - "\uF8D9" # toggle_on (4: On)
+      - "\uE1A4" # battery_full (Battery)
+      - "\uE56C" # kitchen (Kitchen)
+      - "\uF543" # skillet (Cooker)
+      - "\uF076" # thermostat (Climate)
+      - "\uE63C" # power (Sonoff Main)
+      - "\uE646" # power_off (Unavailable)
+      - "\uE897" # lock (Locked)
+      - "\uE8AC" # power_settings_new (Off / On)
+      - "\uF8D8" # toggle_off
+      - "\uF8D9" # toggle_on
 
   - file: "gfonts://Material+Symbols+Outlined"
     id: font_icons_hero
@@ -528,25 +546,25 @@ lvgl:
                     styles: style_card
                     clickable: true
                     widgets:
-                      # 1. Links: Gleiches Icon wie Hauptschirm, aber groß (26px)
+                      # 1. Links: Geräte-Icon (26px)
                       - label:
                           id: icon_sub_bat_loc
-                          text: "\uE1A4" # battery_full
+                          text: "\uE1A4"
                           text_font: font_icons_sub
                           text_color: 0x64748B
                           align: left_mid
                           x: 2
 
-                      # 2. Daneben: Name
+                      # 2. Daneben: Name (16px, ohne style_txt_normal!)
                       - label:
                           id: lbl_sub_bat_name
                           text: "Battery"
-                          text_font: font_card_header
-                          styles: style_txt_normal
+                          text_font: font_sub_title
+                          text_color: 0x38BDF8
                           align: left_mid
                           x: 34
 
-                      # 3a. Oben: Aktuelle Power (W)
+                      # 3a. Oben: Power (W)
                       - label:
                           id: lbl_sub_bat_pwr
                           text: "0 W"
@@ -556,7 +574,7 @@ lvgl:
                           x: -34
                           y: 12
 
-                      # 3b. Unten: Energie heute bisher (Wh)
+                      # 3b. Unten: Energie heute (Wh)
                       - label:
                           id: lbl_sub_bat_energy
                           text: "0 Wh"
@@ -566,10 +584,10 @@ lvgl:
                           x: -34
                           y: -12
 
-                      # 4. Rechts: Zustands-Icon in derselben Größe (26px)
+                      # 4. Rechts: Zustands-Icon (26px)
                       - label:
                           id: icon_sub_bat_state
-                          text: "\uE646" # Start: Unavailable / Off
+                          text: "\uE8AC"
                           text_font: font_icons_sub
                           text_color: 0x64748B
                           align: right_mid
@@ -581,7 +599,8 @@ lvgl:
                           data:
                             entity_id: switch.qek_shelly_c1000_ac_charger
                       - script.execute: power_detail_timeout
-                      
+
+                #kitchen multi plug            
                 - obj:
                     id: btn_sub_kitchen
                     x: 244
