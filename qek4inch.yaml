@@ -623,7 +623,6 @@ sensor:
       then:
         - script.execute: update_ext_pwr_hero
 
-sensor:
   # 1. Battery Charger Shelly
   - platform: homeassistant
     id: ext_bat_power
