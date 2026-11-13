@@ -1090,7 +1090,6 @@ lvgl:
                     align: top_right
                     x: -24
                     y: 85
-
                 - label:
                     id: icon_ext_climate
                     text: "\uF076" # thermostat
