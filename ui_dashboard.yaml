@@ -394,20 +394,13 @@ lvgl:
               styles: style_card
               widgets:
                 - label:
-                    styles: style_txt_normal
-                    text: "LICHT & WASSER"
-                    align: top_left
-                - label:
-                    id: lbl_light_water_main
-                    styles: style_val_blue
-                    text: "BEREIT"
-                    align: center
-                    y: -2
-                - label:
-                    id: lbl_light_water_sub
-                    styles: style_sub_gray
-                    text: "Licht: AN | Pumpe: STANDBY"
-                    align: bottom_mid
+          text: "Light"
+          # ... deine bestehenden Label-Styles und Positionen ...
+         on_click:
+           - homeassistant.service:
+             service: script.turn_on
+             data:
+               entity_id: script.qek_b1  # Entspricht dem vorhin angelegten QEK-Skript
 
           - obj:
               id: card_climate
