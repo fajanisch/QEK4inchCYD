@@ -1,0 +1,384 @@
+binary_sensor:
+  - platform: homeassistant
+    id: ha_auto_dim
+    entity_id: binary_sensor.qek_qek_dashboard_4_0_cyd_auto_dim
+    on_state:
+      then:
+        - if:
+            condition:
+              binary_sensor.is_on: ha_auto_dim
+            then:
+              - script.execute: dim_inactivity_timer
+            else:
+              - script.stop: dim_inactivity_timer
+              - light.turn_on:
+                  id: cyd_backlight
+                  brightness: 80%
+              - lvgl.widget.update:
+                  id: dim_guard_overlay
+                  clickable: false
+                  hidden: true
+
+text_sensor:
+  - platform: homeassistant
+    id: qek_status_gps
+    entity_id: sensor.qek_status_gps
+    on_value:
+      then:
+        - lambda: |-
+            if (x == "ok") {
+              lv_obj_set_style_text_color(id(badge_gps), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+            } else if (x == "warn") {
+              lv_obj_set_style_text_color(id(badge_gps), lv_color_hex(0xFBBF24), LV_PART_MAIN);
+            } else {
+              lv_obj_set_style_text_color(id(badge_gps), lv_color_hex(0x64748B), LV_PART_MAIN);
+            }
+
+  - platform: homeassistant
+    id: qek_status_pwr
+    entity_id: sensor.qek_status_pwr
+    on_value:
+      then:
+        - lambda: |-
+            if (x == "disconnected") {
+              lv_label_set_text(id(badge_pwr), "\uE646");
+              lv_obj_set_style_text_color(id(badge_pwr), lv_color_hex(0x64748B), LV_PART_MAIN);
+            } else if (x == "off") {
+              lv_label_set_text(id(badge_pwr), "\uE63C");
+              lv_obj_set_style_text_color(id(badge_pwr), lv_color_hex(0x64748B), LV_PART_MAIN);
+            } else if (x == "warn") {
+              lv_label_set_text(id(badge_pwr), "\uE63C");
+              lv_obj_set_style_text_color(id(badge_pwr), lv_color_hex(0xFBBF24), LV_PART_MAIN);
+            } else {
+              lv_label_set_text(id(badge_pwr), "\uE63C");
+              lv_obj_set_style_text_color(id(badge_pwr), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+            }
+            lv_obj_invalidate(id(badge_pwr));
+
+  - platform: homeassistant
+    id: qek_status_wan
+    entity_id: sensor.qek_status_wan
+    on_value:
+      then:
+        - lambda: |-
+            std::string val = x;
+            for (auto &c : val) c = tolower(c);
+
+            if (val == "none") {
+              lv_label_set_text(id(badge_wan), "\uE648");
+              lv_obj_set_style_text_color(id(badge_wan), lv_color_hex(0x64748B), LV_PART_MAIN);
+            } else if (val == "fair_warn" || val == "poor_warn") {
+              lv_label_set_text(id(badge_wan), "\uE4D9");
+              lv_obj_set_style_text_color(id(badge_wan), lv_color_hex(0xFBBF24), LV_PART_MAIN);
+            } else {
+              lv_label_set_text(id(badge_wan), "\uE63E");
+              lv_obj_set_style_text_color(id(badge_wan), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+            }
+            lv_obj_invalidate(id(badge_wan));
+
+  - platform: homeassistant
+    id: bat_time_remaining
+    entity_id: sensor.qek_battery_time_remaining
+    on_value:
+      then:
+        - lvgl.label.update:
+            id: lbl_bat_remaining
+            text: !lambda "return x.c_str();"
+
+  - platform: homeassistant
+    id: qek_status_dew
+    entity_id: sensor.qek_status_dew
+    on_value:
+      then:
+        - lambda: |-
+            if (x == "alarm") {
+              lv_obj_set_style_text_color(id(icon_climate_dew), lv_color_hex(0xEF4444), LV_PART_MAIN);
+            } else if (x == "warn") {
+              lv_obj_set_style_text_color(id(icon_climate_dew), lv_color_hex(0xFBBF24), LV_PART_MAIN);
+            } else if (x == "ok") {
+              lv_obj_set_style_text_color(id(icon_climate_dew), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+            } else {
+              lv_obj_set_style_text_color(id(icon_climate_dew), lv_color_hex(0x64748B), LV_PART_MAIN);
+            }
+            lv_obj_invalidate(id(icon_climate_dew));
+
+  - platform: homeassistant
+    id: qek_weather_cond
+    entity_id: weather.forecast_home
+    on_value:
+      then:
+        - lambda: |-
+            std::string cond = x;
+            for (auto &c : cond) c = tolower(c);
+            std::string sum = id(qek_weather_summary).state;
+
+            if (cond == "sunny") {
+              lv_label_set_text(id(icon_climate_wx), "\uE81A");
+            } else if (cond == "clear-night") {
+              lv_label_set_text(id(icon_climate_wx), "\uE51C");
+            } else if (cond == "partlycloudy") {
+              lv_label_set_text(id(icon_climate_wx), "\uF172");
+            } else if (cond == "rainy" || cond == "pouring") {
+              lv_label_set_text(id(icon_climate_wx), "\uF176");
+            } else if (cond == "lightning" || cond == "lightning-rainy") {
+              lv_label_set_text(id(icon_climate_wx), "\uEBDB");
+            } else if (cond == "snowy" || cond == "snowy-rainy" || cond == "hail") {
+              lv_label_set_text(id(icon_climate_wx), "\uEB3B");
+            } else if (cond == "windy" || cond == "windy-variant" || cond == "fog") {
+              lv_label_set_text(id(icon_climate_wx), "\uEFD8");
+            } else {
+              lv_label_set_text(id(icon_climate_wx), "\uE2BD");
+            }
+
+            if (sum == "Weather: Offline" || sum == "Offline" || cond == "unavailable" || cond == "unknown") {
+              lv_obj_set_style_text_color(id(icon_climate_wx), lv_color_hex(0x64748B), LV_PART_MAIN);
+            } else if (cond == "sunny" || cond == "lightning" || cond == "lightning-rainy") {
+              lv_obj_set_style_text_color(id(icon_climate_wx), lv_color_hex(0xFBBF24), LV_PART_MAIN);
+            } else {
+              lv_obj_set_style_text_color(id(icon_climate_wx), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+            }
+            lv_obj_invalidate(id(icon_climate_wx));
+
+  - platform: homeassistant
+    id: qek_weather_summary
+    entity_id: sensor.qek_weather_summary
+    on_value:
+      then:
+        - lambda: |-
+            lv_label_set_text(id(lbl_climate_wx), x.c_str());
+            if (x == "Weather: Offline" || x == "Offline" || x == "unavailable" || x == "unknown") {
+              lv_obj_set_style_text_color(id(lbl_climate_wx), lv_color_hex(0x64748B), LV_PART_MAIN);
+              lv_obj_set_style_text_color(id(icon_climate_wx), lv_color_hex(0x64748B), LV_PART_MAIN);
+            } else {
+              lv_obj_set_style_text_color(id(lbl_climate_wx), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+            }
+            lv_obj_invalidate(id(lbl_climate_wx));
+            lv_obj_invalidate(id(icon_climate_wx));
+
+  - platform: homeassistant
+    id: ext_pwr_switch_state
+    entity_id: switch.matter_over_wifi_smart_switch
+    on_value:
+      then:
+        - script.execute: update_ext_pwr_hero
+
+  - platform: homeassistant
+    id: ext_bat_switch_state
+    entity_id: switch.qek_shelly_c1000_ac_charger
+    on_value:
+      then:
+        - script.execute: update_shelly_bat
+
+  - platform: homeassistant
+    id: ext_kitchen_switch_state
+    entity_id: switch.qek_shelly_kitchen
+    on_value:
+      then:
+        - script.execute: update_shelly_kitchen
+
+  - platform: homeassistant
+    id: ext_cooker_switch_state
+    entity_id: switch.qek_shelly_cooker
+    on_value:
+      then:
+        - script.execute: update_shelly_cooker
+
+  - platform: homeassistant
+    id: ext_climate_switch_state
+    entity_id: switch.qek_shelly_climate_co
+    on_value:
+      then:
+        - script.execute: update_shelly_climate
+
+sensor:
+  - platform: dht
+    pin: GPIO21
+    model: AM2302
+    update_interval: 15s
+    temperature:
+      name: "CYD QEK Temperatur"
+      id: cyd_qek_temperatur
+      accuracy_decimals: 1
+      filters:
+        - sliding_window_moving_average:
+            window_size: 3
+            send_every: 1
+      on_value:
+        then:
+          - lambda: |-
+              lv_label_set_text_fmt(id(lbl_climate_temp), "%.1f°C", x);
+              if (x >= 28.0) {
+                lv_obj_set_style_text_color(id(lbl_climate_temp), lv_color_hex(0xEF4444), LV_PART_MAIN);
+                lv_obj_set_style_text_color(id(icon_climate_card), lv_color_hex(0xEF4444), LV_PART_MAIN);
+              } else if (x <= 12.0) {
+                lv_obj_set_style_text_color(id(lbl_climate_temp), lv_color_hex(0xFBBF24), LV_PART_MAIN);
+                lv_obj_set_style_text_color(id(icon_climate_card), lv_color_hex(0xFBBF24), LV_PART_MAIN);
+              } else {
+                lv_obj_set_style_text_color(id(lbl_climate_temp), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+                lv_obj_set_style_text_color(id(icon_climate_card), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+              }
+              lv_obj_invalidate(id(lbl_climate_temp));
+              lv_obj_invalidate(id(icon_climate_card));
+
+    humidity:
+      name: "CYD QEK Luftfeuchtigkeit"
+      id: cyd_qek_luftfeuchtigkeit
+      accuracy_decimals: 1
+      on_value:
+        then:
+          - lambda: |-
+              lv_label_set_text_fmt(id(lbl_climate_hum), "Hum: %.0f%%", x);
+              if (x >= 70.0) {
+                lv_obj_set_style_text_color(id(icon_climate_hum), lv_color_hex(0xFBBF24), LV_PART_MAIN);
+              } else {
+                lv_obj_set_style_text_color(id(icon_climate_hum), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+              }
+              lv_obj_invalidate(id(lbl_climate_hum));
+              lv_obj_invalidate(id(icon_climate_hum));
+
+  - platform: homeassistant
+    id: c1000_soc
+    entity_id: sensor.anker_solix_c1000_battery_percentage
+    on_value:
+      then:
+        - lambda: |-
+            int soc = (int)x;
+            lv_label_set_text_fmt(id(lbl_bat_soc), "%d%%", soc);
+
+            if (soc < 20) {
+              lv_obj_set_style_text_color(id(lbl_bat_soc), lv_color_hex(0xEF4444), LV_PART_MAIN);
+              lv_obj_set_style_text_color(id(icon_bat_card), lv_color_hex(0xEF4444), LV_PART_MAIN);
+            } else if (soc < 30) {
+              lv_obj_set_style_text_color(id(lbl_bat_soc), lv_color_hex(0xFBBF24), LV_PART_MAIN);
+              lv_obj_set_style_text_color(id(icon_bat_card), lv_color_hex(0xFBBF24), LV_PART_MAIN);
+            } else {
+              lv_obj_set_style_text_color(id(lbl_bat_soc), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+              lv_obj_set_style_text_color(id(icon_bat_card), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+            }
+            lv_obj_invalidate(id(lbl_bat_soc));
+            lv_obj_invalidate(id(icon_bat_card));
+
+  - platform: homeassistant
+    id: bat_sol_in
+    entity_id: sensor.anker_solix_c1000_solar_power_in
+    on_value:
+      then:
+        - lambda: |-
+            if (x > 2.0) {
+              lv_label_set_text_fmt(id(lbl_bat_in), "In: %d W", (int)x);
+              lv_label_set_text(id(icon_bat_source), "\uE81A");
+              lv_obj_set_style_text_color(id(icon_bat_source), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+            } else if (isnan(id(bat_ac_in).state) || id(bat_ac_in).state <= 2.0) {
+              lv_label_set_text(id(lbl_bat_in), "In: 0 W");
+              lv_label_set_text(id(icon_bat_source), "\uE646");
+              lv_obj_set_style_text_color(id(icon_bat_source), lv_color_hex(0x64748B), LV_PART_MAIN);
+            }
+            lv_obj_invalidate(id(lbl_bat_in));
+            lv_obj_invalidate(id(icon_bat_source));
+
+  - platform: homeassistant
+    id: bat_ac_in
+    entity_id: sensor.anker_solix_c1000_ac_power_in
+    on_value:
+      then:
+        - lambda: |-
+            if (x > 2.0) {
+              lv_label_set_text_fmt(id(lbl_bat_in), "In: %d W", (int)x);
+              lv_label_set_text(id(icon_bat_source), "\uE63C");
+              lv_obj_set_style_text_color(id(icon_bat_source), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+            } else if (isnan(id(bat_sol_in).state) || id(bat_sol_in).state <= 2.0) {
+              lv_label_set_text(id(lbl_bat_in), "In: 0 W");
+              lv_label_set_text(id(icon_bat_source), "\uE646");
+              lv_obj_set_style_text_color(id(icon_bat_source), lv_color_hex(0x64748B), LV_PART_MAIN);
+            }
+            lv_obj_invalidate(id(lbl_bat_in));
+            lv_obj_invalidate(id(icon_bat_source));
+
+  - platform: homeassistant
+    id: bat_out
+    entity_id: sensor.anker_solix_c1000_total_power_out
+    on_value:
+      then:
+        - lambda: |-
+            lv_label_set_text_fmt(id(lbl_bat_out), "Out: %d W", (int)x);
+            lv_obj_invalidate(id(lbl_bat_out));
+
+  - platform: homeassistant
+    id: c1000_soc_rate
+    entity_id: sensor.qek_solix_c300ac_qek_prediction_battery
+    on_value:
+      then:
+        - lambda: |-
+            if (x > 0.3) {
+              lv_label_set_text(id(icon_bat_target), "\uE1A4");
+              lv_obj_set_style_text_color(id(icon_bat_target), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+            } else if (x < -0.2) {
+              lv_label_set_text(id(icon_bat_target), "\uEBDC");
+              lv_obj_set_style_text_color(id(icon_bat_target), lv_color_hex(0xFBBF24), LV_PART_MAIN);
+            } else {
+              lv_label_set_text(id(icon_bat_target), "\uEBD2");
+              lv_obj_set_style_text_color(id(icon_bat_target), lv_color_hex(0x64748B), LV_PART_MAIN);
+            }
+            lv_obj_invalidate(id(icon_bat_target));
+
+  - platform: homeassistant
+    id: qek_dew_point
+    entity_id: sensor.qek_dew_point
+    on_value:
+      then:
+        - lambda: |-
+            if (!isnan(x)) {
+              lv_label_set_text_fmt(id(lbl_climate_dew), "Dew: %.1f°C", x);
+            } else {
+              lv_label_set_text(id(lbl_climate_dew), "Dew: --.-°C");
+            }
+            lv_obj_invalidate(id(lbl_climate_dew));
+
+  - platform: homeassistant
+    id: ext_pwr_watt
+    entity_id: sensor.matter_over_wifi_smart_switch_power
+    on_value:
+      then:
+        - script.execute: update_ext_pwr_hero
+
+  - platform: homeassistant
+    id: ext_pwr_current
+    entity_id: sensor.matter_over_wifi_smart_switch_active_current
+    on_value:
+      then:
+        - script.execute: update_ext_pwr_hero
+
+  - platform: homeassistant
+    id: ext_bat_power
+    entity_id: sensor.qek_shelly_c1000_ac_charger_power
+    on_value:
+      then:
+        - script.execute: update_shelly_bat
+
+  - platform: homeassistant
+    id: ext_kitchen_power
+    entity_id: sensor.qek_shelly_kitchen_power
+    on_value:
+      then:
+        - script.execute: update_shelly_kitchen
+
+  - platform: homeassistant
+    id: ext_cooker_power
+    entity_id: sensor.qek_shelly_cooker_power
+    on_value:
+      then:
+        - script.execute: update_shelly_cooker
+
+  - platform: homeassistant
+    id: ext_climate_power
+    entity_id: sensor.qek_shelly_climate_co_power
+    on_value:
+      then:
+        - script.execute: update_shelly_climate
+
+  - platform: homeassistant
+    id: ext_rest_power
+    entity_id: sensor.qek_other_power_consumption
+    on_value:
+      then:
+        - script.execute: update_rest
