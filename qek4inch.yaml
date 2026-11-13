@@ -685,7 +685,7 @@ script:
           lv_obj_invalidate(id(icon_ext_pwr_hero));
           lv_obj_invalidate(id(icon_ext_pwr_card));
 
-  - id: update_shelly_bat
+- id: update_shelly_bat
     mode: restart
     then:
       - lambda: |-
@@ -700,12 +700,12 @@ script:
             lv_obj_set_style_text_color(id(icon_ext_bat), lv_color_hex(0x38BDF8), LV_PART_MAIN);
           } else if (st == "off") {
             lv_label_set_text(id(lbl_ext_bat), "Bat: Off");
-            lv_obj_set_style_text_color(id(lbl_ext_bat), lv_color_hex(0x64748B), LV_PART_MAIN);
-            lv_obj_set_style_text_color(id(icon_ext_bat), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+            lv_obj_set_style_text_color(id(lbl_ext_bat), lv_color_hex(0x38BDF8), LV_PART_MAIN); // Text jetzt auch blau
+            lv_obj_set_style_text_color(id(icon_ext_bat), lv_color_hex(0x38BDF8), LV_PART_MAIN); // Icon blau
           } else {
             lv_label_set_text(id(lbl_ext_bat), "Bat: --");
-            lv_obj_set_style_text_color(id(lbl_ext_bat), lv_color_hex(0x64748B), LV_PART_MAIN);
-            lv_obj_set_style_text_color(id(icon_ext_bat), lv_color_hex(0x64748B), LV_PART_MAIN);
+            lv_obj_set_style_text_color(id(lbl_ext_bat), lv_color_hex(0x64748B), LV_PART_MAIN); // Nur bei unavailable grau
+            lv_obj_set_style_text_color(id(icon_ext_bat), lv_color_hex(0x64748B), LV_PART_MAIN); // Nur bei unavailable grau
           }
           lv_obj_invalidate(id(lbl_ext_bat));
           lv_obj_invalidate(id(icon_ext_bat));
@@ -725,7 +725,7 @@ script:
             lv_obj_set_style_text_color(id(icon_ext_kitchen), lv_color_hex(0x38BDF8), LV_PART_MAIN);
           } else if (st == "off") {
             lv_label_set_text(id(lbl_ext_kitchen), "Kitch: Off");
-            lv_obj_set_style_text_color(id(lbl_ext_kitchen), lv_color_hex(0x64748B), LV_PART_MAIN);
+            lv_obj_set_style_text_color(id(lbl_ext_kitchen), lv_color_hex(0x38BDF8), LV_PART_MAIN);
             lv_obj_set_style_text_color(id(icon_ext_kitchen), lv_color_hex(0x38BDF8), LV_PART_MAIN);
           } else {
             lv_label_set_text(id(lbl_ext_kitchen), "Kitch: --");
@@ -750,7 +750,7 @@ script:
             lv_obj_set_style_text_color(id(icon_ext_cooker), lv_color_hex(0x38BDF8), LV_PART_MAIN);
           } else if (st == "off") {
             lv_label_set_text(id(lbl_ext_cooker), "Cook: Off");
-            lv_obj_set_style_text_color(id(lbl_ext_cooker), lv_color_hex(0x64748B), LV_PART_MAIN);
+            lv_obj_set_style_text_color(id(lbl_ext_cooker), lv_color_hex(0x38BDF8), LV_PART_MAIN);
             lv_obj_set_style_text_color(id(icon_ext_cooker), lv_color_hex(0x38BDF8), LV_PART_MAIN);
           } else {
             lv_label_set_text(id(lbl_ext_cooker), "Cook: --");
@@ -775,7 +775,7 @@ script:
             lv_obj_set_style_text_color(id(icon_ext_climate), lv_color_hex(0x38BDF8), LV_PART_MAIN);
           } else if (st == "off") {
             lv_label_set_text(id(lbl_ext_climate), "Clim: Off");
-            lv_obj_set_style_text_color(id(lbl_ext_climate), lv_color_hex(0x64748B), LV_PART_MAIN);
+            lv_obj_set_style_text_color(id(lbl_ext_climate), lv_color_hex(0x38BDF8), LV_PART_MAIN);
             lv_obj_set_style_text_color(id(icon_ext_climate), lv_color_hex(0x38BDF8), LV_PART_MAIN);
           } else {
             lv_label_set_text(id(lbl_ext_climate), "Clim: --");
@@ -784,7 +784,6 @@ script:
           }
           lv_obj_invalidate(id(lbl_ext_climate));
           lv_obj_invalidate(id(icon_ext_climate));
-
 # 5. Typografie (Inter)
 font:
   - file: "gfonts://Inter"
