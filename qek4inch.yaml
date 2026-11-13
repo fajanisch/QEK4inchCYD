@@ -594,7 +594,7 @@ font:
       - "\uE518" # mode_heat (HVAC Heating flame)
       - "\uE166" # ac_unit (HVAC Cooling snowflake)
 
-- file: "gfonts://Material+Symbols+Outlined"
+  - file: "gfonts://Material+Symbols+Outlined"
     id: font_icons_hero
     size: 36
     glyphs:
