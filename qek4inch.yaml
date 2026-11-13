@@ -334,6 +334,48 @@ text_sensor:
             }
             lv_obj_invalidate(id(icon_climate_dew));
 
+# 7. Weather Condition from weather.forecast_home (drives icon_climate_wx)
+  - platform: homeassistant
+    id: qek_weather_cond
+    entity_id: weather.forecast_home
+    on_value:
+      then:
+        - lambda: |-
+            std::string cond = x;
+            for (auto &c : cond) c = tolower(c);
+            std::string sum = id(qek_weather_summary).state;
+
+            // Set matching glyph first
+            if (cond == "sunny") {
+              lv_label_set_text(id(icon_climate_wx), "\uE81A");
+            } else if (cond == "clear-night") {
+              lv_label_set_text(id(icon_climate_wx), "\uE51C");
+            } else if (cond == "partlycloudy") {
+              lv_label_set_text(id(icon_climate_wx), "\uF172");
+            } else if (cond == "rainy" || cond == "pouring") {
+              lv_label_set_text(id(icon_climate_wx), "\uF176");
+            } else if (cond == "lightning" || cond == "lightning-rainy") {
+              lv_label_set_text(id(icon_climate_wx), "\uEBDB");
+            } else if (cond == "snowy" || cond == "snowy-rainy" || cond == "hail") {
+              lv_label_set_text(id(icon_climate_wx), "\uEB3B");
+            } else if (cond == "windy" || cond == "windy-variant" || cond == "fog") {
+              lv_label_set_text(id(icon_climate_wx), "\uEFD8");
+            } else {
+              lv_label_set_text(id(icon_climate_wx), "\uE2BD");
+            }
+
+            // Color logic: Grey if offline, otherwise weather-specific color
+            if (sum == "Weather: Offline" || sum == "Offline" || cond == "unavailable" || cond == "unknown") {
+              lv_obj_set_style_text_color(id(icon_climate_wx), lv_color_hex(0x64748B), LV_PART_MAIN);
+            } else if (cond == "sunny" || cond == "lightning" || cond == "lightning-rainy") {
+              lv_obj_set_style_text_color(id(icon_climate_wx), lv_color_hex(0xFBBF24), LV_PART_MAIN); // Yellow
+            } else if (cond == "cloudy" || cond == "windy" || cond == "windy-variant" || cond == "fog") {
+              lv_obj_set_style_text_color(id(icon_climate_wx), lv_color_hex(0x94A3B8), LV_PART_MAIN); // Light Slate
+            } else {
+              lv_obj_set_style_text_color(id(icon_climate_wx), lv_color_hex(0x38BDF8), LV_PART_MAIN); // Blue
+            }
+            lv_obj_invalidate(id(icon_climate_wx));
+            
 sensor:
   # Temp&humidity sensor AM2302
   - platform: dht
