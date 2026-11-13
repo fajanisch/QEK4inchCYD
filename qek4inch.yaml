@@ -1371,7 +1371,7 @@ lvgl:
               y: 0
               width: 480
               height: 320
-              styles: style_bg # Hintergrundfarbe deines Dashboards
+              styles: style_card # Hintergrundfarbe deines Dashboards
               hidden: true    # Standardmäßig ausgeblendet
               widgets:
 
