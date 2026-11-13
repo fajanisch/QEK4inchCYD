@@ -443,6 +443,13 @@ text_sensor:
             }
             lv_obj_invalidate(id(lbl_climate_wx));
             lv_obj_invalidate(id(icon_climate_wx));
+
+- platform: homeassistant
+    id: ext_pwr_switch_state
+    entity_id: switch.matter_over_wifi_smart_switch
+    on_value:
+      then:
+        - script.execute: update_ext_pwr_hero
 sensor:
   # Temp&humidity sensor AM2302
   - platform: dht
