@@ -590,6 +590,7 @@ text_sensor:
     on_value:
       then:
         - script.execute: update_shelly_climate
+        
 sensor:
   # Temp&humidity sensor AM2302
   - platform: dht
