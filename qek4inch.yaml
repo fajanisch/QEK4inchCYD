@@ -685,7 +685,7 @@ script:
           lv_obj_invalidate(id(icon_ext_pwr_hero));
           lv_obj_invalidate(id(icon_ext_pwr_card));
 
-  - id: update_shelly_bat
+- id: update_shelly_bat
     mode: restart
     then:
       - lambda: |-
@@ -694,20 +694,17 @@ script:
           float pwr = id(ext_bat_power).state;
 
           if (st == "on") {
-            lv_obj_add_flag(id(icon_ext_bat), LV_OBJ_FLAG_HIDDEN);
-            lv_obj_clear_flag(id(lbl_ext_bat), LV_OBJ_FLAG_HIDDEN);
             int val = (!isnan(pwr) && pwr > 1.0) ? (int)round(pwr) : 0;
             lv_label_set_text_fmt(id(lbl_ext_bat), "Bat: %d W", val);
             lv_obj_set_style_text_color(id(lbl_ext_bat), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+            lv_obj_set_style_text_color(id(icon_ext_bat), lv_color_hex(0x38BDF8), LV_PART_MAIN);
           } else if (st == "off") {
-            lv_obj_add_flag(id(lbl_ext_bat), LV_OBJ_FLAG_HIDDEN);
-            lv_obj_clear_flag(id(icon_ext_bat), LV_OBJ_FLAG_HIDDEN);
-            lv_label_set_text(id(icon_ext_bat), "\uE646");
+            lv_label_set_text(id(lbl_ext_bat), "Bat: Off");
+            lv_obj_set_style_text_color(id(lbl_ext_bat), lv_color_hex(0x64748B), LV_PART_MAIN);
             lv_obj_set_style_text_color(id(icon_ext_bat), lv_color_hex(0x38BDF8), LV_PART_MAIN);
           } else {
-            lv_obj_add_flag(id(lbl_ext_bat), LV_OBJ_FLAG_HIDDEN);
-            lv_obj_clear_flag(id(icon_ext_bat), LV_OBJ_FLAG_HIDDEN);
-            lv_label_set_text(id(icon_ext_bat), "\uE646");
+            lv_label_set_text(id(lbl_ext_bat), "Bat: --");
+            lv_obj_set_style_text_color(id(lbl_ext_bat), lv_color_hex(0x64748B), LV_PART_MAIN);
             lv_obj_set_style_text_color(id(icon_ext_bat), lv_color_hex(0x64748B), LV_PART_MAIN);
           }
           lv_obj_invalidate(id(lbl_ext_bat));
@@ -722,20 +719,17 @@ script:
           float pwr = id(ext_kitchen_power).state;
 
           if (st == "on") {
-            lv_obj_add_flag(id(icon_ext_kitchen), LV_OBJ_FLAG_HIDDEN);
-            lv_obj_clear_flag(id(lbl_ext_kitchen), LV_OBJ_FLAG_HIDDEN);
             int val = (!isnan(pwr) && pwr > 1.0) ? (int)round(pwr) : 0;
             lv_label_set_text_fmt(id(lbl_ext_kitchen), "Kitch: %d W", val);
             lv_obj_set_style_text_color(id(lbl_ext_kitchen), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+            lv_obj_set_style_text_color(id(icon_ext_kitchen), lv_color_hex(0x38BDF8), LV_PART_MAIN);
           } else if (st == "off") {
-            lv_obj_add_flag(id(lbl_ext_kitchen), LV_OBJ_FLAG_HIDDEN);
-            lv_obj_clear_flag(id(icon_ext_kitchen), LV_OBJ_FLAG_HIDDEN);
-            lv_label_set_text(id(icon_ext_kitchen), "\uE646");
+            lv_label_set_text(id(lbl_ext_kitchen), "Kitch: Off");
+            lv_obj_set_style_text_color(id(lbl_ext_kitchen), lv_color_hex(0x64748B), LV_PART_MAIN);
             lv_obj_set_style_text_color(id(icon_ext_kitchen), lv_color_hex(0x38BDF8), LV_PART_MAIN);
           } else {
-            lv_obj_add_flag(id(lbl_ext_kitchen), LV_OBJ_FLAG_HIDDEN);
-            lv_obj_clear_flag(id(icon_ext_kitchen), LV_OBJ_FLAG_HIDDEN);
-            lv_label_set_text(id(icon_ext_kitchen), "\uE646");
+            lv_label_set_text(id(lbl_ext_kitchen), "Kitch: --");
+            lv_obj_set_style_text_color(id(lbl_ext_kitchen), lv_color_hex(0x64748B), LV_PART_MAIN);
             lv_obj_set_style_text_color(id(icon_ext_kitchen), lv_color_hex(0x64748B), LV_PART_MAIN);
           }
           lv_obj_invalidate(id(lbl_ext_kitchen));
@@ -750,20 +744,17 @@ script:
           float pwr = id(ext_cooker_power).state;
 
           if (st == "on") {
-            lv_obj_add_flag(id(icon_ext_cooker), LV_OBJ_FLAG_HIDDEN);
-            lv_obj_clear_flag(id(lbl_ext_cooker), LV_OBJ_FLAG_HIDDEN);
             int val = (!isnan(pwr) && pwr > 1.0) ? (int)round(pwr) : 0;
             lv_label_set_text_fmt(id(lbl_ext_cooker), "Cook: %d W", val);
             lv_obj_set_style_text_color(id(lbl_ext_cooker), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+            lv_obj_set_style_text_color(id(icon_ext_cooker), lv_color_hex(0x38BDF8), LV_PART_MAIN);
           } else if (st == "off") {
-            lv_obj_add_flag(id(lbl_ext_cooker), LV_OBJ_FLAG_HIDDEN);
-            lv_obj_clear_flag(id(icon_ext_cooker), LV_OBJ_FLAG_HIDDEN);
-            lv_label_set_text(id(icon_ext_cooker), "\uE646");
+            lv_label_set_text(id(lbl_ext_cooker), "Cook: Off");
+            lv_obj_set_style_text_color(id(lbl_ext_cooker), lv_color_hex(0x64748B), LV_PART_MAIN);
             lv_obj_set_style_text_color(id(icon_ext_cooker), lv_color_hex(0x38BDF8), LV_PART_MAIN);
           } else {
-            lv_obj_add_flag(id(lbl_ext_cooker), LV_OBJ_FLAG_HIDDEN);
-            lv_obj_clear_flag(id(icon_ext_cooker), LV_OBJ_FLAG_HIDDEN);
-            lv_label_set_text(id(icon_ext_cooker), "\uE646");
+            lv_label_set_text(id(lbl_ext_cooker), "Cook: --");
+            lv_obj_set_style_text_color(id(lbl_ext_cooker), lv_color_hex(0x64748B), LV_PART_MAIN);
             lv_obj_set_style_text_color(id(icon_ext_cooker), lv_color_hex(0x64748B), LV_PART_MAIN);
           }
           lv_obj_invalidate(id(lbl_ext_cooker));
@@ -778,25 +769,22 @@ script:
           float pwr = id(ext_climate_power).state;
 
           if (st == "on") {
-            lv_obj_add_flag(id(icon_ext_climate), LV_OBJ_FLAG_HIDDEN);
-            lv_obj_clear_flag(id(lbl_ext_climate), LV_OBJ_FLAG_HIDDEN);
             int val = (!isnan(pwr) && pwr > 1.0) ? (int)round(pwr) : 0;
             lv_label_set_text_fmt(id(lbl_ext_climate), "Clim: %d W", val);
             lv_obj_set_style_text_color(id(lbl_ext_climate), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+            lv_obj_set_style_text_color(id(icon_ext_climate), lv_color_hex(0x38BDF8), LV_PART_MAIN);
           } else if (st == "off") {
-            lv_obj_add_flag(id(lbl_ext_climate), LV_OBJ_FLAG_HIDDEN);
-            lv_obj_clear_flag(id(icon_ext_climate), LV_OBJ_FLAG_HIDDEN);
-            lv_label_set_text(id(icon_ext_climate), "\uE646");
+            lv_label_set_text(id(lbl_ext_climate), "Clim: Off");
+            lv_obj_set_style_text_color(id(lbl_ext_climate), lv_color_hex(0x64748B), LV_PART_MAIN);
             lv_obj_set_style_text_color(id(icon_ext_climate), lv_color_hex(0x38BDF8), LV_PART_MAIN);
           } else {
-            lv_obj_add_flag(id(lbl_ext_climate), LV_OBJ_FLAG_HIDDEN);
-            lv_obj_clear_flag(id(icon_ext_climate), LV_OBJ_FLAG_HIDDEN);
-            lv_label_set_text(id(icon_ext_climate), "\uE646");
+            lv_label_set_text(id(lbl_ext_climate), "Clim: --");
+            lv_obj_set_style_text_color(id(lbl_ext_climate), lv_color_hex(0x64748B), LV_PART_MAIN);
             lv_obj_set_style_text_color(id(icon_ext_climate), lv_color_hex(0x64748B), LV_PART_MAIN);
           }
           lv_obj_invalidate(id(lbl_ext_climate));
           lv_obj_invalidate(id(icon_ext_climate));
-
+          
 # 5. Typografie (Inter)
 font:
   - file: "gfonts://Inter"
