@@ -825,7 +825,7 @@ lvgl:
                       # Daneben: Text "Zurück" in 16px (font_sub_title, grau)
                       - label:
                           id: lbl_sub_back
-                          text: "Zurück"
+                          text: "Back"
                           text_font: font_sub_title
                           text_color: 0x94A3B8
                           align: left_mid
