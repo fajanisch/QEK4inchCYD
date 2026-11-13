@@ -386,35 +386,35 @@ lvgl:
                     x: -2
                     y: 79
 
-- obj:
-    x: 8
-    y: 182
-    width: 228
-    height: 130
-    styles: style_card
-    clickable: true
-    widgets:
-      - label:
-          id: icon_light
-          text: "\uE63E"
-          text_font: font_icons_sub
-          text_color: 0x94A3B8
-          align: center
-          y: -15
-          clickable: false
-      - label:
-          id: lbl_light
-          text: "Light"
-          text_font: font_sub_title
-          text_color: 0x94A3B8
-          align: center
-          y: 25
-          clickable: false
-    on_click:
-      - homeassistant.service:
-          service: script.turn_on
-          data:
-            entity_id: script.qek_b1
+        - obj:
+            x: 8
+            y: 182
+            width: 228
+            height: 130
+            styles: style_card
+            clickable: true
+            widgets:
+            - label:
+                id: icon_light
+                text: "\uE63E"
+                text_font: font_icons_sub
+                text_color: 0x94A3B8
+                align: center
+                y: -15
+                clickable: false
+            - label:
+                id: lbl_light
+                text: "Light"
+                text_font: font_sub_title
+                text_color: 0x94A3B8
+                align: center
+                y: 25
+                clickable: false
+            on_click:
+            - homeassistant.service:
+                service: script.turn_on
+                data:
+                    entity_id: script.qek_b1
 
 
           - obj:
