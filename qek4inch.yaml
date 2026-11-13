@@ -936,23 +936,24 @@ lvgl:
                     y: 55
 
 # --- BOTTOM FULL ROW: Flush at the bottom of the card ---
-                - label:
-                    id: icon_climate_wx
-                    text: "\uE2BD" # cloud
-                    text_font: font_icons
-                    styles: style_icon_inactive
-                    align: bottom_left
-                    x: 2
-                    y: 0
-
+# --- BOTTOM RIGHT: Forecast Summary + Weather Icon ---
                 - label:
                     id: lbl_climate_wx
                     text: "Out: --° (--°/--°) --%"
                     text_font: font_sub
-                    styles: style_sub_gray
+                    styles: style_txt_normal
                     align: bottom_right
-                    x: 26
+                    x: -24
                     y: -2
+
+                - label:
+                    id: icon_climate_wx
+                    text: "\uE2BD" # cloud
+                    text_font: font_icons
+                    styles: style_icon_normal
+                    align: bottom_right
+                    x: -2
+                    y: 0
                                                           
           # ==========================================
           # DIM GUARD OVERLAY (Vollflächig 480x320)
