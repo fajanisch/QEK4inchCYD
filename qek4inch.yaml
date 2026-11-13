@@ -763,7 +763,7 @@ sensor:
       then:
         - script.execute: update_ext_pwr_hero
 
-  # Shelly
+  # Shelly (4x)
   text_sensor:
   - platform: homeassistant
     id: ext_bat_switch_state
