@@ -935,7 +935,6 @@ lvgl:
                     x: -2 # Exakt unter dem Tropfen-Icon
                     y: 55
 
-# --- BOTTOM FULL ROW: Flush at the bottom of the card ---
 # --- BOTTOM RIGHT: Forecast Summary + Weather Icon ---
                 - label:
                     id: lbl_climate_wx
