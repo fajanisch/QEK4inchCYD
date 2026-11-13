@@ -644,14 +644,14 @@ script:
           hidden: false
           clickable: true
 
-- id: power_detail_timeout
+  - id: power_detail_timeout
     mode: restart
     then:
       - delay: 60s
       - lvgl.widget.update:
           id: screen_power_detail
           hidden: true
-          
+
 # Power Tile
   - id: update_ext_pwr_hero
     mode: restart
