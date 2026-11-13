@@ -1,0 +1,712 @@
+font:
+  - file: "gfonts://Inter"
+    id: font_bar
+    size: 13
+    glyphs: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 /:.-°%|,>()"
+  - file: "gfonts://Inter"
+    id: font_card_header
+    size: 12
+    glyphs: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 /:.-°%,>()"
+  - file: "gfonts://Inter"
+    id: font_val_hero
+    size: 28
+    glyphs: "0123456789.-%°CWAV"
+  - file: "gfonts://Inter"
+    id: font_sub
+    size: 12
+    glyphs: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 /:.-°%|,>()"
+  - file: "gfonts://Material+Symbols+Outlined"
+    id: font_icons
+    size: 18
+    glyphs:
+      - "\uEB3A"
+      - "\uE63E"
+      - "\uE4D9"
+      - "\uE648"
+      - "\uE63C"
+      - "\uE646"
+      - "\uE1A4"
+      - "\uEBDC"
+      - "\uE0F0"
+      - "\uE798"
+      - "\uF076"
+      - "\uEBD2"
+      - "\uE81A"
+      - "\uF172"
+      - "\uE2BD"
+      - "\uF176"
+      - "\uEB3B"
+      - "\uEBDB"
+      - "\uE51C"
+      - "\uEFD8"
+      - "\uF879"
+      - "\uE518"
+      - "\uE166"
+      - "\uE56C"
+      - "\uF543"
+      - "\uF1D4"
+
+  - file: "gfonts://Material+Symbols+Outlined"
+    id: font_icons_hero
+    size: 36
+    glyphs:
+      - "\uE646"
+
+lvgl:
+  displays:
+    - my_display
+  touchscreens:
+    - my_touch
+  rotation: 270
+
+  style_definitions:
+    - id: style_card
+      bg_color: 0x1E293B
+      border_width: 1
+      border_color: 0x334155
+      radius: 10
+      pad_all: 8
+
+    - id: style_badge
+      bg_color: 0x1E293B
+      border_width: 1
+      border_color: 0x334155
+      radius: 6
+      pad_all: 4
+
+    - id: style_txt_normal
+      text_color: 0x38BDF8
+      text_font: font_card_header
+
+    - id: style_txt_inactive
+      text_color: 0x64748B
+      text_font: font_card_header
+
+    - id: style_txt_warn
+      text_color: 0xFBBF24
+      text_font: font_card_header
+
+    - id: style_val_blue
+      text_color: 0x38BDF8
+      text_font: font_val_hero
+
+    - id: style_val_warn
+      text_color: 0xFBBF24
+      text_font: font_val_hero
+
+    - id: style_sub_gray
+      text_color: 0x94A3B8
+      text_font: font_sub
+
+    - id: style_val_red
+      text_color: 0xEF4444
+      text_font: font_val_hero
+
+    - id: style_icon_normal
+      text_color: 0x38BDF8
+      text_font: font_icons
+
+    - id: style_icon_warn
+      text_color: 0xFBBF24
+      text_font: font_icons
+
+    - id: style_icon_inactive
+      text_color: 0x64748B
+      text_font: font_icons
+
+  widgets:
+    - obj:
+        id: main_screen
+        width: 480
+        height: 320
+        bg_color: 0x0F172A
+        border_width: 0
+        outline_width: 0
+        radius: 0
+        pad_all: 0
+        widgets:
+          - obj:
+              x: 8
+              y: 6
+              width: 464
+              height: 30
+              bg_color: 0x131D31
+              border_width: 1
+              border_color: 0x1E293B
+              radius: 6
+              pad_all: 0
+              widgets:
+                - label:
+                    id: lbl_status_datetime
+                    text: "Wed, 11. Nov  14:55"
+                    styles: style_txt_normal
+                    text_font: font_bar
+                    align: left_mid
+                    x: 6
+                - label:
+                    id: badge_pwr
+                    text: "\uE646"
+                    text_font: font_icons
+                    styles: style_icon_inactive
+                    align: right_mid
+                    x: -16
+                - label:
+                    id: badge_wan
+                    text: "\uE648"
+                    text_font: font_icons
+                    styles: style_icon_inactive
+                    align: right_mid
+                    x: -48
+                - label:
+                    id: badge_gps
+                    text: "\uEB3A"
+                    text_font: font_icons
+                    styles: style_icon_inactive
+                    align: right_mid
+                    x: -80
+
+          - obj:
+              id: card_ext_pwr
+              x: 8
+              y: 44
+              width: 228
+              height: 130
+              styles: style_card
+              clickable: true
+              on_click:
+                - lvgl.widget.update:
+                    id: screen_power_detail
+                    hidden: false
+                - script.execute: power_detail_timeout
+              widgets:
+                - label:
+                    id: icon_ext_pwr_card
+                    text: "\uE63C"
+                    text_font: font_icons
+                    styles: style_icon_inactive
+                    align: top_left
+                - label:
+                    text: "POWER"
+                    text_font: font_card_header
+                    styles: style_txt_normal
+                    align: top_left
+                    x: 24
+                    y: 2
+                - label:
+                    id: icon_ext_pwr_hero
+                    text: "\uE646"
+                    text_font: font_icons_hero
+                    text_color: 0x64748B
+                    align: left_mid
+                    x: 16
+                    y: 10
+                - label:
+                    id: lbl_ext_pwr_watt
+                    text: "0 W"
+                    text_font: font_val_hero
+                    styles: style_val_blue
+                    align: left_mid
+                    x: 4
+                    y: 10
+                    hidden: true
+                - label:
+                    id: lbl_ext_bat
+                    text: "0 W"
+                    text_font: font_sub
+                    styles: style_val_blue
+                    align: top_right
+                    x: -26
+                    y: 11
+                - label:
+                    id: icon_ext_bat
+                    text: "\uE1A4"
+                    text_font: font_icons
+                    styles: style_icon_inactive
+                    align: top_right
+                    x: -2
+                    y: 8
+                - label:
+                    id: lbl_ext_kitchen
+                    text: "0 W"
+                    text_font: font_sub
+                    styles: style_val_blue
+                    align: top_right
+                    x: -26
+                    y: 29
+                - label:
+                    id: icon_ext_kitchen
+                    text: "\uE56C"
+                    text_font: font_icons
+                    styles: style_icon_inactive
+                    align: top_right
+                    x: -2
+                    y: 26
+                - label:
+                    id: lbl_ext_cooker
+                    text: "0 W"
+                    text_font: font_sub
+                    styles: style_val_blue
+                    align: top_right
+                    x: -26
+                    y: 47
+                - label:
+                    id: icon_ext_cooker
+                    text: "\uF543"
+                    text_font: font_icons
+                    styles: style_icon_inactive
+                    align: top_right
+                    x: -2
+                    y: 44
+                - label:
+                    id: lbl_ext_climate
+                    text: "0 W"
+                    text_font: font_sub
+                    styles: style_val_blue
+                    align: top_right
+                    x: -26
+                    y: 65
+                - label:
+                    id: icon_ext_climate
+                    text: "\uF076"
+                    text_font: font_icons
+                    styles: style_icon_inactive
+                    align: top_right
+                    x: -2
+                    y: 62
+                - label:
+                    id: lbl_ext_rest
+                    text: "0 W"
+                    text_font: font_sub
+                    styles: style_val_blue
+                    align: top_right
+                    x: -26
+                    y: 83
+                - label:
+                    id: icon_ext_rest
+                    text: "\uF1D4"
+                    text_font: font_icons
+                    text_color: 0x38BDF8
+                    align: top_right
+                    x: -2
+                    y: 80
+
+          - obj:
+              id: card_battery
+              x: 244
+              y: 44
+              width: 228
+              height: 130
+              styles: style_card
+              widgets:
+                - label:
+                    id: icon_bat_card
+                    text: "\uEBD2"
+                    text_font: font_icons
+                    styles: style_icon_normal
+                    align: top_left
+                - label:
+                    text: "BATTERY"
+                    text_font: font_card_header
+                    styles: style_txt_normal
+                    align: top_left
+                    x: 24
+                    y: 2
+                - label:
+                    id: lbl_bat_soc
+                    text: "--%"
+                    text_font: font_val_hero
+                    styles: style_val_blue
+                    align: left_mid
+                    x: 4
+                    y: 10
+                - label:
+                    id: lbl_bat_in
+                    text: "In: -- W"
+                    text_font: font_sub
+                    styles: style_txt_normal
+                    align: top_right
+                    x: -24
+                    y: 34
+                - label:
+                    id: icon_bat_source
+                    text: "\uE646"
+                    text_font: font_icons
+                    styles: style_icon_inactive
+                    align: top_right
+                    x: -2
+                    y: 31
+                - label:
+                    id: lbl_bat_out
+                    text: "Out: -- W"
+                    text_font: font_sub
+                    styles: style_txt_normal
+                    align: top_right
+                    x: -24
+                    y: 58
+                - label:
+                    id: lbl_bat_remaining
+                    text: "--h --m"
+                    text_font: font_sub
+                    styles: style_txt_normal
+                    align: top_right
+                    x: -24
+                    y: 82
+                - label:
+                    id: icon_bat_target
+                    text: "\uEBD2"
+                    text_font: font_icons
+                    styles: style_icon_inactive
+                    align: top_right
+                    x: -2
+                    y: 79
+
+          - obj:
+              x: 8
+              y: 182
+              width: 228
+              height: 130
+              styles: style_card
+              widgets:
+                - label:
+                    styles: style_txt_normal
+                    text: "LICHT & WASSER"
+                    align: top_left
+                - label:
+                    id: lbl_light_water_main
+                    styles: style_val_blue
+                    text: "BEREIT"
+                    align: center
+                    y: -2
+                - label:
+                    id: lbl_light_water_sub
+                    styles: style_sub_gray
+                    text: "Licht: AN | Pumpe: STANDBY"
+                    align: bottom_mid
+
+          - obj:
+              id: card_climate
+              x: 244
+              y: 182
+              width: 228
+              height: 130
+              styles: style_card
+              widgets:
+                - label:
+                    id: icon_climate_card
+                    text: "\uF076"
+                    text_font: font_icons
+                    styles: style_icon_normal
+                    align: top_left
+                - label:
+                    text: "CLIMATE"
+                    text_font: font_card_header
+                    styles: style_txt_normal
+                    align: top_left
+                    x: 24
+                    y: 2
+                - label:
+                    id: lbl_climate_temp
+                    text: "--.-°C"
+                    text_font: font_val_hero
+                    styles: style_val_blue
+                    align: left_mid
+                    x: 4
+                    y: 10
+                - label:
+                    id: lbl_climate_hum
+                    text: "Hum: --%"
+                    text_font: font_sub
+                    styles: style_txt_normal
+                    align: top_right
+                    x: -24
+                    y: 34
+                - label:
+                    id: icon_climate_hum
+                    text: "\uE798"
+                    text_font: font_icons
+                    styles: style_icon_normal
+                    align: top_right
+                    x: -2
+                    y: 31
+                - label:
+                    id: lbl_climate_dew
+                    text: "Dew: --.-°C"
+                    text_font: font_sub
+                    styles: style_txt_normal
+                    align: top_right
+                    x: -24
+                    y: 58
+                - label:
+                    id: icon_climate_dew
+                    text: "\uF879"
+                    text_font: font_icons
+                    styles: style_icon_inactive
+                    align: top_right
+                    x: -2
+                    y: 55
+                - label:
+                    id: lbl_climate_wx
+                    text: "Out: --° (--°/--°) --%"
+                    text_font: font_sub
+                    styles: style_txt_normal
+                    align: bottom_right
+                    x: -24
+                    y: -2
+                - label:
+                    id: icon_climate_wx
+                    text: "\uE2BD"
+                    text_font: font_icons
+                    styles: style_icon_normal
+                    align: bottom_right
+                    x: -2
+                    y: 0
+
+          - obj:
+              id: dim_guard_overlay
+              x: 0
+              y: 0
+              width: 480
+              height: 320
+              bg_opa: TRANSP
+              border_width: 0
+              radius: 0
+              pad_all: 0
+              scrollbar_mode: "off"
+              scrollable: false
+              hidden: true
+              clickable: false
+              on_click:
+                then:
+                  - lvgl.widget.update:
+                      id: dim_guard_overlay
+                      clickable: false
+                  - light.turn_on:
+                      id: cyd_backlight
+                      brightness: 80%
+                  - script.execute: dim_inactivity_timer
+                  - delay: 500ms
+                  - lvgl.widget.update:
+                      id: dim_guard_overlay
+                      hidden: true
+
+          - obj:
+              id: screen_power_detail
+              x: 0
+              y: 44
+              width: 480
+              height: 268
+              hidden: true
+              bg_color: 0x0F172A
+              border_width: 0
+              radius: 0
+              pad_all: 0
+              widgets:
+                - obj:
+                    id: btn_sub_bat
+                    x: 8
+                    y: 0
+                    width: 228
+                    height: 85
+                    styles: style_card
+                    clickable: true
+                    widgets:
+                      - label:
+                          text: "Battery"
+                          text_font: font_card_header
+                          styles: style_txt_normal
+                          align: top_left
+                          x: 12
+                          y: 10
+                      - label:
+                          id: lbl_sub_bat_telemetry
+                          text: "0 W • 0 Wh"
+                          text_font: font_sub
+                          text_color: 0x64748B
+                          align: bottom_left
+                          x: 12
+                          y: -10
+                      - label:
+                          id: icon_sub_bat_state
+                          text: "\uE197"
+                          text_font: font_icons_hero
+                          text_color: 0x64748B
+                          align: right_mid
+                          x: -12
+                    on_click:
+                      - homeassistant.service:
+                          service: switch.toggle
+                          data:
+                            entity_id: switch.qek_shelly_c1000_ac_charger
+                      - script.execute: power_detail_timeout
+
+                - obj:
+                    id: btn_sub_kitchen
+                    x: 244
+                    y: 0
+                    width: 228
+                    height: 85
+                    styles: style_card
+                    clickable: true
+                    widgets:
+                      - label:
+                          text: "Kitchen"
+                          text_font: font_card_header
+                          styles: style_txt_normal
+                          align: top_left
+                          x: 12
+                          y: 10
+                      - label:
+                          id: lbl_sub_kitchen_telemetry
+                          text: "0 W • 0 Wh"
+                          text_font: font_sub
+                          text_color: 0x64748B
+                          align: bottom_left
+                          x: 12
+                          y: -10
+                      - label:
+                          id: icon_sub_kitchen_state
+                          text: "\uE197"
+                          text_font: font_icons_hero
+                          text_color: 0x64748B
+                          align: right_mid
+                          x: -12
+                    on_click:
+                      - homeassistant.service:
+                          service: switch.toggle
+                          data:
+                            entity_id: switch.qek_shelly_kitchen
+                      - script.execute: power_detail_timeout
+
+                - obj:
+                    id: btn_sub_cooker
+                    x: 8
+                    y: 91
+                    width: 228
+                    height: 85
+                    styles: style_card
+                    clickable: true
+                    widgets:
+                      - label:
+                          text: "Cooker"
+                          text_font: font_card_header
+                          styles: style_txt_normal
+                          align: top_left
+                          x: 12
+                          y: 10
+                      - label:
+                          id: lbl_sub_cooker_telemetry
+                          text: "0 W • 0 Wh"
+                          text_font: font_sub
+                          text_color: 0x64748B
+                          align: bottom_left
+                          x: 12
+                          y: -10
+                      - label:
+                          id: icon_sub_cooker_state
+                          text: "\uE197"
+                          text_font: font_icons_hero
+                          text_color: 0x64748B
+                          align: right_mid
+                          x: -12
+                    on_click:
+                      - homeassistant.service:
+                          service: switch.toggle
+                          data:
+                            entity_id: switch.qek_shelly_cooker
+                      - script.execute: power_detail_timeout
+
+                - obj:
+                    id: btn_sub_climate
+                    x: 244
+                    y: 91
+                    width: 228
+                    height: 85
+                    styles: style_card
+                    clickable: true
+                    widgets:
+                      - label:
+                          text: "Climate"
+                          text_font: font_card_header
+                          styles: style_txt_normal
+                          align: top_left
+                          x: 12
+                          y: 10
+                      - label:
+                          id: lbl_sub_climate_telemetry
+                          text: "0 W • 0 Wh"
+                          text_font: font_sub
+                          text_color: 0x64748B
+                          align: bottom_left
+                          x: 12
+                          y: -10
+                      - label:
+                          id: icon_sub_climate_state
+                          text: "\uE197"
+                          text_font: font_icons_hero
+                          text_color: 0x64748B
+                          align: right_mid
+                          x: -12
+                    on_click:
+                      - homeassistant.service:
+                          service: switch.toggle
+                          data:
+                            entity_id: switch.qek_shelly_climate_co
+                      - script.execute: power_detail_timeout
+
+                - obj:
+                    id: btn_sub_sonoff
+                    x: 8
+                    y: 182
+                    width: 228
+                    height: 85
+                    styles: style_card
+                    clickable: true
+                    widgets:
+                      - label:
+                          text: "Sonoff Main"
+                          text_font: font_card_header
+                          styles: style_txt_normal
+                          align: top_left
+                          x: 12
+                          y: 10
+                      - label:
+                          id: lbl_sub_sonoff_telemetry
+                          text: "0 W • 0 Wh"
+                          text_font: font_sub
+                          text_color: 0x64748B
+                          align: bottom_left
+                          x: 12
+                          y: -10
+                      - label:
+                          id: icon_sub_sonoff_state
+                          text: "\uE197"
+                          text_font: font_icons_hero
+                          text_color: 0x64748B
+                          align: right_mid
+                          x: -12
+                    on_click:
+                      - homeassistant.service:
+                          service: switch.toggle
+                          data:
+                            entity_id: switch.matter_over_wifi_smart_switch
+                      - script.execute: power_detail_timeout
+
+                - obj:
+                    id: btn_sub_back
+                    x: 244
+                    y: 182
+                    width: 228
+                    height: 85
+                    styles: style_card
+                    clickable: true
+                    widgets:
+                      - label:
+                          text: "<- Back"
+                          text_font: font_card_header
+                          styles: style_txt_normal
+                          align: center
+                    on_click:
+                      - lvgl.widget.update:
+                          id: screen_power_detail
+                          hidden: true
+                      - script.stop: power_detail_timeout
