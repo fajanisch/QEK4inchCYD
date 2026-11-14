@@ -19,9 +19,7 @@ binary_sensor:
                   clickable: false
                   hidden: true
 
-#---------------------------------------------------------------------------
-# TEXT SENSORS
-#---------------------------------------------------------------------------                  
+               
 
 text_sensor:
   - platform: homeassistant
