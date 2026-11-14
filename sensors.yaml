@@ -255,7 +255,60 @@ text_sensor:
             lv_obj_invalidate(id(btn_mode_heat));
             lv_obj_invalidate(id(btn_mode_cool));
 
+   - platform: homeassistant
+    entity_id: input_select.qek_climate_mode
+    id: ha_climate_mode_state
+    on_value:
+      then:
+        - lambda: |-
+            std::string mode = x;
+            std::string shelly_state = id(ext_climate_switch_state).state;
+
+            auto col_text = lv_color_hex(0x38BDF8); // Blau
+            auto col_border = lv_color_hex(0x334155); // Dunkler Rahmen
             
+            auto text_off = col_text;
+            auto text_heat = col_text;
+            auto text_cool = col_text;
+            auto border_off = col_border;
+            auto border_heat = col_border;
+            auto border_cool = col_border;
+            int width_off = 1, width_heat = 1, width_cool = 1;
+
+            if (shelly_state == "unavailable" || shelly_state == "unknown") {
+              auto gray = lv_color_hex(0x64748B);
+              text_off = gray; text_heat = gray; text_cool = gray;
+            } else {
+              if (mode == "off") {
+                text_off = lv_color_hex(0xFBBF24);
+                border_off = lv_color_hex(0xFBBF24);
+                width_off = 2;
+              } else if (mode == "heat") {
+                text_heat = lv_color_hex(0xFBBF24);
+                border_heat = lv_color_hex(0xFBBF24);
+                width_heat = 2;
+              } else if (mode == "cool") {
+                text_cool = lv_color_hex(0xFBBF24);
+                border_cool = lv_color_hex(0xFBBF24);
+                width_cool = 2;
+              }
+            }
+
+            lv_obj_set_style_border_color(id(btn_mode_off), border_off, LV_PART_MAIN);
+            lv_obj_set_style_border_width(id(btn_mode_off), width_off, LV_PART_MAIN);
+            lv_obj_set_style_text_color(id(lbl_mode_off), text_off, LV_PART_MAIN);
+
+            lv_obj_set_style_border_color(id(btn_mode_heat), border_heat, LV_PART_MAIN);
+            lv_obj_set_style_border_width(id(btn_mode_heat), width_heat, LV_PART_MAIN);
+            lv_obj_set_style_text_color(id(lbl_mode_heat), text_heat, LV_PART_MAIN);
+
+            lv_obj_set_style_border_color(id(btn_mode_cool), border_cool, LV_PART_MAIN);
+            lv_obj_set_style_border_width(id(btn_mode_cool), width_cool, LV_PART_MAIN);
+            lv_obj_set_style_text_color(id(lbl_mode_cool), text_cool, LV_PART_MAIN);
+
+            lv_obj_invalidate(id(btn_mode_off));
+            lv_obj_invalidate(id(btn_mode_heat));
+            lv_obj_invalidate(id(btn_mode_cool));         
 #-------------------------------------------------------------
 # SENSOR
 #-------------------------------------------------------------
