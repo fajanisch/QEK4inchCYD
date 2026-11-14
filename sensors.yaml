@@ -1,3 +1,4 @@
+
 binary_sensor:
   - platform: homeassistant
     id: ha_auto_dim
@@ -22,7 +23,7 @@ binary_sensor:
 #---------------------------------------------------------------------------
 # TEXT SENSORS
 #---------------------------------------------------------------------------   
-               
+
 
 text_sensor:
   - platform: homeassistant
