@@ -24,7 +24,7 @@ binary_sensor:
   - platform: homeassistant
     entity_id: binary_sensor.qek_climate_available
     id: ha_climate_available
-    
+
 #---------------------------------------------------------------------------
 # TEXT SENSORS
 #---------------------------------------------------------------------------   
@@ -210,7 +210,11 @@ text_sensor:
             // Hier kannst du z.B. die Buttons auf dem CYD (OFF/HEAT/COOL) 
             // optisch anpassen, je nachdem welcher Modus in HA aktiv ist!
             ESP_LOGD("climate", "Aktueller Mod aus HA: %s", x.c_str());
-            
+
+  - platform: homeassistant
+    entity_id: sensor.qek_climate_hvac_mode
+    id: ha_climate_mode_state
+    
 #-------------------------------------------------------------
 # SENSOR
 #-------------------------------------------------------------
