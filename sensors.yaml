@@ -220,34 +220,38 @@ text_sensor:
             if (id(ha_climate_mode_state).state == "off") {
               lv_obj_set_style_border_color(id(btn_mode_off), lv_color_hex(0xFBBF24), LV_PART_MAIN);
               lv_obj_set_style_border_width(id(btn_mode_off), 2, LV_PART_MAIN);
-              lv_label_set_text_color(id(lbl_mode_off), lv_color_hex(0xFBBF24));
+              lv_obj_set_style_text_color(id(lbl_mode_off), lv_color_hex(0xFBBF24), LV_PART_MAIN);
             } else {
               lv_obj_set_style_border_color(id(btn_mode_off), col_border, LV_PART_MAIN);
               lv_obj_set_style_border_width(id(btn_mode_off), 1, LV_PART_MAIN);
-              lv_label_set_text_color(id(lbl_mode_off), col_text);
+              lv_obj_set_style_text_color(id(lbl_mode_off), col_text, LV_PART_MAIN);
             }
 
             // HEAT-Button prüfen
             if (id(ha_climate_mode_state).state == "heat") {
               lv_obj_set_style_border_color(id(btn_mode_heat), lv_color_hex(0xFBBF24), LV_PART_MAIN);
               lv_obj_set_style_border_width(id(btn_mode_heat), 2, LV_PART_MAIN);
-              lv_label_set_text_color(id(lbl_mode_heat), lv_color_hex(0xFBBF24));
+              lv_obj_set_style_text_color(id(lbl_mode_heat), lv_color_hex(0xFBBF24), LV_PART_MAIN);
             } else {
               lv_obj_set_style_border_color(id(btn_mode_heat), col_border, LV_PART_MAIN);
               lv_obj_set_style_border_width(id(btn_mode_heat), 1, LV_PART_MAIN);
-              lv_label_set_text_color(id(lbl_mode_heat), col_text);
+              lv_obj_set_style_text_color(id(lbl_mode_heat), col_text, LV_PART_MAIN);
             }
 
             // COOL-Button prüfen
             if (id(ha_climate_mode_state).state == "cool") {
               lv_obj_set_style_border_color(id(btn_mode_cool), lv_color_hex(0xFBBF24), LV_PART_MAIN);
               lv_obj_set_style_border_width(id(btn_mode_cool), 2, LV_PART_MAIN);
-              lv_label_set_text_color(id(lbl_mode_cool), lv_color_hex(0xFBBF24));
+              lv_obj_set_style_text_color(id(lbl_mode_cool), lv_color_hex(0xFBBF24), LV_PART_MAIN);
             } else {
               lv_obj_set_style_border_color(id(btn_mode_cool), col_border, LV_PART_MAIN);
               lv_obj_set_style_border_width(id(btn_mode_cool), 1, LV_PART_MAIN);
-              lv_label_set_text_color(id(lbl_mode_cool), col_text);
+              lv_obj_set_style_text_color(id(lbl_mode_cool), col_text, LV_PART_MAIN);
             }
+            
+            lv_obj_invalidate(id(btn_mode_off));
+            lv_obj_invalidate(id(btn_mode_heat));
+            lv_obj_invalidate(id(btn_mode_cool));
 #-------------------------------------------------------------
 # SENSOR
 #-------------------------------------------------------------
