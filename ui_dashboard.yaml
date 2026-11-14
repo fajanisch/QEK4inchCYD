@@ -998,13 +998,13 @@ lvgl:
                                 text_color: 0x38BDF8
                                 align: center
                           on_click:
-                        then:
-                          - homeassistant.service:
-                              service: input_select.select_option
-                              data:
-                                entity_id: input_select.qek_climate_mode
-                                option: "off"
-                          - script.execute: power_detail_timeout
+                            then:
+                              - homeassistant.service:
+                                  service: input_select.select_option
+                                  data:
+                                    entity_id: input_select.qek_climate_mode
+                                    option: "off"
+                              - script.execute: power_detail_timeout
 
                       - obj:
                           id: btn_mode_heat
@@ -1025,13 +1025,13 @@ lvgl:
                                 text_color: 0x38BDF8
                                 align: center
                           on_click:
-                        then:
-                          - homeassistant.service:
-                              service: input_select.select_option
-                              data:
-                                entity_id: input_select.qek_climate_mode
-                                option: "heat"
-                          - script.execute: power_detail_timeout
+                            then:
+                              - homeassistant.service:
+                                  service: input_select.select_option
+                                  data:
+                                    entity_id: input_select.qek_climate_mode
+                                    option: "heat"
+                              - script.execute: power_detail_timeout
 
                       - obj:
                           id: btn_mode_cool
@@ -1054,11 +1054,12 @@ lvgl:
                           on_click:
                             then:
                               - homeassistant.service:
-                                  service: climate.set_hvac_mode
+                                  service: input_select.select_option
                                   data:
-                                    entity_id: climate.qek_klima
-                                    hvac_mode: "cool"
+                                    entity_id: input_select.qek_climate_mode
+                                    option: "cool"
                               - script.execute: power_detail_timeout
+
                       - obj:
                           id: btn_temp_minus
                           x: 2
@@ -1077,17 +1078,18 @@ lvgl:
                                 text_color: 0x38BDF8
                                 align: center
                           on_click:
-                        then:
-                          - homeassistant.service:
-                              service: input_select.select_option
-                              data:
-                                entity_id: input_select.qek_climate_mode
-                                option: "cool"
-                          - homeassistant.service:
-                              service: switch.turn_on
-                              data:
-                                entity_id: switch.qek_shelly_climate_co
-                          - script.execute: power_detail_timeout
+                            then:
+                              - homeassistant.service:
+                                  service: input_select.select_option
+                                  data:
+                                    entity_id: input_select.qek_climate_mode
+                                    option: "cool"
+                              - homeassistant.service:
+                                  service: switch.turn_on
+                                  data:
+                                    entity_id: switch.qek_shelly_climate_co
+                              - script.execute: power_detail_timeout
+
                       - obj:
                           id: btn_target_toggle
                           x: 56
@@ -1114,6 +1116,7 @@ lvgl:
                                     entity_id: climate.qek_klima
                                     temperature: !lambda "if (isnan(id(ha_climate_target_temp).state)) return 21.0; if (id(ha_climate_target_temp).state >= 18.0) return 15.0; return 21.0;"
                               - script.execute: power_detail_timeout
+
                       - obj:
                           id: btn_temp_plus
                           x: 160
@@ -1139,7 +1142,6 @@ lvgl:
                                     entity_id: climate.qek_klima
                                     temperature: !lambda "if (isnan(id(ha_climate_target_temp).state)) return 22.0; return id(ha_climate_target_temp).state + 1.0;"
                               - script.execute: power_detail_timeout
-
                 # 3. BACK BUTTON (228x84)
                 - obj:
                     id: btn_sub_climate_back
