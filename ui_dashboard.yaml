@@ -1200,3 +1200,5 @@ lvgl:
                       - lvgl.widget.update:
                           id: screen_climate_detail
                           hidden: true
+
+                          
