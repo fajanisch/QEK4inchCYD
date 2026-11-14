@@ -998,13 +998,13 @@ lvgl:
                                 text_color: 0x38BDF8
                                 align: center
                           on_click:
-                            then:
-                              - homeassistant.service:
-                                  service: climate.set_hvac_mode
-                                  data:
-                                    entity_id: climate.qek_klima
-                                    hvac_mode: "off"
-                              - script.execute: power_detail_timeout
+                        then:
+                          - homeassistant.service:
+                              service: input_select.select_option
+                              data:
+                                entity_id: input_select.qek_climate_mode
+                                option: "off"
+                          - script.execute: power_detail_timeout
 
                       - obj:
                           id: btn_mode_heat
