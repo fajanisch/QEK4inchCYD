@@ -506,3 +506,13 @@ sensor:
             if (!isnan(x)) {
               lv_label_set_text_fmt(id(lbl_ext_wind_val), "%.1f km/h", x);
             }
+
+  - platform: homeassistant
+    id: ext_sunshine_hours
+    entity_id: sensor.qek_sunshine_remaining  # Entsprechender Sensor in HA
+    on_value:
+      then:
+        - lambda: |-
+            if (!isnan(x)) {
+              lv_label_set_text_fmt(id(lbl_ext_sun_val), "%.1f h", x);
+            }
