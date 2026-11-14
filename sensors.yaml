@@ -190,7 +190,8 @@ text_sensor:
       then:
         - script.execute: update_shelly_climate
 #-------------------------------------------------------------
-#
+# SENSOR
+
 sensor:
   - platform: dht
     pin: GPIO21
