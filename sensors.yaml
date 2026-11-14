@@ -211,13 +211,15 @@ text_sensor:
             auto col_text = lv_color_hex(0x38BDF8);
             auto col_border = lv_color_hex(0x334155);
             
-            // Wenn Shelly/Klima offline ist -> Grau
-            if (id(ha_climate_available).state == false) {
+            std::string mode = id(ha_climate_mode_state).state;
+            
+            // Wenn Klima nicht erreichbar ist -> Grau
+            if (mode == "unavailable" || mode == "unknown" || mode.empty()) {
               col_text = lv_color_hex(0x64748B);
             }
 
             // OFF-Button prüfen
-            if (id(ha_climate_mode_state).state == "off") {
+            if (mode == "off") {
               lv_obj_set_style_border_color(id(btn_mode_off), lv_color_hex(0xFBBF24), LV_PART_MAIN);
               lv_obj_set_style_border_width(id(btn_mode_off), 2, LV_PART_MAIN);
               lv_obj_set_style_text_color(id(lbl_mode_off), lv_color_hex(0xFBBF24), LV_PART_MAIN);
@@ -228,7 +230,7 @@ text_sensor:
             }
 
             // HEAT-Button prüfen
-            if (id(ha_climate_mode_state).state == "heat") {
+            if (mode == "heat") {
               lv_obj_set_style_border_color(id(btn_mode_heat), lv_color_hex(0xFBBF24), LV_PART_MAIN);
               lv_obj_set_style_border_width(id(btn_mode_heat), 2, LV_PART_MAIN);
               lv_obj_set_style_text_color(id(lbl_mode_heat), lv_color_hex(0xFBBF24), LV_PART_MAIN);
@@ -239,7 +241,7 @@ text_sensor:
             }
 
             // COOL-Button prüfen
-            if (id(ha_climate_mode_state).state == "cool") {
+            if (mode == "cool") {
               lv_obj_set_style_border_color(id(btn_mode_cool), lv_color_hex(0xFBBF24), LV_PART_MAIN);
               lv_obj_set_style_border_width(id(btn_mode_cool), 2, LV_PART_MAIN);
               lv_obj_set_style_text_color(id(lbl_mode_cool), lv_color_hex(0xFBBF24), LV_PART_MAIN);
@@ -252,6 +254,8 @@ text_sensor:
             lv_obj_invalidate(id(btn_mode_off));
             lv_obj_invalidate(id(btn_mode_heat));
             lv_obj_invalidate(id(btn_mode_cool));
+
+            
 #-------------------------------------------------------------
 # SENSOR
 #-------------------------------------------------------------
