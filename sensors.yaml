@@ -211,10 +211,7 @@ text_sensor:
             // optisch anpassen, je nachdem welcher Modus in HA aktiv ist!
             ESP_LOGD("climate", "Aktueller Mod aus HA: %s", x.c_str());
 
-  - platform: homeassistant
-    entity_id: sensor.qek_climate_hvac_mode
-    id: ha_climate_mode_state
-
+  text_sensor:
   - platform: homeassistant
     entity_id: sensor.qek_climate_hvac_mode
     id: ha_climate_mode_state
