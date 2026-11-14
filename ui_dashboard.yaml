@@ -503,30 +503,7 @@ lvgl:
 #          - obj:
 #              id: dim_guard_overlay
 #              x: 0
-#              y: 0
-#              width: 480
-#              height: 320
-#              bg_opa: TRANSP
-#              border_width: 0
-#              radius: 0
-#              pad_all: 0
-#              scrollbar_mode: "off"
-#              scrollable: false
-#              hidden: true
-#              clickable: false
-#              on_click:
-#                then:
-#                  - lvgl.widget.update:
-#                      id: dim_guard_overlay
-#                      clickable: false
-#                  - light.turn_on:
-#                      id: cyd_backlight
-#                      brightness: 80%
-#                  - script.execute: dim_inactivity_timer
-#                  - delay: 500ms
-#                  - lvgl.widget.update:
-#                      id: dim_guard_overlay
-#                      hidden: true
+#  
 
           - obj:
               id: screen_power_detail
