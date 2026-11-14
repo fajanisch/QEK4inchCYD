@@ -24,6 +24,7 @@ binary_sensor:
   - platform: homeassistant
     entity_id: binary_sensor.qek_climate_available
     id: ha_climate_available
+    
 #---------------------------------------------------------------------------
 # TEXT SENSORS
 #---------------------------------------------------------------------------   
