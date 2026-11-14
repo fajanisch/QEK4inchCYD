@@ -1065,6 +1065,7 @@ lvgl:
                                     option: "cool"
                               - script.execute: power_detail_timeout
 
+                      # 1. Minus-Button (-)
                       - obj:
                           id: btn_temp_minus
                           x: 2
@@ -1085,16 +1086,12 @@ lvgl:
                           on_click:
                             then:
                               - homeassistant.service:
-                                  service: input_select.select_option
+                                  service: input_number.decrement
                                   data:
-                                    entity_id: input_select.qek_climate_mode
-                                    option: "cool"
-                              - homeassistant.service:
-                                  service: switch.turn_on
-                                  data:
-                                    entity_id: switch.qek_shelly_climate_co
+                                    entity_id: input_number.qek_target_temp
                               - script.execute: power_detail_timeout
 
+                      # 2. Anzeige der Zieltemperatur in der Mitte
                       - obj:
                           id: btn_target_toggle
                           x: 56
@@ -1105,7 +1102,7 @@ lvgl:
                           pad_all: 0
                           scrollable: false
                           scrollbar_mode: "off"
-                          clickable: true
+                          clickable: false
                           widgets:
                             - label:
                                 id: lbl_target_value
@@ -1113,15 +1110,8 @@ lvgl:
                                 text_font: font_sub_title
                                 text_color: 0x38BDF8
                                 align: center
-                          on_click:
-                            then:
-                              - homeassistant.service:
-                                  service: climate.set_temperature
-                                  data:
-                                    entity_id: climate.qek_klima
-                                    temperature: !lambda "if (isnan(id(ha_climate_target_temp).state)) return 21.0; if (id(ha_climate_target_temp).state >= 18.0) return 15.0; return 21.0;"
-                              - script.execute: power_detail_timeout
 
+                      # 3. Plus-Button (+)
                       - obj:
                           id: btn_temp_plus
                           x: 160
@@ -1142,11 +1132,11 @@ lvgl:
                           on_click:
                             then:
                               - homeassistant.service:
-                                  service: climate.set_temperature
+                                  service: input_number.increment
                                   data:
-                                    entity_id: climate.qek_klima
-                                    temperature: !lambda "if (isnan(id(ha_climate_target_temp).state)) return 22.0; return id(ha_climate_target_temp).state + 1.0;"
+                                    entity_id: input_number.qek_target_temp
                               - script.execute: power_detail_timeout
+                              
                 # 3. BACK BUTTON (228x84)
                 - obj:
                     id: btn_sub_climate_back
