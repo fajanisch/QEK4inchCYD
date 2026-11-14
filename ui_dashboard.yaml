@@ -1091,7 +1091,7 @@ lvgl:
                                     entity_id: input_number.qek_target_temp
                               - script.execute: power_detail_timeout
 
-                      # 2. Anzeige der Zieltemperatur in der Mitte
+                      # 2. Anzeige & Schnell-Umschalter (21.0 °C <-> 15.0 °C)
                       - obj:
                           id: btn_target_toggle
                           x: 56
@@ -1102,7 +1102,7 @@ lvgl:
                           pad_all: 0
                           scrollable: false
                           scrollbar_mode: "off"
-                          clickable: false
+                          clickable: true
                           widgets:
                             - label:
                                 id: lbl_target_value
@@ -1110,7 +1110,15 @@ lvgl:
                                 text_font: font_sub_title
                                 text_color: 0x38BDF8
                                 align: center
-
+                          on_click:
+                            then:
+                              - homeassistant.service:
+                                  service: input_number.set_value
+                                  data:
+                                    entity_id: input_number.qek_target_temp
+                                    value: !lambda "if (isnan(id(ha_climate_target_temp).state)) return 21.0; if (id(ha_climate_target_temp).state >= 18.0) return 15.0; return 21.0;"
+                              - script.execute: power_detail_timeout
+                              
                       # 3. Plus-Button (+)
                       - obj:
                           id: btn_temp_plus
