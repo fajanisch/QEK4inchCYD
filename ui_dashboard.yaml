@@ -501,7 +501,7 @@ lvgl:
                     align: bottom_right
                     x: -2
                     y: 0
-                    
+
           - obj:
               id: screen_power_detail
               x: 0
@@ -566,11 +566,12 @@ lvgl:
                           align: right_mid
                           x: -2
                     on_click:
-                      - homeassistant.service:
-                          service: switch.toggle
-                          data:
-                            entity_id: switch.qek_shelly_c1000_ac_charger
-                      - script.execute: power_detail_timeout
+                      then:
+                        - homeassistant.service:
+                            service: switch.toggle
+                            data:
+                              entity_id: switch.qek_shelly_c1000_ac_charger
+                        - script.execute: power_detail_timeout
 
                 # 2. KITCHEN
                 - obj:
@@ -620,11 +621,12 @@ lvgl:
                           align: right_mid
                           x: -2
                     on_click:
-                      - homeassistant.service:
-                          service: switch.toggle
-                          data:
-                            entity_id: switch.qek_shelly_kitchen
-                      - script.execute: power_detail_timeout
+                      then:
+                        - homeassistant.service:
+                            service: switch.toggle
+                            data:
+                              entity_id: switch.qek_shelly_kitchen
+                        - script.execute: power_detail_timeout
 
                 # 3. COOKER
                 - obj:
@@ -674,11 +676,12 @@ lvgl:
                           align: right_mid
                           x: -2
                     on_click:
-                      - homeassistant.service:
-                          service: switch.toggle
-                          data:
-                            entity_id: switch.qek_shelly_cooker
-                      - script.execute: power_detail_timeout
+                      then:
+                        - homeassistant.service:
+                            service: switch.toggle
+                            data:
+                              entity_id: switch.qek_shelly_cooker
+                        - script.execute: power_detail_timeout
 
                 # 4. CLIMATE
                 - obj:
@@ -728,11 +731,12 @@ lvgl:
                           align: right_mid
                           x: -2
                     on_click:
-                      - homeassistant.service:
-                          service: switch.toggle
-                          data:
-                            entity_id: switch.qek_shelly_climate_co
-                      - script.execute: power_detail_timeout
+                      then:
+                        - homeassistant.service:
+                            service: switch.toggle
+                            data:
+                              entity_id: switch.qek_shelly_climate_co
+                        - script.execute: power_detail_timeout
 
                 # 5. MAIN (Sonoff)
                 - obj:
@@ -782,11 +786,12 @@ lvgl:
                           align: right_mid
                           x: -2
                     on_click:
-                      - homeassistant.service:
-                          service: switch.toggle
-                          data:
-                            entity_id: switch.qek_matter_over_wifi_smart_switch
-                      - script.execute: power_detail_timeout
+                      then:
+                        - homeassistant.service:
+                            service: switch.toggle
+                            data:
+                              entity_id: switch.qek_matter_over_wifi_smart_switch
+                        - script.execute: power_detail_timeout
                       
                 # 6. BACK BUTTON (Reihe 3, rechts neben Main)
                 - obj:
@@ -796,20 +801,16 @@ lvgl:
                     width: 228
                     height: 84       
                     styles: style_card
-                    #bg_color: 0x38BDF8     # Blauer Hintergrund
-                    border_color: 0x38BDF8 # Blauer Rahmen
+                    border_color: 0x38BDF8
                     clickable: true
                     widgets:
-                      # Icon zentriert (leicht nach links versetzt)
                       - label:
                           id: icon_sub_back
-                          text: "\uE166" # undo (geschwungener Pfeil)
+                          text: "\uE166"
                           text_font: font_icons_sub
                           text_color: 0x38BDF8 
                           align: center
                           x: -25
-
-                      # Label zentriert (leicht nach rechts versetzt)
                       - label:
                           id: lbl_sub_back
                           text: "Back"
@@ -818,10 +819,378 @@ lvgl:
                           align: center
                           x: 21
                     on_click:
-                      - script.execute: power_detail_timeout
-                      - lvgl.widget.update:
-                          id: screen_power_detail
-                          hidden: true
+                      then:
+                        - script.execute: power_detail_timeout
+                        - lvgl.widget.update:
+                            id: screen_power_detail
+                            hidden: true
 
+          # ==========================================
+          # 5. CLIMATE SUB-SCREEN (y: 44, unter Statusbalken)
+          # ==========================================
+          - obj:
+              id: screen_climate_detail
+              x: 0
+              y: 44
+              width: 480
+              height: 268
+              hidden: true
+              bg_color: 0x0F172A
+              border_width: 0
+              radius: 0
+              pad_all: 0
+              scrollable: false
+              scrollbar_mode: "off"
+              widgets:
+                # 1. LEFT CARD: Room & Weather (228x268)
+                - obj:
+                    id: card_climate_weather
+                    x: 8
+                    y: 0
+                    width: 228
+                    height: 268
+                    styles: style_card
+                    scrollable: false
+                    scrollbar_mode: "off"
+                    widgets:
+                      - label:
+                          text: "Room & Weather"
+                          text_font: font_sub_title
+                          text_color: 0x38BDF8
+                          align: top_left
+                          x: 2
+                          y: 2
+                      - label:
+                          id: icon_climate_sub_wx
+                          text: "\uE2BD"
+                          text_font: font_icons
+                          styles: style_icon_normal
+                          align: top_right
+                          x: -2
+                          y: 2
+                      - label:
+                          id: lbl_climate_temp_val
+                          text: "In: --.-°C | --% | --.-°C"
+                          text_font: font_sub
+                          text_color: 0xE2E8F0
+                          align: top_left
+                          x: 2
+                          y: 36
+                      - label:
+                          text: "Temp:"
+                          text_font: font_sub
+                          text_color: 0x64748B
+                          align: top_left
+                          x: 2
+                          y: 72
+                      - label:
+                          id: lbl_ext_temp_val
+                          text: "--.-°C"
+                          text_font: font_sub
+                          text_color: 0xE2E8F0
+                          align: top_left
+                          x: 48
+                          y: 72
+                      - label:
+                          text: "Hum:"
+                          text_font: font_sub
+                          text_color: 0x64748B
+                          align: top_left
+                          x: 112
+                          y: 72
+                      - label:
+                          id: lbl_ext_hum_val
+                          text: "--%"
+                          text_font: font_sub
+                          text_color: 0xE2E8F0
+                          align: top_left
+                          x: 152
+                          y: 72
+                      - label:
+                          text: "Press:"
+                          text_font: font_sub
+                          text_color: 0x64748B
+                          align: top_left
+                          x: 2
+                          y: 104
+                      - label:
+                          id: lbl_ext_press_val
+                          text: "----"
+                          text_font: font_sub
+                          text_color: 0xE2E8F0
+                          align: top_left
+                          x: 48
+                          y: 104
+                      - label:
+                          text: "Wind:"
+                          text_font: font_sub
+                          text_color: 0x64748B
+                          align: top_left
+                          x: 112
+                          y: 104
+                      - label:
+                          id: lbl_ext_wind_val
+                          text: "--"
+                          text_font: font_sub
+                          text_color: 0xE2E8F0
+                          align: top_left
+                          x: 152
+                          y: 104
+                      - label:
+                          text: "Sun (Rem):"
+                          text_font: font_sub
+                          text_color: 0x64748B
+                          align: top_left
+                          x: 2
+                          y: 136
+                      - label:
+                          id: lbl_ext_sun_val
+                          text: "--.- h"
+                          text_font: font_sub
+                          text_color: 0xFBBF24
+                          align: top_left
+                          x: 90
+                          y: 136
+                      - label:
+                          id: lbl_climate_wx_summary
+                          text: "Loading weather..."
+                          text_font: font_sub
+                          text_color: 0x38BDF8
+                          align: bottom_left
+                          x: 2
+                          y: -4
 
-          - script.execute: power_detail_timeout
+                # 2. RIGHT CARD: Climate Control (228x176)
+                - obj:
+                    id: card_climate_control
+                    x: 244
+                    y: 0
+                    width: 228
+                    height: 176
+                    styles: style_card
+                    scrollable: false
+                    scrollbar_mode: "off"
+                    widgets:
+                      - label:
+                          text: "Climate Control"
+                          text_font: font_sub_title
+                          text_color: 0x38BDF8
+                          align: top_left
+                          x: 2
+                          y: 2
+                      - obj:
+                          id: btn_mode_off
+                          x: 2
+                          y: 38
+                          width: 64
+                          height: 36
+                          styles: style_card
+                          pad_all: 0
+                          scrollable: false
+                          scrollbar_mode: "off"
+                          clickable: true
+                          widgets:
+                            - label:
+                                text: "OFF"
+                                text_font: font_sub
+                                text_color: 0xE2E8F0
+                                align: center
+                          on_click:
+                            then:
+                              - homeassistant.service:
+                                  service: climate.set_hvac_mode
+                                  data:
+                                    entity_id: climate.qek_klima
+                                    hvac_mode: "off"
+                              - script.execute: power_detail_timeout
+                      - obj:
+                          id: btn_mode_heat
+                          x: 73
+                          y: 38
+                          width: 64
+                          height: 36
+                          styles: style_card
+                          pad_all: 0
+                          scrollable: false
+                          scrollbar_mode: "off"
+                          clickable: true
+                          widgets:
+                            - label:
+                                text: "HEAT"
+                                text_font: font_sub
+                                text_color: 0xE2E8F0
+                                align: center
+                          on_click:
+                            then:
+                              - homeassistant.service:
+                                  service: climate.set_hvac_mode
+                                  data:
+                                    entity_id: climate.qek_klima
+                                    hvac_mode: "heat"
+                              - script.execute: power_detail_timeout
+                      - obj:
+                          id: btn_mode_cool
+                          x: 144
+                          y: 38
+                          width: 64
+                          height: 36
+                          styles: style_card
+                          pad_all: 0
+                          scrollable: false
+                          scrollbar_mode: "off"
+                          clickable: true
+                          widgets:
+                            - label:
+                                text: "COOL"
+                                text_font: font_sub
+                                text_color: 0xE2E8F0
+                                align: center
+                          on_click:
+                            then:
+                              - homeassistant.service:
+                                  service: climate.set_hvac_mode
+                                  data:
+                                    entity_id: climate.qek_klima
+                                    hvac_mode: "cool"
+                              - script.execute: power_detail_timeout
+                      - obj:
+                          id: btn_temp_minus
+                          x: 2
+                          y: 96
+                          width: 48
+                          height: 48
+                          styles: style_card
+                          pad_all: 0
+                          scrollable: false
+                          scrollbar_mode: "off"
+                          clickable: true
+                          widgets:
+                            - label:
+                                text: "<"
+                                text_font: font_sub_title
+                                text_color: 0x38BDF8
+                                align: center
+                          on_click:
+                            then:
+                              - homeassistant.service:
+                                  service: climate.set_temperature
+                                  data:
+                                    entity_id: climate.qek_klima
+                                    temperature: !lambda "if (isnan(id(ha_climate_target_temp).state)) return 20.0; return id(ha_climate_target_temp).state - 1.0;"
+                              - script.execute: power_detail_timeout
+                      - obj:
+                          id: btn_target_toggle
+                          x: 56
+                          y: 96
+                          width: 98
+                          height: 48
+                          styles: style_card
+                          pad_all: 0
+                          scrollable: false
+                          scrollbar_mode: "off"
+                          clickable: true
+                          widgets:
+                            - label:
+                                id: lbl_target_value
+                                text: "21.0 °C"
+                                text_font: font_sub_title
+                                text_color: 0x38BDF8
+                                align: center
+                          on_click:
+                            then:
+                              - homeassistant.service:
+                                  service: climate.set_temperature
+                                  data:
+                                    entity_id: climate.qek_klima
+                                    temperature: !lambda "if (isnan(id(ha_climate_target_temp).state)) return 21.0; if (id(ha_climate_target_temp).state >= 18.0) return 15.0; return 21.0;"
+                              - script.execute: power_detail_timeout
+                      - obj:
+                          id: btn_temp_plus
+                          x: 160
+                          y: 96
+                          width: 48
+                          height: 48
+                          styles: style_card
+                          pad_all: 0
+                          scrollable: false
+                          scrollbar_mode: "off"
+                          clickable: true
+                          widgets:
+                            - label:
+                                text: ">"
+                                text_font: font_sub_title
+                                text_color: 0x38BDF8
+                                align: center
+                          on_click:
+                            then:
+                              - homeassistant.service:
+                                  service: climate.set_temperature
+                                  data:
+                                    entity_id: climate.qek_klima
+                                    temperature: !lambda "if (isnan(id(ha_climate_target_temp).state)) return 22.0; return id(ha_climate_target_temp).state + 1.0;"
+                              - script.execute: power_detail_timeout
+
+                # 3. BACK BUTTON (228x84)
+                - obj:
+                    id: btn_sub_climate_back
+                    x: 244
+                    y: 184
+                    width: 228
+                    height: 84
+                    styles: style_card
+                    border_color: 0x38BDF8
+                    scrollable: false
+                    scrollbar_mode: "off"
+                    clickable: true
+                    widgets:
+                      - label:
+                          id: icon_sub_climate_back
+                          text: "\uE166"
+                          text_font: font_icons_sub
+                          text_color: 0x38BDF8
+                          align: center
+                          x: -25
+                      - label:
+                          id: lbl_sub_climate_back
+                          text: "Back"
+                          text_font: font_sub_title
+                          text_color: 0x38BDF8
+                          align: center
+                          x: 21
+                    on_click:
+                      then:
+                        - script.stop: power_detail_timeout
+                        - lvgl.widget.update:
+                            id: screen_climate_detail
+                            hidden: true
+
+          # ==========================================
+          # 6. DIM GUARD OVERLAY (Oberste Ebene)
+          # ==========================================
+          - obj:
+              id: dim_guard_overlay
+              x: 0
+              y: 0
+              width: 480
+              height: 320
+              bg_opa: TRANSP
+              border_width: 0
+              radius: 0
+              pad_all: 0
+              scrollbar_mode: "off"
+              scrollable: false
+              hidden: true
+              clickable: false
+              on_press:
+                then:
+                  - light.turn_on:
+                      id: cyd_backlight
+                      brightness: 80%
+                  - script.execute: dim_inactivity_timer
+                  - lvgl.widget.update:
+                      id: dim_guard_overlay
+                      clickable: false
+                  - delay: 300ms
+                  - lvgl.widget.update:
+                      id: dim_guard_overlay
+                      hidden: true
