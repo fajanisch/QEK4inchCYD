@@ -214,6 +214,7 @@ text_sensor:
   - platform: homeassistant
     entity_id: sensor.qek_climate_hvac_mode
     id: ha_climate_mode_state
+
     
 #-------------------------------------------------------------
 # SENSOR
