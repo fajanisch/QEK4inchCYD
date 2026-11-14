@@ -198,7 +198,9 @@ text_sensor:
         - lambda: |-
             // Hier kannst du z.B. die Buttons auf dem CYD (OFF/HEAT/COOL) 
             // optisch anpassen, je nachdem welcher Modus in HA aktiv ist!
-            ESP_LOGD("climate", "Aktueller Mod aus HA: %s", x.c_str());#-------------------------------------------------------------
+            ESP_LOGD("climate", "Aktueller Mod aus HA: %s", x.c_str());
+            
+#-------------------------------------------------------------
 # SENSOR
 #-------------------------------------------------------------
 sensor:
