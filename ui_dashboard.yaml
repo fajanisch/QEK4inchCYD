@@ -1201,3 +1201,33 @@ lvgl:
                           id: screen_climate_detail
                           hidden: true
 
+# ==========================================
+          # 6. DIM GUARD OVERLAY (Muss ganz unten stehen = oberste Ebene!)
+          # ==========================================
+          - obj:
+              id: dim_guard_overlay
+              x: 0
+              y: 0
+              width: 480
+              height: 320
+              bg_opa: TRANSP
+              border_width: 0
+              radius: 0
+              pad_all: 0
+              scrollbar_mode: "off"
+              scrollable: false
+              hidden: true
+              clickable: false
+              on_press:
+                then:
+                  - light.turn_on:
+                      id: cyd_backlight
+                      brightness: 80%
+                  - script.execute: dim_inactivity_timer
+                  - lvgl.widget.update:
+                      id: dim_guard_overlay
+                      clickable: false
+                  - delay: 300ms
+                  - lvgl.widget.update:
+                      id: dim_guard_overlay
+                      hidden: true
