@@ -849,7 +849,7 @@ lvgl:
                           id: screen_power_detail
                           hidden: true
 
-            - obj: 
+          - obj: 
                 id: screen_climate_detail
                 x: 0
                 y: 44
