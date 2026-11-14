@@ -908,7 +908,113 @@ lvgl:
                             x: 12
                             y: 200
 
+                  # 1. LINKE KACHEL: Raum & Wetter (Volle Höhe links: 228x268)
+                  - obj: 
+                      id: card_climate_weather
+                      x: 8
+                      y: 0
+                      width: 228
+                      height: 268
+                      styles: style_card
+                      widgets: 
+                        - label:
+                            text: "Raum & Wetter"
+                            text_font: font_sub_title
+                            text_color: 3718648
+                            x: 4
+                            y: 4
 
+                        # --- Sektion: INNENRAUM ---
+                        - label: 
+                            id: lbl_climate_temp_val
+                            text: "Innen: --.-°C | --% | --.-°C"
+                            text_font: font_sub
+                            text_color: 14870768
+                            x: 4
+                            y: 36
+
+                        # --- Sektion: AUSSEN / WETTERDIENST ---
+                        # Zeile 1: Außentemperatur & Außenfeuchte
+                        - label:
+                            text: "Temp:"
+                            text_font: font_sub
+                            text_color: 6583435
+                            x: 4
+                            y: 72
+                        - label:
+                            id: lbl_ext_temp_val
+                            text: "--.- °C"
+                            text_font: font_sub
+                            text_color: 14870768
+                            x: 52
+                            y: 72
+
+                        - label:
+                            text: "Hum:"
+                            text_font: font_sub
+                            text_color: 6583435
+                            x: 118
+                            y: 72
+                        - label:
+                            id: lbl_ext_hum_val
+                            text: "-- %"
+                            text_font: font_sub
+                            text_color: 14870768
+                            x: 160
+                            y: 72
+
+                        # Zeile 2: Luftdruck & Wind
+                        - label:
+                            text: "Druck:"
+                            text_font: font_sub
+                            text_color: 6583435
+                            x: 4
+                            y: 102
+                        - label:
+                            id: lbl_ext_press_val
+                            text: "---- hPa"
+                            text_font: font_sub
+                            text_color: 14870768
+                            x: 52
+                            y: 102
+
+                        - label:
+                            text: "Wind:"
+                            text_font: font_sub
+                            text_color: 6583435
+                            x: 118
+                            y: 102
+                        - label:
+                            id: lbl_ext_wind_val
+                            text: "--.- km/h"
+                            text_font: font_sub
+                            text_color: 14870768
+                            x: 158
+                            y: 102
+
+                        # Zeile 3: Sonnenstunden (Off-Grid Planung)
+                        - label:
+                            text: "Sonne:"
+                            text_font: font_sub
+                            text_color: 6583435
+                            x: 4
+                            y: 132
+                        - label:
+                            id: lbl_ext_sun_val
+                            text: "--.- h"
+                            text_font: font_sub
+                            text_color: 16498468
+                            x: 58
+                            y: 132
+
+                        # Wetter Summary unten in der linken Kachel
+                        - label:
+                            id: lbl_climate_wx_summary
+                            text: "Lade Wetter..."
+                            text_font: font_sub
+                            text_color: 3718648
+                            x: 4
+                            y: 215
                   # 2. RECHTE KACHEL: Klimaregelung (Reihe 1 & 2 rechts: x: 244, y: 0, width: 228, height: 176)
                   - obj:
                       id: card_climate_control
