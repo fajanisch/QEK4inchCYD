@@ -978,7 +978,7 @@ lvgl:
                           align: top_left
                           x: 2
                           y: 2
-                      # Mode Buttons (OFF / HEAT / COOL)
+                      # 1. OFF-Button (Icon: Power / Aus)
                       - obj:
                           id: btn_mode_off
                           x: 2
@@ -993,8 +993,8 @@ lvgl:
                           widgets:
                             - label:
                                 id: lbl_mode_off
-                                text: "OFF"
-                                text_font: font_sub
+                                text: "\uE8AC"  # Power-Symbol (oder \uE646)
+                                text_font: font_icons_sub
                                 text_color: 0x38BDF8
                                 align: center
                           on_click:
@@ -1006,6 +1006,7 @@ lvgl:
                                     option: "off"
                               - script.execute: power_detail_timeout
 
+                      # 2. HEAT-Button (Icon: Thermostat / Heizung)
                       - obj:
                           id: btn_mode_heat
                           x: 73
@@ -1020,8 +1021,8 @@ lvgl:
                           widgets:
                             - label:
                                 id: lbl_mode_heat
-                                text: "HEAT"
-                                text_font: font_sub
+                                text: "\uF076"  # Thermostat-Symbol
+                                text_font: font_icons_sub
                                 text_color: 0x38BDF8
                                 align: center
                           on_click:
@@ -1033,6 +1034,7 @@ lvgl:
                                     option: "heat"
                               - script.execute: power_detail_timeout
 
+                      # 3. COOL-Button (Icon: Kühlung / Klima)
                       - obj:
                           id: btn_mode_cool
                           x: 144
@@ -1047,8 +1049,8 @@ lvgl:
                           widgets:
                             - label:
                                 id: lbl_mode_cool
-                                text: "COOL"
-                                text_font: font_sub
+                                text: "\uE2BD"  # Oder dein bevorzugtes Cool/Fan-Icon
+                                text_font: font_icons_sub
                                 text_color: 0x38BDF8
                                 align: center
                           on_click:
@@ -1059,7 +1061,7 @@ lvgl:
                                     entity_id: input_select.qek_climate_mode
                                     option: "cool"
                               - script.execute: power_detail_timeout
-
+                              
                       - obj:
                           id: btn_temp_minus
                           x: 2
