@@ -568,4 +568,13 @@ sensor:
             if (!isnan(x)) {
               lv_label_set_text_fmt(id(lbl_ext_sun_val), "%.1f h", x);
             }
-            
+
+  - platform: homeassistant
+    entity_id: input_number.qek_target_temp
+    id: ha_climate_target_temp
+    on_value:
+      then:
+        - lambda: |-
+            char buf[16];
+            sprintf(buf, "%.1f °C", x);
+            lv_label_set_text(id(lbl_target_value), buf);
