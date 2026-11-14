@@ -429,6 +429,7 @@ lvgl:
                 - lvgl.widget.update:
                     id: screen_climate_detail
                     hidden: false
+                - script.execute: power_detail_timeout
               widgets:
                 - label:
                     id: icon_climate_card
