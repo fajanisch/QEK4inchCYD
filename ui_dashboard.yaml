@@ -73,7 +73,7 @@ font:
       - "\uE166" # undo (Der geschwungene Rücksprung-Pfeil)
       # --- Klima-Modus Icons ---
       - "\uEB3B" # ac_unit / Schneeflocke (Cool)
-      - "\uE87A" # local_fire_department / Flamme (Heat)
+      - "\uEF55" # local_fire_department / Flamme (Heat)
 
   - file: "gfonts://Material+Symbols+Outlined"
     id: font_icons_hero
