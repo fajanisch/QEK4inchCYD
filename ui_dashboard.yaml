@@ -1015,6 +1015,7 @@ lvgl:
                             text_color: 3718648
                             x: 4
                             y: 215
+                            
                   # 2. RECHTE KACHEL: Klimaregelung (Reihe 1 & 2 rechts: x: 244, y: 0, width: 228, height: 176)
                   - obj:
                       id: card_climate_control
