@@ -263,6 +263,7 @@ text_sensor:
               lv_obj_set_style_border_width(id(btn_mode_cool), 1, LV_PART_MAIN);
               lv_label_set_text_color(id(lbl_mode_cool), col_text);
             }
+            
 #-------------------------------------------------------------
 # SENSOR
 #-------------------------------------------------------------
