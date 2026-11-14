@@ -500,7 +500,7 @@ lvgl:
                     x: -2
                     y: 0
 
-          - obj:
+#          - obj:
               id: dim_guard_overlay
               x: 0
               y: 0
