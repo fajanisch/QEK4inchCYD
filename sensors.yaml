@@ -456,3 +456,53 @@ sensor:
               lv_label_set_text_fmt(id(lbl_target_value), "%.1f °C", x);
             }
 
+sensor:
+  # ... deine bestehenden Sensoren ...
+
+  - platform: homeassistant
+    id: ext_weather_temp
+    entity_id: weather.forecast_home
+    attribute: temperature
+    accuracy_decimals: 1
+    on_value:
+      then:
+        - lambda: |-
+            if (!isnan(x)) {
+              lv_label_set_text_fmt(id(lbl_ext_temp_val), "%.1f °C", x);
+            }
+
+  - platform: homeassistant
+    id: ext_weather_humidity
+    entity_id: weather.forecast_home
+    attribute: humidity
+    accuracy_decimals: 0
+    on_value:
+      then:
+        - lambda: |-
+            if (!isnan(x)) {
+              lv_label_set_text_fmt(id(lbl_ext_hum_val), "%d %%", (int)x);
+            }
+
+  - platform: homeassistant
+    id: ext_weather_pressure
+    entity_id: weather.forecast_home
+    attribute: pressure
+    accuracy_decimals: 0
+    on_value:
+      then:
+        - lambda: |-
+            if (!isnan(x)) {
+              lv_label_set_text_fmt(id(lbl_ext_press_val), "%d hPa", (int)x);
+            }
+
+  - platform: homeassistant
+    id: ext_weather_wind
+    entity_id: weather.forecast_home
+    attribute: wind_speed
+    accuracy_decimals: 1
+    on_value:
+      then:
+        - lambda: |-
+            if (!isnan(x)) {
+              lv_label_set_text_fmt(id(lbl_ext_wind_val), "%.1f km/h", x);
+            }
