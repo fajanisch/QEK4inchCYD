@@ -71,6 +71,7 @@ font:
       - "\uF8D8" # toggle_off (Alternative)
       - "\uF8D9" # toggle_on (Alternative)
       - "\uE166" # undo (Der geschwungene Rücksprung-Pfeil)
+      - "\uEB3B" # ac_unit / snowflake (Cool)
 
   - file: "gfonts://Material+Symbols+Outlined"
     id: font_icons_hero
@@ -1061,7 +1062,7 @@ lvgl:
                                     entity_id: input_select.qek_climate_mode
                                     option: "cool"
                               - script.execute: power_detail_timeout
-                              
+
                       - obj:
                           id: btn_temp_minus
                           x: 2
