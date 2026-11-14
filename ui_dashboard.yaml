@@ -71,7 +71,6 @@ font:
       - "\uF8D8" # toggle_off (Alternative)
       - "\uF8D9" # toggle_on (Alternative)
       - "\uE166" # undo (Der geschwungene Rücksprung-Pfeil)
-      - "\uEB3B" # ac_unit / snowflake (Cool)
       # --- Klima-Modus Icons ---
       - "\uEB3B" # ac_unit / Schneeflocke (Cool)
       - "\uE509" # local_fire_department / Flamme (Heat)
