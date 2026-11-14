@@ -568,3 +568,4 @@ sensor:
             if (!isnan(x)) {
               lv_label_set_text_fmt(id(lbl_ext_sun_val), "%.1f h", x);
             }
+            
