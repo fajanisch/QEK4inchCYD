@@ -426,8 +426,8 @@ lvgl:
               styles: style_card
               clickable: true 
               on_click:
-      - lvgl.widget.update:
-          id: screen_climate_detail
+                - lvgl.widget.update:
+                id: screen_climate_detail
           hidden: false
               widgets:
                 - label:
