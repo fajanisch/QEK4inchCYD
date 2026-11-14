@@ -429,7 +429,7 @@ sensor:
       then:
         - script.execute: update_shelly_climate
 
-- platform: homeassistant
+  - platform: homeassistant
     id: ha_climate_target_temp
     entity_id: climate.qek_klima
     attribute: temperature
@@ -442,7 +442,7 @@ sensor:
             if (!isnan(x)) {
               lv_label_set_text_fmt(id(lbl_target_value), "%.1f °C", x);
             }
-            
+
   - platform: homeassistant
     id: ha_climate_mode_state
     entity_id: climate.qek_klima
