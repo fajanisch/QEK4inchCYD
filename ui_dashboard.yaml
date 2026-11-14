@@ -1052,7 +1052,8 @@ lvgl:
                           widgets:
                             - label:
                                 id: lbl_mode_cool
-                                text: "\uEB3B"nt_icons_sub
+                                text: "\uE2BD"  # Oder dein bevorzugtes Cool/Fan-Icon
+                                text_font: font_icons_sub
                                 text_color: 0x38BDF8
                                 align: center
                           on_click:
