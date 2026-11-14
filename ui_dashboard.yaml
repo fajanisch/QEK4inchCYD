@@ -424,7 +424,7 @@ lvgl:
               width: 228
               height: 130
               styles: style_card
-              
+              clickable: true
               widgets:
                 - label:
                     id: icon_climate_card
