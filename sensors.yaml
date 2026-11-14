@@ -19,6 +19,8 @@ binary_sensor:
                   clickable: false
                   hidden: true
 
+                  
+
 text_sensor:
   - platform: homeassistant
     id: qek_status_gps
