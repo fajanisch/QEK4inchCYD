@@ -215,7 +215,54 @@ text_sensor:
     entity_id: sensor.qek_climate_hvac_mode
     id: ha_climate_mode_state
 
-    
+  text_sensor:
+  - platform: homeassistant
+    entity_id: sensor.qek_climate_hvac_mode
+    id: ha_climate_mode_state
+    on_value:
+      then:
+        - lambda: |-
+            // Standardfarben (Blau / Inaktiv)
+            auto col_text = lv_color_hex(0x38BDF8);
+            auto col_border = lv_color_hex(0x334155);
+            
+            // Wenn Shelly/Klima offline ist -> Grau
+            if (id(ha_climate_available).state == false) {
+              col_text = lv_color_hex(0x64748B);
+            }
+
+            // OFF-Button prüfen
+            if (id(ha_climate_mode_state).state == "off") {
+              lv_obj_set_style_border_color(id(btn_mode_off), lv_color_hex(0xFBBF24), LV_PART_MAIN);
+              lv_obj_set_style_border_width(id(btn_mode_off), 2, LV_PART_MAIN);
+              lv_label_set_text_color(id(lbl_mode_off), lv_color_hex(0xFBBF24));
+            } else {
+              lv_obj_set_style_border_color(id(btn_mode_off), col_border, LV_PART_MAIN);
+              lv_obj_set_style_border_width(id(btn_mode_off), 1, LV_PART_MAIN);
+              lv_label_set_text_color(id(lbl_mode_off), col_text);
+            }
+
+            // HEAT-Button prüfen
+            if (id(ha_climate_mode_state).state == "heat") {
+              lv_obj_set_style_border_color(id(btn_mode_heat), lv_color_hex(0xFBBF24), LV_PART_MAIN);
+              lv_obj_set_style_border_width(id(btn_mode_heat), 2, LV_PART_MAIN);
+              lv_label_set_text_color(id(lbl_mode_heat), lv_color_hex(0xFBBF24));
+            } else {
+              lv_obj_set_style_border_color(id(btn_mode_heat), col_border, LV_PART_MAIN);
+              lv_obj_set_style_border_width(id(btn_mode_heat), 1, LV_PART_MAIN);
+              lv_label_set_text_color(id(lbl_mode_heat), col_text);
+            }
+
+            // COOL-Button prüfen
+            if (id(ha_climate_mode_state).state == "cool") {
+              lv_obj_set_style_border_color(id(btn_mode_cool), lv_color_hex(0xFBBF24), LV_PART_MAIN);
+              lv_obj_set_style_border_width(id(btn_mode_cool), 2, LV_PART_MAIN);
+              lv_label_set_text_color(id(lbl_mode_cool), lv_color_hex(0xFBBF24));
+            } else {
+              lv_obj_set_style_border_color(id(btn_mode_cool), col_border, LV_PART_MAIN);
+              lv_obj_set_style_border_width(id(btn_mode_cool), 1, LV_PART_MAIN);
+              lv_label_set_text_color(id(lbl_mode_cool), col_text);
+            }
 #-------------------------------------------------------------
 # SENSOR
 #-------------------------------------------------------------
