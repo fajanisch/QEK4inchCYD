@@ -1024,7 +1024,7 @@ lvgl:
                           widgets:
                             - label:
                                 id: lbl_mode_heat
-                                text: "\uE509"  # Fire
+                                text: "\uE87A"  # Fire
                                 text_font: font_icons_sub
                                 text_color: 0x38BDF8
                                 align: center
