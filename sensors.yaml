@@ -1,3 +1,9 @@
+climate:
+  - platform: homeassistant
+    id: qek_climate_ha
+    entity_id: climate.qek_klima
+    name: "QEK Klima-Steuerung"
+
 binary_sensor:
   - platform: homeassistant
     id: ha_auto_dim
