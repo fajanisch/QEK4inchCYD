@@ -865,7 +865,7 @@ lvgl:
               radius: 0
               pad_all: 0
               scrollable: false
-              scrollbar_mode: off
+              scrollbar_mode: "off"
               widgets:
                 # 1. LEFT CARD: Room & Weather (228x268)
                 - obj:
@@ -876,7 +876,7 @@ lvgl:
                     height: 268
                     styles: style_card
                     scrollable: false
-                    scrollbar_mode: off
+                    scrollbar_mode: "off"
                     widgets:
                       - label:
                           text: "Room & Weather"
@@ -1009,7 +1009,7 @@ lvgl:
                     height: 176
                     styles: style_card
                     scrollable: false
-                    scrollbar_mode: off
+                    scrollbar_mode: "off"
                     widgets:
                       - label:
                           text: "Climate Control"
@@ -1029,177 +1029,9 @@ lvgl:
                           styles: style_card
                           pad_all: 0
                           scrollable: false
+                          scrollbar_mode: "off"
                           clickable: true
                           widgets:
                             - label:
                                 text: "OFF"
-                                text_font: font_sub
-                                text_color: 0xE2E8F0
-                                align: center
-                          on_click:
-                            - homeassistant.service:
-                                service: climate.set_hvac_mode
-                                data:
-                                  entity_id: climate.qek_klima
-                                  hvac_mode: "off"
-
-                      - obj:
-                          id: btn_mode_heat
-                          x: 73
-                          y: 38
-                          width: 64
-                          height: 36
-                          styles: style_card
-                          pad_all: 0
-                          scrollable: false
-                          clickable: true
-                          widgets:
-                            - label:
-                                text: "HEAT"
-                                text_font: font_sub
-                                text_color: 0xE2E8F0
-                                align: center
-                          on_click:
-                            - homeassistant.service:
-                                service: climate.set_hvac_mode
-                                data:
-                                  entity_id: climate.qek_klima
-                                  hvac_mode: "heat"
-
-                      - obj:
-                          id: btn_mode_cool
-                          x: 144
-                          y: 38
-                          width: 64
-                          height: 36
-                          styles: style_card
-                          pad_all: 0
-                          scrollable: false
-                          clickable: true
-                          widgets:
-                            - label:
-                                text: "COOL"
-                                text_font: font_sub
-                                text_color: 0xE2E8F0
-                                align: center
-                          on_click:
-                            - homeassistant.service:
-                                service: climate.set_hvac_mode
-                                data:
-                                  entity_id: climate.qek_klima
-                                  hvac_mode: "cool"
-
-                      # --- TARGET TEMPERATURE CONTROL (-1 / Toggle 21<->15 / +1) ---
-                      # Minus Button (-1.0 °C)
-                      - obj:
-                          id: btn_temp_minus
-                          x: 2
-                          y: 96
-                          width: 48
-                          height: 48
-                          styles: style_card
-                          pad_all: 0
-                          scrollable: false
-                          clickable: true
-                          widgets:
-                            - label:
-                                text: "-"
-                                text_font: font_sub_title
-                                text_color: 0x38BDF8
-                                align: center
-                          on_click:
-                            - homeassistant.service:
-                                service: climate.set_temperature
-                                data:
-                                  entity_id: climate.qek_klima
-                                  temperature: !lambda |-
-                                    float c = id(ha_climate_target_temp).state;
-                                    if (isnan(c)) c = 21.0;
-                                    return c - 1.0;
-
-                      # Center Target Temp (Clickable: toggles between 21.0 and 15.0)
-                      - obj:
-                          id: btn_target_toggle
-                          x: 56
-                          y: 96
-                          width: 98
-                          height: 48
-                          styles: style_card
-                          pad_all: 0
-                          scrollable: false
-                          clickable: true
-                          widgets:
-                            - label:
-                                id: lbl_target_value
-                                text: "21.0 °C"
-                                text_font: font_sub_title
-                                text_color: 0x38BDF8
-                                align: center
-                          on_click:
-                            - homeassistant.service:
-                                service: climate.set_temperature
-                                data:
-                                  entity_id: climate.qek_klima
-                                  temperature: !lambda |-
-                                    float c = id(ha_climate_target_temp).state;
-                                    if (isnan(c)) c = 21.0;
-                                    return (c >= 18.0) ? 15.0 : 21.0;
-
-                      # Plus Button (+1.0 °C)
-                      - obj:
-                          id: btn_temp_plus
-                          x: 160
-                          y: 96
-                          width: 48
-                          height: 48
-                          styles: style_card
-                          pad_all: 0
-                          scrollable: false
-                          clickable: true
-                          widgets:
-                            - label:
-                                text: "+"
-                                text_font: font_sub_title
-                                text_color: 0x38BDF8
-                                align: center
-                          on_click:
-                            - homeassistant.service:
-                                service: climate.set_temperature
-                                data:
-                                  entity_id: climate.qek_klima
-                                  temperature: !lambda |-
-                                    float c = id(ha_climate_target_temp).state;
-                                    if (isnan(c)) c = 21.0;
-                                    return c + 1.0;
-
-                # 3. BACK BUTTON (228x84)
-                - obj:
-                    id: btn_sub_climate_back
-                    x: 244
-                    y: 184
-                    width: 228
-                    height: 84
-                    styles: style_card
-                    border_color: 0x38BDF8
-                    scrollable: false
-                    scrollbar_mode: off
-                    clickable: true
-                    widgets:
-                      - label:
-                          id: icon_sub_climate_back
-                          text: "\uE166"
-                          text_font: font_icons_sub
-                          text_color: 0x38BDF8
-                          align: center
-                          x: -25
-                      - label:
-                          id: lbl_sub_climate_back
-                          text: "Back"
-                          text_font: font_sub_title
-                          text_color: 0x38BDF8
-                          align: center
-                          x: 21
-                    on_click:
-                      - lvgl.widget.update:
-                          id: screen_climate_detail
-                          hidden: true
+                                text
