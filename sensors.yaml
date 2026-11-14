@@ -201,7 +201,6 @@ text_sensor:
       then:
         - script.execute: update_shelly_climate
 
-
    - platform: homeassistant
     entity_id: input_select.qek_climate_mode
     id: ha_climate_mode_state
