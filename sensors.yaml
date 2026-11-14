@@ -202,17 +202,6 @@ text_sensor:
         - script.execute: update_shelly_climate
 
   - platform: homeassistant
-    id: ha_climate_mode_state
-    entity_id: climate.qek_klima
-    on_value:
-      then:
-        - lambda: |-
-            // Hier kannst du z.B. die Buttons auf dem CYD (OFF/HEAT/COOL) 
-            // optisch anpassen, je nachdem welcher Modus in HA aktiv ist!
-            ESP_LOGD("climate", "Aktueller Mod aus HA: %s", x.c_str());
-
-  text_sensor:
-  - platform: homeassistant
     entity_id: sensor.qek_climate_hvac_mode
     id: ha_climate_mode_state
     on_value:
@@ -259,7 +248,6 @@ text_sensor:
               lv_obj_set_style_border_width(id(btn_mode_cool), 1, LV_PART_MAIN);
               lv_label_set_text_color(id(lbl_mode_cool), col_text);
             }
-
 #-------------------------------------------------------------
 # SENSOR
 #-------------------------------------------------------------
