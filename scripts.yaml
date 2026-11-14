@@ -15,14 +15,6 @@ script:
           hidden: false
           clickable: true
 
-  - id: power_detail_timeout
-    mode: restart
-    then:
-      - delay: 60s
-      - lvgl.widget.update:
-          id: screen_power_detail
-          hidden: true
-
   # ==========================================
   # 1. BATTERY CHARGER
   # ==========================================
