@@ -978,7 +978,6 @@ lvgl:
                           align: top_left
                           x: 2
                           y: 2
-                      # Mode Buttons (OFF / HEAT / COOL)
                       - obj:
                           id: btn_mode_off
                           x: 2
@@ -992,10 +991,9 @@ lvgl:
                           clickable: true
                           widgets:
                             - label:
-                                id: lbl_mode_off
                                 text: "OFF"
                                 text_font: font_sub
-                                text_color: 0x38BDF8
+                                text_color: 0xE2E8F0
                                 align: center
                           on_click:
                             then:
@@ -1005,7 +1003,6 @@ lvgl:
                                     entity_id: climate.qek_klima
                                     hvac_mode: "off"
                               - script.execute: power_detail_timeout
-
                       - obj:
                           id: btn_mode_heat
                           x: 73
@@ -1019,10 +1016,9 @@ lvgl:
                           clickable: true
                           widgets:
                             - label:
-                                id: lbl_mode_heat
                                 text: "HEAT"
                                 text_font: font_sub
-                                text_color: 0x38BDF8
+                                text_color: 0xE2E8F0
                                 align: center
                           on_click:
                             then:
@@ -1032,7 +1028,6 @@ lvgl:
                                     entity_id: climate.qek_klima
                                     hvac_mode: "heat"
                               - script.execute: power_detail_timeout
-
                       - obj:
                           id: btn_mode_cool
                           x: 144
@@ -1046,10 +1041,9 @@ lvgl:
                           clickable: true
                           widgets:
                             - label:
-                                id: lbl_mode_cool
                                 text: "COOL"
                                 text_font: font_sub
-                                text_color: 0x38BDF8
+                                text_color: 0xE2E8F0
                                 align: center
                           on_click:
                             then:
@@ -1059,7 +1053,7 @@ lvgl:
                                     entity_id: climate.qek_klima
                                     hvac_mode: "cool"
                               - script.execute: power_detail_timeout
-        - obj:
+                      - obj:
                           id: btn_temp_minus
                           x: 2
                           y: 96
