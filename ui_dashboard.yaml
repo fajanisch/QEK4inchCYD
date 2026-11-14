@@ -425,7 +425,10 @@ lvgl:
               height: 130
               styles: style_card
               clickable: true 
-              
+              on_click:
+      - lvgl.widget.update:
+          id: screen_climate_detail
+          hidden: false
               widgets:
                 - label:
                     id: icon_climate_card
