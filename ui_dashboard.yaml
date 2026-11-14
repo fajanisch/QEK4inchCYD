@@ -500,11 +500,6 @@ lvgl:
                     x: -2
                     y: 0
 
-#          - obj:
-#              id: dim_guard_overlay
-#              x: 0
-#  
-
           - obj:
               id: screen_power_detail
               x: 0
