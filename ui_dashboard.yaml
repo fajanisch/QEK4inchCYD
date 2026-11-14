@@ -864,8 +864,10 @@ lvgl:
               border_width: 0
               radius: 0
               pad_all: 0
+              scrollable: false
+              scrollbar_mode: off
               widgets:
-                # 1. LINKE KACHEL: Raum & Wetter (Volle Höhe: 228x268)
+                # 1. LEFT CARD: Room & Weather (228x268)
                 - obj:
                     id: card_climate_weather
                     x: 8
@@ -873,107 +875,132 @@ lvgl:
                     width: 228
                     height: 268
                     styles: style_card
+                    scrollable: false
+                    scrollbar_mode: off
                     widgets:
                       - label:
-                          text: "Raum & Wetter"
+                          text: "Room & Weather"
                           text_font: font_sub_title
                           text_color: 0x38BDF8
-                          x: 4
-                          y: 4
+                          align: top_left
+                          x: 2
+                          y: 2
 
-                      # --- Sektion: INNENRAUM ---
+                      # Weather Condition Icon (top right)
+                      - label:
+                          id: icon_climate_sub_wx
+                          text: "\uE2BD"
+                          text_font: font_icons
+                          styles: style_icon_normal
+                          align: top_right
+                          x: -2
+                          y: 2
+
+                      # --- Section: INDOOR ---
                       - label:
                           id: lbl_climate_temp_val
-                          text: "Innen: --.-°C | --% | --.-°C"
+                          text: "In: --.-°C | --% | --.-°C"
                           text_font: font_sub
                           text_color: 0xE2E8F0
-                          x: 4
+                          align: top_left
+                          x: 2
                           y: 36
 
-                      # --- Sektion: AUSSEN / WETTERDIENST ---
-                      # Zeile 1: Außentemperatur & Außenfeuchte
+                      # --- Section: OUTDOOR / WEATHER ---
+                      # Row 1: Outdoor Temp & Humidity
                       - label:
                           text: "Temp:"
                           text_font: font_sub
                           text_color: 0x64748B
-                          x: 4
+                          align: top_left
+                          x: 2
                           y: 72
                       - label:
                           id: lbl_ext_temp_val
-                          text: "--.- °C"
+                          text: "--.-°C"
                           text_font: font_sub
                           text_color: 0xE2E8F0
-                          x: 52
+                          align: top_left
+                          x: 48
                           y: 72
 
                       - label:
                           text: "Hum:"
                           text_font: font_sub
                           text_color: 0x64748B
-                          x: 118
+                          align: top_left
+                          x: 112
                           y: 72
                       - label:
                           id: lbl_ext_hum_val
-                          text: "-- %"
+                          text: "--%"
                           text_font: font_sub
                           text_color: 0xE2E8F0
-                          x: 160
+                          align: top_left
+                          x: 152
                           y: 72
 
-                      # Zeile 2: Luftdruck & Wind
+                      # Row 2: Pressure & Wind
                       - label:
-                          text: "Druck:"
+                          text: "Press:"
                           text_font: font_sub
                           text_color: 0x64748B
-                          x: 4
-                          y: 102
+                          align: top_left
+                          x: 2
+                          y: 104
                       - label:
                           id: lbl_ext_press_val
-                          text: "---- hPa"
+                          text: "----"
                           text_font: font_sub
                           text_color: 0xE2E8F0
-                          x: 52
-                          y: 102
+                          align: top_left
+                          x: 48
+                          y: 104
 
                       - label:
                           text: "Wind:"
                           text_font: font_sub
                           text_color: 0x64748B
-                          x: 118
-                          y: 102
+                          align: top_left
+                          x: 112
+                          y: 104
                       - label:
                           id: lbl_ext_wind_val
-                          text: "--.- km/h"
+                          text: "--"
                           text_font: font_sub
                           text_color: 0xE2E8F0
-                          x: 158
-                          y: 102
+                          align: top_left
+                          x: 152
+                          y: 104
 
-                      # Zeile 3: Sonnenstunden (Off-Grid Planung)
+                      # Row 3: Remaining Sun Hours (Off-Grid Planning)
                       - label:
-                          text: "Sonne:"
+                          text: "Sun (Rem):"
                           text_font: font_sub
                           text_color: 0x64748B
-                          x: 4
-                          y: 132
+                          align: top_left
+                          x: 2
+                          y: 136
                       - label:
                           id: lbl_ext_sun_val
                           text: "--.- h"
                           text_font: font_sub
                           text_color: 0xFBBF24
-                          x: 58
-                          y: 132
+                          align: top_left
+                          x: 90
+                          y: 136
 
-                      # Wetter Summary unten in der linken Kachel
+                      # Weather Summary at the bottom of the left card
                       - label:
                           id: lbl_climate_wx_summary
-                          text: "Lade Wetter..."
+                          text: "Loading weather..."
                           text_font: font_sub
                           text_color: 0x38BDF8
-                          x: 4
-                          y: 215
+                          align: bottom_left
+                          x: 2
+                          y: -4
 
-                # 2. RECHTE KACHEL: Klimaregelung (Reihe 1 & 2 rechts: 228x176)
+                # 2. RIGHT CARD: Climate Control (228x176)
                 - obj:
                     id: card_climate_control
                     x: 244
@@ -981,27 +1008,33 @@ lvgl:
                     width: 228
                     height: 176
                     styles: style_card
+                    scrollable: false
+                    scrollbar_mode: off
                     widgets:
                       - label:
-                          text: "Klimaregelung"
+                          text: "Climate Control"
                           text_font: font_sub_title
                           text_color: 0x38BDF8
-                          x: 4
-                          y: 4
+                          align: top_left
+                          x: 2
+                          y: 2
 
-                      # Modus-Buttons (OFF / HEAT / COOL)
-                      - button:
+                      # Mode Buttons (OFF / HEAT / COOL)
+                      - obj:
                           id: btn_mode_off
-                          x: 4
-                          y: 42
+                          x: 2
+                          y: 38
                           width: 64
                           height: 36
                           styles: style_card
+                          pad_all: 0
+                          scrollable: false
                           clickable: true
                           widgets:
                             - label:
                                 text: "OFF"
                                 text_font: font_sub
+                                text_color: 0xE2E8F0
                                 align: center
                           on_click:
                             - homeassistant.service:
@@ -1010,18 +1043,21 @@ lvgl:
                                   entity_id: climate.qek_klima
                                   hvac_mode: "off"
 
-                      - button:
+                      - obj:
                           id: btn_mode_heat
-                          x: 74
-                          y: 42
+                          x: 73
+                          y: 38
                           width: 64
                           height: 36
                           styles: style_card
+                          pad_all: 0
+                          scrollable: false
                           clickable: true
                           widgets:
                             - label:
                                 text: "HEAT"
                                 text_font: font_sub
+                                text_color: 0xE2E8F0
                                 align: center
                           on_click:
                             - homeassistant.service:
@@ -1030,18 +1066,21 @@ lvgl:
                                   entity_id: climate.qek_klima
                                   hvac_mode: "heat"
 
-                      - button:
+                      - obj:
                           id: btn_mode_cool
                           x: 144
-                          y: 42
+                          y: 38
                           width: 64
                           height: 36
                           styles: style_card
+                          pad_all: 0
+                          scrollable: false
                           clickable: true
                           widgets:
                             - label:
                                 text: "COOL"
                                 text_font: font_sub
+                                text_color: 0xE2E8F0
                                 align: center
                           on_click:
                             - homeassistant.service:
@@ -1050,23 +1089,90 @@ lvgl:
                                   entity_id: climate.qek_klima
                                   hvac_mode: "cool"
 
-                      # Zieltemperatur Anzeige / Toggle (Klick: 21 <-> 15)
-                      - label:
-                          id: lbl_target_value
-                          text: "21.0 °C"
-                          text_font: font_sub_title
-                          text_color: 0x38BDF8
-                          align: center
-                          y: 110
+                      # --- TARGET TEMPERATURE CONTROL (-1 / Toggle 21<->15 / +1) ---
+                      # Minus Button (-1.0 °C)
+                      - obj:
+                          id: btn_temp_minus
+                          x: 2
+                          y: 96
+                          width: 48
+                          height: 48
+                          styles: style_card
+                          pad_all: 0
+                          scrollable: false
                           clickable: true
+                          widgets:
+                            - label:
+                                text: "-"
+                                text_font: font_sub_title
+                                text_color: 0x38BDF8
+                                align: center
                           on_click:
                             - homeassistant.service:
                                 service: climate.set_temperature
                                 data:
                                   entity_id: climate.qek_klima
-                                  temperature: !lambda "float c = id(ha_climate_target_temp).state; return (c >= 20.0) ? 15.0 : 21.0;"
+                                  temperature: !lambda |-
+                                    float c = id(ha_climate_target_temp).state;
+                                    if (isnan(c)) c = 21.0;
+                                    return c - 1.0;
 
-                # 3. BACK BUTTON (Reihe 3 rechts: 228x84)
+                      # Center Target Temp (Clickable: toggles between 21.0 and 15.0)
+                      - obj:
+                          id: btn_target_toggle
+                          x: 56
+                          y: 96
+                          width: 98
+                          height: 48
+                          styles: style_card
+                          pad_all: 0
+                          scrollable: false
+                          clickable: true
+                          widgets:
+                            - label:
+                                id: lbl_target_value
+                                text: "21.0 °C"
+                                text_font: font_sub_title
+                                text_color: 0x38BDF8
+                                align: center
+                          on_click:
+                            - homeassistant.service:
+                                service: climate.set_temperature
+                                data:
+                                  entity_id: climate.qek_klima
+                                  temperature: !lambda |-
+                                    float c = id(ha_climate_target_temp).state;
+                                    if (isnan(c)) c = 21.0;
+                                    return (c >= 18.0) ? 15.0 : 21.0;
+
+                      # Plus Button (+1.0 °C)
+                      - obj:
+                          id: btn_temp_plus
+                          x: 160
+                          y: 96
+                          width: 48
+                          height: 48
+                          styles: style_card
+                          pad_all: 0
+                          scrollable: false
+                          clickable: true
+                          widgets:
+                            - label:
+                                text: "+"
+                                text_font: font_sub_title
+                                text_color: 0x38BDF8
+                                align: center
+                          on_click:
+                            - homeassistant.service:
+                                service: climate.set_temperature
+                                data:
+                                  entity_id: climate.qek_klima
+                                  temperature: !lambda |-
+                                    float c = id(ha_climate_target_temp).state;
+                                    if (isnan(c)) c = 21.0;
+                                    return c + 1.0;
+
+                # 3. BACK BUTTON (228x84)
                 - obj:
                     id: btn_sub_climate_back
                     x: 244
@@ -1075,6 +1181,8 @@ lvgl:
                     height: 84
                     styles: style_card
                     border_color: 0x38BDF8
+                    scrollable: false
+                    scrollbar_mode: off
                     clickable: true
                     widgets:
                       - label:
@@ -1095,4 +1203,3 @@ lvgl:
                       - lvgl.widget.update:
                           id: screen_climate_detail
                           hidden: true
-
