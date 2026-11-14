@@ -1201,7 +1201,7 @@ lvgl:
                           id: screen_climate_detail
                           hidden: true
 
-# ==========================================
+          # ==========================================
           # 6. DIM GUARD OVERLAY (Muss ganz unten stehen = oberste Ebene!)
           # ==========================================
           - obj:
