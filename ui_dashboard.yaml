@@ -1059,7 +1059,7 @@ lvgl:
                                     entity_id: climate.qek_klima
                                     hvac_mode: "cool"
                               - script.execute: power_detail_timeout
-            - obj:
+        - obj:
                           id: btn_temp_minus
                           x: 2
                           y: 96
