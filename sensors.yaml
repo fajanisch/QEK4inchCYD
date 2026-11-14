@@ -456,9 +456,6 @@ sensor:
               lv_label_set_text_fmt(id(lbl_target_value), "%.1f °C", x);
             }
 
-sensor:
-  # ... deine bestehenden Sensoren ...
-
   - platform: homeassistant
     id: ext_weather_temp
     entity_id: weather.forecast_home
