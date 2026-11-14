@@ -428,7 +428,7 @@ lvgl:
               on_click:
                 - lvgl.widget.update:
                 id: screen_climate_detail
-          hidden: false
+                    hidden: false
               widgets:
                 - label:
                     id: icon_climate_card
