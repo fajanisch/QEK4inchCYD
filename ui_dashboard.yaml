@@ -850,7 +850,8 @@ lvgl:
                           hidden: true
 
 #---------------------------------------------------------------------------------
-# Climate Detail
+# Climate Detail Screen
+#
           - obj: 
                 id: screen_climate_detail
                 x: 0
