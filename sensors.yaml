@@ -429,6 +429,20 @@ sensor:
       then:
         - script.execute: update_shelly_climate
 
+- platform: homeassistant
+    id: ha_climate_target_temp
+    entity_id: climate.qek_klima
+    attribute: temperature
+    accuracy_decimals: 1
+    on_value:
+      then:
+        - lambda: |-
+            // Aktualisiert die Zieltemperatur-Anzeige auf dem CYD, 
+            // falls sie extern (z.B. in der HA App) geändert wurde
+            if (!isnan(x)) {
+              lv_label_set_text_fmt(id(lbl_target_value), "%.1f °C", x);
+            }
+            
   - platform: homeassistant
     id: ha_climate_mode_state
     entity_id: climate.qek_klima
