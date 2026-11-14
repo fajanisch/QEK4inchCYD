@@ -849,7 +849,7 @@ lvgl:
                           id: screen_power_detail
                           hidden: true
 
-```yaml
+
           # ==========================================
           # 5. CLIMATE SUB-SCREEN (y: 44, unter Statusbalken)
           # ==========================================
