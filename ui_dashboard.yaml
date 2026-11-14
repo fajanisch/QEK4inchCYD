@@ -2,11 +2,11 @@ font:
   - file: "gfonts://Inter"
     id: font_bar
     size: 13
-    glyphs: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 /:.-°%|,>()"
+    glyphs: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 /:.-°%|,>()+"
   - file: "gfonts://Inter"
     id: font_card_header
     size: 12
-    glyphs: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 /:.-°%,>()"
+    glyphs: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 /:.-°%,>()+"
   - file: "gfonts://Inter"
     id: font_val_hero
     size: 28
@@ -14,14 +14,14 @@ font:
   - file: "gfonts://Inter"
     id: font_sub
     size: 12
-    glyphs: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 /:.-°%|,>()"
+    glyphs: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 /:.-°%|,>()+"
   - file:
       type: gfonts
       family: Inter
       weight: 600
     id: font_sub_title
     size: 16
-    glyphs: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 /:.-°%|,>()<"
+    glyphs: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 /:.-°%|,>()<+"
 
   - file: "gfonts://Material+Symbols+Outlined"
     id: font_icons
