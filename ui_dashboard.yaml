@@ -1077,13 +1077,17 @@ lvgl:
                                 text_color: 0x38BDF8
                                 align: center
                           on_click:
-                            then:
-                              - homeassistant.service:
-                                  service: climate.set_temperature
-                                  data:
-                                    entity_id: climate.qek_klima
-                                    temperature: !lambda "if (isnan(id(ha_climate_target_temp).state)) return 20.0; return id(ha_climate_target_temp).state - 1.0;"
-                              - script.execute: power_detail_timeout
+                        then:
+                          - homeassistant.service:
+                              service: input_select.select_option
+                              data:
+                                entity_id: input_select.qek_climate_mode
+                                option: "cool"
+                          - homeassistant.service:
+                              service: switch.turn_on
+                              data:
+                                entity_id: switch.qek_shelly_climate_co
+                          - script.execute: power_detail_timeout
                       - obj:
                           id: btn_target_toggle
                           x: 56
