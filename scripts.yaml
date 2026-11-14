@@ -377,3 +377,15 @@ script:
           lv_label_set_text_fmt(id(lbl_ext_rest), "%d W", val);
           lv_obj_set_style_text_color(id(lbl_ext_rest), lv_color_hex(0x38BDF8), LV_PART_MAIN);
           lv_obj_invalidate(id(lbl_ext_rest));
+
+script:
+  - id: power_detail_timeout
+    mode: restart
+    then:
+      - delay: 60s
+      - lvgl.widget.update:
+          id: screen_power_detail
+          hidden: true
+      - lvgl.widget.update:
+          id: screen_climate_detail
+          hidden: true
