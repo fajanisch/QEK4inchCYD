@@ -57,6 +57,8 @@ font:
       - "\uEF55" # local_fire_department / Flamme (Heat)
       - "\uF8D8" # toggle_off (Alternative)
       - "\uF8D9" # toggle_on (Alternative)
+      - "\uE63C" # power (Sonoff Main)
+      - "\uE646" # power_off (1: Unavailable)
 
   - file: "gfonts://Material+Symbols+Outlined"
     id: font_icons_sub
@@ -538,7 +540,7 @@ lvgl:
                     align: bottom_right
                     x: -2
                     y: 0
-                    
+
 #----------------------------------------------------------------------------
 # Power Detail Screen
 #----------------------------------------------------------------------------                    
