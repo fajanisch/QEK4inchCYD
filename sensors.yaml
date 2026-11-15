@@ -351,13 +351,13 @@ sensor:
         - lambda: |-
             if (!isnan(x)) {
               char buf[32];
-              sprintf(buf, "Dew: %.1f°C", x);
-              lv_label_set_text(id(lbl_climate_dew), buf);
               sprintf(buf, "%.1f°C", x);
-              lv_label_set_text(id(lbl_in_dew_val), buf);
+              lv_lbl_set_text(id(lbl_climate_dew), buf);
+              sprintf(buf, "%.1f°C", x);
+              lv_lbl_set_text(id(lbl_in_dew_val), buf);
             } else {
-              lv_label_set_text(id(lbl_climate_dew), "Dew: --.-°C");
-              lv_label_set_text(id(lbl_in_dew_val), "--.-°C");
+              lv_lbl_set_text(id(lbl_climate_dew), "--.-°C");
+              lv_lbl_set_text(id(lbl_in_dew_val), "--.-°C");
             }
             lv_obj_invalidate(id(lbl_climate_dew));
             lv_obj_invalidate(id(lbl_in_dew_val));
