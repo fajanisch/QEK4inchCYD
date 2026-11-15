@@ -258,7 +258,7 @@ text_sensor:
 # NUMERIC SENSORS
 #-------------------------------------------------------------
 sensor:
-# --- 1. LOCAL HARDWARE SENSOR (DHT22) -> Aktualisiert Hauptscreen & Subscreen ---
+  # --- 1. LOCAL HARDWARE SENSOR (DHT22) -> Aktualisiert Hauptscreen & Subscreen ---
   - platform: dht
     pin: GPIO21
     model: AM2302
@@ -279,7 +279,7 @@ sensor:
               sprintf(buf, "%.1f°C", x);
               lv_label_set_text(id(lbl_climate_temp), buf);
               
-              // 2. Subscreen (Weather & Climate Card) aktualisieren
+              // 2. Subscreen aktualisieren
               sprintf(buf, "Temp: %.1f °C", x);
               lv_label_set_text(id(lbl_in_temp_val), buf);
 
@@ -314,7 +314,7 @@ sensor:
               lv_label_set_text(id(lbl_climate_hum), buf);
               
               // Subscreen
-              sprintf(buf, "Hum: %.0f %%", x);
+              sprintf(buf, "Hum: %.0f %%", (int)x);
               lv_label_set_text(id(lbl_in_hum_val), buf);
 
               if (x >= 70.0) {
@@ -348,7 +348,7 @@ sensor:
             }
             lv_obj_invalidate(id(lbl_climate_dew));
             lv_obj_invalidate(id(lbl_in_dew_val));
-            
+
   # --- 2. BATTERY & POWER SENSORS ---
   - platform: homeassistant
     id: c1000_soc
@@ -530,55 +530,6 @@ sensor:
       then:
         - script.execute: update_shelly_climate
 
-  # --- 3. INDOOR & CLIMATE SENSORS ---
-  - platform: homeassistant
-    entity_id: sensor.qek_indoor_temperature
-    id: ha_indoor_temp
-    on_value:
-      then:
-        - lambda: |-
-            char buf[16];
-            sprintf(buf, "Temp: %.1f °C", x);
-            lv_label_set_text(id(lbl_in_temp_val), buf);
-            if (x < 10.0 || x > 30.0) {
-              lv_obj_set_style_text_color(id(lbl_in_temp_val), lv_color_hex(0xEAB308), LV_PART_MAIN);
-            } else {
-              lv_obj_set_style_text_color(id(lbl_in_temp_val), lv_color_hex(0x38BDF8), LV_PART_MAIN);
-            }
-
-  - platform: homeassistant
-    entity_id: sensor.qek_indoor_humidity
-    id: ha_indoor_hum
-    on_value:
-      then:
-        - lambda: |-
-            char buf[16];
-            sprintf(buf, "Hum: %.0f %%", x);
-            lv_label_set_text(id(lbl_in_hum_val), buf);
-
-  - platform: homeassistant
-    entity_id: sensor.qek_indoor_dewpoint
-    id: ha_indoor_dew
-    on_value:
-      then:
-        - lambda: |-
-            char buf[16];
-            sprintf(buf, "Dew: %.1f °C", x);
-            lv_label_set_text(id(lbl_in_dew_val), buf);
-
-  - platform: homeassistant
-    id: qek_dew_point
-    entity_id: sensor.qek_dew_point
-    on_value:
-      then:
-        - lambda: |-
-            if (!isnan(x)) {
-              lv_label_set_text_fmt(id(lbl_climate_dew), "Dew: %.1f°C", x);
-            } else {
-              lv_label_set_text(id(lbl_climate_dew), "Dew: --.-°C");
-            }
-            lv_obj_invalidate(id(lbl_climate_dew));
-
   - platform: homeassistant
     entity_id: input_number.qek_target_temp
     id: ha_climate_target_temp
@@ -589,7 +540,7 @@ sensor:
             sprintf(buf, "%.1f °C", x);
             lv_label_set_text(id(lbl_target_value), buf);
 
-  # --- 4. WEATHER & FORECAST SENSORS ---
+  # --- 3. WEATHER & FORECAST SENSORS ---
   - platform: homeassistant
     entity_id: weather.forecast_home
     id: ext_weather_temp
@@ -598,13 +549,15 @@ sensor:
     on_value:
       then:
         - lambda: |-
-            char buf[16];
-            sprintf(buf, "Temp: %.1f °C", x);
-            lv_label_set_text(id(lbl_out_temp_val), buf);
-            if (x < 10.0 || x > 30.0) {
-              lv_obj_set_style_text_color(id(lbl_out_temp_val), lv_color_hex(0xEAB308), LV_PART_MAIN);
-            } else {
-              lv_obj_set_style_text_color(id(lbl_out_temp_val), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+            if (!isnan(x)) {
+              char buf[16];
+              sprintf(buf, "Temp: %.1f °C", x);
+              lv_label_set_text(id(lbl_out_temp_val), buf);
+              if (x < 10.0 || x > 30.0) {
+                lv_obj_set_style_text_color(id(lbl_out_temp_val), lv_color_hex(0xEAB308), LV_PART_MAIN);
+              } else {
+                lv_obj_set_style_text_color(id(lbl_out_temp_val), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+              }
             }
 
   - platform: homeassistant
@@ -615,9 +568,11 @@ sensor:
     on_value:
       then:
         - lambda: |-
-            char buf[16];
-            sprintf(buf, "Wind: %.1f km/h", x);
-            lv_label_set_text(id(lbl_out_wind_val), buf);
+            if (!isnan(x)) {
+              char buf[16];
+              sprintf(buf, "Wind: %.1f km/h", x);
+              lv_label_set_text(id(lbl_out_wind_val), buf);
+            }
 
   - platform: homeassistant
     entity_id: sensor.qek_forecast_hourly_temp
@@ -625,13 +580,15 @@ sensor:
     on_value:
       then:
         - lambda: |-
-            char buf[16];
-            sprintf(buf, "Next: %.1f °C", x);
-            lv_label_set_text(id(lbl_fc_hourly_val), buf);
-            if (x < 0 || x > 30) {
-              lv_obj_set_style_text_color(id(lbl_fc_hourly_val), lv_color_hex(0xEAB308), LV_PART_MAIN);
-            } else {
-              lv_obj_set_style_text_color(id(lbl_fc_hourly_val), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+            if (!isnan(x)) {
+              char buf[16];
+              sprintf(buf, "Next: %.1f °C", x);
+              lv_label_set_text(id(lbl_fc_hourly_val), buf);
+              if (x < 0 || x > 30) {
+                lv_obj_set_style_text_color(id(lbl_fc_hourly_val), lv_color_hex(0xEAB308), LV_PART_MAIN);
+              } else {
+                lv_obj_set_style_text_color(id(lbl_fc_hourly_val), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+              }
             }
 
   - platform: homeassistant
@@ -641,14 +598,26 @@ sensor:
     on_value:
       then:
         - lambda: |-
-            char buf[32];
-            sprintf(buf, "Tom: %.0f / %.0f °C", x, id(ha_fc_daily_low).state);
-            lv_label_set_text(id(lbl_fc_daily_val), buf);
+            float low_val = id(ha_fc_daily_low).state;
+            if (!isnan(x) && !isnan(low_val)) {
+              char buf[32];
+              sprintf(buf, "Tom: %.0f / %.0f °C", x, low_val);
+              lv_label_set_text(id(lbl_fc_daily_val), buf);
+            }
 
   - platform: homeassistant
     entity_id: sensor.qek_forecast_daily_low
     id: ha_fc_daily_low
     accuracy_decimals: 1
+    on_value:
+      then:
+        - lambda: |-
+            float high_val = id(ha_fc_daily_high).state;
+            if (!isnan(x) && !isnan(high_val)) {
+              char buf[32];
+              sprintf(buf, "Tom: %.0f / %.0f °C", high_val, x);
+              lv_label_set_text(id(lbl_fc_daily_val), buf);
+            }
 
   # --- ERWEITERTE OUTDOOR- & FORECAST-DATEN ---
   - platform: homeassistant
