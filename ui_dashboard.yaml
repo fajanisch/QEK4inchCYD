@@ -81,7 +81,7 @@ font:
       - "\uEB3B" # ac_unit / Schneeflocke (Cool)
       - "\uEF55" # local_fire_department / Flamme (Heat)
       - "\uF0EB"  # Lightbulb
-      - "\uF0290" # Fridge
+      - "\U000F0291" # <-- HIER: Outline Kühlschrank (fridge-outline)
       - "\uE63E"  # LED / WLED
       - "\uF058F" # Water pump
 
