@@ -82,7 +82,6 @@ font:
       - "\uEF55" # local_fire_department / Flamme (Heat)
       - "\uF0EB"  # Lightbulb
       - "\uF0290" # Fridge
-      - "\uF0A70" # Cutlery
       - "\uE63E"  # LED / WLED
       - "\uF058F" # Water pump
 
@@ -467,7 +466,7 @@ lvgl:
                           x: 14
                       - label:
                           id: lbl_light_2b
-                          text: "\uF0A70"
+                          text: "\uE56C"
                           text_font: font_icons_large
                           styles: style_icon_normal
                           align: right_mid
