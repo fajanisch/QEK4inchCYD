@@ -1437,7 +1437,114 @@ lvgl:
                         - lvgl.widget.update:
                             id: screen_climate_detail
                             hidden: true
-                            
+          # ==========================================
+          # POWER SUB-SCREEN (y: 44, unter Statusbalken)
+          # ==========================================
+          - obj:
+              id: screen_power_detail
+              x: 0
+              y: 44
+              width: 480
+              height: 268
+              hidden: true
+              bg_color: 0x0F172A
+              border_width: 0
+              radius: 0
+              pad_all: 0
+              scrollable: false
+              scrollbar_mode: "off"
+              widgets:
+                # --- 1. LINKER BEREICH: Große Hauptkachel (228x268) ---
+                - obj:
+                    id: card_power_main_detail
+                    x: 8
+                    y: 0
+                    width: 228
+                    height: 268
+                    styles: style_card
+                    pad_all: 4
+                    scrollable: false
+                    scrollbar_mode: "off"
+                    clickable: false
+                    widgets:
+                      - label:
+                          id: lbl_power_detail_title
+                          text: "Power Overview"
+                          text_font: font_sub_title
+                          text_color: 0x38BDF8
+                          align: top_left
+                          x: 4
+                          y: 2
+                      - label:
+                          id: lbl_power_detail_placeholder
+                          text: "Platzhalter Großkachel"
+                          text_font: font_card_header
+                          text_color: 0x64748B
+                          align: center
+
+                # --- 2. RECHTE SEITE OBEN: Info/Steuerungs-Kachel (228x176) ---
+                - obj:
+                    id: card_power_control
+                    x: 244
+                    y: 0
+                    width: 228
+                    height: 176
+                    styles: style_card
+                    scrollable: false
+                    scrollbar_mode: "off"
+                    widgets:
+                      - label:
+                          text: "Power Control"
+                          text_font: font_sub_title
+                          text_color: 0x38BDF8
+                          align: top_left
+                          x: 2
+                          y: 2
+                      - label:
+                          id: lbl_power_control_placeholder
+                          text: "Platzhalter Steuerung"
+                          text_font: font_card_header
+                          text_color: 0x64748B
+                          align: center
+
+                # --- 3. BACK BUTTON (Rechte Seite Unten, 228x84) ---
+                - obj:
+                    id: btn_sub_power_back
+                    x: 244
+                    y: 184
+                    width: 228
+                    height: 84
+                    styles: style_card
+                    border_color: 0x38BDF8
+                    scrollable: false
+                    scrollbar_mode: "off"
+                    clickable: true
+                    widgets:
+                      - label:
+                          id: icon_sub_power_back
+                          text: "\uE166"
+                          text_font: font_icons_sub
+                          text_color: 0x38BDF8
+                          align: center
+                          x: -25
+                      - label:
+                          id: lbl_sub_power_back
+                          text: "Back"
+                          text_font: font_sub_title
+                          text_color: 0x38BDF8
+                          align: center
+                          x: 21
+                    on_click:
+                      then:
+                        - script.stop: power_detail_timeout
+                        - lvgl.widget.update:
+                            id: screen_power_detail
+                            hidden: true
+
+
+
+
+
           # ==========================================
           # 6. DIM GUARD OVERLAY (Oberste Ebene)
           # ==========================================
