@@ -81,7 +81,7 @@ font:
       - "\uEB3B" # ac_unit / Schneeflocke (Cool)
       - "\uEF55" # local_fire_department / Flamme (Heat)
       - "\uF0EB"  # Lightbulb
-      - "\U000F0291" # <-- HIER: Outline Kühlschrank (fridge-outline)
+      - "\ueb47" # (fridge-outline)
       - "\uE63E"  # LED / WLED
       - "\uF058F" # Water pump
       - "\uE798" # drop
@@ -465,7 +465,7 @@ lvgl:
                           x: 12
                       - label:
                           id: lbl_light_1b
-                          text: "\U000F0291"
+                          text: "\ueb47"
                           text_font: font_icons_sub
                           styles: style_icon_normal
                           align: right_mid
