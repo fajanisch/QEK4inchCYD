@@ -100,16 +100,20 @@ text_sensor:
     on_value:
       then:
         - lambda: |-
+            auto color = lv_color_hex(0x38BDF8);
             if (x == "alarm") {
-              lv_obj_set_style_text_color(id(icon_climate_dew), lv_color_hex(0xEF4444), LV_PART_MAIN);
+              color = lv_color_hex(0xEF4444);
             } else if (x == "warn") {
-              lv_obj_set_style_text_color(id(icon_climate_dew), lv_color_hex(0xFBBF24), LV_PART_MAIN);
+              color = lv_color_hex(0xFBBF24);
             } else if (x == "ok") {
-              lv_obj_set_style_text_color(id(icon_climate_dew), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+              color = lv_color_hex(0x38BDF8);
             } else {
-              lv_obj_set_style_text_color(id(icon_climate_dew), lv_color_hex(0x64748B), LV_PART_MAIN);
+              color = lv_color_hex(0x64748B);
             }
+            lv_obj_set_style_text_color(id(icon_climate_dew), color, LV_PART_MAIN);
+            lv_obj_set_style_text_color(id(icon_in_dew), color, LV_PART_MAIN);
             lv_obj_invalidate(id(icon_climate_dew));
+            lv_obj_invalidate(id(icon_in_dew));
 
   - platform: homeassistant
     id: qek_weather_cond
@@ -317,20 +321,17 @@ sensor:
         - lambda: |-
             if (!isnan(x)) {
               char buf[32];
-              // Hauptscreen
               sprintf(buf, "Dew: %.1f°C", x);
               lv_label_set_text(id(lbl_climate_dew), buf);
-              
-              // Subscreen
-              sprintf(buf, "Dew: %.1f °C", x);
+              sprintf(buf, "%.1f°C", x);
               lv_label_set_text(id(lbl_in_dew_val), buf);
             } else {
               lv_label_set_text(id(lbl_climate_dew), "Dew: --.-°C");
-              lv_label_set_text(id(lbl_in_dew_val), "Dew: --.- °C");
+              lv_label_set_text(id(lbl_in_dew_val), "--.-°C");
             }
             lv_obj_invalidate(id(lbl_climate_dew));
             lv_obj_invalidate(id(lbl_in_dew_val));
-
+            
   # --- 2. BATTERY & POWER SENSORS ---
   - platform: homeassistant
     id: c1000_soc
