@@ -80,6 +80,14 @@ font:
     size: 36
     glyphs:
       - "\uE646"
+      - "\uE81A" # Sunny
+      - "\uE51C" # Clear Night
+      - "\uF172" # Partly Cloudy
+      - "\uF176" # Rainy
+      - "\uEBDB" # Lightning
+      - "\uEB3B" # Snowy
+      - "\uEFD8" # Windy
+      - "\uE2BD" # Default / Unknown
 
 lvgl:
   displays:
@@ -845,7 +853,7 @@ lvgl:
               scrollable: false
               scrollbar_mode: "off"
               widgets:
-                # --- 1. WEATHER & CLIMATE CARD (LEFT - Ohne Text-Labels, nur Icons + Werte) ---
+                # --- 1. WEATHER & CLIMATE CARD (LEFT) ---
                 - obj:
                     id: card_weather
                     x: 8
@@ -869,7 +877,7 @@ lvgl:
                           y: 2
 
                       # ==========================================
-                      # 1. INDOOR (Temp, Hum, Dew - Nur Icons + Werte)
+                      # 1. INDOOR (Temp, Hum, Dew - Ohne Label)
                       # ==========================================
                       - label:
                           id: icon_in_temp
@@ -957,7 +965,7 @@ lvgl:
                           text_font: font_icons
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 115
+                          x: 105
                           y: 50
                       - label:
                           id: lbl_out_hum_val
@@ -965,7 +973,7 @@ lvgl:
                           text_font: font_bar
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 133
+                          x: 123
                           y: 50
 
                       # Zeile 2 Outdoor: Wind & Luftdruck
@@ -992,7 +1000,7 @@ lvgl:
                           text_font: font_icons
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 115
+                          x: 105
                           y: 72
                       - label:
                           id: lbl_out_press_val
@@ -1000,18 +1008,18 @@ lvgl:
                           text_font: font_bar
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 133
+                          x: 123
                           y: 72
 
-                      # Wetter Condition Icon (rechts neben den Outdoor-Werten)
+                      # Wetter Condition Icon (Groß, weiter links positioniert gegen Überlappung)
                       - label:
                           id: icon_climate_wx_sub
                           text: "\uE2BD"
                           text_font: font_icons_hero
                           text_color: 0x38BDF8
                           align: top_right
-                          x: -8
-                          y: 56
+                          x: -4
+                          y: 54
 
                       # Trennlinie 2 (Abgrenzung zum Forecast-Bereich)
                       - obj:
@@ -1020,6 +1028,18 @@ lvgl:
                           width: 218
                           height: 1
                           styles: style_card
+
+                      # ==========================================
+                      # 3. FORECAST BEREICH (Platzhalter unten)
+                      # ==========================================
+                      - label:
+                          id: lbl_forecast_placeholder
+                          text: "Forecast Platzhalter"
+                          text_font: font_card_header
+                          text_color: 0x64748B
+                          align: top_left
+                          x: 4
+                          y: 104
 
                       # ==========================================
                       # 3. FORECAST BEREICH (Platzhalter unten)
