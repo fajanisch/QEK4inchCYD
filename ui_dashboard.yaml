@@ -80,6 +80,11 @@ font:
       # --- Klima-Modus Icons ---
       - "\uEB3B" # ac_unit / Schneeflocke (Cool)
       - "\uEF55" # local_fire_department / Flamme (Heat)
+      - "\uF0EB"  # Lightbulb
+      - "\uF0290" # Fridge
+      - "\uF0A70" # Cutlery
+      - "\uE63E"  # LED / WLED
+      - "\uF058F" # Water pump
 
   - file: "gfonts://Material+Symbols+Outlined"
     id: font_icons_hero
@@ -333,6 +338,8 @@ lvgl:
                     x: -2
                     y: 80
 
+#--- Battery Card
+
           - obj:
               id: card_battery
               x: 244
@@ -403,6 +410,8 @@ lvgl:
                     x: -2
                     y: 79
 
+# ---- Light Card
+
           - obj:
               id: card_light
               x: 8
@@ -411,68 +420,90 @@ lvgl:
               height: 130
               styles: style_card
               clickable: false
+              scrollable: false
+              pad_all: 0
               widgets:
-                # --- Button 1 (Oben Links) ---
+                # --- Button 1 (Oben Links): Licht & Kühlschrank ---
                 - button:
                     id: btn_light_1
-                    width: 110
-                    height: 59
+                    width: 112
+                    height: 61
                     align: top_left
-                    x: 4
-                    y: 4
+                    x: 0
+                    y: 0
                     styles: style_card
                     widgets:
                       - label:
+                          id: lbl_light_1a
                           text: "\uF0EB"
-                          text_font: font_icons
+                          text_font: font_icons_large
                           styles: style_icon_normal
-                          align: center
-                
-                # --- Button 2 (Oben Rechts) ---
+                          align: left_mid
+                          x: 14
+                      - label:
+                          id: lbl_light_1b
+                          text: "\uF0290"
+                          text_font: font_icons_large
+                          styles: style_icon_normal
+                          align: right_mid
+                          x: -14
+
+                # --- Button 2 (Oben Rechts): Licht & Küche (Cutlery) ---
                 - button:
                     id: btn_light_2
-                    width: 110
-                    height: 59
+                    width: 112
+                    height: 61
                     align: top_left
                     x: 114
-                    y: 4
+                    y: 0
                     styles: style_card
                     widgets:
                       - label:
+                          id: lbl_light_2a
                           text: "\uF0EB"
-                          text_font: font_icons
+                          text_font: font_icons_large
                           styles: style_icon_normal
-                          align: center
+                          align: left_mid
+                          x: 14
+                      - label:
+                          id: lbl_light_2b
+                          text: "\uF0A70"
+                          text_font: font_icons_large
+                          styles: style_icon_normal
+                          align: right_mid
+                          x: -14
 
-                # --- Button 3 (Unten Links) ---
+                # --- Button 3 (Unten Links): WLED-Lampe ---
                 - button:
                     id: btn_light_3
-                    width: 110
-                    height: 59
+                    width: 112
+                    height: 61
                     align: top_left
-                    x: 4
-                    y: 67
+                    x: 0
+                    y: 63
                     styles: style_card
                     widgets:
                       - label:
-                          text: "\uF0EB"
-                          text_font: font_icons
+                          id: lbl_light_3
+                          text: "\uE63E"
+                          text_font: font_icons_large
                           styles: style_icon_normal
                           align: center
 
-                # --- Button 4 (Unten Rechts) ---
+                # --- Button 4 (Unten Rechts): Wasserpumpe ---
                 - button:
                     id: btn_light_4
-                    width: 110
-                    height: 59
+                    width: 112
+                    height: 61
                     align: top_left
                     x: 114
-                    y: 67
+                    y: 63
                     styles: style_card
                     widgets:
                       - label:
-                          text: "\uF0EB"
-                          text_font: font_icons
+                          id: lbl_light_4
+                          text: "\uF058F"
+                          text_font: font_icons_large
                           styles: style_icon_normal
                           align: center
 
