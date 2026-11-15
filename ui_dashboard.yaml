@@ -497,6 +497,17 @@ lvgl:
                     align: top_right
                     x: -2
                     y: 55
+
+# Zeile 3: Modus-Icon (Schneeflocke / Feuer / Aus)
+                - label:
+                    id: icon_climate_mode
+                    text: "\uE8AC"
+                    text_font: font_icons
+                    styles: style_icon_normal
+                    align: top_right
+                    x: -2
+                    y: 56
+
                 - label:
                     id: lbl_climate_wx
                     text: "Out: --° (--°/--°) --%"
