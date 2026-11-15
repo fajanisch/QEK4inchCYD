@@ -417,7 +417,7 @@ lvgl:
               y: 182
               width: 228
               height: 130
-              styles: style_card
+              #styles: style_card
               clickable: false
               scrollable: false
               pad_all: 0
