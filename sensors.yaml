@@ -245,7 +245,7 @@ text_sensor:
               }
             }
 
-            # 1. Subscreen-Buttons aktualisieren
+            // 1. Subscreen-Buttons aktualisieren
             lv_obj_set_style_border_color(id(btn_mode_off), border_off, LV_PART_MAIN);
             lv_obj_set_style_border_width(id(btn_mode_off), width_off, LV_PART_MAIN);
             lv_obj_set_style_text_color(id(lbl_mode_off), text_off, LV_PART_MAIN);
@@ -262,7 +262,7 @@ text_sensor:
             lv_obj_invalidate(id(btn_mode_heat));
             lv_obj_invalidate(id(btn_mode_cool));
 
-            # 2. Hauptkachel-Modus-Icon aktualisieren
+            // 2. Hauptkachel-Modus-Icon aktualisieren
             std::string icon_code = "\uE8AC"; // Off Icon
             auto main_color = lv_color_hex(0x64748B); // Inactive gray
 
@@ -345,16 +345,15 @@ sensor:
             if (!isnan(x)) {
               char buf[32];
               sprintf(buf, "%.1f°C", x);
-              lv_lbl_set_text(id(lbl_climate_dew), buf);
-              sprintf(buf, "%.1f°C", x);
-              lv_lbl_set_text(id(lbl_in_dew_val), buf);
+              lv_label_set_text(id(lbl_climate_dew), buf);
+              lv_label_set_text(id(lbl_in_dew_val), buf);
             } else {
-              lv_lbl_set_text(id(lbl_climate_dew), "--.-°C");
-              lv_lbl_set_text(id(lbl_in_dew_val), "--.-°C");
+              lv_label_set_text(id(lbl_climate_dew), "--.-°C");
+              lv_label_set_text(id(lbl_in_dew_val), "--.-°C");
             }
             lv_obj_invalidate(id(lbl_climate_dew));
             lv_obj_invalidate(id(lbl_in_dew_val));
-            
+                        
   # --- 2. BATTERY & POWER SENSORS ---
   - platform: homeassistant
     id: c1000_soc
