@@ -461,7 +461,7 @@ lvgl:
                     x: 28
                     y: 2
 
-                # --- LINKS: HERO-TEMPERATUR & ZIELTEMPERATUR ---
+                # --- LINKE SEITE: Hero-Temperatur & Zieltemperatur ---
                 - label:
                     id: lbl_climate_temp
                     text: "--.-°C"
@@ -469,7 +469,7 @@ lvgl:
                     styles: style_val_blue
                     align: top_left
                     x: 4
-                    y: 20
+                    y: 22
 
                 - label:
                     id: lbl_climate_target
@@ -480,7 +480,8 @@ lvgl:
                     x: 4
                     y: 62
 
-                # --- RECHTS DANEBEN: FEUCHTE, TAUPUNKT & MODUS-ICON ---
+                # --- RECHTE SEITE: Die 3 Zeilen untereinander ---
+                # Zeile 1: Luftfeuchtigkeit
                 - label:
                     id: lbl_climate_hum
                     text: "--%"
@@ -488,7 +489,7 @@ lvgl:
                     styles: style_txt_normal
                     align: top_right
                     x: -24
-                    y: 20
+                    y: 16
                 - label:
                     id: icon_climate_hum
                     text: "\uE798"
@@ -496,16 +497,17 @@ lvgl:
                     styles: style_icon_normal
                     align: top_right
                     x: -2
-                    y: 18
+                    y: 14
 
+                # Zeile 2: Taupunkt
                 - label:
                     id: lbl_climate_dew
-                    text: "Dew: --.-°C"
+                    text: "--.-°C"
                     text_font: font_sub
                     styles: style_txt_normal
                     align: top_right
                     x: -24
-                    y: 40
+                    y: 36
                 - label:
                     id: icon_climate_dew
                     text: "\uF879"
@@ -513,8 +515,9 @@ lvgl:
                     styles: style_icon_inactive
                     align: top_right
                     x: -2
-                    y: 38
+                    y: 34
 
+                # Zeile 3: Modus-Icon (Schneeflocke / Feuer / Aus)
                 - label:
                     id: icon_climate_mode
                     text: "\uE8AC"
@@ -522,9 +525,9 @@ lvgl:
                     styles: style_icon_normal
                     align: top_right
                     x: -2
-                    y: 60
+                    y: 56
 
-                # --- UNTEN DRUNTER: WEATHER FORECAST / INFOS ---
+                # --- UNTERE ZEILE: Wetter-Forecast / Status ---
                 - label:
                     id: lbl_climate_wx
                     text: "Out: --° (--°/--°) --%"
