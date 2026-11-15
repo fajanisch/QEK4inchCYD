@@ -86,6 +86,7 @@ font:
       - "\uF058F" # Water pump
       - "\uE798" # drop
       - "\uf3e3" #lightbulb (2)
+      - "\uf0cf" smart light
 
   - file: "gfonts://Material+Symbols+Outlined"
     id: font_icons_hero
@@ -457,7 +458,7 @@ lvgl:
                     widgets:
                       - label:
                           id: lbl_light_1a
-                          text: "\uF0EB"
+                          text: "\uF3E3"
                           text_font: font_icons_sub
                           styles: style_icon_normal
                           align: left_mid
@@ -470,7 +471,7 @@ lvgl:
                           align: right_mid
                           x: -12
 
-                # --- Button 2 (Oben Rechts): Licht & Küche (Cutlery) ---
+                # --- Button 2 (Oben Rechts): Licht & Küche ---
                 - button:
                     id: btn_light_2
                     width: 108
@@ -500,7 +501,7 @@ lvgl:
                     widgets:
                       - label:
                           id: lbl_light_2a
-                          text: "\uF0EB"
+                          text: "\uF3E3"
                           text_font: font_icons_sub
                           styles: style_icon_normal
                           align: left_mid
@@ -516,11 +517,11 @@ lvgl:
                 # --- Button 3 (Unten Links): WLED-Lampe ---
                 - button:
                     id: btn_light_3
-                    width: 112
-                    height: 61
+                    width: 108
+                    height: 59
                     align: top_left
-                    x: 0
-                    y: 63
+                    x: 4
+                    y: 67
                     styles: style_card
                     shadow_width: 0
                     border_width: 0
@@ -541,7 +542,7 @@ lvgl:
                     widgets:
                       - label:
                           id: lbl_light_3
-                          text: "\uE63E"
+                          text: "\uF0CF"
                           text_font: font_icons_sub
                           styles: style_icon_normal
                           align: center
@@ -549,11 +550,11 @@ lvgl:
                 # --- Button 4 (Unten Rechts): Wasserpumpe ---
                 - button:
                     id: btn_light_4
-                    width: 112
-                    height: 61
+                    width: 108
+                    height: 59
                     align: top_left
-                    x: 114
-                    y: 63
+                    x: 116
+                    y: 67
                     styles: style_card
                     shadow_width: 0
                     border_width: 0
@@ -574,7 +575,7 @@ lvgl:
                     widgets:
                       - label:
                           id: lbl_light_4
-                          text: "\uF058F"
+                          text: "\uE798"
                           text_font: font_icons_sub
                           styles: style_icon_normal
                           align: center
