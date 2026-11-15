@@ -574,50 +574,6 @@ sensor:
               lv_label_set_text(id(lbl_out_wind_val), buf);
             }
 
-  - platform: homeassistant
-    entity_id: sensor.qek_forecast_hourly_temp
-    id: ha_fc_hourly_temp
-    on_value:
-      then:
-        - lambda: |-
-            if (!isnan(x)) {
-              char buf[16];
-              sprintf(buf, "Next: %.1f °C", x);
-              lv_label_set_text(id(lbl_fc_hourly_val), buf);
-              if (x < 0 || x > 30) {
-                lv_obj_set_style_text_color(id(lbl_fc_hourly_val), lv_color_hex(0xEAB308), LV_PART_MAIN);
-              } else {
-                lv_obj_set_style_text_color(id(lbl_fc_hourly_val), lv_color_hex(0x38BDF8), LV_PART_MAIN);
-              }
-            }
-
-  - platform: homeassistant
-    entity_id: sensor.qek_forecast_daily_high
-    id: ha_fc_daily_high
-    accuracy_decimals: 1
-    on_value:
-      then:
-        - lambda: |-
-            float low_val = id(ha_fc_daily_low).state;
-            if (!isnan(x) && !isnan(low_val)) {
-              char buf[32];
-              sprintf(buf, "Tom: %.0f / %.0f °C", x, low_val);
-              lv_label_set_text(id(lbl_fc_daily_val), buf);
-            }
-
-  - platform: homeassistant
-    entity_id: sensor.qek_forecast_daily_low
-    id: ha_fc_daily_low
-    accuracy_decimals: 1
-    on_value:
-      then:
-        - lambda: |-
-            float high_val = id(ha_fc_daily_high).state;
-            if (!isnan(x) && !isnan(high_val)) {
-              char buf[32];
-              sprintf(buf, "Tom: %.0f / %.0f °C", high_val, x);
-              lv_label_set_text(id(lbl_fc_daily_val), buf);
-            }
 
   # --- ERWEITERTE OUTDOOR- & FORECAST-DATEN ---
   - platform: homeassistant
