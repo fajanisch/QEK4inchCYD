@@ -80,7 +80,7 @@ font:
       # --- Klima-Modus Icons ---
       - "\uEB3B" # ac_unit / Schneeflocke (Cool)
       - "\uEF55" # local_fire_department / Flamme (Heat)
-      - "\uF0EB"  # Lightbulb
+      - compiliert, inzwischen: "\uF0EB"  # Lightbulb
       - "\uF0290" # Fridge
       - "\uE63E"  # LED / WLED
       - "\uF058F" # Water pump
