@@ -123,34 +123,37 @@ text_sensor:
         - lambda: |-
             std::string cond = x;
             for (auto &c : cond) c = tolower(c);
-            std::string sum = id(qek_weather_summary).state;
+            std::string icon_code = "\uE2BD"; // Default
 
-            if (cond == "sunny") {
-              lv_label_set_text(id(icon_climate_wx), "\uE81A");
-            } else if (cond == "clear-night") {
-              lv_label_set_text(id(icon_climate_wx), "\uE51C");
-            } else if (cond == "partlycloudy") {
-              lv_label_set_text(id(icon_climate_wx), "\uF172");
-            } else if (cond == "rainy" || cond == "pouring") {
-              lv_label_set_text(id(icon_climate_wx), "\uF176");
-            } else if (cond == "lightning" || cond == "lightning-rainy") {
-              lv_label_set_text(id(icon_climate_wx), "\uEBDB");
-            } else if (cond == "snowy" || cond == "snowy-rainy" || cond == "hail") {
-              lv_label_set_text(id(icon_climate_wx), "\uEB3B");
-            } else if (cond == "windy" || cond == "windy-variant" || cond == "fog") {
-              lv_label_set_text(id(icon_climate_wx), "\uEFD8");
-            } else {
-              lv_label_set_text(id(icon_climate_wx), "\uE2BD");
+            if (cond == "sunny") { 
+              icon_code = "\uE81A"; 
+            } else if (cond == "clear-night") { 
+              icon_code = "\uE51C"; 
+            } else if (cond == "partlycloudy") { 
+              icon_code = "\uF172"; 
+            } else if (cond == "rainy" || cond == "pouring") { 
+              icon_code = "\uF176"; 
+            } else if (cond == "lightning" || cond == "lightning-rainy") { 
+              icon_code = "\uEBDB"; 
+            } else if (cond == "snowy" || cond == "snowy-rainy" || cond == "hail") { 
+              icon_code = "\uEB3B"; 
+            } else if (cond == "windy" || cond == "windy-variant" || cond == "fog") { 
+              icon_code = "\uEFD8"; 
             }
 
-            if (sum == "Weather: Offline" || sum == "Offline" || cond == "unavailable" || cond == "unknown") {
-              lv_obj_set_style_text_color(id(icon_climate_wx), lv_color_hex(0x64748B), LV_PART_MAIN);
-            } else if (cond == "sunny" || cond == "lightning" || cond == "lightning-rainy") {
-              lv_obj_set_style_text_color(id(icon_climate_wx), lv_color_hex(0xFBBF24), LV_PART_MAIN);
-            } else {
-              lv_obj_set_style_text_color(id(icon_climate_wx), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+            // BEIDE Icons absolut synchron setzen (Hauptschirm & Detailschirm)
+            lv_label_set_text(id(icon_climate_wx), icon_code.c_str());
+            lv_label_set_text(id(icon_climate_wx_sub), icon_code.c_str());
+            
+            auto color = lv_color_hex(0x38BDF8);
+            if (cond == "sunny" || cond == "lightning" || cond == "lightning-rainy") {
+              color = lv_color_hex(0xFBBF24); // Gelb für Sonne/Gewitter
             }
+            lv_obj_set_style_text_color(id(icon_climate_wx), color, LV_PART_MAIN);
+            lv_obj_set_style_text_color(id(icon_climate_wx_sub), color, LV_PART_MAIN);
+            
             lv_obj_invalidate(id(icon_climate_wx));
+            lv_obj_invalidate(id(icon_climate_wx_sub));
 
   - platform: homeassistant
     id: qek_weather_summary
