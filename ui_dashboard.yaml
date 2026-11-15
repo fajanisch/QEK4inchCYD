@@ -431,6 +431,24 @@ lvgl:
                     x: 0
                     y: 0
                     styles: style_card
+                    shadow_width: 0
+                    border_width: 0
+                    on_click:
+                      then:
+                        - lambda: |-
+                            static bool state_1 = false;
+                            state_1 = !state_1;
+                            if (state_1) {
+                              lv_obj_set_style_border_color(id(btn_light_1), lv_color_hex(0xFBBF24), LV_PART_MAIN);
+                              lv_obj_set_style_border_width(id(btn_light_1), 2, LV_PART_MAIN);
+                              lv_obj_set_style_text_color(id(lbl_light_1a), lv_color_hex(0xFBBF24), LV_PART_MAIN);
+                              lv_obj_set_style_text_color(id(lbl_light_1b), lv_color_hex(0xFBBF24), LV_PART_MAIN);
+                            } else {
+                              lv_obj_set_style_border_width(id(btn_light_1), 0, LV_PART_MAIN);
+                              lv_obj_set_style_text_color(id(lbl_light_1a), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+                              lv_obj_set_style_text_color(id(lbl_light_1b), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+                            }
+                            lv_obj_invalidate(id(btn_light_1));
                     widgets:
                       - label:
                           id: lbl_light_1a
@@ -447,7 +465,7 @@ lvgl:
                           align: right_mid
                           x: -14
 
-                # --- Button 2 (Oben Rechts): Licht & Küche (Cutlery) ---
+                # --- Button 2 (Oben Rechts): Licht & Küche ---
                 - button:
                     id: btn_light_2
                     width: 112
@@ -456,6 +474,24 @@ lvgl:
                     x: 114
                     y: 0
                     styles: style_card
+                    shadow_width: 0
+                    border_width: 0
+                    on_click:
+                      then:
+                        - lambda: |-
+                            static bool state_2 = false;
+                            state_2 = !state_2;
+                            if (state_2) {
+                              lv_obj_set_style_border_color(id(btn_light_2), lv_color_hex(0xFBBF24), LV_PART_MAIN);
+                              lv_obj_set_style_border_width(id(btn_light_2), 2, LV_PART_MAIN);
+                              lv_obj_set_style_text_color(id(lbl_light_2a), lv_color_hex(0xFBBF24), LV_PART_MAIN);
+                              lv_obj_set_style_text_color(id(lbl_light_2b), lv_color_hex(0xFBBF24), LV_PART_MAIN);
+                            } else {
+                              lv_obj_set_style_border_width(id(btn_light_2), 0, LV_PART_MAIN);
+                              lv_obj_set_style_text_color(id(lbl_light_2a), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+                              lv_obj_set_style_text_color(id(lbl_light_2b), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+                            }
+                            lv_obj_invalidate(id(btn_light_2));
                     widgets:
                       - label:
                           id: lbl_light_2a
@@ -481,6 +517,22 @@ lvgl:
                     x: 0
                     y: 63
                     styles: style_card
+                    shadow_width: 0
+                    border_width: 0
+                    on_click:
+                      then:
+                        - lambda: |-
+                            static bool state_3 = false;
+                            state_3 = !state_3;
+                            if (state_3) {
+                              lv_obj_set_style_border_color(id(btn_light_3), lv_color_hex(0xFBBF24), LV_PART_MAIN);
+                              lv_obj_set_style_border_width(id(btn_light_3), 2, LV_PART_MAIN);
+                              lv_obj_set_style_text_color(id(lbl_light_3), lv_color_hex(0xFBBF24), LV_PART_MAIN);
+                            } else {
+                              lv_obj_set_style_border_width(id(btn_light_3), 0, LV_PART_MAIN);
+                              lv_obj_set_style_text_color(id(lbl_light_3), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+                            }
+                            lv_obj_invalidate(id(btn_light_3));
                     widgets:
                       - label:
                           id: lbl_light_3
@@ -498,6 +550,22 @@ lvgl:
                     x: 114
                     y: 63
                     styles: style_card
+                    shadow_width: 0
+                    border_width: 0
+                    on_click:
+                      then:
+                        - lambda: |-
+                            static bool state_4 = false;
+                            state_4 = !state_4;
+                            if (state_4) {
+                              lv_obj_set_style_border_color(id(btn_light_4), lv_color_hex(0xFBBF24), LV_PART_MAIN);
+                              lv_obj_set_style_border_width(id(btn_light_4), 2, LV_PART_MAIN);
+                              lv_obj_set_style_text_color(id(lbl_light_4), lv_color_hex(0xFBBF24), LV_PART_MAIN);
+                            } else {
+                              lv_obj_set_style_border_width(id(btn_light_4), 0, LV_PART_MAIN);
+                              lv_obj_set_style_text_color(id(lbl_light_4), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+                            }
+                            lv_obj_invalidate(id(btn_light_4));
                     widgets:
                       - label:
                           id: lbl_light_4
@@ -505,7 +573,7 @@ lvgl:
                           text_font: font_icons_sub
                           styles: style_icon_normal
                           align: center
-
+                          
 #-----CLIMATE CARD
                           
                           
