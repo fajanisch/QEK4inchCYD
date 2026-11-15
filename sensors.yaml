@@ -28,8 +28,6 @@ binary_sensor:
 #---------------------------------------------------------------------------
 # TEXT SENSORS
 #---------------------------------------------------------------------------   
-
-
 text_sensor:
   - platform: homeassistant
     id: qek_status_gps
@@ -210,8 +208,8 @@ text_sensor:
             std::string mode = x;
             std::string shelly_state = id(ext_climate_switch_state).state;
 
-            auto col_text = lv_color_hex(0x38BDF8); // Blau
-            auto col_border = lv_color_hex(0x334155); // Dunkler Rahmen
+            auto col_text = lv_color_hex(0x38BDF8);
+            auto col_border = lv_color_hex(0x334155);
             
             auto text_off = col_text;
             auto text_heat = col_text;
@@ -255,10 +253,12 @@ text_sensor:
             lv_obj_invalidate(id(btn_mode_off));
             lv_obj_invalidate(id(btn_mode_heat));
             lv_obj_invalidate(id(btn_mode_cool));         
+
 #-------------------------------------------------------------
-# SENSOR
+# NUMERIC SENSORS
 #-------------------------------------------------------------
 sensor:
+  # --- 1. LOCAL HARDWARE SENSOR (DHT22) ---
   - platform: dht
     pin: GPIO21
     model: AM2302
@@ -304,6 +304,7 @@ sensor:
               lv_obj_invalidate(id(lbl_climate_hum));
               lv_obj_invalidate(id(icon_climate_hum));
 
+  # --- 2. BATTERY & POWER SENSORS ---
   - platform: homeassistant
     id: c1000_soc
     entity_id: sensor.anker_solix_c1000_battery_percentage
@@ -390,19 +391,6 @@ sensor:
             lv_obj_invalidate(id(icon_bat_target));
 
   - platform: homeassistant
-    id: qek_dew_point
-    entity_id: sensor.qek_dew_point
-    on_value:
-      then:
-        - lambda: |-
-            if (!isnan(x)) {
-              lv_label_set_text_fmt(id(lbl_climate_dew), "Dew: %.1f°C", x);
-            } else {
-              lv_label_set_text(id(lbl_climate_dew), "Dew: --.-°C");
-            }
-            lv_obj_invalidate(id(lbl_climate_dew));
-
-  - platform: homeassistant
     id: ext_pwr_watt
     entity_id: sensor.matter_over_wifi_smart_switch_power
     on_value:
@@ -451,7 +439,7 @@ sensor:
       then:
         - script.execute: update_rest
 
-# --- TAGESENERGIE (kWh aus HA -> Wh in ESPHome) ---
+  # --- TAGESENERGY (kWh aus HA -> Wh in ESPHome) ---
   - platform: homeassistant
     id: ext_pwr_wh
     entity_id: sensor.qek_sonoff_energy_daily
@@ -497,100 +485,7 @@ sensor:
       then:
         - script.execute: update_shelly_climate
 
-  - platform: homeassistant
-    id: ext_weather_temp
-    entity_id: weather.forecast_home
-    attribute: temperature
-    accuracy_decimals: 1
-    on_value:
-      then:
-        - lambda: |-
-            if (!isnan(x)) {
-              lv_label_set_text_fmt(id(lbl_ext_temp_val), "%.1f °C", x);
-            }
-
-  - platform: homeassistant
-    id: ext_weather_humidity
-    entity_id: weather.forecast_home
-    attribute: humidity
-    accuracy_decimals: 0
-    on_value:
-      then:
-        - lambda: |-
-            if (!isnan(x)) {
-              lv_label_set_text_fmt(id(lbl_ext_hum_val), "%d %%", (int)x);
-            }
-
-  - platform: homeassistant
-    id: ext_weather_pressure
-    entity_id: weather.forecast_home
-    attribute: pressure
-    accuracy_decimals: 0
-    on_value:
-      then:
-        - lambda: |-
-            if (!isnan(x)) {
-              lv_label_set_text_fmt(id(lbl_ext_press_val), "%d hPa", (int)x);
-            }
-
-  - platform: homeassistant
-    id: ext_weather_wind
-    entity_id: weather.forecast_home
-    attribute: wind_speed
-    accuracy_decimals: 1
-    on_value:
-      then:
-        - lambda: |-
-            if (!isnan(x)) {
-              lv_label_set_text_fmt(id(lbl_ext_wind_val), "%.1f km/h", x);
-            }
-
-  - platform: homeassistant
-    id: ext_sunshine_hours
-    entity_id: sensor.qek_sunshine_remaining  # Entsprechender Sensor in HA
-    on_value:
-      then:
-        - lambda: |-
-            if (!isnan(x)) {
-              lv_label_set_text_fmt(id(lbl_ext_sun_val), "%.1f h", x);
-            }
-
-  - platform: homeassistant
-    entity_id: input_number.qek_target_temp
-    id: ha_climate_target_temp
-    on_value:
-      then:
-        - lambda: |-
-            char buf[16];
-            sprintf(buf, "%.1f °C", x);
-            lv_label_set_text(id(lbl_target_value), buf);
-
-  - platform: homeassistant
-    entity_id: sensor.qek_forecast_hourly_temp
-    id: ha_fc_hourly_temp
-    on_value:
-      then:
-        - lambda: |-
-            char buf[16];
-            sprintf(buf, "Next: %.1f °C", x);
-            lv_label_set_text(id(lbl_fc_hourly_val), buf);
-            if (x < 0 || x > 30) {
-              lv_obj_set_style_text_color(id(lbl_fc_hourly_val), lv_color_hex(0xEAB308), LV_PART_MAIN);
-            } else {
-              lv_obj_set_style_text_color(id(lbl_fc_hourly_val), lv_color_hex(0x38BDF8), LV_PART_MAIN);
-            }
-
-  - platform: homeassistant
-    entity_id: sensor.qek_forecast_daily_high
-    id: ha_fc_daily_high
-    on_value:
-      then:
-        - lambda: |-
-            char buf[32];
-            sprintf(buf, "Tom: %.0f / %.0f °C", x, id(ha_fc_daily_low).state);
-            lv_label_set_text(id(lbl_fc_daily_val), buf);
-
-  # --- INDOOR SENSORS ---
+  # --- 3. INDOOR & CLIMATE SENSORS ---
   - platform: homeassistant
     entity_id: sensor.qek_indoor_temperature
     id: ha_indoor_temp
@@ -626,7 +521,30 @@ sensor:
             sprintf(buf, "Dew: %.1f °C", x);
             lv_label_set_text(id(lbl_in_dew_val), buf);
 
-  # --- OUTDOOR WEATHER SENSORS ---
+  - platform: homeassistant
+    id: qek_dew_point
+    entity_id: sensor.qek_dew_point
+    on_value:
+      then:
+        - lambda: |-
+            if (!isnan(x)) {
+              lv_label_set_text_fmt(id(lbl_climate_dew), "Dew: %.1f°C", x);
+            } else {
+              lv_label_set_text(id(lbl_climate_dew), "Dew: --.-°C");
+            }
+            lv_obj_invalidate(id(lbl_climate_dew));
+
+  - platform: homeassistant
+    entity_id: input_number.qek_target_temp
+    id: ha_climate_target_temp
+    on_value:
+      then:
+        - lambda: |-
+            char buf[16];
+            sprintf(buf, "%.1f °C", x);
+            lv_label_set_text(id(lbl_target_value), buf);
+
+  # --- 4. WEATHER & FORECAST SENSORS ---
   - platform: homeassistant
     entity_id: weather.forecast_home
     id: ext_weather_temp
@@ -656,7 +574,6 @@ sensor:
             sprintf(buf, "Wind: %.1f km/h", x);
             lv_label_set_text(id(lbl_out_wind_val), buf);
 
-  # --- FORECAST SENSORS ---
   - platform: homeassistant
     entity_id: sensor.qek_forecast_hourly_temp
     id: ha_fc_hourly_temp
@@ -666,6 +583,11 @@ sensor:
             char buf[16];
             sprintf(buf, "Next: %.1f °C", x);
             lv_label_set_text(id(lbl_fc_hourly_val), buf);
+            if (x < 0 || x > 30) {
+              lv_obj_set_style_text_color(id(lbl_fc_hourly_val), lv_color_hex(0xEAB308), LV_PART_MAIN);
+            } else {
+              lv_obj_set_style_text_color(id(lbl_fc_hourly_val), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+            }
 
   - platform: homeassistant
     entity_id: sensor.qek_forecast_daily_high
