@@ -533,7 +533,7 @@ sensor:
         - lambda: |-
             if (!isnan(x)) {
               char buf[16];
-              sprintf(buf, "Temp: %.1f °C", x);
+              sprintf(buf, "%.1f°C", x);
               lv_label_set_text(id(lbl_out_temp_val), buf);
               if (x < 10.0 || x > 30.0) {
                 lv_obj_set_style_text_color(id(lbl_out_temp_val), lv_color_hex(0xEAB308), LV_PART_MAIN);
@@ -552,12 +552,10 @@ sensor:
         - lambda: |-
             if (!isnan(x)) {
               char buf[16];
-              sprintf(buf, "Wind: %.1f km/h", x);
+              sprintf(buf, "%.1f km/h", x);
               lv_label_set_text(id(lbl_out_wind_val), buf);
             }
 
-
-  # --- ERWEITERTE OUTDOOR- & FORECAST-DATEN ---
   - platform: homeassistant
     entity_id: weather.forecast_home
     id: ext_weather_pressure
@@ -568,7 +566,7 @@ sensor:
         - lambda: |-
             if (!isnan(x)) {
               char buf[16];
-              sprintf(buf, "Press: %d hPa", (int)x);
+              sprintf(buf, "%d hPa", (int)x);
               lv_label_set_text(id(lbl_out_press_val), buf);
             }
 
@@ -582,6 +580,6 @@ sensor:
         - lambda: |-
             if (!isnan(x)) {
               char buf[16];
-              sprintf(buf, "Hum: %d %%", (int)x);
+              sprintf(buf, "%d%%", (int)x);
               lv_label_set_text(id(lbl_out_hum_val), buf);
             }
