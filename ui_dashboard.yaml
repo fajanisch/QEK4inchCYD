@@ -845,13 +845,13 @@ lvgl:
               scrollable: false
               scrollbar_mode: "off"
               widgets:
-                # --- 1. WEATHER & FORECAST CARD (LEFT) ---
+                # --- 1. WEATHER CARD (Standard-Maße 228x130, alle Schriften Blau) ---
                 - obj:
                     id: card_weather
-                    x: 10
-                    y: 40
-                    width: 220
-                    height: 190
+                    x: 8
+                    y: 4
+                    width: 228
+                    height: 130
                     styles: style_card
                     pad_all: 4
                     scrollable: false
@@ -866,106 +866,73 @@ lvgl:
                           text_color: 0x38BDF8
                           align: top_left
                           x: 4
-                          y: 4
+                          y: 2
 
-                      # --- SEKTION 1: INDOOR (2 Spalten) ---
+                      # --- SEKTION 1: INDOOR ---
                       - label:
                           text: "Indoor:"
                           text_font: font_bar
-                          text_color: 0x64748B
+                          text_color: 0x38BDF8
                           align: top_left
                           x: 4
-                          y: 28
+                          y: 22
                       - label:
                           id: lbl_in_temp_val
                           text: "Temp: --.- °C"
                           text_font: font_bar
-                          text_color: 0x64748B
+                          text_color: 0x38BDF8
                           align: top_left
                           x: 4
-                          y: 44
+                          y: 38
                       - label:
                           id: lbl_in_dew_val
                           text: "Dew: --.- °C"
                           text_font: font_bar
-                          text_color: 0x64748B
+                          text_color: 0x38BDF8
                           align: top_left
-                          x: 110
-                          y: 44
+                          x: 115
+                          y: 38
                       - label:
                           id: lbl_in_hum_val
                           text: "Hum: -- %"
                           text_font: font_bar
-                          text_color: 0x64748B
+                          text_color: 0x38BDF8
                           align: top_left
                           x: 4
-                          y: 60
+                          y: 54
 
                       # Trennlinie
                       - obj:
                           x: 4
-                          y: 78
-                          width: 210
+                          y: 70
+                          width: 218
                           height: 1
                           styles: style_card
 
-                      # --- SEKTION 2: OUTDOOR CURRENT ---
+                      # --- SEKTION 2: OUTDOOR ---
                       - label:
                           text: "Outdoor:"
                           text_font: font_bar
-                          text_color: 0x64748B
+                          text_color: 0x38BDF8
                           align: top_left
                           x: 4
-                          y: 84
+                          y: 76
                       - label:
                           id: lbl_out_temp_val
                           text: "Temp: --.- °C"
                           text_font: font_bar
-                          text_color: 0x64748B
+                          text_color: 0x38BDF8
                           align: top_left
                           x: 4
-                          y: 100
+                          y: 92
                       - label:
                           id: lbl_out_wind_val
                           text: "Wind: -- km/h"
                           text_font: font_bar
-                          text_color: 0x64748B
+                          text_color: 0x38BDF8
                           align: top_left
-                          x: 110
-                          y: 100
-
-                      # Trennlinie
-                      - obj:
-                          x: 4
-                          y: 118
-                          width: 210
-                          height: 1
-                          styles: style_card
-
-                      # --- SEKTION 3: FORECAST (Hourly & Daily) ---
-                      - label:
-                          text: "Forecast:"
-                          text_font: font_bar
-                          text_color: 0x64748B
-                          align: top_left
-                          x: 4
-                          y: 124
-                      - label:
-                          id: lbl_fc_hourly_val
-                          text: "Next: --.- °C"
-                          text_font: font_bar
-                          text_color: 0x64748B
-                          align: top_left
-                          x: 4
-                          y: 140
-                      - label:
-                          id: lbl_fc_daily_val
-                          text: "Tom: -- / -- °C"
-                          text_font: font_bar
-                          text_color: 0x64748B
-                          align: top_left
-                          x: 4
-                          y: 156
+                          x: 115
+                          y: 92
                                 
                 # --- 2. RIGHT CARD: Climate Control (228x176) ---
                 - obj:
