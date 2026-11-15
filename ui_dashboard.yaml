@@ -86,7 +86,7 @@ font:
       - "\uF058F" # Water pump
       - "\uE798" # drop
       - "\uf3e3" #lightbulb (2)
-      - "\uf0cf" smart light
+      - "\uf0cf" #smart light
 
   - file: "gfonts://Material+Symbols+Outlined"
     id: font_icons_hero
