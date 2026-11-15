@@ -1437,6 +1437,7 @@ lvgl:
                         - lvgl.widget.update:
                             id: screen_climate_detail
                             hidden: true
+                            
           # ==========================================
           # POWER SUB-SCREEN (y: 44, unter Statusbalken)
           # ==========================================
