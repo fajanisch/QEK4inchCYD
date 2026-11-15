@@ -53,6 +53,7 @@ font:
       - "\uE56C"
       - "\uF543"
       - "\uF1D4"
+      - "\uE94D"  # Luftdruck (compress) 
 
   - file: "gfonts://Material+Symbols+Outlined"
     id: font_icons_sub
