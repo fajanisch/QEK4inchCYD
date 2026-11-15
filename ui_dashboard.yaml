@@ -869,7 +869,7 @@ lvgl:
                       # Titel
                       - label:
                           id: lbl_weather_title
-                          text: "Climate & Weather"
+                          text: "Weather"
                           text_font: font_sub_title
                           text_color: 0x38BDF8
                           align: top_left
