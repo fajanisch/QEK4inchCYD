@@ -444,7 +444,7 @@ lvgl:
                       hidden: false
                   - script.execute: power_detail_timeout
               widgets:
-                # --- ZEILE 1: HEADER ---
+                # --- HEADER ---
                 - label:
                     id: icon_climate_card
                     text: "\uF076"
@@ -461,42 +461,7 @@ lvgl:
                     x: 28
                     y: 2
 
-                # --- ZEILE 2: LUFTFEUCHTE & TAUPUNKT (Oben rechts) ---
-                - label:
-                    id: lbl_climate_hum
-                    text: "--%"
-                    text_font: font_sub
-                    styles: style_txt_normal
-                    align: top_right
-                    x: -24
-                    y: 2
-                - label:
-                    id: icon_climate_hum
-                    text: "\uE798"
-                    text_font: font_icons
-                    styles: style_icon_normal
-                    align: top_right
-                    x: -2
-                    y: 0
-
-                - label:
-                    id: lbl_climate_dew
-                    text: "Dew: --.-°C"
-                    text_font: font_sub
-                    styles: style_txt_normal
-                    align: top_right
-                    x: -24
-                    y: 18
-                - label:
-                    id: icon_climate_dew
-                    text: "\uF879"
-                    text_font: font_icons
-                    styles: style_icon_inactive
-                    align: top_right
-                    x: -2
-                    y: 15
-
-                # --- ZEILE 3: AKTUELLE TEMPERATUR (Links, groß) ---
+                # --- LINKS: HERO-TEMPERATUR & ZIELTEMPERATUR ---
                 - label:
                     id: lbl_climate_temp
                     text: "--.-°C"
@@ -506,7 +471,6 @@ lvgl:
                     x: 4
                     y: 20
 
-                # --- ZEILE 4: ZIELTEMPERATUR & MODUS-ICON (Darunter) ---
                 - label:
                     id: lbl_climate_target
                     text: "Target: --.-°C"
@@ -516,6 +480,41 @@ lvgl:
                     x: 4
                     y: 62
 
+                # --- RECHTS DANEBEN: FEUCHTE, TAUPUNKT & MODUS-ICON ---
+                - label:
+                    id: lbl_climate_hum
+                    text: "--%"
+                    text_font: font_sub
+                    styles: style_txt_normal
+                    align: top_right
+                    x: -24
+                    y: 20
+                - label:
+                    id: icon_climate_hum
+                    text: "\uE798"
+                    text_font: font_icons
+                    styles: style_icon_normal
+                    align: top_right
+                    x: -2
+                    y: 18
+
+                - label:
+                    id: lbl_climate_dew
+                    text: "Dew: --.-°C"
+                    text_font: font_sub
+                    styles: style_txt_normal
+                    align: top_right
+                    x: -24
+                    y: 40
+                - label:
+                    id: icon_climate_dew
+                    text: "\uF879"
+                    text_font: font_icons
+                    styles: style_icon_inactive
+                    align: top_right
+                    x: -2
+                    y: 38
+
                 - label:
                     id: icon_climate_mode
                     text: "\uE8AC"
@@ -523,9 +522,9 @@ lvgl:
                     styles: style_icon_normal
                     align: top_right
                     x: -2
-                    y: 58
+                    y: 60
 
-                # --- ZEILE 5: WETTER-FORECAST / UNTERE INFOS (Unten) ---
+                # --- UNTEN DRUNTER: WEATHER FORECAST / INFOS ---
                 - label:
                     id: lbl_climate_wx
                     text: "Out: --° (--°/--°) --%"
@@ -542,6 +541,7 @@ lvgl:
                     align: bottom_right
                     x: -2
                     y: 0
+                    
           - obj:
               id: screen_power_detail
               x: 0
