@@ -349,6 +349,12 @@ lvgl:
               width: 228
               height: 130
               styles: style_card
+              clickable: true
+              on_click:
+                - lvgl.widget.update:
+                    id: screen_battery_detail
+                    hidden: false
+                - script.execute: power_detail_timeout
               widgets:
                 - label:
                     id: icon_bat_card
