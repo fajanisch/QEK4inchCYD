@@ -1437,7 +1437,7 @@ lvgl:
                         - lvgl.widget.update:
                             id: screen_climate_detail
                             hidden: true
-                            
+
           # ==========================================
           # POWER SUB-SCREEN (y: 44, unter Statusbalken)
           # ==========================================
@@ -1508,31 +1508,29 @@ lvgl:
                           text_color: 0x64748B
                           align: center
 
-                # --- 3. BACK BUTTON (Rechte Seite Unten, 228x84) ---
+                # 6. BACK BUTTON (Reihe 3, rechts neben Main)
                 - obj:
-                    id: btn_sub_power_back
+                    id: btn_sub_back
                     x: 244
                     y: 184
                     width: 228
-                    height: 84
+                    height: 84       
                     styles: style_card
                     border_color: 0x38BDF8
-                    scrollable: false
-                    scrollbar_mode: "off"
                     clickable: true
                     widgets:
                       - label:
-                          id: icon_sub_power_back
+                          id: icon_sub_back
                           text: "\uE166"
                           text_font: font_icons_sub
-                          text_color: 0x38BDF8
+                          text_color: 0x38BDF8 
                           align: center
                           x: -25
                       - label:
-                          id: lbl_sub_power_back
+                          id: lbl_sub_back
                           text: "Back"
                           text_font: font_sub_title
-                          text_color: 0x38BDF8
+                          text_color: 0x38BDF8  
                           align: center
                           x: 21
                     on_click:
