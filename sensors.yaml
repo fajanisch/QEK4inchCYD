@@ -537,16 +537,16 @@ sensor:
       then:
         - lambda: |-
             char buf[32];
-            // 1. Für den Unterbildschirm (falls dort "Target:" gewünscht ist, oder auch ohne):
-            sprintf(buf, "Target: %.1f °C", x);
+            sprintf(buf, "%.1f°C", x);
+            
+            // 1. Für den Subscreen (Einstelltaste)
             lv_label_set_text(id(lbl_target_value), buf);
             lv_obj_invalidate(id(lbl_target_value));
 
-            // 2. Für den Hauptbildschirm (NUR noch der reine Wert):
-            sprintf(buf, "%.1f°C", x);
+            // 2. Für den Hauptbildschirm (Kachel)
             lv_label_set_text(id(lbl_climate_target), buf);
             lv_obj_invalidate(id(lbl_climate_target));
-            
+                      
   # --- 3. WEATHER & FORECAST SENSORS ---
   - platform: homeassistant
     entity_id: weather.forecast_home
