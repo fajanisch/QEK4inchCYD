@@ -435,14 +435,14 @@ lvgl:
                       - label:
                           id: lbl_light_1a
                           text: "\uF0EB"
-                          text_font: font_icons_large
+                          text_font: font_icons_sub
                           styles: style_icon_normal
                           align: left_mid
                           x: 14
                       - label:
                           id: lbl_light_1b
                           text: "\uF0290"
-                          text_font: font_icons_large
+                          text_font: font_icons_sub
                           styles: style_icon_normal
                           align: right_mid
                           x: -14
@@ -460,14 +460,14 @@ lvgl:
                       - label:
                           id: lbl_light_2a
                           text: "\uF0EB"
-                          text_font: font_icons_large
+                          text_font: font_icons_sub
                           styles: style_icon_normal
                           align: left_mid
                           x: 14
                       - label:
                           id: lbl_light_2b
                           text: "\uE56C"
-                          text_font: font_icons_large
+                          text_font: font_icons_sub
                           styles: style_icon_normal
                           align: right_mid
                           x: -14
@@ -485,7 +485,7 @@ lvgl:
                       - label:
                           id: lbl_light_3
                           text: "\uE63E"
-                          text_font: font_icons_large
+                          text_font: font_icons_sub
                           styles: style_icon_normal
                           align: center
 
@@ -502,7 +502,7 @@ lvgl:
                       - label:
                           id: lbl_light_4
                           text: "\uF058F"
-                          text_font: font_icons_large
+                          text_font: font_icons_sub
                           styles: style_icon_normal
                           align: center
 
