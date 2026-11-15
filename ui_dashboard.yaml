@@ -1461,9 +1461,10 @@ lvgl:
               scrollable: false
               scrollbar_mode: "off"
               widgets:
-                # --- 1. LINKER BEREICH: Detail-Hauptkachel (228x268) ---
+                # --- 1. LINKER BEREICH: Control-Kachel (228x268) ---
+                # Beinhaltet Presets (20-80%, 20-50%, 80-100%, 100%) & Min/Max SoC Regler
                 - obj:
-                    id: card_battery_detail_main
+                    id: card_battery_control
                     x: 8
                     y: 0
                     width: 228
@@ -1475,23 +1476,23 @@ lvgl:
                     clickable: false
                     widgets:
                       - label:
-                          id: lbl_battery_detail_title
-                          text: "Battery Details"
+                          text: "Battery Control"
                           text_font: font_sub_title
                           text_color: 0x38BDF8
                           align: top_left
                           x: 4
                           y: 2
                       - label:
-                          id: lbl_battery_detail_placeholder
-                          text: "Anker Solix Stats"
+                          id: lbl_battery_control_placeholder
+                          text: "Presets & Min/Max SoC"
                           text_font: font_card_header
                           text_color: 0x64748B
                           align: center
 
-                # --- 2. RECHTE SEITE OBEN: Steuerungs-Kachel (228x176) ---
+                # --- 2. RECHTE SEITE OBEN: Details-Kachel (228x176) ---
+                # Beinhaltet SoC, Time to Full/Empty sowie AC/Solar/12V/USB/Total Werte
                 - obj:
-                    id: card_battery_control
+                    id: card_battery_details
                     x: 244
                     y: 0
                     width: 228
@@ -1501,15 +1502,15 @@ lvgl:
                     scrollbar_mode: "off"
                     widgets:
                       - label:
-                          text: "Battery Control"
+                          text: "Battery Details"
                           text_font: font_sub_title
                           text_color: 0x38BDF8
                           align: top_left
                           x: 2
                           y: 2
                       - label:
-                          id: lbl_battery_control_placeholder
-                          text: "Schalter / Toggles"
+                          id: lbl_battery_details_placeholder
+                          text: "SoC, Restzeit & Kanäle"
                           text_font: font_card_header
                           text_color: 0x64748B
                           align: center
@@ -1547,7 +1548,6 @@ lvgl:
                         - lvgl.widget.update:
                             id: screen_battery_detail
                             hidden: true
-
 
 
 
