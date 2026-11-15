@@ -457,14 +457,24 @@ lvgl:
                     align: top_left
                     x: 24
                     y: 2
+                # --- LINKE SEITE: Ist-Temperatur & Zieltemperatur ---
                 - label:
                     id: lbl_climate_temp
                     text: "--.-°C"
                     text_font: font_val_hero
                     styles: style_val_blue
-                    align: left_mid
+                    align: top_left
                     x: 4
-                    y: 10
+                    y: 20
+                - label:
+                    id: lbl_climate_target
+                    text: "Target: --.-°C"
+                    text_font: font_sub
+                    styles: style_txt_normal
+                    align: top_left
+                    x: 4
+                    y: 62
+                # --- RECHTE SEITE: 3 Zeilen (Luftfeuchte, Taupunkt, Modus-Icon) ---
                 - label:
                     id: lbl_climate_hum
                     text: "Hum: --%"
@@ -472,7 +482,7 @@ lvgl:
                     styles: style_txt_normal
                     align: top_right
                     x: -24
-                    y: 34
+                    y: 20
                 - label:
                     id: icon_climate_hum
                     text: "\uE798"
@@ -480,15 +490,15 @@ lvgl:
                     styles: style_icon_normal
                     align: top_right
                     x: -2
-                    y: 31
+                    y: 18
                 - label:
                     id: lbl_climate_dew
-                    text: "Dew: --.-°C"
+                    text: "--.-°C"
                     text_font: font_sub
                     styles: style_txt_normal
                     align: top_right
                     x: -24
-                    y: 58
+                    y: 38
                 - label:
                     id: icon_climate_dew
                     text: "\uF879"
@@ -496,9 +506,7 @@ lvgl:
                     styles: style_icon_inactive
                     align: top_right
                     x: -2
-                    y: 55
-
-# Zeile 3: Modus-Icon (Schneeflocke / Feuer / Aus)
+                    y: 36
                 - label:
                     id: icon_climate_mode
                     text: "\uE8AC"
@@ -507,7 +515,7 @@ lvgl:
                     align: top_right
                     x: -2
                     y: 56
-
+                # --- UNTERE ZEILE: Wetter-Forecast (unverändert) ---
                 - label:
                     id: lbl_climate_wx
                     text: "Out: --° (--°/--°) --%"
@@ -524,7 +532,6 @@ lvgl:
                     align: bottom_right
                     x: -2
                     y: 0
-
                     
           - obj:
               id: screen_power_detail
