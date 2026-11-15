@@ -522,9 +522,16 @@ sensor:
     on_value:
       then:
         - lambda: |-
-            char buf[16];
+            char buf[32];
+            // 1. Aktualisiert das Label im Untermenü (Ziel-Auswahl)
             sprintf(buf, "%.1f °C", x);
             lv_label_set_text(id(lbl_target_value), buf);
+            lv_obj_invalidate(id(lbl_target_value));
+
+            // 2. NEU: Aktualisiert das Label auf der Hauptkachel (mit "Target: "-Präfix)
+            sprintf(buf, "Target: %.1f°C", x);
+            lv_label_set_text(id(lbl_climate_target), buf);
+            lv_obj_invalidate(id(lbl_climate_target));
 
   # --- 3. WEATHER & FORECAST SENSORS ---
   - platform: homeassistant
