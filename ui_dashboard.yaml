@@ -410,30 +410,72 @@ lvgl:
               width: 228
               height: 130
               styles: style_card
-              clickable: true
+              clickable: false
               widgets:
-                - label:
-                    id: icon_light
-                    text: "\uE63E"
-                    text_font: font_icons_sub
-                    text_color: 0x94A3B8
-                    align: center
-                    y: -15
-                    clickable: false
-                - label:
-                    id: lbl_light
-                    text: "Light"
-                    text_font: font_sub_title
-                    text_color: 0x94A3B8
-                    align: center
-                    y: 25
-                    clickable: false
-              on_click:
-                - homeassistant.service:
-                    service: script.turn_on
-                    data:
-                      entity_id: script.qek_b1
+                # --- Button 1 (Oben Links) ---
+                - button:
+                    id: btn_light_1
+                    width: 110
+                    height: 59
+                    align: top_left
+                    x: 4
+                    y: 4
+                    styles: style_btn
+                    widgets:
+                      - label:
+                          text: "\uF0EB"
+                          text_font: font_icons
+                          styles: style_icon_normal
+                          align: center
+                
+                # --- Button 2 (Oben Rechts) ---
+                - button:
+                    id: btn_light_2
+                    width: 110
+                    height: 59
+                    align: top_left
+                    x: 114
+                    y: 4
+                    styles: style_btn
+                    widgets:
+                      - label:
+                          text: "\uF0EB"
+                          text_font: font_icons
+                          styles: style_icon_normal
+                          align: center
 
+                # --- Button 3 (Unten Links) ---
+                - button:
+                    id: btn_light_3
+                    width: 110
+                    height: 59
+                    align: top_left
+                    x: 4
+                    y: 67
+                    styles: style_btn
+                    widgets:
+                      - label:
+                          text: "\uF0EB"
+                          text_font: font_icons
+                          styles: style_icon_normal
+                          align: center
+
+                # --- Button 4 (Unten Rechts) ---
+                - button:
+                    id: btn_light_4
+                    width: 110
+                    height: 59
+                    align: top_left
+                    x: 114
+                    y: 67
+                    styles: style_btn
+                    widgets:
+                      - label:
+                          text: "\uF0EB"
+                          text_font: font_icons
+                          styles: style_icon_normal
+                          align: center
+                          
           - obj:
               id: card_climate
               x: 244
