@@ -84,6 +84,8 @@ font:
       - "\U000F0291" # <-- HIER: Outline Kühlschrank (fridge-outline)
       - "\uE63E"  # LED / WLED
       - "\uF058F" # Water pump
+      - "\uE798" # drop
+      - "\uf3e3" #lightbulb (2)
 
   - file: "gfonts://Material+Symbols+Outlined"
     id: font_icons_hero
