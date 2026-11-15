@@ -845,7 +845,7 @@ lvgl:
               scrollable: false
               scrollbar_mode: "off"
               widgets:
-                # --- 1. WEATHER & CLIMATE CARD (LEFT - Kompakt oben, Platz unten) ---
+                # --- 1. WEATHER & CLIMATE CARD (LEFT - Ohne Text-Labels, nur Icons + Werte) ---
                 - obj:
                     id: card_weather
                     x: 8
@@ -869,7 +869,7 @@ lvgl:
                           y: 2
 
                       # ==========================================
-                      # 1. INDOOR (Ultra-Kompakt in einer Zeile)
+                      # 1. INDOOR (Temp, Hum, Dew - Nur Icons + Werte)
                       # ==========================================
                       - label:
                           id: icon_in_temp
@@ -894,7 +894,7 @@ lvgl:
                           text_font: font_icons
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 78
+                          x: 82
                           y: 22
                       - label:
                           id: lbl_in_hum_val
@@ -902,7 +902,7 @@ lvgl:
                           text_font: font_bar
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 96
+                          x: 100
                           y: 22
 
                       - label:
@@ -911,7 +911,7 @@ lvgl:
                           text_font: font_icons
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 148
+                          x: 152
                           y: 22
                       - label:
                           id: lbl_in_dew_val
@@ -919,20 +919,21 @@ lvgl:
                           text_font: font_bar
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 166
+                          x: 170
                           y: 22
 
                       # Trennlinie 1
                       - obj:
                           x: 4
-                          y: 40
+                          y: 42
                           width: 218
                           height: 1
                           styles: style_card
 
                       # ==========================================
-                      # 2. OUTDOOR (2x2 Grid + Wetter-Condition-Icon rechts)
+                      # 2. OUTDOOR (2x2 Grid + Wetter-Icon rechts)
                       # ==========================================
+                      # Zeile 1 Outdoor: Temperatur & Luftfeuchtigkeit
                       - label:
                           id: icon_out_temp
                           text: "\uF076"
@@ -940,7 +941,7 @@ lvgl:
                           text_color: 0x38BDF8
                           align: top_left
                           x: 4
-                          y: 46
+                          y: 50
                       - label:
                           id: lbl_out_temp_val
                           text: "--.-°C"
@@ -948,7 +949,7 @@ lvgl:
                           text_color: 0x38BDF8
                           align: top_left
                           x: 22
-                          y: 46
+                          y: 50
 
                       - label:
                           id: icon_out_hum
@@ -956,17 +957,18 @@ lvgl:
                           text_font: font_icons
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 78
-                          y: 46
+                          x: 115
+                          y: 50
                       - label:
                           id: lbl_out_hum_val
                           text: "--%"
                           text_font: font_bar
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 96
-                          y: 46
+                          x: 133
+                          y: 50
 
+                      # Zeile 2 Outdoor: Wind & Luftdruck
                       - label:
                           id: icon_out_wind
                           text: "\uEFD8"
@@ -974,7 +976,7 @@ lvgl:
                           text_color: 0x38BDF8
                           align: top_left
                           x: 4
-                          y: 68
+                          y: 72
                       - label:
                           id: lbl_out_wind_val
                           text: "-- km/h"
@@ -982,7 +984,7 @@ lvgl:
                           text_color: 0x38BDF8
                           align: top_left
                           x: 22
-                          y: 68
+                          y: 72
 
                       - label:
                           id: icon_out_press
@@ -990,16 +992,16 @@ lvgl:
                           text_font: font_icons
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 78
-                          y: 68
+                          x: 115
+                          y: 72
                       - label:
                           id: lbl_out_press_val
                           text: "---- hPa"
                           text_font: font_bar
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 96
-                          y: 68
+                          x: 133
+                          y: 72
 
                       # Wetter Condition Icon (rechts neben den Outdoor-Werten)
                       - label:
@@ -1009,18 +1011,18 @@ lvgl:
                           text_color: 0x38BDF8
                           align: top_right
                           x: -8
-                          y: 46
+                          y: 56
 
-                      # Trennlinie 2
+                      # Trennlinie 2 (Abgrenzung zum Forecast-Bereich)
                       - obj:
                           x: 4
-                          y: 90
+                          y: 96
                           width: 218
                           height: 1
                           styles: style_card
 
                       # ==========================================
-                      # 3. FORECAST BEREICH (Platzhalter)
+                      # 3. FORECAST BEREICH (Platzhalter unten)
                       # ==========================================
                       - label:
                           id: lbl_forecast_placeholder
@@ -1029,7 +1031,7 @@ lvgl:
                           text_color: 0x64748B
                           align: top_left
                           x: 4
-                          y: 96
+                          y: 104
                                 
                 # --- 2. RIGHT CARD: Climate Control (228x176) ---
                 - obj:
