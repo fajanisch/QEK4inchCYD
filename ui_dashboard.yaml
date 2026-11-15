@@ -845,30 +845,7 @@ lvgl:
               scrollable: false
               scrollbar_mode: "off"
               widgets:
-                # --- 1. WEATHER & CLIMATE CARD (LEFT - Kompakt oben, Riesen-Platz unten) ---
-                - obj:
-                    id: card_weather
-                    x: 8
-                    y: 0
-                    width: 228
-                    height: 268
-                    styles: style_card
-                    pad_all: 4
-                    scrollable: false
-                    scrollbar_mode: "off"
-                    clickable: false
-                    widgets:
-                      # Titel
-                      - label:
-                          id: lbl_weather_title
-                          text: "Climate & Weather"
-                          text_font: font_sub_title
-                          text_color: 0x38BDF8
-                          align: top_left
-                          x: 4
-                          y: 2
-
-# --- 1. WEATHER & CLIMATE CARD (LEFT - Kompakt oben, Platz für Forecast unten) ---
+                # --- 1. WEATHER & CLIMATE CARD (LEFT - Kompakt oben, Platz unten) ---
                 - obj:
                     id: card_weather
                     x: 8
@@ -956,7 +933,6 @@ lvgl:
                       # ==========================================
                       # 2. OUTDOOR (2x2 Grid + Wetter-Condition-Icon rechts)
                       # ==========================================
-                      # Zeile 1 Outdoor: Temperatur & Luftfeuchtigkeit
                       - label:
                           id: icon_out_temp
                           text: "\uF076"
@@ -991,7 +967,6 @@ lvgl:
                           x: 96
                           y: 46
 
-                      # Zeile 2 Outdoor: Wind & Luftdruck
                       - label:
                           id: icon_out_wind
                           text: "\uEFD8"
@@ -1036,7 +1011,7 @@ lvgl:
                           x: -8
                           y: 46
 
-                      # Trennlinie 2 (Abgrenzung zum freien Forecast-Bereich)
+                      # Trennlinie 2
                       - obj:
                           x: 4
                           y: 90
@@ -1045,7 +1020,7 @@ lvgl:
                           styles: style_card
 
                       # ==========================================
-                      # 3. FORECAST BEREICH (Platzhalter - frei für deine Idee)
+                      # 3. FORECAST BEREICH (Platzhalter)
                       # ==========================================
                       - label:
                           id: lbl_forecast_placeholder
@@ -1186,31 +1161,31 @@ lvgl:
 
                       # Zieltemperatur Anzeige & Umschalter
                       - obj:
-                              id: btn_target_toggle
-                              x: 56
-                              y: 96
-                              width: 98
-                              height: 48
-                              styles: style_card
-                              pad_all: 0
-                              scrollable: false
-                              scrollbar_mode: "off"
-                              clickable: true
-                              widgets:
-                                - label:
-                                    id: lbl_target_value
-                                    text: "21.0 °C"
-                                    text_font: font_sub_title
-                                    text_color: 0x38BDF8
-                                    align: center
-                              on_click:
-                                then:
-                                  - homeassistant.service:
-                                      service: input_number.set_value
-                                      data:
-                                        entity_id: input_number.qek_target_temp
-                                        value: !lambda "if (isnan(id(ha_climate_target_temp).state)) return 21.0; if (id(ha_climate_target_temp).state >= 18.0) return 15.0; return 21.0;"
-                                  - script.execute: power_detail_timeout
+                          id: btn_target_toggle
+                          x: 56
+                          y: 96
+                          width: 98
+                          height: 48
+                          styles: style_card
+                          pad_all: 0
+                          scrollable: false
+                          scrollbar_mode: "off"
+                          clickable: true
+                          widgets:
+                            - label:
+                                id: lbl_target_value
+                                text: "21.0 °C"
+                                text_font: font_sub_title
+                                text_color: 0x38BDF8
+                                align: center
+                          on_click:
+                            then:
+                              - homeassistant.service:
+                                  service: input_number.set_value
+                                  data:
+                                    entity_id: input_number.qek_target_temp
+                                    value: !lambda "if (isnan(id(ha_climate_target_temp).state)) return 21.0; if (id(ha_climate_target_temp).state >= 18.0) return 15.0; return 21.0;"
+                              - script.execute: power_detail_timeout
                               
                       # Plus-Button (+)
                       - obj:
