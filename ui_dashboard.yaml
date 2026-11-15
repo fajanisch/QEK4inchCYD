@@ -939,7 +939,7 @@ lvgl:
                           styles: style_card
 
                       # ==========================================
-                      # 2. OUTDOOR (2x2 Grid + Wetter-Icon rechts)
+                      # 2. OUTDOOR (2x2 Grid + Wetter-Icon rechts - Entzerrt)
                       # ==========================================
                       # Zeile 1 Outdoor: Temperatur & Luftfeuchtigkeit
                       - label:
@@ -965,7 +965,7 @@ lvgl:
                           text_font: font_icons
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 105
+                          x: 112
                           y: 50
                       - label:
                           id: lbl_out_hum_val
@@ -973,7 +973,7 @@ lvgl:
                           text_font: font_bar
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 123
+                          x: 130
                           y: 50
 
                       # Zeile 2 Outdoor: Wind & Luftdruck
@@ -1000,7 +1000,7 @@ lvgl:
                           text_font: font_icons
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 105
+                          x: 112
                           y: 72
                       - label:
                           id: lbl_out_press_val
@@ -1008,10 +1008,10 @@ lvgl:
                           text_font: font_bar
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 123
+                          x: 130
                           y: 72
 
-                      # Wetter Condition Icon (Groß, weiter links positioniert gegen Überlappung)
+                      # Wetter Condition Icon (Groß)
                       - label:
                           id: icon_climate_wx_sub
                           text: "\uE2BD"
@@ -1030,19 +1030,7 @@ lvgl:
                           styles: style_card
 
                       # ==========================================
-                      # 3. FORECAST BEREICH (Platzhalter unten)
-                      # ==========================================
-                      - label:
-                          id: lbl_forecast_placeholder
-                          text: "Forecast Platzhalter"
-                          text_font: font_card_header
-                          text_color: 0x64748B
-                          align: top_left
-                          x: 4
-                          y: 104
-
-                      # ==========================================
-                      # 3. FORECAST BEREICH (Platzhalter unten)
+                      # 3. FORECAST BEREICH (Platzhalter unten - nur 1x)
                       # ==========================================
                       - label:
                           id: lbl_forecast_placeholder
