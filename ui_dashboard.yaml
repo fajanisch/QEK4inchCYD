@@ -54,7 +54,6 @@ font:
       - "\uF543"
       - "\uF1D4"
       - "\uE94D"  # Luftdruck (compress) 
-      - "\uEB3B" # ac_unit / Schneeflocke (Cool)
       - "\uEF55" # local_fire_department / Flamme (Heat)
       - "\uF8D8" # toggle_off (Alternative)
       - "\uF8D9" # toggle_on (Alternative)
