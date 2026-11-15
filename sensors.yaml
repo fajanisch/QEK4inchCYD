@@ -604,3 +604,32 @@ sensor:
     entity_id: sensor.qek_forecast_daily_low
     id: ha_fc_daily_low
     accuracy_decimals: 1
+
+  # --- ERWEITERTE OUTDOOR- & FORECAST-DATEN ---
+  - platform: homeassistant
+    entity_id: weather.forecast_home
+    id: ext_weather_pressure
+    attribute: pressure
+    accuracy_decimals: 0
+    on_value:
+      then:
+        - lambda: |-
+            if (!isnan(x)) {
+              char buf[16];
+              sprintf(buf, "Press: %d hPa", (int)x);
+              lv_label_set_text(id(lbl_out_press_val), buf);
+            }
+
+  - platform: homeassistant
+    entity_id: weather.forecast_home
+    id: ext_weather_humidity
+    attribute: humidity
+    accuracy_decimals: 0
+    on_value:
+      then:
+        - lambda: |-
+            if (!isnan(x)) {
+              char buf[16];
+              sprintf(buf, "Hum: %d %%", (int)x);
+              lv_label_set_text(id(lbl_out_hum_val), buf);
+            }
