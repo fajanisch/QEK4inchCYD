@@ -419,6 +419,8 @@ lvgl:
               height: 130
               bg_color: 0x0F172A
               bg_opa: COVER
+              border_width: 0
+              shadow_width: 0
               clickable: false
               scrollable: false
               pad_all: 0
