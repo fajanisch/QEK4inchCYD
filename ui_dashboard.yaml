@@ -857,7 +857,7 @@ lvgl:
                     scrollbar_mode: "off"
                     widgets:
                       - label:
-                          text: "Room & Weather"
+                          text: "Weather"
                           text_font: font_sub_title
                           text_color: 0x38BDF8
                           align: top_left
