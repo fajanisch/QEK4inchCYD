@@ -429,7 +429,7 @@ lvgl:
                     data:
                       entity_id: script.qek_b1
 
-          - obj:
+                    - obj:
               id: card_climate
               x: 244
               y: 182
@@ -444,52 +444,35 @@ lvgl:
                       hidden: false
                   - script.execute: power_detail_timeout
               widgets:
-                # --- HEADER ---
                 - label:
                     id: icon_climate_card
                     text: "\uF076"
                     text_font: font_icons
                     styles: style_icon_normal
                     align: top_left
-                    x: 4
-                    y: 2
                 - label:
                     text: "CLIMATE"
                     text_font: font_card_header
                     styles: style_txt_normal
                     align: top_left
-                    x: 28
+                    x: 24
                     y: 2
-
-                # --- LINKE SEITE: Hero-Temperatur & Zieltemperatur ---
                 - label:
                     id: lbl_climate_temp
                     text: "--.-°C"
                     text_font: font_val_hero
                     styles: style_val_blue
-                    align: top_left
+                    align: left_mid
                     x: 4
-                    y: 22
-
-                - label:
-                    id: lbl_climate_target
-                    text: "Target: --.-°C"
-                    text_font: font_sub
-                    styles: style_txt_normal
-                    align: top_left
-                    x: 4
-                    y: 62
-
-                # --- RECHTE SEITE: Die 3 Zeilen untereinander ---
-                # Zeile 1: Luftfeuchtigkeit
+                    y: 10
                 - label:
                     id: lbl_climate_hum
-                    text: "--%"
+                    text: "Hum: --%"
                     text_font: font_sub
                     styles: style_txt_normal
                     align: top_right
                     x: -24
-                    y: 16
+                    y: 34
                 - label:
                     id: icon_climate_hum
                     text: "\uE798"
@@ -497,17 +480,15 @@ lvgl:
                     styles: style_icon_normal
                     align: top_right
                     x: -2
-                    y: 14
-
-                # Zeile 2: Taupunkt
+                    y: 31
                 - label:
                     id: lbl_climate_dew
-                    text: "--.-°C"
+                    text: "Dew: --.-°C"
                     text_font: font_sub
                     styles: style_txt_normal
                     align: top_right
                     x: -24
-                    y: 36
+                    y: 58
                 - label:
                     id: icon_climate_dew
                     text: "\uF879"
@@ -515,19 +496,7 @@ lvgl:
                     styles: style_icon_inactive
                     align: top_right
                     x: -2
-                    y: 34
-
-                # Zeile 3: Modus-Icon (Schneeflocke / Feuer / Aus)
-                - label:
-                    id: icon_climate_mode
-                    text: "\uE8AC"
-                    text_font: font_icons
-                    styles: style_icon_normal
-                    align: top_right
-                    x: -2
-                    y: 56
-
-                # --- UNTERE ZEILE: Wetter-Forecast / Status ---
+                    y: 55
                 - label:
                     id: lbl_climate_wx
                     text: "Out: --° (--°/--°) --%"
@@ -544,6 +513,7 @@ lvgl:
                     align: bottom_right
                     x: -2
                     y: 0
+
                     
           - obj:
               id: screen_power_detail
