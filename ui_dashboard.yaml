@@ -57,7 +57,7 @@ font:
       - "\uEF55" # local_fire_department / Flamme (Heat)
       - "\uF8D8" # toggle_off (Alternative)
       - "\uF8D9" # toggle_on (Alternative)
-      - "\uE8AC"; #// Off / Power
+      - "\uE8AC" #// Off / Power
 
 
   - file: "gfonts://Material+Symbols+Outlined"
