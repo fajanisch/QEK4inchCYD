@@ -845,13 +845,13 @@ lvgl:
               scrollable: false
               scrollbar_mode: "off"
               widgets:
-                # --- 1. WEATHER & CLIMATE CARD (LEFT - Volle Höhe 260px) ---
+                # --- 1. WEATHER & CLIMATE CARD (LEFT - Volle Höhe 268px) ---
                 - obj:
                     id: card_weather
                     x: 8
-                    y: 4
+                    y: 0
                     width: 228
-                    height: 260
+                    height: 268
                     styles: style_card
                     pad_all: 4
                     scrollable: false
@@ -861,7 +861,7 @@ lvgl:
                       # Titel
                       - label:
                           id: lbl_weather_title
-                          text: "Weather & Climate"
+                          text: "Weather"
                           text_font: font_sub_title
                           text_color: 0x38BDF8
                           align: top_left
@@ -875,7 +875,7 @@ lvgl:
                           text_color: 0x38BDF8
                           align: top_left
                           x: 4
-                          y: 26
+                          y: 28
                       - label:
                           id: lbl_in_temp_val
                           text: "Temp: --.- °C"
@@ -883,7 +883,7 @@ lvgl:
                           text_color: 0x38BDF8
                           align: top_left
                           x: 4
-                          y: 42
+                          y: 46
                       - label:
                           id: lbl_in_dew_val
                           text: "Dew: --.- °C"
@@ -891,7 +891,7 @@ lvgl:
                           text_color: 0x38BDF8
                           align: top_left
                           x: 115
-                          y: 42
+                          y: 46
                       - label:
                           id: lbl_in_hum_val
                           text: "Hum: -- %"
@@ -899,24 +899,24 @@ lvgl:
                           text_color: 0x38BDF8
                           align: top_left
                           x: 4
-                          y: 58
+                          y: 64
 
                       # Trennlinie 1
                       - obj:
                           x: 4
-                          y: 75
+                          y: 86
                           width: 218
                           height: 1
                           styles: style_card
 
-                      # --- SEKTION 2: OUTDOOR (wie Screenshot) ---
+                      # --- SEKTION 2: OUTDOOR (Mit Icons wie Screenshot) ---
                       - label:
                           text: "Outdoor:"
                           text_font: font_bar
                           text_color: 0x38BDF8
                           align: top_left
                           x: 4
-                          y: 81
+                          y: 92
                       - label:
                           id: lbl_out_temp_val
                           text: "Temp: --.- °C"
@@ -924,15 +924,15 @@ lvgl:
                           text_color: 0x38BDF8
                           align: top_left
                           x: 4
-                          y: 97
+                          y: 110
                       - label:
                           id: lbl_out_press_val
                           text: "Press: ---- hPa"
                           text_font: font_bar
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 115
-                          y: 97
+                          x: 4
+                          y: 128
                       - label:
                           id: lbl_out_hum_val
                           text: "Hum: -- %"
@@ -940,20 +940,20 @@ lvgl:
                           text_color: 0x38BDF8
                           align: top_left
                           x: 4
-                          y: 113
+                          y: 146
                       - label:
                           id: lbl_out_wind_val
                           text: "Wind: -- km/h"
                           text_font: font_bar
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 115
-                          y: 113
+                          x: 4
+                          y: 164
 
                       # Trennlinie 2
                       - obj:
                           x: 4
-                          y: 131
+                          y: 186
                           width: 218
                           height: 1
                           styles: style_card
@@ -965,7 +965,7 @@ lvgl:
                           text_color: 0x38BDF8
                           align: top_left
                           x: 4
-                          y: 137
+                          y: 192
                       - label:
                           id: lbl_fc_hourly_val
                           text: "Next: --.- °C"
@@ -973,7 +973,7 @@ lvgl:
                           text_color: 0x38BDF8
                           align: top_left
                           x: 4
-                          y: 153
+                          y: 210
                       - label:
                           id: lbl_fc_daily_val
                           text: "Tom: -- / -- °C"
@@ -981,7 +981,7 @@ lvgl:
                           text_color: 0x38BDF8
                           align: top_left
                           x: 4
-                          y: 169
+                          y: 228
                                 
                 # --- 2. RIGHT CARD: Climate Control (228x176) ---
                 - obj:
@@ -1113,31 +1113,31 @@ lvgl:
 
                       # Zieltemperatur Anzeige & Umschalter
                       - obj:
-                          id: btn_target_toggle
-                          x: 56
-                          y: 96
-                          width: 98
-                          height: 48
-                          styles: style_card
-                          pad_all: 0
-                          scrollable: false
-                          scrollbar_mode: "off"
-                          clickable: true
-                          widgets:
-                            - label:
-                                id: lbl_target_value
-                                text: "21.0 °C"
-                                text_font: font_sub_title
-                                text_color: 0x38BDF8
-                                align: center
-                          on_click:
-                            then:
-                              - homeassistant.service:
-                                  service: input_number.set_value
-                                  data:
-                                    entity_id: input_number.qek_target_temp
-                                    value: !lambda "if (isnan(id(ha_climate_target_temp).state)) return 21.0; if (id(ha_climate_target_temp).state >= 18.0) return 15.0; return 21.0;"
-                              - script.execute: power_detail_timeout
+                              id: btn_target_toggle
+                              x: 56
+                              y: 96
+                              width: 98
+                              height: 48
+                              styles: style_card
+                              pad_all: 0
+                              scrollable: false
+                              scrollbar_mode: "off"
+                              clickable: true
+                              widgets:
+                                - label:
+                                    id: lbl_target_value
+                                    text: "21.0 °C"
+                                    text_font: font_sub_title
+                                    text_color: 0x38BDF8
+                                    align: center
+                              on_click:
+                                then:
+                                  - homeassistant.service:
+                                      service: input_number.set_value
+                                      data:
+                                        entity_id: input_number.qek_target_temp
+                                        value: !lambda "if (isnan(id(ha_climate_target_temp).state)) return 21.0; if (id(ha_climate_target_temp).state >= 18.0) return 15.0; return 21.0;"
+                                  - script.execute: power_detail_timeout
                               
                       # Plus-Button (+)
                       - obj:
