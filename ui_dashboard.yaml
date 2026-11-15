@@ -420,7 +420,7 @@ lvgl:
                     align: top_left
                     x: 4
                     y: 4
-                    styles: style_btn
+                    styles: style_card
                     widgets:
                       - label:
                           text: "\uF0EB"
@@ -436,7 +436,7 @@ lvgl:
                     align: top_left
                     x: 114
                     y: 4
-                    styles: style_btn
+                    styles: style_card
                     widgets:
                       - label:
                           text: "\uF0EB"
@@ -452,7 +452,7 @@ lvgl:
                     align: top_left
                     x: 4
                     y: 67
-                    styles: style_btn
+                    styles: style_card
                     widgets:
                       - label:
                           text: "\uF0EB"
@@ -468,13 +468,16 @@ lvgl:
                     align: top_left
                     x: 114
                     y: 67
-                    styles: style_btn
+                    styles: style_card
                     widgets:
                       - label:
                           text: "\uF0EB"
                           text_font: font_icons
                           styles: style_icon_normal
                           align: center
+
+#-----CLIMATE CARD
+                          
                           
           - obj:
               id: card_climate
