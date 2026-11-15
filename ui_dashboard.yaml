@@ -457,7 +457,7 @@ lvgl:
                     align: top_left
                     x: 24
                     y: 2
-                # --- LINKE SEITE: Ist-Temperatur & Zieltemperatur ---
+                # --- LINKE SEITE: Hero-Temperatur (Ist-Wert) ---
                 - label:
                     id: lbl_climate_temp
                     text: "--.-°C"
@@ -466,15 +466,8 @@ lvgl:
                     align: top_left
                     x: 4
                     y: 20
-                - label:
-                    id: lbl_climate_target
-                    text: "Target: --.-°C"
-                    text_font: font_sub
-                    styles: style_txt_normal
-                    align: top_left
-                    x: 4
-                    y: 62
-                # --- RECHTE SEITE: 3 Zeilen (Luftfeuchte, Taupunkt, Modus-Icon) ---
+                # --- RECHTE SEITE: 3 Zeilen (Luftfeuchte, Taupunkt, Zieltemperatur) ---
+                # Zeile 1: Luftfeuchtigkeit
                 - label:
                     id: lbl_climate_hum
                     text: "Hum: --%"
@@ -482,7 +475,7 @@ lvgl:
                     styles: style_txt_normal
                     align: top_right
                     x: -24
-                    y: 20
+                    y: 16
                 - label:
                     id: icon_climate_hum
                     text: "\uE798"
@@ -490,7 +483,8 @@ lvgl:
                     styles: style_icon_normal
                     align: top_right
                     x: -2
-                    y: 18
+                    y: 14
+                # Zeile 2: Taupunkt
                 - label:
                     id: lbl_climate_dew
                     text: "--.-°C"
@@ -498,15 +492,24 @@ lvgl:
                     styles: style_txt_normal
                     align: top_right
                     x: -24
-                    y: 38
+                    y: 36
                 - label:
                     id: icon_climate_dew
                     text: "\uF879"
                     text_font: font_icons
-                    styles: style_icon_inactive
+                    styles: style_icon_normal
                     align: top_right
                     x: -2
-                    y: 36
+                    y: 34
+                # Zeile 3: Zieltemperatur (exakt wie Taupunkt ausgerichtet) & Modus-Icon daneben
+                - label:
+                    id: lbl_climate_target
+                    text: "--.-°C"
+                    text_font: font_sub
+                    styles: style_txt_normal
+                    align: top_right
+                    x: -24
+                    y: 56
                 - label:
                     id: icon_climate_mode
                     text: "\uE8AC"
@@ -514,7 +517,7 @@ lvgl:
                     styles: style_icon_normal
                     align: top_right
                     x: -2
-                    y: 56
+                    y: 54
                 # --- UNTERE ZEILE: Wetter-Forecast (unverändert) ---
                 - label:
                     id: lbl_climate_wx
@@ -532,6 +535,10 @@ lvgl:
                     align: bottom_right
                     x: -2
                     y: 0
+
+#----------------------------------------------------------------------------
+# Power Detail Screen
+#----------------------------------------------------------------------------                    
                     
           - obj:
               id: screen_power_detail
