@@ -258,7 +258,7 @@ text_sensor:
 # NUMERIC SENSORS
 #-------------------------------------------------------------
 sensor:
-  # --- 1. LOCAL HARDWARE SENSOR (DHT22) ---
+# --- 1. LOCAL HARDWARE SENSOR (DHT22) -> Aktualisiert Hauptscreen & Subscreen ---
   - platform: dht
     pin: GPIO21
     model: AM2302
@@ -274,19 +274,32 @@ sensor:
       on_value:
         then:
           - lambda: |-
-              lv_label_set_text_fmt(id(lbl_climate_temp), "%.1f°C", x);
+              char buf[32];
+              // 1. Hauptscreen aktualisieren
+              sprintf(buf, "%.1f°C", x);
+              lv_label_set_text(id(lbl_climate_temp), buf);
+              
+              // 2. Subscreen (Weather & Climate Card) aktualisieren
+              sprintf(buf, "Temp: %.1f °C", x);
+              lv_label_set_text(id(lbl_in_temp_val), buf);
+
+              // Farb- und Icon-Logik (Warnfarben <12°C oder >=28°C)
               if (x >= 28.0) {
                 lv_obj_set_style_text_color(id(lbl_climate_temp), lv_color_hex(0xEF4444), LV_PART_MAIN);
                 lv_obj_set_style_text_color(id(icon_climate_card), lv_color_hex(0xEF4444), LV_PART_MAIN);
+                lv_obj_set_style_text_color(id(lbl_in_temp_val), lv_color_hex(0xEF4444), LV_PART_MAIN);
               } else if (x <= 12.0) {
                 lv_obj_set_style_text_color(id(lbl_climate_temp), lv_color_hex(0xFBBF24), LV_PART_MAIN);
                 lv_obj_set_style_text_color(id(icon_climate_card), lv_color_hex(0xFBBF24), LV_PART_MAIN);
+                lv_obj_set_style_text_color(id(lbl_in_temp_val), lv_color_hex(0xFBBF24), LV_PART_MAIN);
               } else {
                 lv_obj_set_style_text_color(id(lbl_climate_temp), lv_color_hex(0x38BDF8), LV_PART_MAIN);
                 lv_obj_set_style_text_color(id(icon_climate_card), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+                lv_obj_set_style_text_color(id(lbl_in_temp_val), lv_color_hex(0x38BDF8), LV_PART_MAIN);
               }
               lv_obj_invalidate(id(lbl_climate_temp));
               lv_obj_invalidate(id(icon_climate_card));
+              lv_obj_invalidate(id(lbl_in_temp_val));
 
     humidity:
       name: "CYD QEK Luftfeuchtigkeit"
@@ -295,7 +308,15 @@ sensor:
       on_value:
         then:
           - lambda: |-
-              lv_label_set_text_fmt(id(lbl_climate_hum), "Hum: %.0f%%", x);
+              char buf[32];
+              // Hauptscreen
+              sprintf(buf, "Hum: %.0f%%", x);
+              lv_label_set_text(id(lbl_climate_hum), buf);
+              
+              // Subscreen
+              sprintf(buf, "Hum: %.0f %%", x);
+              lv_label_set_text(id(lbl_in_hum_val), buf);
+
               if (x >= 70.0) {
                 lv_obj_set_style_text_color(id(icon_climate_hum), lv_color_hex(0xFBBF24), LV_PART_MAIN);
               } else {
@@ -303,7 +324,31 @@ sensor:
               }
               lv_obj_invalidate(id(lbl_climate_hum));
               lv_obj_invalidate(id(icon_climate_hum));
+              lv_obj_invalidate(id(lbl_in_hum_val));
 
+  # --- TAUHÖHE / DEW POINT (Beide Screens) ---
+  - platform: homeassistant
+    id: qek_dew_point
+    entity_id: sensor.qek_dew_point
+    on_value:
+      then:
+        - lambda: |-
+            if (!isnan(x)) {
+              char buf[32];
+              // Hauptscreen
+              sprintf(buf, "Dew: %.1f°C", x);
+              lv_label_set_text(id(lbl_climate_dew), buf);
+              
+              // Subscreen
+              sprintf(buf, "Dew: %.1f °C", x);
+              lv_label_set_text(id(lbl_in_dew_val), buf);
+            } else {
+              lv_label_set_text(id(lbl_climate_dew), "Dew: --.-°C");
+              lv_label_set_text(id(lbl_in_dew_val), "Dew: --.- °C");
+            }
+            lv_obj_invalidate(id(lbl_climate_dew));
+            lv_obj_invalidate(id(lbl_in_dew_val));
+            
   # --- 2. BATTERY & POWER SENSORS ---
   - platform: homeassistant
     id: c1000_soc
