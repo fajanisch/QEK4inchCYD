@@ -429,7 +429,7 @@ lvgl:
                     data:
                       entity_id: script.qek_b1
 
-            - obj:
+          - obj:
               id: card_climate
               x: 244
               y: 182
