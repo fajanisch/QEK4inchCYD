@@ -460,15 +460,15 @@ lvgl:
                     align: top_left
                     x: 24
                     y: 2
-                # --- LINKE SEITE: Hero-Temperatur (Ist-Wert) ---
+                # --- LINKE SEITE: Hero-Temperatur (wieder unten wie Power-Kachel) ---
                 - label:
                     id: lbl_climate_temp
                     text: "--.-°C"
                     text_font: font_val_hero
                     styles: style_val_blue
-                    align: top_left
+                    align: left_mid
                     x: 4
-                    y: 20
+                    y: 10
                 # --- RECHTE SEITE: 3 Zeilen (Luftfeuchte, Taupunkt, Zieltemperatur) ---
                 # Zeile 1: Luftfeuchtigkeit
                 - label:
@@ -504,7 +504,7 @@ lvgl:
                     align: top_right
                     x: -2
                     y: 34
-                # Zeile 3: Zieltemperatur (exakt wie Taupunkt ausgerichtet) & Modus-Icon daneben
+                # Zeile 3: Zieltemperatur & Modus-Icon daneben
                 - label:
                     id: lbl_climate_target
                     text: "--.-°C"
@@ -521,7 +521,7 @@ lvgl:
                     align: top_right
                     x: -2
                     y: 54
-                # --- UNTERE ZEILE: Wetter-Forecast (unverändert) ---
+                # --- UNTERE ZEILE: Wetter-Forecast ---
                 - label:
                     id: lbl_climate_wx
                     text: "Out: --° (--°/--°) --%"
@@ -538,7 +538,7 @@ lvgl:
                     align: bottom_right
                     x: -2
                     y: 0
-
+                    
 #----------------------------------------------------------------------------
 # Power Detail Screen
 #----------------------------------------------------------------------------                    
