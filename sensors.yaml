@@ -245,7 +245,7 @@ text_sensor:
               }
             }
 
-            # 1. Bestehende Logik für den Unterbildschirm (Buttons & Rahmen)
+            # 1. Subscreen-Buttons aktualisieren
             lv_obj_set_style_border_color(id(btn_mode_off), border_off, LV_PART_MAIN);
             lv_obj_set_style_border_width(id(btn_mode_off), width_off, LV_PART_MAIN);
             lv_obj_set_style_text_color(id(lbl_mode_off), text_off, LV_PART_MAIN);
@@ -262,32 +262,25 @@ text_sensor:
             lv_obj_invalidate(id(btn_mode_heat));
             lv_obj_invalidate(id(btn_mode_cool));
 
-            # 2. NEU: Ergänzung für den Hauptbildschirm (Modus-Text & Icon)
-            std::string label_text = "Off";
+            # 2. Hauptkachel-Modus-Icon aktualisieren
             std::string icon_code = "\uE8AC"; // Off Icon
-            auto main_color = lv_color_hex(0x6583435); // Inactive gray
+            auto main_color = lv_color_hex(0x64748B); // Inactive gray
 
             if (mode == "heat") {
-              label_text = "Heat";
               icon_code = "\uEF55"; // Flame
               main_color = lv_color_hex(0xEF4444); // Red
             } else if (mode == "cool") {
-              label_text = "Cool";
               icon_code = "\uEB3B"; // Snowflake
               main_color = lv_color_hex(0x38BDF8); // Blue
             } else if (mode == "off") {
-              label_text = "Off";
               icon_code = "\uE8AC"; // Power/Off
-              main_color = lv_color_hex(0x6583435);
+              main_color = lv_color_hex(0xFBBF24); // Yellow
             }
 
-            lv_label_set_text(id(lbl_climate_mode_text), label_text.c_str());
             lv_label_set_text(id(icon_climate_mode), icon_code.c_str());
             lv_obj_set_style_text_color(id(icon_climate_mode), main_color, LV_PART_MAIN);
+            lv_obj_invalidate(id(icon_climate_mode));
             
-            lv_obj_invalidate(id(lbl_climate_mode_text));
-            lv_obj_invalidate(id(icon_climate_mode));         
-
 #-------------------------------------------------------------
 # NUMERIC SENSORS
 #-------------------------------------------------------------
