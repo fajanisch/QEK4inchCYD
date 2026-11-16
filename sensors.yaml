@@ -95,6 +95,19 @@ text_sensor:
 #            text: !lambda "return x.c_str();"
 
   - platform: homeassistant
+    id: bat_time_remaining
+    entity_id: sensor.qek_battery_time_remaining
+    on_value:
+      then:
+        - lambda: |-
+            std::string t_str = x;
+            if (t_str.empty()) t_str = "--h --m";
+            lv_label_set_text(id(lbl_bat_remaining), t_str.c_str());
+            lv_label_set_text(id(lbl_det_time_val), t_str.c_str());
+            lv_obj_invalidate(id(lbl_bat_remaining));
+            lv_obj_invalidate(id(lbl_det_time_val));
+
+  - platform: homeassistant
     id: qek_status_dew
     entity_id: sensor.qek_status_dew
     on_value:
@@ -381,19 +394,6 @@ sensor:
             lv_obj_invalidate(id(icon_bat_card));
             lv_obj_invalidate(id(lbl_det_soc_val));
             lv_obj_invalidate(id(icon_det_soc));
-
-  - platform: homeassistant
-    id: bat_time_remaining
-    entity_id: sensor.qek_battery_time_remaining
-    on_value:
-      then:
-        - lambda: |-
-            std::string t_str = x;
-            if (t_str.empty()) t_str = "--h --m";
-            lv_label_set_text(id(lbl_bat_remaining), t_str.c_str());
-            lv_label_set_text(id(lbl_det_time_val), t_str.c_str());
-            lv_obj_invalidate(id(lbl_bat_remaining));
-            lv_obj_invalidate(id(lbl_det_time_val));
 
   - platform: homeassistant
     id: bat_sol_in
