@@ -1507,7 +1507,7 @@ lvgl:
                             - label:
                                 id: lbl_det_soc_val
                                 text: !lambda |-
-                                  float soc = id(anker_solix_c1000_battery_percentage).state;
+                                  float soc = id(c1000_soc).state;
                                   char buf[16];
                                   sprintf(buf, "%.0f%%", isnan(soc) ? 0 : soc);
                                   return std::string(buf);
@@ -1527,7 +1527,7 @@ lvgl:
                             - label:
                                 id: lbl_det_time_val
                                 text: !lambda |-
-                                  std::string time_str = id(qek_battery_time_remaining).state;
+                                  std::string time_str = id(bat_time_remaining).state;
                                   return time_str.empty() ? "--h --m" : time_str;
                                 text_font: font_bar
                                 text_color: 0x38BDF8
@@ -1550,13 +1550,12 @@ lvgl:
                                 x: 2
                                 y: 48
                             - label: 
-                                id: lbl_det_total_in
+                                id: lbl_det_ac_in
                                 text: !lambda |-
-                                  float ac_in = id(anker_solix_c1000_ac_power_in).state;
-                                  float solar_in = id(anker_solix_c1000_solar_power_in).state;
-                                  float total_in = (isnan(ac_in) ? 0 : ac_in) + (isnan(solar_in) ? 0 : solar_in);
+                                  float power = id(anker_solix_c1000_ac_power_in).state;
+                                  float energy = id(qek_anker_solix_c1000x_anker_solix_c1000_ac_energy_in_today).state;
                                   char buf[32];
-                                  sprintf(buf, "In: %.0f W", total_in);
+                                  sprintf(buf, "%.0f W  (%.0f Wh)", isnan(power) ? 0 : power, isnan(energy) ? 0 : energy);
                                   return std::string(buf);
                                 text_font: font_bar
                                 text_color: 0x38BDF8
@@ -1574,7 +1573,7 @@ lvgl:
                             - label: 
                                 id: lbl_det_total_out
                                 text: !lambda |-
-                                  float total_out = id(anker_solix_c1000_total_out).state;
+                                  float total_out = id(bat_out).state;
                                   char buf[32];
                                   sprintf(buf, "Out: %.0f W", isnan(total_out) ? 0 : total_out);
                                   return std::string(buf);
