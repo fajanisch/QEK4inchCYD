@@ -357,20 +357,43 @@ sensor:
       then:
         - lambda: |-
             int soc = (int)x;
+            // Hauptkachel & Subscreen aktualisieren
             lv_label_set_text_fmt(id(lbl_bat_soc), "%d%%", soc);
+            lv_label_set_text_fmt(id(lbl_det_soc_val), "%d%%", soc);
 
             if (soc < 20) {
               lv_obj_set_style_text_color(id(lbl_bat_soc), lv_color_hex(0xEF4444), LV_PART_MAIN);
               lv_obj_set_style_text_color(id(icon_bat_card), lv_color_hex(0xEF4444), LV_PART_MAIN);
+              lv_obj_set_style_text_color(id(lbl_det_soc_val), lv_color_hex(0xEF4444), LV_PART_MAIN);
+              lv_obj_set_style_text_color(id(icon_det_soc), lv_color_hex(0xEF4444), LV_PART_MAIN);
             } else if (soc < 30) {
               lv_obj_set_style_text_color(id(lbl_bat_soc), lv_color_hex(0xFBBF24), LV_PART_MAIN);
               lv_obj_set_style_text_color(id(icon_bat_card), lv_color_hex(0xFBBF24), LV_PART_MAIN);
+              lv_obj_set_style_text_color(id(lbl_det_soc_val), lv_color_hex(0xFBBF24), LV_PART_MAIN);
+              lv_obj_set_style_text_color(id(icon_det_soc), lv_color_hex(0xFBBF24), LV_PART_MAIN);
             } else {
               lv_obj_set_style_text_color(id(lbl_bat_soc), lv_color_hex(0x38BDF8), LV_PART_MAIN);
               lv_obj_set_style_text_color(id(icon_bat_card), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+              lv_obj_set_style_text_color(id(lbl_det_soc_val), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+              lv_obj_set_style_text_color(id(icon_det_soc), lv_color_hex(0x38BDF8), LV_PART_MAIN);
             }
             lv_obj_invalidate(id(lbl_bat_soc));
             lv_obj_invalidate(id(icon_bat_card));
+            lv_obj_invalidate(id(lbl_det_soc_val));
+            lv_obj_invalidate(id(icon_det_soc));
+
+  - platform: text_sensor
+    id: bat_time_remaining
+    entity_id: sensor.qek_battery_time_remaining
+    on_value:
+      then:
+        - lambda: |-
+            std::string t_str = x;
+            if (t_str.empty()) t_str = "--h --m";
+            lv_label_set_text(id(lbl_bat_remaining), t_str.c_str());
+            lv_label_set_text(id(lbl_det_time_val), t_str.c_str());
+            lv_obj_invalidate(id(lbl_bat_remaining));
+            lv_obj_invalidate(id(lbl_det_time_val));
 
   - platform: homeassistant
     id: bat_sol_in
@@ -378,17 +401,25 @@ sensor:
     on_value:
       then:
         - lambda: |-
-            if (x > 2.0) {
-              lv_label_set_text_fmt(id(lbl_bat_in), "In: %d W", (int)x);
+            float sol = x;
+            float ac = id(bat_ac_in).state;
+            float total_in = (isnan(sol) ? 0 : sol) + (isnan(ac) ? 0 : ac);
+            
+            if (sol > 2.0) {
+              lv_label_set_text_fmt(id(lbl_bat_in), "In: %d W", (int)sol);
               lv_label_set_text(id(icon_bat_source), "\uE81A");
               lv_obj_set_style_text_color(id(icon_bat_source), lv_color_hex(0x38BDF8), LV_PART_MAIN);
-            } else if (isnan(id(bat_ac_in).state) || id(bat_ac_in).state <= 2.0) {
+            } else if (isnan(ac) || ac <= 2.0) {
               lv_label_set_text(id(lbl_bat_in), "In: 0 W");
               lv_label_set_text(id(icon_bat_source), "\uE646");
               lv_obj_set_style_text_color(id(icon_bat_source), lv_color_hex(0x64748B), LV_PART_MAIN);
             }
             lv_obj_invalidate(id(lbl_bat_in));
             lv_obj_invalidate(id(icon_bat_source));
+
+            float energy = id(qek_anker_solix_c1000x_anker_solix_c1000_ac_energy_in_today).state;
+            lv_label_set_text_fmt(id(lbl_det_ac_in), "%.0f W  (%.0f Wh)", total_in, isnan(energy) ? 0 : energy);
+            lv_obj_invalidate(id(lbl_det_ac_in));
 
   - platform: homeassistant
     id: bat_ac_in
@@ -396,11 +427,15 @@ sensor:
     on_value:
       then:
         - lambda: |-
-            if (x > 2.0) {
-              lv_label_set_text_fmt(id(lbl_bat_in), "In: %d W", (int)x);
+            float ac = x;
+            float sol = id(bat_sol_in).state;
+            float total_in = (isnan(sol) ? 0 : sol) + (isnan(ac) ? 0 : ac);
+
+            if (ac > 2.0) {
+              lv_label_set_text_fmt(id(lbl_bat_in), "In: %d W", (int)ac);
               lv_label_set_text(id(icon_bat_source), "\uE63C");
               lv_obj_set_style_text_color(id(icon_bat_source), lv_color_hex(0x38BDF8), LV_PART_MAIN);
-            } else if (isnan(id(bat_sol_in).state) || id(bat_sol_in).state <= 2.0) {
+            } else if (isnan(sol) || sol <= 2.0) {
               lv_label_set_text(id(lbl_bat_in), "In: 0 W");
               lv_label_set_text(id(icon_bat_source), "\uE646");
               lv_obj_set_style_text_color(id(icon_bat_source), lv_color_hex(0x64748B), LV_PART_MAIN);
@@ -408,15 +443,22 @@ sensor:
             lv_obj_invalidate(id(lbl_bat_in));
             lv_obj_invalidate(id(icon_bat_source));
 
+            float energy = id(qek_anker_solix_c1000x_anker_solix_c1000_ac_energy_in_today).state;
+            lv_label_set_text_fmt(id(lbl_det_ac_in), "%.0f W  (%.0f Wh)", total_in, isnan(energy) ? 0 : energy);
+            lv_obj_invalidate(id(lbl_det_ac_in));
+
   - platform: homeassistant
     id: bat_out
     entity_id: sensor.anker_solix_c1000_total_power_out
     on_value:
       then:
         - lambda: |-
-            lv_label_set_text_fmt(id(lbl_bat_out), "Out: %d W", (int)x);
+            int out_w = (int)x;
+            lv_label_set_text_fmt(id(lbl_bat_out), "Out: %d W", out_w);
+            lv_label_set_text_fmt(id(lbl_det_total_out), "Out: %d W", out_w);
             lv_obj_invalidate(id(lbl_bat_out));
-
+            lv_obj_invalidate(id(lbl_det_total_out));
+            
   - platform: homeassistant
     id: c1000_soc_rate
     entity_id: sensor.qek_solix_c300ac_qek_prediction_battery
