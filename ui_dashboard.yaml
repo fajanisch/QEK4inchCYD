@@ -1490,7 +1490,7 @@ lvgl:
                           align: center
 
 # --- 2. RECHTE SEITE OBEN: Details-Kachel (228x176) ---
-                - obj:
+        - obj:
                         id: card_battery_details
                         x: 244
                         y: 0
@@ -1502,53 +1502,53 @@ lvgl:
                         scrollbar_mode: LV_SCROLLBAR_MODE_OFF
                         widgets: 
                           # --- 1. Kopfzeile: Titel ---
-                      - label:
-                          text: "Battery Details"
-                          text_font: font_sub_title
-                          text_color: 3718648
-                          align: LV_ALIGN_TOP_LEFT
-                          x: 2
-                          y: 2
-                      
-                      # --- 2. Sub-Header: SoC & Restzeit (Live von den Hauptschirm-Sensoren) ---
-                      - label:
-                          id: icon_det_soc
-                          text: ""
-                          text_font: font_icons
-                          text_color: 16498468
-                          align: LV_ALIGN_TOP_LEFT
-                          x: 2
-                          y: 22
-                      - label:
-                          id: lbl_det_soc_val
-                          text: !lambda |-
-                            float soc = id(anker_solix_c1000_battery_percentage).state;
-                            char buf[16];
-                            sprintf(buf, "%.0f%%", isnan(soc) ? 0 : soc);
-                            return std::string(buf);
-                          text_font: font_bar
-                          text_color: 16498468
-                          align: LV_ALIGN_TOP_LEFT
-                          x: 22
-                          y: 22
-                      - label:
-                          id: icon_det_time
-                          text: ""
-                          text_font: font_icons
-                          text_color: 9741240
-                          align: LV_ALIGN_TOP_RIGHT
-                          x: -64
-                          y: 22
-                      - label:
-                          id: lbl_det_time_val
-                          text: !lambda |-
-                            std::string time_str = id(qek_battery_time_remaining).state;
-                            return time_str.empty() ? "--h --m" : time_str;
-                          text_font: font_bar
-                          text_color: 3718648
-                          align: LV_ALIGN_TOP_RIGHT
-                          x: -2
-                          y: 22
+                          - label:
+                              text: "Battery Details"
+                              text_font: font_sub_title
+                              text_color: 3718648
+                              align: LV_ALIGN_TOP_LEFT
+                              x: 2
+                              y: 2
+
+                          # --- 2. Sub-Header: SoC & Restzeit (Live) ---
+                          - label:
+                              id: icon_det_soc
+                              text: ""
+                              text_font: font_icons
+                              text_color: 16498468
+                              align: LV_ALIGN_TOP_LEFT
+                              x: 2
+                              y: 22
+                          - label:
+                              id: lbl_det_soc_val
+                              text: !lambda |-
+                                float soc = id(anker_solix_c1000_battery_percentage).state;
+                                char buf[16];
+                                sprintf(buf, "%.0f%%", isnan(soc) ? 0 : soc);
+                                return std::string(buf);
+                              text_font: font_bar
+                              text_color: 16498468
+                              align: LV_ALIGN_TOP_LEFT
+                              x: 22
+                              y: 22
+                          - label:
+                              id: icon_det_time
+                              text: ""
+                              text_font: font_icons
+                              text_color: 9741240
+                              align: LV_ALIGN_TOP_RIGHT
+                              x: -64
+                              y: 22
+                          - label:
+                              id: lbl_det_time_val
+                              text: !lambda |-
+                                std::string time_str = id(qek_battery_time_remaining).state;
+                                return time_str.empty() ? "--h --m" : time_str;
+                              text_font: font_bar
+                              text_color: 3718648
+                              align: LV_ALIGN_TOP_RIGHT
+                              x: -2
+                              y: 22
 
                           # --- Trennlinie unter dem Header ---
                           - obj:
@@ -1559,9 +1559,9 @@ lvgl:
                               styles:
                                 - style_card
 
-                          # --- Zeile 1: AC In ---
+                          # --- Zeile 1: Total In (AC + Solar kombiniert) ---
                           - label:
-                              id: icon_ac_plug
+                              id: icon_det_in
                               text: ""
                               text_font: font_icons
                               text_color: 9741240
@@ -1569,19 +1569,42 @@ lvgl:
                               x: 2
                               y: 48
                           - label: 
-                              id: lbl_det_ac_in
+                              id: lbl_det_total_in
                               text: !lambda |-
-                                float power = id(anker_solix_c1000_ac_power_in).state;
-                                float energy = id(qek_anker_solix_c1000x_anker_solix_c1000_ac_energy_in_today).state;
+                                float ac_in = id(anker_solix_c1000_ac_power_in).state;
+                                float solar_in = id(anker_solix_c1000_solar_power_in).state;
+                                float total_in = (isnan(ac_in) ? 0 : ac_in) + (isnan(solar_in) ? 0 : solar_in);
                                 char buf[32];
-                                sprintf(buf, "%.0f W  (%.0f Wh)", isnan(power) ? 0 : power, isnan(energy) ? 0 : energy);
+                                sprintf(buf, "In: %.0f W", total_in);
                                 return std::string(buf);
                               text_font: font_bar
                               text_color: 3718648
                               align: LV_ALIGN_TOP_RIGHT
                               x: -2
                               y: 48
-                          
+
+                          # --- Zeile 2: Total Out (Alle Kanäle) ---
+                          - label:
+                              id: icon_det_out
+                              text: ""
+                              text_font: font_icons
+                              text_color: 9741240
+                              align: LV_ALIGN_TOP_LEFT
+                              x: 2
+                              y: 74
+                          - label: 
+                              id: lbl_det_total_out
+                              text: !lambda |-
+                                float total_out = id(anker_solix_c1000_total_out).state;
+                                char buf[32];
+                                sprintf(buf, "Out: %.0f W", isnan(total_out) ? 0 : total_out);
+                                return std::string(buf);
+                              text_font: font_bar
+                              text_color: 3718648
+                              align: LV_ALIGN_TOP_RIGHT
+                              x: -2
+                              y: 74
+
                 # --- 3. BACK BUTTON (Rechte Seite Unten, 228x84) ---
                 - obj:
                     id: btn_sub_battery_back
