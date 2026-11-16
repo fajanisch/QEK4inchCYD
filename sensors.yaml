@@ -382,7 +382,7 @@ sensor:
             lv_obj_invalidate(id(lbl_det_soc_val));
             lv_obj_invalidate(id(icon_det_soc));
 
-  - platform: text_sensor
+  - platform: homeassistant
     id: bat_time_remaining
     entity_id: sensor.qek_battery_time_remaining
     on_value:
