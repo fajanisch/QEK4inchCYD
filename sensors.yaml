@@ -85,14 +85,14 @@ text_sensor:
             }
             lv_obj_invalidate(id(badge_wan));
 
-  - platform: homeassistant
-    id: bat_time_remaining
-    entity_id: sensor.qek_battery_time_remaining
-    on_value:
-      then:
-        - lvgl.label.update:
-            id: lbl_bat_remaining
-            text: !lambda "return x.c_str();"
+#  - platform: homeassistant
+#    id: bat_time_remaining
+#    entity_id: sensor.qek_battery_time_remaining
+#    on_value:
+#      then:
+#        - lvgl.label.update:
+#            id: lbl_bat_remaining
+#            text: !lambda "return x.c_str();"
 
   - platform: homeassistant
     id: qek_status_dew
@@ -418,9 +418,8 @@ sensor:
             lv_obj_invalidate(id(icon_bat_source));
 
             float energy = id(qek_anker_solix_c1000x_anker_solix_c1000_ac_energy_in_today).state;
-            // Korrigiert auf lbl_det_total_in:
-            lv_label_set_text_fmt(id(lbl_det_total_in), "In: %.0f W", total_in);
-            lv_obj_invalidate(id(lbl_det_total_in));
+            lv_label_set_text_fmt(id(lbl_det_ac_in), "%.0f W  (%.0f Wh)", total_in, isnan(energy) ? 0 : energy);
+            lv_obj_invalidate(id(lbl_det_ac_in));
 
   - platform: homeassistant
     id: bat_ac_in
@@ -445,10 +444,9 @@ sensor:
             lv_obj_invalidate(id(icon_bat_source));
 
             float energy = id(qek_anker_solix_c1000x_anker_solix_c1000_ac_energy_in_today).state;
-            // Korrigiert auf lbl_det_total_in:
-            lv_label_set_text_fmt(id(lbl_det_total_in), "In: %.0f W", total_in);
-            lv_obj_invalidate(id(lbl_det_total_in));
-            
+            lv_label_set_text_fmt(id(lbl_det_ac_in), "%.0f W  (%.0f Wh)", total_in, isnan(energy) ? 0 : energy);
+            lv_obj_invalidate(id(lbl_det_ac_in));
+                        
   - platform: homeassistant
     id: bat_out
     entity_id: sensor.anker_solix_c1000_total_power_out
