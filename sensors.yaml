@@ -418,8 +418,8 @@ sensor:
             lv_obj_invalidate(id(icon_bat_source));
 
             float energy = id(qek_anker_solix_c1000x_anker_solix_c1000_ac_energy_in_today).state;
-            lv_label_set_text_fmt(id(lbl_det_ac_in), "%.0f W  (%.0f Wh)", total_in, isnan(energy) ? 0 : energy);
-            lv_obj_invalidate(id(lbl_det_ac_in));
+            lv_label_set_text_fmt(id(lbl_det_total_in), "%.0f W  (%.0f Wh)", total_in, isnan(energy) ? 0 : energy);
+            lv_obj_invalidate(id(lbl_det_total_in));
 
   - platform: homeassistant
     id: bat_ac_in
@@ -444,8 +444,8 @@ sensor:
             lv_obj_invalidate(id(icon_bat_source));
 
             float energy = id(qek_anker_solix_c1000x_anker_solix_c1000_ac_energy_in_today).state;
-            lv_label_set_text_fmt(id(lbl_det_ac_in), "%.0f W  (%.0f Wh)", total_in, isnan(energy) ? 0 : energy);
-            lv_obj_invalidate(id(lbl_det_ac_in));
+            lv_label_set_text_fmt(id(lbl_det_total_in), "%.0f W  (%.0f Wh)", total_in, isnan(energy) ? 0 : energy);
+            lv_obj_invalidate(id(lbl_det_total_in));
                         
   - platform: homeassistant
     id: bat_out
