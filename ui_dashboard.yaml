@@ -1490,7 +1490,7 @@ lvgl:
                           align: center
 
 # --- 2. RECHTE SEITE OBEN: Details-Kachel (228x176) ---
-        - obj:
+          - obj:
                         id: card_battery_details
                         x: 244
                         y: 0
