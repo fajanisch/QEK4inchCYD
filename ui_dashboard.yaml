@@ -699,7 +699,6 @@ lvgl:
 #----------------------------------------------------------------------------
 # Power Detail Screen
 #----------------------------------------------------------------------------                    
-                    
           - obj:
               id: screen_power_detail
               x: 0
@@ -712,10 +711,6 @@ lvgl:
               radius: 0
               pad_all: 0
               widgets:
-                # ==========================================
-                # POWER SUB-SCREEN KACHELN (Alle 5 Kanäle)
-                # ==========================================
-                
                 # 1. BATTERY
                 - obj:
                     id: btn_sub_bat
@@ -991,7 +986,7 @@ lvgl:
                               entity_id: switch.qek_matter_over_wifi_smart_switch
                         - script.execute: power_detail_timeout
                       
-                # 6. BACK BUTTON (Reihe 3, rechts neben Main)
+                # 6. BACK BUTTON
                 - obj:
                     id: btn_sub_back
                     x: 244
@@ -1024,7 +1019,7 @@ lvgl:
                             hidden: true
 
           # ==========================================
-          # 5. CLIMATE SUB-SCREEN (y: 44, unter Statusbalken)
+          # CLIMATE SUB-SCREEN
           # ==========================================
           - obj:
               id: screen_climate_detail
@@ -1040,7 +1035,6 @@ lvgl:
               scrollable: false
               scrollbar_mode: "off"
               widgets:
-                # --- 1. WEATHER & CLIMATE CARD (LEFT) ---
                 - obj:
                     id: card_weather
                     x: 8
@@ -1053,7 +1047,6 @@ lvgl:
                     scrollbar_mode: "off"
                     clickable: false
                     widgets:
-                      # Titel
                       - label:
                           id: lbl_weather_title
                           text: "Weather"
@@ -1062,10 +1055,6 @@ lvgl:
                           align: top_left
                           x: 4
                           y: 2
-
-                      # ==========================================
-                      # 1. INDOOR (Temp, Hum, Dew - Ohne Label)
-                      # ==========================================
                       - label:
                           id: icon_in_temp
                           text: "\uF076"
@@ -1082,7 +1071,6 @@ lvgl:
                           align: top_left
                           x: 22
                           y: 22
-                      
                       - label:
                           id: icon_in_hum
                           text: "\uE798"
@@ -1099,7 +1087,6 @@ lvgl:
                           align: top_left
                           x: 100
                           y: 22
-
                       - label:
                           id: icon_in_dew
                           text: "\uF879"
@@ -1116,19 +1103,12 @@ lvgl:
                           align: top_left
                           x: 170
                           y: 22
-
-                      # Trennlinie 1
                       - obj:
                           x: 4
                           y: 42
                           width: 218
                           height: 1
                           styles: style_card
-
-                      # ==========================================
-                      # 2. OUTDOOR (2x2 Grid + Wetter-Icon rechts - Entzerrt)
-                      # ==========================================
-                      # Zeile 1 Outdoor: Temperatur & Luftfeuchtigkeit
                       - label:
                           id: icon_out_temp
                           text: "\uF076"
@@ -1145,7 +1125,6 @@ lvgl:
                           align: top_left
                           x: 22
                           y: 50
-
                       - label:
                           id: icon_out_hum
                           text: "\uE798"
@@ -1162,8 +1141,6 @@ lvgl:
                           align: top_left
                           x: 114
                           y: 50
-
-                      # Zeile 2 Outdoor: Wind & Luftdruck
                       - label:
                           id: icon_out_wind
                           text: "\uEFD8"
@@ -1180,7 +1157,6 @@ lvgl:
                           align: top_left
                           x: 22
                           y: 72
-
                       - label:
                           id: icon_out_press
                           text: "\uE94D"
@@ -1197,8 +1173,6 @@ lvgl:
                           align: top_left
                           x: 114
                           y: 72
-
-                      # Wetter Condition Icon (Groß)
                       - label:
                           id: icon_climate_wx_sub
                           text: "\uE2BD"
@@ -1207,18 +1181,12 @@ lvgl:
                           align: top_right
                           x: -4
                           y: 54
-
-                      # Trennlinie 2 (Abgrenzung zum Forecast-Bereich)
                       - obj:
                           x: 4
                           y: 96
                           width: 218
                           height: 1
                           styles: style_card
-
-                      # ==========================================
-                      # 3. FORECAST BEREICH (Platzhalter unten)
-                      # ==========================================
                       - label:
                           id: lbl_forecast_placeholder
                           text: "Forecast Platzhalter"
@@ -1227,8 +1195,6 @@ lvgl:
                           align: top_left
                           x: 4
                           y: 104
-                                
-                # --- 2. RIGHT CARD: Climate Control (228x176) ---
                 - obj:
                     id: card_climate_control
                     x: 244
@@ -1246,7 +1212,6 @@ lvgl:
                           align: top_left
                           x: 2
                           y: 2
-                      # 1. OFF-Button
                       - obj:
                           id: btn_mode_off
                           x: 2
@@ -1273,8 +1238,6 @@ lvgl:
                                     entity_id: input_select.qek_climate_mode
                                     option: "off"
                               - script.execute: power_detail_timeout
-
-                      # 2. HEAT-Button
                       - obj:
                           id: btn_mode_heat
                           x: 73
@@ -1301,8 +1264,6 @@ lvgl:
                                     entity_id: input_select.qek_climate_mode
                                     option: "heat"
                               - script.execute: power_detail_timeout
-
-                      # 3. COOL-Button
                       - obj:
                           id: btn_mode_cool
                           x: 144
@@ -1329,8 +1290,6 @@ lvgl:
                                     entity_id: input_select.qek_climate_mode
                                     option: "cool"
                               - script.execute: power_detail_timeout
-
-                      # Minus-Button (-)
                       - obj:
                           id: btn_temp_minus
                           x: 2
@@ -1355,8 +1314,6 @@ lvgl:
                                   data:
                                     entity_id: input_number.qek_target_temp
                               - script.execute: power_detail_timeout
-
-                      # Zieltemperatur Anzeige & Umschalter
                       - obj:
                           id: btn_target_toggle
                           x: 56
@@ -1383,8 +1340,6 @@ lvgl:
                                     entity_id: input_number.qek_target_temp
                                     value: !lambda "if (isnan(id(ha_climate_target_temp).state)) return 21.0; if (id(ha_climate_target_temp).state >= 18.0) return 15.0; return 21.0;"
                               - script.execute: power_detail_timeout
-                              
-                      # Plus-Button (+)
                       - obj:
                           id: btn_temp_plus
                           x: 160
@@ -1409,8 +1364,6 @@ lvgl:
                                   data:
                                     entity_id: input_number.qek_target_temp
                               - script.execute: power_detail_timeout
-                              
-                # --- 3. BACK BUTTON ---
                 - obj:
                     id: btn_sub_climate_back
                     x: 244
@@ -1445,184 +1398,176 @@ lvgl:
                             hidden: true
 
           # ==========================================
-          # BATTERY SUB-SCREEN (y: 44, unter Statusbalken)
+          # BATTERY SUB-SCREEN
           # ==========================================
-          # --- Subscreen: Battery Detail ---
+          - obj:
+              id: screen_battery_detail
+              x: 0
+              y: 44
+              width: 480
+              height: 268
+              hidden: true
+              bg_color: 0x0F172A
+              border_width: 0
+              radius: 0
+              pad_all: 0
+              scrollable: false
+              scrollbar_mode: "off"
+              widgets: 
+                # Linke Seite (leer)
                 - obj:
-                    id: screen_battery_detail
-                    x: 0
-                    y: 44
-                    width: 480
+                    id: card_battery_left_empty
+                    x: 8
+                    y: 0
+                    width: 228
                     height: 268
-                    hidden: True
-                    bg_color: 0x0F172A
-                    border_width: 0
-                    radius: 0
-                    pad_all: 0
-                    scrollable: False
-                    scrollbar_mode: LV_SCROLLBAR_MODE_OFF
+                    styles: style_card
+                    pad_all: 4
+                    scrollable: false
+                    scrollbar_mode: "off"
+                    clickable: false
+                    widgets: []
+
+                # Rechte Seite oben (Batterie-Details)
+                - obj:
+                    id: card_battery_details
+                    x: 244
+                    y: 0
+                    width: 228
+                    height: 176
+                    styles: style_card
+                    scrollable: false
+                    scrollbar_mode: "off"
                     widgets: 
-                      # --- Linke Seite: Leer ---
+                      - label:
+                          text: "Battery Details"
+                          text_font: font_sub_title
+                          text_color: 0x38BDF8
+                          align: top_left
+                          x: 2
+                          y: 2
+                      - label:
+                          id: icon_det_soc
+                          text: "\uE1A4"
+                          text_font: font_icons
+                          text_color: 0xFBBF24
+                          align: top_left
+                          x: 2
+                          y: 22
+                      - label:
+                          id: lbl_det_soc_val
+                          text: !lambda |-
+                            float soc = id(c1000_soc).state;
+                            char buf[16];
+                            sprintf(buf, "%.0f%%", isnan(soc) ? 0 : soc);
+                            return std::string(buf);
+                          text_font: font_bar
+                          text_color: 0xFBBF24
+                          align: top_left
+                          x: 22
+                          y: 22
+                      - label:
+                          id: icon_det_time
+                          text: "\uE8AC"
+                          text_font: font_icons
+                          text_color: 0x94A3B8
+                          align: top_right
+                          x: -64
+                          y: 22
+                      - label:
+                          id: lbl_det_time_val
+                          text: !lambda |-
+                            std::string time_str = id(bat_time_remaining).state;
+                            return time_str.empty() ? "--h --m" : time_str;
+                          text_font: font_bar
+                          text_color: 0x38BDF8
+                          align: top_right
+                          x: -2
+                          y: 22
                       - obj:
-                          id: card_battery_left_empty
-                          x: 8
-                          y: 0
-                          width: 228
-                          height: 268
-                          styles:
-                            - style_card
-                          pad_all: 4
-                          scrollable: False
-                          scrollbar_mode: LV_SCROLLBAR_MODE_OFF
-                          clickable: False
-                          widgets: []
+                          x: 2
+                          y: 42
+                          width: 220
+                          height: 1
+                          styles: style_card
+                      - label:
+                          id: icon_det_in
+                          text: "\uE2BD"
+                          text_font: font_icons
+                          text_color: 0x94A3B8
+                          align: top_left
+                          x: 2
+                          y: 48
+                      - label: 
+                          id: lbl_det_ac_in
+                          text: !lambda |-
+                            float power = id(anker_solix_c1000_ac_power_in).state;
+                            float energy = id(qek_anker_solix_c1000x_anker_solix_c1000_ac_energy_in_today).state;
+                            char buf[32];
+                            sprintf(buf, "%.0f W  (%.0f Wh)", isnan(power) ? 0 : power, isnan(energy) ? 0 : energy);
+                            return std::string(buf);
+                          text_font: font_bar
+                          text_color: 0x38BDF8
+                          align: top_right
+                          x: -2
+                          y: 48
+                      - label:
+                          id: icon_det_out
+                          text: "\uE56C"
+                          text_font: font_icons
+                          text_color: 0x94A3B8
+                          align: top_left
+                          x: 2
+                          y: 74
+                      - label: 
+                          id: lbl_det_total_out
+                          text: !lambda |-
+                            float total_out = id(bat_out).state;
+                            char buf[32];
+                            sprintf(buf, "Out: %.0f W", isnan(total_out) ? 0 : total_out);
+                            return std::string(buf);
+                          text_font: font_bar
+                          text_color: 0x38BDF8
+                          align: top_right
+                          x: -2
+                          y: 74
 
-                      # --- Rechte Seite oben: Battery Details ---
-                      - obj:
-                          id: card_battery_details
-                          x: 244
-                          y: 0
-                          width: 228
-                          height: 176
-                          styles:
-                            - style_card
-                          scrollable: False
-                          scrollbar_mode: LV_SCROLLBAR_MODE_OFF
-                          widgets: 
-                            - label:
-                                text: "Battery Details"
-                                text_font: font_sub_title
-                                text_color: 0x38BDF8
-                                align: LV_ALIGN_TOP_LEFT
-                                x: 2
-                                y: 2
-                            - label:
-                                id: icon_det_soc
-                                text: "\ue1a4"
-                                text_font: font_icons
-                                text_color: 0xFBBF24
-                                align: LV_ALIGN_TOP_LEFT
-                                x: 2
-                                y: 22
-                            - label:
-                                id: lbl_det_soc_val
-                                text: !lambda |-
-                                  float soc = id(c1000_soc).state;
-                                  char buf[16];
-                                  sprintf(buf, "%.0f%%", isnan(soc) ? 0 : soc);
-                                  return std::string(buf);
-                                text_font: font_bar
-                                text_color: 0xFBBF24
-                                align: LV_ALIGN_TOP_LEFT
-                                x: 22
-                                y: 22
-                            - label:
-                                id: icon_det_time
-                                text: "\ue6ac"
-                                text_font: font_icons
-                                text_color: 0x94A3B8
-                                align: LV_ALIGN_TOP_RIGHT
-                                x: -64
-                                y: 22
-                            - label:
-                                id: lbl_det_time_val
-                                text: !lambda |-
-                                  std::string time_str = id(bat_time_remaining).state;
-                                  return time_str.empty() ? "--h --m" : time_str;
-                                text_font: font_bar
-                                text_color: 0x38BDF8
-                                align: LV_ALIGN_TOP_RIGHT
-                                x: -2
-                                y: 22
-                            - obj:
-                                x: 2
-                                y: 42
-                                width: 220
-                                height: 1
-                                styles:
-                                  - style_card
-                            - label:
-                                id: icon_det_in
-                                text: "\ue2e7"
-                                text_font: font_icons
-                                text_color: 0x94A3B8
-                                align: LV_ALIGN_TOP_LEFT
-                                x: 2
-                                y: 48
-                            - label: 
-                                id: lbl_det_ac_in
-                                text: !lambda |-
-                                  float power = id(anker_solix_c1000_ac_power_in).state;
-                                  float energy = id(qek_anker_solix_c1000x_anker_solix_c1000_ac_energy_in_today).state;
-                                  char buf[32];
-                                  sprintf(buf, "%.0f W  (%.0f Wh)", isnan(power) ? 0 : power, isnan(energy) ? 0 : energy);
-                                  return std::string(buf);
-                                text_font: font_bar
-                                text_color: 0x38BDF8
-                                align: LV_ALIGN_TOP_RIGHT
-                                x: -2
-                                y: 48
-                            - label:
-                                id: icon_det_out
-                                text: "\ue56c"
-                                text_font: font_icons
-                                text_color: 0x94A3B8
-                                align: LV_ALIGN_TOP_LEFT
-                                x: 2
-                                y: 74
-                            - label: 
-                                id: lbl_det_total_out
-                                text: !lambda |-
-                                  float total_out = id(bat_out).state;
-                                  char buf[32];
-                                  sprintf(buf, "Out: %.0f W", isnan(total_out) ? 0 : total_out);
-                                  return std::string(buf);
-                                text_font: font_bar
-                                text_color: 0x38BDF8
-                                align: LV_ALIGN_TOP_RIGHT
-                                x: -2
-                                y: 74
-
-                      # --- Rechte Seite unten: Back Button ---
-                      - obj:
-                          id: btn_sub_battery_back
-                          x: 244
-                          y: 184
-                          width: 228
-                          height: 84
-                          styles:
-                            - style_card
-                          border_color: 0x38BDF8
-                          scrollable: False
-                          scrollbar_mode: LV_SCROLLBAR_MODE_OFF
-                          clickable: True
-                          widgets:
-                            - label:
-                                id: icon_sub_battery_back
-                                text: "\ue166"
-                                text_font: font_icons_sub
-                                text_color: 0x38BDF8
-                                align: LV_ALIGN_CENTER
-                                x: -25
-                            - label:
-                                id: lbl_sub_battery_back
-                                text: "Back"
-                                text_font: font_sub_title
-                                text_color: 0x38BDF8
-                                align: LV_ALIGN_CENTER
-                                x: 21
-                          on_click:
-                            - then:
-                                - script.stop:
-                                    id: power_detail_timeout
-                                - lvgl.widget.update:
-                                    id: screen_battery_detail
-                                    hidden: True
-
-
+                # Rechte Seite unten (Back Button)
+                - obj:
+                    id: btn_sub_battery_back
+                    x: 244
+                    y: 184
+                    width: 228
+                    height: 84
+                    styles: style_card
+                    border_color: 0x38BDF8
+                    scrollable: false
+                    scrollbar_mode: "off"
+                    clickable: true
+                    widgets:
+                      - label:
+                          id: icon_sub_battery_back
+                          text: "\uE166"
+                          text_font: font_icons_sub
+                          text_color: 0x38BDF8
+                          align: center
+                          x: -25
+                      - label:
+                          id: lbl_sub_battery_back
+                          text: "Back"
+                          text_font: font_sub_title
+                          text_color: 0x38BDF8
+                          align: center
+                          x: 21
+                    on_click:
+                      then:
+                        - script.stop: power_detail_timeout
+                        - lvgl.widget.update:
+                            id: screen_battery_detail
+                            hidden: true
 
           # ==========================================
-          # 6. DIM GUARD OVERLAY (Oberste Ebene)
+          # DIM GUARD OVERLAY
           # ==========================================
           - obj:
               id: dim_guard_overlay
