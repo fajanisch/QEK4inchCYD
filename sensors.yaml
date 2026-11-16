@@ -659,9 +659,9 @@ sensor:
   - platform: homeassistant
     name: "Anker Solix AC Energy In Today"
     entity_id: sensor.qek_anker_solix_c1000_ac_energy_in_today
-    id: qek_anker_anker_solix_c1000_ac_energy_in_today
+    id: anker_anker_solix_c1000_ac_energy_in_today
 
   - platform: homeassistant
     name: "Anker Solix AC Energy In Today"
     entity_id: sensor.qek_anker_solix_c1000_ac_energy_in_today # Passe hier ggf. deine HA Entity-ID an
-    id: qek_anker_solix_c1000_ac_energy_in_today
+    id: anker_solix_c1000_ac_energy_in_today
