@@ -1446,6 +1446,8 @@ lvgl:
                           align: top_left
                           x: 2
                           y: 2
+
+                      # --- Zeile 1: SoC & Restlaufzeit (Header) ---
                       - label:
                           id: icon_det_soc
                           text: "\uE1A4"
@@ -1466,6 +1468,7 @@ lvgl:
                           align: top_left
                           x: 22
                           y: 22
+
                       - label:
                           id: icon_det_time
                           text: "\uE8AC"
@@ -1484,12 +1487,16 @@ lvgl:
                           align: top_right
                           x: -2
                           y: 22
+
+                      # Trennlinie
                       - obj:
                           x: 2
                           y: 42
                           width: 220
                           height: 1
                           styles: style_card
+
+                      # --- Zeile 2: Total Input (Solar + AC kombiniert) ---
                       - label:
                           id: icon_det_in
                           text: "\uE2BD"
@@ -1499,18 +1506,21 @@ lvgl:
                           x: 2
                           y: 48
                       - label: 
-                          id: lbl_det_ac_in
+                          id: lbl_det_total_in
                           text: !lambda |-
-                            float power = id(anker_solix_c1000_ac_power_in).state;
-                            float energy = id(qek_anker_solix_c1000x_anker_solix_c1000_ac_energy_in_today).state;
+                            float sol = id(bat_sol_in).state;
+                            float ac = id(bat_ac_in).state;
+                            float total_in = (isnan(sol) ? 0 : sol) + (isnan(ac) ? 0 : ac);
                             char buf[32];
-                            sprintf(buf, "%.0f W  (%.0f Wh)", isnan(power) ? 0 : power, isnan(energy) ? 0 : energy);
+                            sprintf(buf, "In: %.0f W", total_in);
                             return std::string(buf);
                           text_font: font_bar
                           text_color: 0x38BDF8
                           align: top_right
                           x: -2
                           y: 48
+
+                      # --- Zeile 3: Total Output ---
                       - label:
                           id: icon_det_out
                           text: "\uE56C"
@@ -1531,7 +1541,7 @@ lvgl:
                           align: top_right
                           x: -2
                           y: 74
-
+                          
                 # Rechte Seite unten (Back Button)
                 - obj:
                     id: btn_sub_battery_back
