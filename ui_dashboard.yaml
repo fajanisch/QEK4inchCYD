@@ -1489,8 +1489,7 @@ lvgl:
                           text_color: 0x64748B
                           align: center
 
-                # --- 2. RECHTE SEITE OBEN: Details-Kachel (228x176) ---
-                # Beinhaltet SoC, Time to Full/Empty sowie AC/Solar/12V/USB/Total Werte
+# --- 2. RECHTE SEITE OBEN: Details-Kachel (228x176) ---
                 - obj:
                     id: card_battery_details
                     x: 244
@@ -1509,11 +1508,38 @@ lvgl:
                           x: 2
                           y: 2
                       - label:
-                          id: lbl_battery_details_placeholder
-                          text: "SoC, Restzeit & Kanäle"
-                          text_font: font_card_header
-                          text_color: 0x64748B
-                          align: center
+                          id: lbl_det_soc_time
+                          text: "85%  •  4h 30m"
+                          text_font: font_bar
+                          text_color: 0xFBBF24
+                          align: top_right
+                          x: -2
+                          y: 4
+
+                      # Trennlinie unter dem Kopf
+                      - obj:
+                          x: 2
+                          y: 20
+                          width: 220
+                          height: 1
+                          styles: style_card
+
+                      # ==========================================
+                      # ZEILE 1: AC In (Power & Energy)
+                      # ==========================================
+                      - label:
+                          id: lbl_det_ac_in
+                          text: !lambda |-
+                            float power = id(anker_solix_c1000_ac_power_in).state;
+                            float energy = id(qek_anker_solix_c1000x_anker_solix_c1000_ac_energy_in_today).state;
+                            char buf[32];
+                            sprintf(buf, "%.0f W  (%.0f Wh)", isnan(power) ? 0 : power, isnan(energy) ? 0 : energy);
+                            return std::string(buf);
+                          text_font: font_bar
+                          text_color: 0x38BDF8
+                          align: top_right
+                          x: -2
+                          y: 26
 
                 # --- 3. BACK BUTTON (Rechte Seite Unten, 228x84) ---
                 - obj:
