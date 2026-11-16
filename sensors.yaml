@@ -403,7 +403,6 @@ sensor:
         - lambda: |-
             float sol = x;
             float ac = id(bat_ac_in).state;
-            float total_in = (isnan(sol) ? 0 : sol) + (isnan(ac) ? 0 : ac);
             
             if (sol > 2.0) {
               lv_label_set_text_fmt(id(lbl_bat_in), "In: %d W", (int)sol);
@@ -417,9 +416,10 @@ sensor:
             lv_obj_invalidate(id(lbl_bat_in));
             lv_obj_invalidate(id(icon_bat_source));
 
-            float energy = id(qek_anker_solix_c1000x_anker_solix_c1000_ac_energy_in_today).state;
-            lv_label_set_text_fmt(id(lbl_det_total_in), "%.0f W  (%.0f Wh)", total_in, isnan(energy) ? 0 : energy);
-            lv_obj_invalidate(id(lbl_det_total_in));
+            // Solar Subscreen Update (Power & Energy)
+            float sol_energy = id(qek_anker_solix_c1000x_anker_solix_c1000_solar_energy_in_today).state;
+            lv_label_set_text_fmt(id(lbl_det_sol_in), "%.0f W  (%.0f Wh)", isnan(sol) ? 0 : sol, isnan(sol_energy) ? 0 : sol_energy);
+            lv_obj_invalidate(id(lbl_det_sol_in));
 
   - platform: homeassistant
     id: bat_ac_in
@@ -429,7 +429,6 @@ sensor:
         - lambda: |-
             float ac = x;
             float sol = id(bat_sol_in).state;
-            float total_in = (isnan(sol) ? 0 : sol) + (isnan(ac) ? 0 : ac);
 
             if (ac > 2.0) {
               lv_label_set_text_fmt(id(lbl_bat_in), "In: %d W", (int)ac);
@@ -443,9 +442,10 @@ sensor:
             lv_obj_invalidate(id(lbl_bat_in));
             lv_obj_invalidate(id(icon_bat_source));
 
-            float energy = id(qek_anker_solix_c1000x_anker_solix_c1000_ac_energy_in_today).state;
-            lv_label_set_text_fmt(id(lbl_det_total_in), "%.0f W  (%.0f Wh)", total_in, isnan(energy) ? 0 : energy);
-            lv_obj_invalidate(id(lbl_det_total_in));
+            // AC Subscreen Update (Power & Energy)
+            float ac_energy = id(qek_anker_solix_c1000x_anker_solix_c1000_ac_energy_in_today).state;
+            lv_label_set_text_fmt(id(lbl_det_ac_in), "%.0f W  (%.0f Wh)", isnan(ac) ? 0 : ac, isnan(ac_energy) ? 0 : ac_energy);
+            lv_obj_invalidate(id(lbl_det_ac_in));
                         
   - platform: homeassistant
     id: bat_out
