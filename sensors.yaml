@@ -397,7 +397,7 @@ sensor:
 
   - platform: homeassistant
     id: bat_sol_in
-    entity_id: sensor.anker_solix_c1000_solar_power_in
+    entity_id: sensor.qek_anker_solix_c1000_solar_power_in
     on_value:
       then:
         - lambda: |-
