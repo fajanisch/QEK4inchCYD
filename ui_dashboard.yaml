@@ -1496,31 +1496,43 @@ lvgl:
                           height: 1
                           styles: style_card
 
-                      # --- Zeile 2: Total Input (Solar + AC kombiniert) ---
+                      # --- Zeile 2: AC In (Power & Energy) ---
                       - label:
-                          id: icon_det_in
-                          text: "\uE2BD"
+                          id: icon_det_ac_in
+                          text: "\uE63C"
                           text_font: font_icons
                           text_color: 0x94A3B8
                           align: top_left
                           x: 2
                           y: 48
                       - label: 
-                          id: lbl_det_total_in
-                          text: !lambda |-
-                            float sol = id(bat_sol_in).state;
-                            float ac = id(bat_ac_in).state;
-                            float total_in = (isnan(sol) ? 0 : sol) + (isnan(ac) ? 0 : ac);
-                            char buf[32];
-                            sprintf(buf, "In: %.0f W", total_in);
-                            return std::string(buf);
+                          id: lbl_det_ac_in
+                          text: "AC: -- W"
                           text_font: font_bar
                           text_color: 0x38BDF8
                           align: top_right
                           x: -2
                           y: 48
 
-                      # --- Zeile 3: Total Output ---
+                      # --- Zeile 3: Solar In (Power & Energy) ---
+                      - label:
+                          id: icon_det_sol_in
+                          text: "\uE81A"
+                          text_font: font_icons
+                          text_color: 0xFBBF24
+                          align: top_left
+                          x: 2
+                          y: 74
+                      - label: 
+                          id: lbl_det_sol_in
+                          text: "Sol: -- W"
+                          text_font: font_bar
+                          text_color: 0xFBBF24
+                          align: top_right
+                          x: -2
+                          y: 74
+
+                      # --- Zeile 4: Total Output ---
                       - label:
                           id: icon_det_out
                           text: "\uE56C"
@@ -1528,19 +1540,15 @@ lvgl:
                           text_color: 0x94A3B8
                           align: top_left
                           x: 2
-                          y: 74
+                          y: 100
                       - label: 
                           id: lbl_det_total_out
-                          text: !lambda |-
-                            float total_out = id(bat_out).state;
-                            char buf[32];
-                            sprintf(buf, "Out: %.0f W", isnan(total_out) ? 0 : total_out);
-                            return std::string(buf);
+                          text: "Out: -- W"
                           text_font: font_bar
                           text_color: 0x38BDF8
                           align: top_right
                           x: -2
-                          y: 74
+                          y: 100
                           
                 # Rechte Seite unten (Back Button)
                 - obj:
