@@ -85,15 +85,6 @@ text_sensor:
             }
             lv_obj_invalidate(id(badge_wan));
 
-#  - platform: homeassistant
-#    id: bat_time_remaining
-#    entity_id: sensor.qek_battery_time_remaining
-#    on_value:
-#      then:
-#        - lvgl.label.update:
-#            id: lbl_bat_remaining
-#            text: !lambda "return x.c_str();"
-
   - platform: homeassistant
     id: bat_time_remaining
     entity_id: sensor.qek_battery_time_remaining
@@ -136,7 +127,7 @@ text_sensor:
         - lambda: |-
             std::string cond = x;
             for (auto &c : cond) c = tolower(c);
-            std::string icon_code = "\uE2BD"; // Default
+            std::string icon_code = "\uE2BD";
 
             if (cond == "sunny") { 
               icon_code = "\uE81A"; 
@@ -154,13 +145,12 @@ text_sensor:
               icon_code = "\uEFD8"; 
             }
 
-            // BEIDE Icons absolut synchron setzen (Hauptschirm & Detailschirm)
             lv_label_set_text(id(icon_climate_wx), icon_code.c_str());
             lv_label_set_text(id(icon_climate_wx_sub), icon_code.c_str());
             
             auto color = lv_color_hex(0x38BDF8);
             if (cond == "sunny" || cond == "lightning" || cond == "lightning-rainy") {
-              color = lv_color_hex(0xFBBF24); // Gelb für Sonne/Gewitter
+              color = lv_color_hex(0xFBBF24);
             }
             lv_obj_set_style_text_color(id(icon_climate_wx), color, LV_PART_MAIN);
             lv_obj_set_style_text_color(id(icon_climate_wx_sub), color, LV_PART_MAIN);
@@ -258,7 +248,6 @@ text_sensor:
               }
             }
 
-            // 1. Subscreen-Buttons aktualisieren
             lv_obj_set_style_border_color(id(btn_mode_off), border_off, LV_PART_MAIN);
             lv_obj_set_style_border_width(id(btn_mode_off), width_off, LV_PART_MAIN);
             lv_obj_set_style_text_color(id(lbl_mode_off), text_off, LV_PART_MAIN);
@@ -275,25 +264,23 @@ text_sensor:
             lv_obj_invalidate(id(btn_mode_heat));
             lv_obj_invalidate(id(btn_mode_cool));
 
-            // 2. Hauptkachel-Modus-Icon aktualisieren (Symbol wechselt, Farbe bleibt blau)
-            std::string icon_code = "\uE8AC"; // Off Icon
-
+            std::string icon_code = "\uE8AC";
             if (mode == "heat") {
-              icon_code = "\uEF55"; // Flame
+              icon_code = "\uEF55";
             } else if (mode == "cool") {
-              icon_code = "\uEB3B"; // Snowflake
+              icon_code = "\uEB3B";
             } else if (mode == "off") {
-              icon_code = "\uE8AC"; // Power/Off
+              icon_code = "\uE8AC";
             }
 
             lv_label_set_text(id(icon_climate_mode), icon_code.c_str());
             lv_obj_invalidate(id(icon_climate_mode));
-            
+
 #-------------------------------------------------------------
 # NUMERIC SENSORS
 #-------------------------------------------------------------
 sensor:
-  # --- 1. LOCAL HARDWARE SENSOR (DHT22) -> Aktualisiert Hauptscreen & Subscreen ---
+  # --- 1. LOCAL HARDWARE SENSOR (DHT22) ---
   - platform: dht
     pin: GPIO21
     model: AM2302
@@ -312,7 +299,6 @@ sensor:
               char buf[32];
               sprintf(buf, "%.1f°C", x);
               lv_label_set_text(id(lbl_climate_temp), buf);
-              sprintf(buf, "%.1f°C", x);
               lv_label_set_text(id(lbl_in_temp_val), buf);
 
               auto color = lv_color_hex(0x38BDF8);
@@ -343,7 +329,8 @@ sensor:
               lv_label_set_text(id(lbl_climate_hum), buf);
               sprintf(buf, "%.0f%%", x);
               lv_label_set_text(id(lbl_in_hum_val), buf);
-  # --- TAUHÖHE / DEW POINT (Beide Screens) ---
+
+  # --- TAUHÖHE / DEW POINT ---
   - platform: homeassistant
     id: qek_dew_point
     entity_id: sensor.qek_dew_point
@@ -370,7 +357,6 @@ sensor:
       then:
         - lambda: |-
             int soc = (int)x;
-            // Hauptkachel & Subscreen aktualisieren
             lv_label_set_text_fmt(id(lbl_bat_soc), "%d%%", soc);
             lv_label_set_text_fmt(id(lbl_det_soc_val), "%d%%", soc);
 
@@ -416,15 +402,13 @@ sensor:
             lv_obj_invalidate(id(lbl_bat_in));
             lv_obj_invalidate(id(icon_bat_source));
 
-            // Solar Subscreen Update (Power & Energy)
             float sol_energy = id(qek_anker_solix_c1000_solar_energy_in_today).state;
             lv_label_set_text_fmt(id(lbl_det_sol_in), "%.0f W  (%.0f Wh)", isnan(sol) ? 0 : sol, isnan(sol_energy) ? 0 : sol_energy);
             lv_obj_invalidate(id(lbl_det_sol_in));
 
   - platform: homeassistant
-    name: "Anker Solix Solar Energy In Today"
-    entity_id: sensor.qek_anker_solix_c1000_solar_energy_in_today
     id: qek_anker_solix_c1000_solar_energy_in_today
+    entity_id: sensor.qek_anker_solix_c1000_solar_energy_in_today
     on_value:
       then:
         - lambda: |-
@@ -432,7 +416,7 @@ sensor:
             float sol_energy = x;
             lv_label_set_text_fmt(id(lbl_det_sol_in), "%.0f W  (%.0f Wh)", isnan(sol) ? 0 : sol, isnan(sol_energy) ? 0 : sol_energy);
             lv_obj_invalidate(id(lbl_det_sol_in));
-                        
+
   - platform: homeassistant
     id: bat_ac_in
     entity_id: sensor.anker_solix_c1000_ac_power_in
@@ -454,8 +438,18 @@ sensor:
             lv_obj_invalidate(id(lbl_bat_in));
             lv_obj_invalidate(id(icon_bat_source));
 
-            // AC Subscreen Update (Power & Energy)
             float ac_energy = id(qek_anker_solix_c1000_ac_energy_in_today).state;
+            lv_label_set_text_fmt(id(lbl_det_ac_in), "%.0f W  (%.0f Wh)", isnan(ac) ? 0 : ac, isnan(ac_energy) ? 0 : ac_energy);
+            lv_obj_invalidate(id(lbl_det_ac_in));
+
+  - platform: homeassistant
+    id: qek_anker_solix_c1000_ac_energy_in_today
+    entity_id: sensor.qek_anker_solix_c1000_ac_energy_in_today
+    on_value:
+      then:
+        - lambda: |-
+            float ac = id(bat_ac_in).state;
+            float ac_energy = x;
             lv_label_set_text_fmt(id(lbl_det_ac_in), "%.0f W  (%.0f Wh)", isnan(ac) ? 0 : ac, isnan(ac_energy) ? 0 : ac_energy);
             lv_obj_invalidate(id(lbl_det_ac_in));
                         
@@ -592,12 +586,8 @@ sensor:
         - lambda: |-
             char buf[32];
             sprintf(buf, "%.1f°C", x);
-            
-            // 1. Für den Subscreen (Einstelltaste)
             lv_label_set_text(id(lbl_target_value), buf);
             lv_obj_invalidate(id(lbl_target_value));
-
-            // 2. Für den Hauptbildschirm (Kachel)
             lv_label_set_text(id(lbl_climate_target), buf);
             lv_obj_invalidate(id(lbl_climate_target));
                       
@@ -662,56 +652,3 @@ sensor:
               sprintf(buf, "%d%%", (int)x);
               lv_label_set_text(id(lbl_out_hum_val), buf);
             }
-
-  - platform: homeassistant
-    name: "Anker Solix AC Power In"
-    entity_id: sensor.anker_solix_c1000_ac_power_in
-    id: anker_solix_c1000_ac_power_in
-
-  - platform: homeassistant
-    name: "Anker Solix AC Energy In Today"
-    entity_id: sensor.qek_anker_solix_c1000_ac_energy_in_today
-    id: qek_anker_solix_c1000_ac_energy_in_today
-
-  - platform: homeassistant
-    name: "Anker Solix Solar Energy In Today"
-    entity_id: sensor.qek_anker_solix_c1000_solar_energy_in_today
-    id: qek_anker_solix_c1000_solar_energy_in_today
-
-  - platform: homeassistant
-    id: bat_sol_in
-    entity_id: sensor.anker_solix_c1000_solar_power_in
-    on_value:
-      then:
-        - lambda: |-
-            float sol = x;
-            float ac = id(bat_ac_in).state;
-            
-            if (sol > 2.0) {
-              lv_label_set_text_fmt(id(lbl_bat_in), "In: %d W", (int)sol);
-              lv_label_set_text(id(icon_bat_source), "\uE81A");
-              lv_obj_set_style_text_color(id(icon_bat_source), lv_color_hex(0x38BDF8), LV_PART_MAIN);
-            } else if (isnan(ac) || ac <= 2.0) {
-              lv_label_set_text(id(lbl_bat_in), "In: 0 W");
-              lv_label_set_text(id(icon_bat_source), "\uE646");
-              lv_obj_set_style_text_color(id(icon_bat_source), lv_color_hex(0x64748B), LV_PART_MAIN);
-            }
-            lv_obj_invalidate(id(lbl_bat_in));
-            lv_obj_invalidate(id(icon_bat_source));
-
-            // Solar Subscreen Update (Power & Energy)
-            float sol_energy = id(qek_anker_solix_c1000_solar_energy_in_today).state;
-            lv_label_set_text_fmt(id(lbl_det_sol_in), "%.0f W  (%.0f Wh)", isnan(sol) ? 0 : sol, isnan(sol_energy) ? 0 : sol_energy);
-            lv_obj_invalidate(id(lbl_det_sol_in));
-
-  - platform: homeassistant
-    name: "Anker Solix Solar Energy In Today"
-    entity_id: sensor.qek_anker_solix_c1000_solar_energy_in_today
-    id: qek_anker_solix_c1000_solar_energy_in_today
-    on_value:
-      then:
-        - lambda: |-
-            float sol = id(bat_sol_in).state;
-            float sol_energy = x;
-            lv_label_set_text_fmt(id(lbl_det_sol_in), "%.0f W  (%.0f Wh)", isnan(sol) ? 0 : sol, isnan(sol_energy) ? 0 : sol_energy);
-            lv_obj_invalidate(id(lbl_det_sol_in));  
