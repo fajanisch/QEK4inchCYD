@@ -397,7 +397,7 @@ sensor:
 
   - platform: homeassistant
     id: bat_sol_in
-    entity_id: sensor.qek_anker_solix_c1000_solar_power_in
+    entity_id: sensor.anker_solix_c1000_solar_power_in
     on_value:
       then:
         - lambda: |-
@@ -420,7 +420,19 @@ sensor:
             float sol_energy = id(qek_anker_solix_c1000_solar_energy_in_today).state;
             lv_label_set_text_fmt(id(lbl_det_sol_in), "%.0f W  (%.0f Wh)", isnan(sol) ? 0 : sol, isnan(sol_energy) ? 0 : sol_energy);
             lv_obj_invalidate(id(lbl_det_sol_in));
-            
+
+  - platform: homeassistant
+    name: "Anker Solix Solar Energy In Today"
+    entity_id: sensor.qek_anker_solix_c1000_solar_energy_in_today
+    id: qek_anker_solix_c1000_solar_energy_in_today
+    on_value:
+      then:
+        - lambda: |-
+            float sol = id(bat_sol_in).state;
+            float sol_energy = x;
+            lv_label_set_text_fmt(id(lbl_det_sol_in), "%.0f W  (%.0f Wh)", isnan(sol) ? 0 : sol, isnan(sol_energy) ? 0 : sol_energy);
+            lv_obj_invalidate(id(lbl_det_sol_in));
+                        
   - platform: homeassistant
     id: bat_ac_in
     entity_id: sensor.anker_solix_c1000_ac_power_in
