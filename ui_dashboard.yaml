@@ -23,6 +23,7 @@ font:
     size: 16
     glyphs: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 /:.-°%|,>()<+"
 
+  font:
   - file: "gfonts://Material+Symbols+Outlined"
     id: font_icons
     size: 18
@@ -57,8 +58,7 @@ font:
       - "\uEF55" # local_fire_department / Flamme (Heat)
       - "\uF8D8" # toggle_off (Alternative)
       - "\uF8D9" # toggle_on (Alternative)
-      - "\uE8AC" #// Off / Power
-
+      - "\uE8AC" # Off / Power
 
   - file: "gfonts://Material+Symbols+Outlined"
     id: font_icons_sub
@@ -206,7 +206,7 @@ lvgl:
                     id: badge_charging
                     text: "\uE1A4"
                     text_font: font_icons
-                    styles: style_icon_inactive
+                    # styles: style_icon_inactive
                     align: right_mid
                     x: -190
                 # --- Bestehende Badges rechts ---
