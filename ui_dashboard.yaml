@@ -1439,10 +1439,10 @@ lvgl:
                     height: 268
                     styles: style_card
                     pad_all: 4
-                    scrollable: false
-                    scrollbar_mode: "off"
-                    clickable: false
-                    widgets:
+                    scrollable: False
+                    scrollbar_mode: off
+                    clickable: False
+                    widgets: 
                       - label:
                           text: "Battery Settings"
                           text_font: font_sub_title
@@ -1452,7 +1452,7 @@ lvgl:
                           y: 2
 
                       # --- OBEN: 4 Preset-Knöpfe in einer Zeile ---
-                      - obj:
+                      - obj: 
                           x: 2
                           y: 28
                           width: 220
@@ -1461,112 +1461,112 @@ lvgl:
                           bg_opa: TRANSP
                           border_width: 0
                           pad_all: 0
-                          scrollable: false
-                          widgets:
-                            - button:
+                          scrollable: False
+                          widgets: 
+                            - button: 
                                 x: 0
                                 y: 0
                                 width: 50
                                 height: 34
                                 styles: style_card
-                                clickable: true
+                                clickable: True
                                 widgets:
                                   - label:
                                       text: "20-50"
                                       text_font: font_card_header
                                       text_color: 0x38BDF8
                                       align: center
-                                on_click:
-                                  then:
-                                    - homeassistant.service:
+                                on_click: 
+                                  then: 
+                                    - homeassistant.service: 
                                         service: input_number.set_value
-                                        data:
+                                        data: 
                                           entity_id: input_number.c1000_min_soc
                                           value: 20
-                                    - homeassistant.service:
+                                    - homeassistant.service: 
                                         service: input_number.set_value
-                                        data:
+                                        data: 
                                           entity_id: input_number.c1000_max_soc
                                           value: 50
                                     - script.execute: power_detail_timeout
 
-                            - button:
+                            - button: 
                                 x: 56
                                 y: 0
                                 width: 50
                                 height: 34
                                 styles: style_card
-                                clickable: true
+                                clickable: True
                                 widgets:
                                   - label:
                                       text: "20-80"
                                       text_font: font_card_header
                                       text_color: 0x38BDF8
                                       align: center
-                                on_click:
-                                  then:
-                                    - homeassistant.service:
+                                on_click: 
+                                  then: 
+                                    - homeassistant.service: 
                                         service: input_number.set_value
-                                        data:
+                                        data: 
                                           entity_id: input_number.c1000_min_soc
                                           value: 20
-                                    - homeassistant.service:
+                                    - homeassistant.service: 
                                         service: input_number.set_value
-                                        data:
+                                        data: 
                                           entity_id: input_number.c1000_max_soc
                                           value: 80
                                     - script.execute: power_detail_timeout
 
-                            - button:
+                            - button: 
                                 x: 112
                                 y: 0
                                 width: 50
                                 height: 34
                                 styles: style_card
-                                clickable: true
+                                clickable: True
                                 widgets:
                                   - label:
                                       text: "50-80"
                                       text_font: font_card_header
                                       text_color: 0x38BDF8
                                       align: center
-                                on_click:
-                                  then:
-                                    - homeassistant.service:
+                                on_click: 
+                                  then: 
+                                    - homeassistant.service: 
                                         service: input_number.set_value
-                                        data:
+                                        data: 
                                           entity_id: input_number.c1000_min_soc
                                           value: 50
-                                    - homeassistant.service:
+                                    - homeassistant.service: 
                                         service: input_number.set_value
-                                        data:
+                                        data: 
                                           entity_id: input_number.c1000_max_soc
                                           value: 80
                                     - script.execute: power_detail_timeout
 
-                            - button:
+                            - button: 
                                 x: 168
                                 y: 0
                                 width: 50
                                 height: 34
                                 styles: style_card
-                                clickable: true
+                                clickable: True
                                 widgets:
                                   - label:
                                       text: "100%"
                                       text_font: font_card_header
                                       text_color: 0x38BDF8
                                       align: center
-                                on_click:
-                                  then:
-                                    - homeassistant.service:
+                                on_click: 
+                                  then: 
+                                    - homeassistant.service: 
                                         service: input_number.set_value
-                                        data:
+                                        data: 
                                           entity_id: input_number.c1000_min_soc
                                           value: 100
-                                    - homeassistant.service:
+                                    - homeassistant.service: 
                                         service: input_number.set_value
-                                        data:
+                                        data: 
                                           entity_id: input_number.c1000_max_soc
                                           value: 100
                                     - script.execute: power_detail_timeout
@@ -1586,7 +1586,7 @@ lvgl:
                           height: 42
                           styles: style_card
                           pad_all: 0
-                          clickable: true
+                          clickable: True
                           widgets:
                             - label:
                                 text: "-"
@@ -1607,7 +1607,7 @@ lvgl:
                           height: 42
                           styles: style_card
                           pad_all: 0
-                          clickable: false
+                          clickable: False
                           widgets:
                             - label:
                                 id: lbl_cyd_min_val
@@ -1626,7 +1626,7 @@ lvgl:
                           height: 42
                           styles: style_card
                           pad_all: 0
-                          clickable: true
+                          clickable: True
                           widgets:
                             - label:
                                 text: "+"
@@ -1656,7 +1656,7 @@ lvgl:
                           height: 42
                           styles: style_card
                           pad_all: 0
-                          clickable: true
+                          clickable: True
                           widgets:
                             - label:
                                 text: "-"
@@ -1677,7 +1677,7 @@ lvgl:
                           height: 42
                           styles: style_card
                           pad_all: 0
-                          clickable: false
+                          clickable: False
                           widgets:
                             - label:
                                 id: lbl_cyd_max_val
@@ -1696,7 +1696,7 @@ lvgl:
                           height: 42
                           styles: style_card
                           pad_all: 0
-                          clickable: true
+                          clickable: True
                           widgets:
                             - label:
                                 text: "+"
