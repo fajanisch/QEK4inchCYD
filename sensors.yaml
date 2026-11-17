@@ -652,6 +652,8 @@ sensor:
               sprintf(buf, "%d%%", (int)x);
               lv_label_set_text(id(lbl_out_hum_val), buf);
             }
+
+            
  #INETRNAL BATTERY
   # --- 1. ADC-Messung an GPIO9 ---
   - platform: adc
