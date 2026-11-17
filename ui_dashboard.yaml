@@ -57,6 +57,7 @@ font:
       - "\uF8D8" # toggle_off (Alternative)
       - "\uF8D9" # toggle_on (Alternative)
       - "\uE8AC" # Off / Power
+      - "\uE1A3" # Battery Charging
 
   - file: "gfonts://Material+Symbols+Outlined"
     id: font_icons_sub
