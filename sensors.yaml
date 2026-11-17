@@ -694,7 +694,7 @@ sensor:
             
             if (is_charging) {
               // Lädt: Blitz-Icon + Cyan
-              lv_label_set_text(id(badge_charging), "\uE63C");
+              lv_label_set_text(id(badge_charging), "\uE1A3");
               color = lv_color_hex(0x38BDF8);
             } else {
               // Entlädt: Batterie-Icon + Farbwarnstufen nach Akkustand
