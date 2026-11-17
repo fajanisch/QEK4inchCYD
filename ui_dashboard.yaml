@@ -1445,7 +1445,7 @@ lvgl:
                     clickable: False
                     widgets: 
                       - label:
-                          text: "Battery Settings"
+                          text: "Charge Control"
                           text_font: font_sub_title
                           text_color: 0x38BDF8
                           align: top_left
@@ -1732,7 +1732,7 @@ lvgl:
                     scrollbar_mode: "off"
                     widgets: 
                       - label:
-                          text: "Battery Details"
+                          text: "Battery Stats"
                           text_font: font_sub_title
                           text_color: 0x38BDF8
                           align: top_left
