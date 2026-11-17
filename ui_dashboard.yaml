@@ -1430,7 +1430,7 @@ lvgl:
               scrollable: false
               scrollbar_mode: "off"
               widgets: 
-                # Linke Seite (leer)
+                # Linke Seite (Batterie-Einstellungen & Presets)
                 - obj:
                     id: card_battery_left_empty
                     x: 8
@@ -1442,8 +1442,275 @@ lvgl:
                     scrollable: false
                     scrollbar_mode: "off"
                     clickable: false
-                    widgets: []
+                    widgets:
+                      - label:
+                          text: "Battery Settings"
+                          text_font: font_sub_title
+                          text_color: 0x38BDF8
+                          align: top_left
+                          x: 2
+                          y: 2
 
+                      # --- OBEN: 4 Preset-Knöpfe in einer Zeile ---
+                      - obj:
+                          x: 2
+                          y: 28
+                          width: 220
+                          height: 36
+                          bg_color: 0x0F172A
+                          bg_opa: TRANSP
+                          border_width: 0
+                          pad_all: 0
+                          scrollable: false
+                          widgets:
+                            - button:
+                                x: 0
+                                y: 0
+                                width: 50
+                                height: 34
+                                styles: style_card
+                                clickable: true
+                                widgets:
+                                  - label:
+                                      text: "20-50"
+                                      text_font: font_card_header
+                                      text_color: 0x38BDF8
+                                      align: center
+                                on_click:
+                                  then:
+                                    - homeassistant.service:
+                                        service: input_number.set_value
+                                        data:
+                                          entity_id: input_number.c1000_min_soc
+                                          value: 20
+                                    - homeassistant.service:
+                                        service: input_number.set_value
+                                        data:
+                                          entity_id: input_number.c1000_max_soc
+                                          value: 50
+                                    - script.execute: power_detail_timeout
+
+                            - button:
+                                x: 56
+                                y: 0
+                                width: 50
+                                height: 34
+                                styles: style_card
+                                clickable: true
+                                widgets:
+                                  - label:
+                                      text: "20-80"
+                                      text_font: font_card_header
+                                      text_color: 0x38BDF8
+                                      align: center
+                                on_click:
+                                  then:
+                                    - homeassistant.service:
+                                        service: input_number.set_value
+                                        data:
+                                          entity_id: input_number.c1000_min_soc
+                                          value: 20
+                                    - homeassistant.service:
+                                        service: input_number.set_value
+                                        data:
+                                          entity_id: input_number.c1000_max_soc
+                                          value: 80
+                                    - script.execute: power_detail_timeout
+
+                            - button:
+                                x: 112
+                                y: 0
+                                width: 50
+                                height: 34
+                                styles: style_card
+                                clickable: true
+                                widgets:
+                                  - label:
+                                      text: "50-80"
+                                      text_font: font_card_header
+                                      text_color: 0x38BDF8
+                                      align: center
+                                on_click:
+                                  then:
+                                    - homeassistant.service:
+                                        service: input_number.set_value
+                                        data:
+                                          entity_id: input_number.c1000_min_soc
+                                          value: 50
+                                    - homeassistant.service:
+                                        service: input_number.set_value
+                                        data:
+                                          entity_id: input_number.c1000_max_soc
+                                          value: 80
+                                    - script.execute: power_detail_timeout
+
+                            - button:
+                                x: 168
+                                y: 0
+                                width: 50
+                                height: 34
+                                styles: style_card
+                                clickable: true
+                                widgets:
+                                  - label:
+                                      text: "100%"
+                                      text_font: font_card_header
+                                      text_color: 0x38BDF8
+                                      align: center
+                                on_click:
+                                  then:
+                                    - homeassistant.service:
+                                        service: input_number.set_value
+                                        data:
+                                          entity_id: input_number.c1000_min_soc
+                                          value: 100
+                                    - homeassistant.service:
+                                        service: input_number.set_value
+                                        data:
+                                          entity_id: input_number.c1000_max_soc
+                                          value: 100
+                                    - script.execute: power_detail_timeout
+
+                      # --- MITTE: Min SoC Einsteller [-][ Wert ][+] ---
+                      - label:
+                          text: "Min SoC"
+                          text_font: font_card_header
+                          text_color: 0x94A3B8
+                          align: top_left
+                          x: 2
+                          y: 72
+                      - obj:
+                          x: 2
+                          y: 92
+                          width: 48
+                          height: 42
+                          styles: style_card
+                          pad_all: 0
+                          clickable: true
+                          widgets:
+                            - label:
+                                text: "-"
+                                text_font: font_sub_title
+                                text_color: 0x38BDF8
+                                align: center
+                          on_click:
+                            then:
+                              - homeassistant.service:
+                                  service: input_number.decrement
+                                  data:
+                                    entity_id: input_number.c1000_min_soc
+                              - script.execute: power_detail_timeout
+                      - obj:
+                          x: 54
+                          y: 92
+                          width: 114
+                          height: 42
+                          styles: style_card
+                          pad_all: 0
+                          clickable: false
+                          widgets:
+                            - label:
+                                id: lbl_cyd_min_val
+                                text: !lambda |-
+                                  float val = id(c1000_min_soc).state;
+                                  char buf[16];
+                                  sprintf(buf, "%.0f %%", isnan(val) ? 0 : val);
+                                  return std::string(buf);
+                                text_font: font_card_header
+                                text_color: 0x38BDF8
+                                align: center
+                      - obj:
+                          x: 172
+                          y: 92
+                          width: 48
+                          height: 42
+                          styles: style_card
+                          pad_all: 0
+                          clickable: true
+                          widgets:
+                            - label:
+                                text: "+"
+                                text_font: font_sub_title
+                                text_color: 0x38BDF8
+                                align: center
+                          on_click:
+                            then:
+                              - homeassistant.service:
+                                  service: input_number.increment
+                                  data:
+                                    entity_id: input_number.c1000_min_soc
+                              - script.execute: power_detail_timeout
+
+                      # --- UNTEN: Max SoC Einsteller [-][ Wert ][+] ---
+                      - label:
+                          text: "Max SoC"
+                          text_font: font_card_header
+                          text_color: 0x94A3B8
+                          align: top_left
+                          x: 2
+                          y: 144
+                      - obj:
+                          x: 2
+                          y: 164
+                          width: 48
+                          height: 42
+                          styles: style_card
+                          pad_all: 0
+                          clickable: true
+                          widgets:
+                            - label:
+                                text: "-"
+                                text_font: font_sub_title
+                                text_color: 0x38BDF8
+                                align: center
+                          on_click:
+                            then:
+                              - homeassistant.service:
+                                  service: input_number.decrement
+                                  data:
+                                    entity_id: input_number.c1000_max_soc
+                              - script.execute: power_detail_timeout
+                      - obj:
+                          x: 54
+                          y: 164
+                          width: 114
+                          height: 42
+                          styles: style_card
+                          pad_all: 0
+                          clickable: false
+                          widgets:
+                            - label:
+                                id: lbl_cyd_max_val
+                                text: !lambda |-
+                                  float val = id(c1000_max_soc).state;
+                                  char buf[16];
+                                  sprintf(buf, "%.0f %%", isnan(val) ? 0 : val);
+                                  return std::string(buf);
+                                text_font: font_card_header
+                                text_color: 0x38BDF8
+                                align: center
+                      - obj:
+                          x: 172
+                          y: 164
+                          width: 48
+                          height: 42
+                          styles: style_card
+                          pad_all: 0
+                          clickable: true
+                          widgets:
+                            - label:
+                                text: "+"
+                                text_font: font_sub_title
+                                text_color: 0x38BDF8
+                                align: center
+                          on_click:
+                            then:
+                              - homeassistant.service:
+                                  service: input_number.increment
+                                  data:
+                                    entity_id: input_number.c1000_max_soc
+                              - script.execute: power_detail_timeout
+                              
                 # Rechte Seite oben (Batterie-Details)
                 - obj:
                     id: card_battery_details
