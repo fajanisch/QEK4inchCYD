@@ -716,8 +716,10 @@ sensor:
     entity_id: input_number.c1000_min_soc
     id: cyd_ha_min_soc
     name: "CYD Mirror Min SoC"
+    force_update: true
 
   - platform: homeassistant
     entity_id: input_number.c1000_max_soc
     id: cyd_ha_max_soc
     name: "CYD Mirror Max SoC"
+    force_update: true
