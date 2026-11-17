@@ -688,7 +688,7 @@ sensor:
             
             // Lade-Erkennung über die Spannung (> 4.10V = USB angeschlossen / lädt)
             float v = id(cyd_batt_raw_voltage).state;
-            bool is_charging = (v > 4.10); 
+            bool is_charging = (v > 3.95); 
 
             auto color = lv_color_hex(0x38BDF8); // Standard Cyan
             
