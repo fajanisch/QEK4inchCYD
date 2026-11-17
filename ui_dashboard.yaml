@@ -193,21 +193,23 @@ lvgl:
                     text_font: font_bar
                     align: left_mid
                     x: 6
+                # --- Neu: Akku Prozent (weiter rechts vor den Icons) ---
                 - label:
                     id: lbl_status_batt_pct
-                    text: "100%"
+                    text: "--%"
                     styles: style_txt_normal
                     text_font: font_bar
-                    text_color: 0x38BDF8
-                    align: left_mid
-                    x: 145
+                    align: right_mid
+                    x: -145
+                # --- Neu: Lade-Indikator (direkt links neben dem Akku-Wert) ---
                 - label:
                     id: badge_charging
                     text: "\uE1A4"
                     text_font: font_icons
                     styles: style_icon_inactive
-                    align: left_mid
-                    x: 195
+                    align: right_mid
+                    x: -190
+                # --- Bestehende Badges rechts ---
                 - label:
                     id: badge_pwr
                     text: "\uE646"
