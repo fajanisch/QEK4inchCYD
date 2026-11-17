@@ -1440,7 +1440,7 @@ lvgl:
                     styles: style_card
                     pad_all: 4
                     scrollable: False
-                    scrollbar_mode: off
+                    scrollbar_mode: "off"
                     clickable: False
                     widgets: 
                       - label:
@@ -1482,12 +1482,12 @@ lvgl:
                                         service: input_number.set_value
                                         data: 
                                           entity_id: input_number.c1000_min_soc
-                                          value: 20
+                                          value: "20"
                                     - homeassistant.service: 
                                         service: input_number.set_value
                                         data: 
                                           entity_id: input_number.c1000_max_soc
-                                          value: 50
+                                          value: "50"
                                     - script.execute: power_detail_timeout
 
                             - button: 
@@ -1509,12 +1509,12 @@ lvgl:
                                         service: input_number.set_value
                                         data: 
                                           entity_id: input_number.c1000_min_soc
-                                          value: 20
+                                          value: "20"
                                     - homeassistant.service: 
                                         service: input_number.set_value
                                         data: 
                                           entity_id: input_number.c1000_max_soc
-                                          value: 80
+                                          value: "80"
                                     - script.execute: power_detail_timeout
 
                             - button: 
@@ -1536,12 +1536,12 @@ lvgl:
                                         service: input_number.set_value
                                         data: 
                                           entity_id: input_number.c1000_min_soc
-                                          value: 50
+                                          value: "50"
                                     - homeassistant.service: 
                                         service: input_number.set_value
                                         data: 
                                           entity_id: input_number.c1000_max_soc
-                                          value: 80
+                                          value: "80"
                                     - script.execute: power_detail_timeout
 
                             - button: 
@@ -1563,12 +1563,12 @@ lvgl:
                                         service: input_number.set_value
                                         data: 
                                           entity_id: input_number.c1000_min_soc
-                                          value: 100
+                                          value: "100"
                                     - homeassistant.service: 
                                         service: input_number.set_value
                                         data: 
                                           entity_id: input_number.c1000_max_soc
-                                          value: 100
+                                          value: "100"
                                     - script.execute: power_detail_timeout
 
                       # --- MITTE: Min SoC Einsteller [-][ Wert ][+] ---
@@ -1710,8 +1710,8 @@ lvgl:
                                   data:
                                     entity_id: input_number.c1000_max_soc
                               - script.execute: power_detail_timeout
-                              
-                # Rechte Seite oben (Batterie-Details)
+#---------------------------------------------------------------------------------------                              
+# Rechte Seite oben (Batterie-Details)
                 - obj:
                     id: card_battery_details
                     x: 244
