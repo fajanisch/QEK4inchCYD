@@ -23,7 +23,6 @@ font:
     size: 16
     glyphs: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 /:.-°%|,>()<+"
 
-  font:
   - file: "gfonts://Material+Symbols+Outlined"
     id: font_icons
     size: 18
