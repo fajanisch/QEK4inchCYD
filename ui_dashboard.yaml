@@ -1614,6 +1614,7 @@ lvgl:
                             - label:
                                 id: lbl_cyd_min_val
                                 text: !lambda |-
+                                  if (!id(cyd_ha_min_soc).has_state()) return "---";
                                   float val = id(cyd_ha_min_soc).state;
                                   char buf[16];
                                   sprintf(buf, "%.0f %%", isnan(val) ? 0 : val);
@@ -1687,6 +1688,7 @@ lvgl:
                             - label:
                                 id: lbl_cyd_max_val
                                 text: !lambda |-
+                                  if (!id(cyd_ha_max_soc).has_state()) return "---";
                                   float val = id(cyd_ha_max_soc).state;
                                   char buf[16];
                                   sprintf(buf, "%.0f %%", isnan(val) ? 0 : val);
