@@ -717,9 +717,23 @@ sensor:
     id: c1000_mirror_min_soc
     name: "C1000 Mirror Min SoC"
     force_update: true
+    on_value:
+      then:
+        - lambda: |-
+            char buf[32];
+            sprintf(buf, "%.0f %%", x);
+            lv_label_set_text(id(lbl_c1000_min_val), buf);
+            lv_obj_invalidate(id(lbl_c1000_min_val));
 
   - platform: homeassistant
     entity_id: input_number.c1000_max_soc
     id: c1000_mirror_max_soc
     name: "C1000 Mirror Max SoC"
     force_update: true
+    on_value:
+      then:
+        - lambda: |-
+            char buf[32];
+            sprintf(buf, "%.0f %%", x);
+            lv_label_set_text(id(lbl_c1000_max_val), buf);
+            lv_obj_invalidate(id(lbl_c1000_max_val));
