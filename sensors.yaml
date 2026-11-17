@@ -710,3 +710,14 @@ sensor:
             lv_obj_set_style_text_color(id(badge_charging), color, LV_PART_MAIN);
             lv_obj_invalidate(id(lbl_status_batt_pct));
             lv_obj_invalidate(id(badge_charging));
+
+# C1000 charge Control
+  - platform: homeassistant
+    entity_id: input_number.c1000_min_soc
+    id: cyd_ha_min_soc
+    name: "CYD Mirror Min SoC"
+
+  - platform: homeassistant
+    entity_id: input_number.c1000_max_soc
+    id: cyd_ha_max_soc
+    name: "CYD Mirror Max SoC"
