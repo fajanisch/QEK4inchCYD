@@ -1430,7 +1430,8 @@ lvgl:
               scrollable: false
               scrollbar_mode: "off"
               widgets: 
-                # Linke Seite (Batterie-Einstellungen & Presets)
+#---------------------------------------------------------------------------------------------                
+# Linke Seite (Batterie-Einstellungen & Presets)
                 - obj:
                     id: card_battery_left_empty
                     x: 8
@@ -1478,14 +1479,14 @@ lvgl:
                                       align: center
                                 on_click: 
                                   then: 
-                                    - homeassistant.service: 
+                                    - homeassistant.service:
                                         service: input_number.set_value
-                                        data: 
+                                        data:
                                           entity_id: input_number.c1000_min_soc
                                           value: "20"
-                                    - homeassistant.service: 
+                                    - homeassistant.service:
                                         service: input_number.set_value
-                                        data: 
+                                        data:
                                           entity_id: input_number.c1000_max_soc
                                           value: "50"
                                     - script.execute: power_detail_timeout
@@ -1505,14 +1506,14 @@ lvgl:
                                       align: center
                                 on_click: 
                                   then: 
-                                    - homeassistant.service: 
+                                    - homeassistant.service:
                                         service: input_number.set_value
-                                        data: 
+                                        data:
                                           entity_id: input_number.c1000_min_soc
                                           value: "20"
-                                    - homeassistant.service: 
+                                    - homeassistant.service:
                                         service: input_number.set_value
-                                        data: 
+                                        data:
                                           entity_id: input_number.c1000_max_soc
                                           value: "80"
                                     - script.execute: power_detail_timeout
@@ -1532,14 +1533,14 @@ lvgl:
                                       align: center
                                 on_click: 
                                   then: 
-                                    - homeassistant.service: 
+                                    - homeassistant.service:
                                         service: input_number.set_value
-                                        data: 
+                                        data:
                                           entity_id: input_number.c1000_min_soc
                                           value: "50"
-                                    - homeassistant.service: 
+                                    - homeassistant.service:
                                         service: input_number.set_value
-                                        data: 
+                                        data:
                                           entity_id: input_number.c1000_max_soc
                                           value: "80"
                                     - script.execute: power_detail_timeout
@@ -1559,14 +1560,14 @@ lvgl:
                                       align: center
                                 on_click: 
                                   then: 
-                                    - homeassistant.service: 
+                                    - homeassistant.service:
                                         service: input_number.set_value
-                                        data: 
+                                        data:
                                           entity_id: input_number.c1000_min_soc
                                           value: "100"
-                                    - homeassistant.service: 
+                                    - homeassistant.service:
                                         service: input_number.set_value
-                                        data: 
+                                        data:
                                           entity_id: input_number.c1000_max_soc
                                           value: "100"
                                     - script.execute: power_detail_timeout
@@ -1612,7 +1613,7 @@ lvgl:
                             - label:
                                 id: lbl_cyd_min_val
                                 text: !lambda |-
-                                  float val = id(c1000_min_soc).state;
+                                  float val = id(cyd_ha_min_soc).state;
                                   char buf[16];
                                   sprintf(buf, "%.0f %%", isnan(val) ? 0 : val);
                                   return std::string(buf);
@@ -1682,7 +1683,7 @@ lvgl:
                             - label:
                                 id: lbl_cyd_max_val
                                 text: !lambda |-
-                                  float val = id(c1000_max_soc).state;
+                                  float val = id(cyd_ha_max_soc).state;
                                   char buf[16];
                                   sprintf(buf, "%.0f %%", isnan(val) ? 0 : val);
                                   return std::string(buf);
@@ -1710,6 +1711,7 @@ lvgl:
                                   data:
                                     entity_id: input_number.c1000_max_soc
                               - script.execute: power_detail_timeout
+                              
 #---------------------------------------------------------------------------------------                              
 # Rechte Seite oben (Batterie-Details)
                 - obj:
