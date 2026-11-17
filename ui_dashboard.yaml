@@ -194,6 +194,21 @@ lvgl:
                     align: left_mid
                     x: 6
                 - label:
+                    id: lbl_status_batt_pct
+                    text: "100%"
+                    styles: style_txt_normal
+                    text_font: font_bar
+                    text_color: 0x38BDF8
+                    align: left_mid
+                    x: 145
+                - label:
+                    id: badge_charging
+                    text: "\uE1A4"
+                    text_font: font_icons
+                    styles: style_icon_inactive
+                    align: left_mid
+                    x: 195
+                - label:
                     id: badge_pwr
                     text: "\uE646"
                     text_font: font_icons
@@ -214,7 +229,7 @@ lvgl:
                     styles: style_icon_inactive
                     align: right_mid
                     x: -80
-
+                    
           - obj:
               id: card_ext_pwr
               x: 8
