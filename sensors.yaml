@@ -652,3 +652,48 @@ sensor:
               sprintf(buf, "%d%%", (int)x);
               lv_label_set_text(id(lbl_out_hum_val), buf);
             }
+ #INETRNAL BATTERY
+  # --- 1. ADC-Messung an GPIO9 ---
+  - platform: adc
+    pin: GPIO9
+    id: cyd_batt_raw_voltage
+    name: "CYD Battery Voltage"
+    update_interval: 60s
+    attenuation: 11dB  # Erlaubt Messungen bis ca. 3.3V / mit Teiler entsprechend mehr
+    filters:
+      # Falls ein Spannungsteiler auf dem Board sitzt (oft 1:1), muss hier multipliziert werden.
+      # Starten wir mit einem Multiplikator von 2.0 (falls halbe Spannung gemessen wird):
+      - multiply: 2.0
+
+  # --- 2. Umrechnung in Prozent & UI-Aktualisierung ---
+  - platform: template
+    name: "CYD Battery Percentage"
+    id: cyd_battery_pct
+    update_interval: 60s
+    lambda: |-
+      float v = id(cyd_batt_raw_voltage).state;
+      if (isnan(v)) return 0.0;
+      
+      // Lineäre Annäherung für Li-Ion (3.3V = 0%, 4.2V = 100%)
+      float pct = (v - 3.3) / (4.2 - 3.3) * 100.0;
+      if (pct < 0) return 0.0;
+      if (pct > 100) return 100.0;
+      return pct;
+    on_value:
+      then:
+        - lambda: |-
+            int soc = (int)x;
+            char buf[16];
+            sprintf(buf, "%d%%", soc);
+            lv_label_set_text(id(lbl_status_batt_pct), buf);
+            
+            // Farbwechsel bei niedrigem Stand
+            auto color = lv_color_hex(0x38BDF8); // Standard Cyan
+            if (soc < 20) {
+              color = lv_color_hex(0xEF4444); // Rot unter 20%
+            } else if (soc < 30) {
+              color = lv_color_hex(0xFBBF24); // Gelb unter 30%
+            }
+            
+            lv_obj_set_style_text_color(id(lbl_status_batt_pct), color, LV_PART_MAIN);
+            lv_obj_invalidate(id(lbl_status_batt_pct));
