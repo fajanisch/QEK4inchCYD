@@ -58,6 +58,11 @@ font:
       - "\uF8D9" # toggle_on (Alternative)
       - "\uE8AC" # Off / Power
       - "\uE1A3" # Battery Charging
+      - "\uE8B5" # Time to Full/Empty
+      - "\uEC0F" # Solar Power In
+      - "\uE39E" # 12V Power Out
+      - "\uE1E0" # USB Power Out
+      - "\uE24A" # Total Power Out
 
   - file: "gfonts://Material+Symbols+Outlined"
     id: font_icons_sub
