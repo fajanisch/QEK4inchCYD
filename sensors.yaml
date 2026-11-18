@@ -739,10 +739,9 @@ sensor:
             lv_obj_invalidate(id(lbl_c1000_max_val));
 
 #-------------------------------------------------------------
-# BATTERY STATS SENSORS (Für den Battery Subscreen)
+# BATTERY STATS SENSORS (Exakt gemappt auf die UI-Labels)
 #-------------------------------------------------------------
-
-  # Zeile 1: SoC (nutzt die bestehende Entität, aktualisiert unser neues UI-Label)
+  # 1. SoC & Restlaufzeit
   - platform: homeassistant
     entity_id: sensor.anker_solix_c1000_battery_percentage
     id: stat_c1000_soc
@@ -754,7 +753,6 @@ sensor:
             lv_label_set_text(id(lbl_stat_soc), buf);
             lv_obj_invalidate(id(lbl_stat_soc));
 
-  # Zeile 1 (rechts): Restlaufzeit
   - platform: homeassistant
     entity_id: sensor.qek_battery_time_remaining
     id: stat_c1000_timeremaining
@@ -766,7 +764,7 @@ sensor:
             lv_label_set_text(id(lbl_stat_timeremaining), buf);
             lv_obj_invalidate(id(lbl_stat_timeremaining));
 
-  # Zeile 2: AC Power In & AC Energy Today
+  # 2. AC Power In & AC Energy Today
   - platform: homeassistant
     entity_id: sensor.anker_solix_c1000_ac_power_in
     id: stat_c1000_ac_in
@@ -789,7 +787,7 @@ sensor:
             lv_label_set_text(id(lbl_stat_ac_energy_today), buf);
             lv_obj_invalidate(id(lbl_stat_ac_energy_today));
 
-  # Zeile 3: Solar Power In & Solar Energy Today
+  # 3. Solar Power In & Solar Energy Today
   - platform: homeassistant
     entity_id: sensor.anker_solix_c1000_solar_power_in
     id: stat_c1000_solar_in
@@ -812,7 +810,7 @@ sensor:
             lv_label_set_text(id(lbl_stat_solar_energy_today), buf);
             lv_obj_invalidate(id(lbl_stat_solar_energy_today));
 
-  # Zeile 4: AC Power Out & AC Energy Out Today
+  # 4. AC Power Out & AC Energy Out Today
   - platform: homeassistant
     entity_id: sensor.anker_solix_c1000_ac_power_out
     id: stat_c1000_ac_out
@@ -835,7 +833,7 @@ sensor:
             lv_label_set_text(id(lbl_stat_ac_energy_out_today), buf);
             lv_obj_invalidate(id(lbl_stat_ac_energy_out_today));
 
-  # Zeile 5: 12V DC Power Out & Energy Out Today
+  # 5. 12V DC Power Out & DC Energy Out Today
   - platform: homeassistant
     entity_id: sensor.qek_anker_solix_c1000_dc_power_out
     id: stat_c1000_dc_out
@@ -858,7 +856,7 @@ sensor:
             lv_label_set_text(id(lbl_stat_dc_energy_out_today), buf);
             lv_obj_invalidate(id(lbl_stat_dc_energy_out_today));
 
-  # Zeile 6: USB Power Out & Energy Out Today
+  # 6. USB Power Out & USB Energy Out Today
   - platform: homeassistant
     entity_id: sensor.anker_solix_c1000_usb_power_out
     id: stat_c1000_usb_out
@@ -881,7 +879,7 @@ sensor:
             lv_label_set_text(id(lbl_stat_usb_energy_today), buf);
             lv_obj_invalidate(id(lbl_stat_usb_energy_today));
 
-  # Zeile 7: Total Power Out & Total Energy Out Today
+  # 7. Total Power Out & Total Energy Out Today
   - platform: homeassistant
     entity_id: sensor.anker_solix_c1000_total_power_out
     id: stat_c1000_total_out
