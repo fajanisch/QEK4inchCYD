@@ -1208,14 +1208,118 @@ lvgl:
                           width: 218
                           height: 1
                           styles: style_card
+
+                      # =======================================================
+                      # FORECAST BEREICH (4 Spalten nebeneinander ab Y: 104)
+                      # =======================================================
+                      
+                      # --- SPALTE 1 (X: 8) ---
                       - label:
-                          id: lbl_forecast_placeholder
-                          text: "Forecast Platzhalter"
-                          text_font: font_card_header
+                          id: lbl_h1_time
+                          text: "--:--"
+                          text_font: font_small
                           text_color: 0x64748B
                           align: top_left
-                          x: 4
+                          x: 8
                           y: 104
+                      - label:
+                          id: icon_h1_cond
+                          text: "\U0000E2BD"
+                          text_font: font_icons
+                          text_color: 0x38BDF8
+                          align: top_left
+                          x: 12
+                          y: 136
+                      - label:
+                          id: lbl_h1_temp
+                          text: "--°"
+                          text_font: font_card_header
+                          text_color: 0x38BDF8
+                          align: top_left
+                          x: 8
+                          y: 196
+
+                      # --- SPALTE 2 (X: 62) ---
+                      - label:
+                          id: lbl_h2_time
+                          text: "--:--"
+                          text_font: font_small
+                          text_color: 0x64748B
+                          align: top_left
+                          x: 62
+                          y: 104
+                      - label:
+                          id: icon_h2_cond
+                          text: "\U0000E2BD"
+                          text_font: font_icons
+                          text_color: 0x38BDF8
+                          align: top_left
+                          x: 66
+                          y: 136
+                      - label:
+                          id: lbl_h2_temp
+                          text: "--°"
+                          text_font: font_card_header
+                          text_color: 0x38BDF8
+                          align: top_left
+                          x: 62
+                          y: 196
+
+                      # --- SPALTE 3 (X: 116) ---
+                      - label:
+                          id: lbl_h3_time
+                          text: "--:--"
+                          text_font: font_small
+                          text_color: 0x64748B
+                          align: top_left
+                          x: 116
+                          y: 104
+                      - label:
+                          id: icon_h3_cond
+                          text: "\U0000E2BD"
+                          text_font: font_icons
+                          text_color: 0x38BDF8
+                          align: top_left
+                          x: 120
+                          y: 136
+                      - label:
+                          id: lbl_h3_temp
+                          text: "--°"
+                          text_font: font_card_header
+                          text_color: 0x38BDF8
+                          align: top_left
+                          x: 116
+                          y: 196
+
+                      # --- SPALTE 4 (X: 170) ---
+                      - label:
+                          id: lbl_h4_time
+                          text: "--:--"
+                          text_font: font_small
+                          text_color: 0x64748B
+                          align: top_left
+                          x: 170
+                          y: 104
+                      - label:
+                          id: icon_h4_cond
+                          text: "\U0000E2BD"
+                          text_font: font_icons
+                          text_color: 0x38BDF8
+                          align: top_left
+                          x: 174
+                          y: 136
+                      - label:
+                          id: lbl_h4_temp
+                          text: "--°"
+                          text_font: font_card_header
+                          text_color: 0x38BDF8
+                          align: top_left
+                          x: 170
+                          y: 196
+
+#--------------------------------------------------------------
+#CLIMATE CONTROL
+#--------------------------------------------------------------                          
                 - obj:
                     id: card_climate_control
                     x: 244
