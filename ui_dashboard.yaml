@@ -1839,7 +1839,7 @@ lvgl:
                           text_font: font_icons
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 98
+                          x: 96
                           y: 52
                       - label:
                           id: lbl_stat_ac_out
@@ -1864,7 +1864,7 @@ lvgl:
                           text_font: font_icons
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 98
+                          x: 96
                           y: 80
                       - label:
                           id: lbl_stat_dc_out
@@ -1889,7 +1889,7 @@ lvgl:
                           text_font: font_icons
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 98
+                          x: 96
                           y: 108
                       - label:
                           id: lbl_stat_usb_out
@@ -1914,7 +1914,7 @@ lvgl:
                           text_font: font_icons
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 98
+                          x: 96
                           y: 136
                       - label:
                           id: lbl_stat_total_out
