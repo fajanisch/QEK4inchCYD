@@ -263,6 +263,24 @@ text_sensor:
             lv_label_set_text(id(icon_climate_mode), icon_code.c_str());
             lv_obj_invalidate(id(icon_climate_mode));
 
+  - platform: homeassistant
+    id: bat_time_remaining
+    entity_id: sensor.qek_battery_time_remaining
+    on_value:
+      then:
+        - lambda: |-
+            std::string t_str = x;
+            if (t_str.empty() || t_str == "unavailable" || t_str == "unknown") {
+              t_str = "--h --m";
+            }
+            
+            // Hauptbildschirm-Label aktualisieren
+            lv_label_set_text(id(lbl_bat_remaining), t_str.c_str());
+            lv_obj_invalidate(id(lbl_bat_remaining));
+            
+            // Subscreen (Statistik) aktualisieren
+            lv_label_set_text(id(lbl_stat_timeremaining), t_str.c_str());
+            lv_obj_invalidate(id(lbl_stat_timeremaining));
 #-------------------------------------------------------------
 # NUMERIC SENSORS
 #-------------------------------------------------------------
@@ -643,29 +661,6 @@ sensor:
             lv_obj_invalidate(id(lbl_bat_soc));
             lv_obj_invalidate(id(icon_bat_card));
             lv_obj_invalidate(id(lbl_stat_soc));
-            
-  - platform: homeassistant
-    id: bat_time_remaining
-    entity_id: sensor.qek_battery_time_remaining
-    on_value:
-      then:
-        - lambda: |-
-            std::string t_str;
-            if (isnan(x) || x < 0) {
-              t_str = "--h --m";
-            } else {
-              char buf[32];
-              snprintf(buf, sizeof(buf), "%.0f min", x);
-              t_str = std::string(buf);
-            }
-            
-            // Hauptbildschirm-Label aktualisieren
-            lv_label_set_text(id(lbl_bat_remaining), t_str.c_str());
-            lv_obj_invalidate(id(lbl_bat_remaining));
-            
-            // Subscreen (Statistik) aktualisieren
-            lv_label_set_text(id(lbl_stat_timeremaining), t_str.c_str());
-            lv_obj_invalidate(id(lbl_stat_timeremaining));
             
   # --- CSV STATS MAPPINGS (7 Zeilen) ---
   - platform: homeassistant
