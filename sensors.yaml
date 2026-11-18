@@ -631,23 +631,19 @@ sensor:
               lv_obj_set_style_text_color(id(lbl_bat_soc), lv_color_hex(0xEF4444), LV_PART_MAIN);
               lv_obj_set_style_text_color(id(icon_bat_card), lv_color_hex(0xEF4444), LV_PART_MAIN);
               lv_obj_set_style_text_color(id(lbl_stat_soc), lv_color_hex(0xEF4444), LV_PART_MAIN);
-              lv_obj_set_style_text_color(id(icon_det_soc), lv_color_hex(0xEF4444), LV_PART_MAIN);
             } else if (soc < 30) {
               lv_obj_set_style_text_color(id(lbl_bat_soc), lv_color_hex(0xFBBF24), LV_PART_MAIN);
               lv_obj_set_style_text_color(id(icon_bat_card), lv_color_hex(0xFBBF24), LV_PART_MAIN);
               lv_obj_set_style_text_color(id(lbl_stat_soc), lv_color_hex(0xFBBF24), LV_PART_MAIN);
-              lv_obj_set_style_text_color(id(icon_det_soc), lv_color_hex(0xFBBF24), LV_PART_MAIN);
             } else {
               lv_obj_set_style_text_color(id(lbl_bat_soc), lv_color_hex(0x38BDF8), LV_PART_MAIN);
               lv_obj_set_style_text_color(id(icon_bat_card), lv_color_hex(0x38BDF8), LV_PART_MAIN);
               lv_obj_set_style_text_color(id(lbl_stat_soc), lv_color_hex(0x38BDF8), LV_PART_MAIN);
-              lv_obj_set_style_text_color(id(icon_det_soc), lv_color_hex(0x38BDF8), LV_PART_MAIN);
             }
             lv_obj_invalidate(id(lbl_bat_soc));
             lv_obj_invalidate(id(icon_bat_card));
             lv_obj_invalidate(id(lbl_stat_soc));
-            lv_obj_invalidate(id(icon_det_soc));
-
+            
   - platform: homeassistant
     id: bat_time_remaining
     entity_id: sensor.qek_battery_time_remaining
