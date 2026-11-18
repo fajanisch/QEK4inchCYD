@@ -381,28 +381,28 @@ sensor:
 #            lv_obj_invalidate(id(lbl_det_soc_val));
 #            lv_obj_invalidate(id(icon_det_soc));
 
-  - platform: homeassistant
-    id: bat_sol_in
-    entity_id: sensor.anker_solix_c1000_solar_power_in
-    on_value:
-      then:
-        - lambda: |-
-            float sol = x;
-            float ac = id(bat_ac_in).state;
-            
-            if (sol > 2.0) {
-              lv_label_set_text_fmt(id(lbl_bat_in), "In: %d W", (int)sol);
-              lv_label_set_text(id(icon_bat_source), "\uE81A");
-              lv_obj_set_style_text_color(id(icon_bat_source), lv_color_hex(0x38BDF8), LV_PART_MAIN);
-            } else if (isnan(ac) || ac <= 2.0) {
-              lv_label_set_text(id(lbl_bat_in), "In: 0 W");
-              lv_label_set_text(id(icon_bat_source), "\uE646");
-              lv_obj_set_style_text_color(id(icon_bat_source), lv_color_hex(0x64748B), LV_PART_MAIN);
-            }
-            lv_obj_invalidate(id(lbl_bat_in));
-            lv_obj_invalidate(id(icon_bat_source));
-
-            float sol_energy = id(qek_anker_solix_c1000_solar_energy_in_today).state;
+#  - platform: homeassistant
+#    id: bat_sol_in
+#    entity_id: sensor.anker_solix_c1000_solar_power_in
+#    on_value:
+#      then:
+#        - lambda: |-
+#            float sol = x;
+#            float ac = id(bat_ac_in).state;
+#            
+#            if (sol > 2.0) {
+#              lv_label_set_text_fmt(id(lbl_bat_in), "In: %d W", (int)sol);
+#              lv_label_set_text(id(icon_bat_source), "\uE81A");
+#              lv_obj_set_style_text_color(id(icon_bat_source), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+#            } else if (isnan(ac) || ac <= 2.0) {
+#              lv_label_set_text(id(lbl_bat_in), "In: 0 W");
+#              lv_label_set_text(id(icon_bat_source), "\uE646");
+#              lv_obj_set_style_text_color(id(icon_bat_source), lv_color_hex(0x64748B), LV_PART_MAIN);
+#            }
+#            lv_obj_invalidate(id(lbl_bat_in));
+#            lv_obj_invalidate(id(icon_bat_source));
+#
+#            float sol_energy = id(qek_anker_solix_c1000_solar_energy_in_today).state;
             lv_label_set_text_fmt(id(lbl_det_sol_in), "%.0f W  (%.0f Wh)", isnan(sol) ? 0 : sol, isnan(sol_energy) ? 0 : sol_energy);
             lv_obj_invalidate(id(lbl_det_sol_in));
 
