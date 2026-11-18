@@ -681,7 +681,11 @@ sensor:
       then:
         - lambda: |-
             char buf[32];
-            sprintf(buf, "%.2f Wh", x);
+            if (isnan(x)) {
+              snprintf(buf, sizeof(buf), "0 Wh");
+            } else {
+              snprintf(buf, sizeof(buf), "%.0f Wh", (x * 1000.0) + 0.5);
+            }
             lv_label_set_text(id(lbl_stat_ac_energy_today), buf);
             lv_obj_invalidate(id(lbl_stat_ac_energy_today));
 
@@ -703,7 +707,11 @@ sensor:
       then:
         - lambda: |-
             char buf[32];
-            sprintf(buf, "%.2f Wh", x);
+            if (isnan(x)) {
+              snprintf(buf, sizeof(buf), "0 Wh");
+            } else {
+              snprintf(buf, sizeof(buf), "%.0f Wh", (x * 1000.0) + 0.5);
+            }
             lv_label_set_text(id(lbl_stat_solar_energy_today), buf);
             lv_obj_invalidate(id(lbl_stat_solar_energy_today));
 
@@ -725,7 +733,11 @@ sensor:
       then:
         - lambda: |-
             char buf[32];
-            sprintf(buf, "%.2f Wh", x);
+            if (isnan(x)) {
+              snprintf(buf, sizeof(buf), "0 Wh");
+            } else {
+              snprintf(buf, sizeof(buf), "%.0f Wh", (x * 1000.0) + 0.5);
+            }
             lv_label_set_text(id(lbl_stat_ac_energy_out_today), buf);
             lv_obj_invalidate(id(lbl_stat_ac_energy_out_today));
 
