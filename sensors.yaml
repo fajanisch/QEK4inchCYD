@@ -737,3 +737,169 @@ sensor:
             sprintf(buf, "%.0f %%", x);
             lv_label_set_text(id(lbl_c1000_max_val), buf);
             lv_obj_invalidate(id(lbl_c1000_max_val));
+
+#-------------------------------------------------------------
+# BATTERY STATS SENSORS (Für den Battery Subscreen)
+#-------------------------------------------------------------
+
+  # Zeile 1: SoC (nutzt die bestehende Entität, aktualisiert unser neues UI-Label)
+  - platform: homeassistant
+    entity_id: sensor.anker_solix_c1000_battery_percentage
+    id: stat_c1000_soc
+    on_value:
+      then:
+        - lambda: |-
+            char buf[32];
+            sprintf(buf, "%.0f %%", x);
+            lv_label_set_text(id(lbl_stat_soc), buf);
+            lv_obj_invalidate(id(lbl_stat_soc));
+
+  # Zeile 1 (rechts): Restlaufzeit
+  - platform: homeassistant
+    entity_id: sensor.qek_battery_time_remaining
+    id: stat_c1000_timeremaining
+    on_value:
+      then:
+        - lambda: |-
+            char buf[32];
+            sprintf(buf, "%.0f min", x);
+            lv_label_set_text(id(lbl_stat_timeremaining), buf);
+            lv_obj_invalidate(id(lbl_stat_timeremaining));
+
+  # Zeile 2: AC Power In & AC Energy Today
+  - platform: homeassistant
+    entity_id: sensor.anker_solix_c1000_ac_power_in
+    id: stat_c1000_ac_in
+    on_value:
+      then:
+        - lambda: |-
+            char buf[32];
+            sprintf(buf, "%.0f W", x);
+            lv_label_set_text(id(lbl_stat_ac_in), buf);
+            lv_obj_invalidate(id(lbl_stat_ac_in));
+
+  - platform: homeassistant
+    entity_id: sensor.qek_anker_solix_c1000_ac_energy_in_today
+    id: stat_c1000_ac_energy_today
+    on_value:
+      then:
+        - lambda: |-
+            char buf[32];
+            sprintf(buf, "%.2f kWh", x);
+            lv_label_set_text(id(lbl_stat_ac_energy_today), buf);
+            lv_obj_invalidate(id(lbl_stat_ac_energy_today));
+
+  # Zeile 3: Solar Power In & Solar Energy Today
+  - platform: homeassistant
+    entity_id: sensor.anker_solix_c1000_solar_power_in
+    id: stat_c1000_solar_in
+    on_value:
+      then:
+        - lambda: |-
+            char buf[32];
+            sprintf(buf, "%.0f W", x);
+            lv_label_set_text(id(lbl_stat_solar_in), buf);
+            lv_obj_invalidate(id(lbl_stat_solar_in));
+
+  - platform: homeassistant
+    entity_id: sensor.qek_anker_solix_c1000_solar_energy_in_today
+    id: stat_c1000_solar_energy_today
+    on_value:
+      then:
+        - lambda: |-
+            char buf[32];
+            sprintf(buf, "%.2f kWh", x);
+            lv_label_set_text(id(lbl_stat_solar_energy_today), buf);
+            lv_obj_invalidate(id(lbl_stat_solar_energy_today));
+
+  # Zeile 4: AC Power Out & AC Energy Out Today
+  - platform: homeassistant
+    entity_id: sensor.anker_solix_c1000_ac_power_out
+    id: stat_c1000_ac_out
+    on_value:
+      then:
+        - lambda: |-
+            char buf[32];
+            sprintf(buf, "%.0f W", x);
+            lv_label_set_text(id(lbl_stat_ac_out), buf);
+            lv_obj_invalidate(id(lbl_stat_ac_out));
+
+  - platform: homeassistant
+    entity_id: sensor.qek_anker_solix_c1000x_ac_energy_out_today
+    id: stat_c1000_ac_energy_out_today
+    on_value:
+      then:
+        - lambda: |-
+            char buf[32];
+            sprintf(buf, "%.2f kWh", x);
+            lv_label_set_text(id(lbl_stat_ac_energy_out_today), buf);
+            lv_obj_invalidate(id(lbl_stat_ac_energy_out_today));
+
+  # Zeile 5: 12V DC Power Out & Energy Out Today
+  - platform: homeassistant
+    entity_id: sensor.qek_anker_solix_c1000_dc_power_out
+    id: stat_c1000_dc_out
+    on_value:
+      then:
+        - lambda: |-
+            char buf[32];
+            sprintf(buf, "%.0f W", x);
+            lv_label_set_text(id(lbl_stat_dc_out), buf);
+            lv_obj_invalidate(id(lbl_stat_dc_out));
+
+  - platform: homeassistant
+    entity_id: sensor.qek_anker_solix_c1000x_dc_energy_out_today
+    id: stat_c1000_dc_energy_out_today
+    on_value:
+      then:
+        - lambda: |-
+            char buf[32];
+            sprintf(buf, "%.2f kWh", x);
+            lv_label_set_text(id(lbl_stat_dc_energy_out_today), buf);
+            lv_obj_invalidate(id(lbl_stat_dc_energy_out_today));
+
+  # Zeile 6: USB Power Out & Energy Out Today
+  - platform: homeassistant
+    entity_id: sensor.anker_solix_c1000_usb_power_out
+    id: stat_c1000_usb_out
+    on_value:
+      then:
+        - lambda: |-
+            char buf[32];
+            sprintf(buf, "%.0f W", x);
+            lv_label_set_text(id(lbl_stat_usb_out), buf);
+            lv_obj_invalidate(id(lbl_stat_usb_out));
+
+  - platform: homeassistant
+    entity_id: sensor.qek_anker_solix_c1000_usb_energy_out_today
+    id: stat_c1000_usb_energy_today
+    on_value:
+      then:
+        - lambda: |-
+            char buf[32];
+            sprintf(buf, "%.2f kWh", x);
+            lv_label_set_text(id(lbl_stat_usb_energy_today), buf);
+            lv_obj_invalidate(id(lbl_stat_usb_energy_today));
+
+  # Zeile 7: Total Power Out & Total Energy Out Today
+  - platform: homeassistant
+    entity_id: sensor.anker_solix_c1000_total_power_out
+    id: stat_c1000_total_out
+    on_value:
+      then:
+        - lambda: |-
+            char buf[32];
+            sprintf(buf, "%.0f W", x);
+            lv_label_set_text(id(lbl_stat_total_out), buf);
+            lv_obj_invalidate(id(lbl_stat_total_out));
+
+  - platform: homeassistant
+    entity_id: sensor.qek_anker_solix_c1000_total_energy_out_today
+    id: stat_c1000_total_energy_today
+    on_value:
+      then:
+        - lambda: |-
+            char buf[32];
+            sprintf(buf, "%.2f kWh", x);
+            lv_label_set_text(id(lbl_stat_total_energy_today), buf);
+            lv_obj_invalidate(id(lbl_stat_total_energy_today));
