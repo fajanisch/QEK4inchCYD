@@ -1777,7 +1777,7 @@ lvgl:
                           y: 22
 
                       # =======================================================
-                      # LINKE SPALTE: INPUTS (AC In, Solar In) - Y von 46 bis 140
+                      # LINKE SPALTE: INPUTS (AC In, Solar In)
                       # =======================================================
                       # AC In
                       - label:
@@ -1831,7 +1831,7 @@ lvgl:
 
 
                       # =======================================================
-                      # RECHTE SPALTE: OUTPUTS (AC, DC, USB, Total) - Nach links gerückt
+                      # RECHTE SPALTE: OUTPUTS (Weiter nach links gerückt)
                       # =======================================================
                       # AC Out
                       - label:
@@ -1839,7 +1839,7 @@ lvgl:
                           text_font: font_icons
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 110
+                          x: 98
                           y: 52
                       - label:
                           id: lbl_stat_ac_out
@@ -1847,7 +1847,7 @@ lvgl:
                           text_font: font_card_header
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 128
+                          x: 116
                           y: 52
                       - label:
                           id: lbl_stat_ac_energy_out_today
@@ -1855,7 +1855,7 @@ lvgl:
                           text_font: font_card_header
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 164
+                          x: 152
                           y: 52
 
                       # 12V DC Out
@@ -1864,7 +1864,7 @@ lvgl:
                           text_font: font_icons
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 110
+                          x: 98
                           y: 80
                       - label:
                           id: lbl_stat_dc_out
@@ -1872,7 +1872,7 @@ lvgl:
                           text_font: font_card_header
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 128
+                          x: 116
                           y: 80
                       - label:
                           id: lbl_stat_dc_energy_out_today
@@ -1880,7 +1880,7 @@ lvgl:
                           text_font: font_card_header
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 164
+                          x: 152
                           y: 80
 
                       # USB Out
@@ -1889,7 +1889,7 @@ lvgl:
                           text_font: font_icons
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 110
+                          x: 98
                           y: 108
                       - label:
                           id: lbl_stat_usb_out
@@ -1897,7 +1897,7 @@ lvgl:
                           text_font: font_card_header
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 128
+                          x: 116
                           y: 108
                       - label:
                           id: lbl_stat_usb_energy_today
@@ -1905,7 +1905,7 @@ lvgl:
                           text_font: font_card_header
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 164
+                          x: 152
                           y: 108
 
                       # Total Out
@@ -1914,7 +1914,7 @@ lvgl:
                           text_font: font_icons
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 110
+                          x: 98
                           y: 136
                       - label:
                           id: lbl_stat_total_out
@@ -1922,7 +1922,7 @@ lvgl:
                           text_font: font_card_header
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 128
+                          x: 116
                           y: 136
                       - label:
                           id: lbl_stat_total_energy_today
@@ -1930,7 +1930,7 @@ lvgl:
                           text_font: font_card_header
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 164
+                          x: 152
                           y: 136
                           
 #-------------------------------------------------------------------
