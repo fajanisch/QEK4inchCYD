@@ -1751,7 +1751,7 @@ lvgl:
                           text_color: 0x38BDF8
                           align: top_left
                           x: 2
-                          y: 22
+                          y: 24
                       - label:
                           id: lbl_stat_soc
                           text: "0 %"
@@ -1759,14 +1759,14 @@ lvgl:
                           text_color: 0x38BDF8
                           align: top_left
                           x: 22
-                          y: 22
+                          y: 24
                       - label:
                           text: "\U0000E8B5"
                           text_font: font_icons
                           text_color: 0x38BDF8
                           align: top_left
                           x: 96
-                          y: 22
+                          y: 24
                       - label:
                           id: lbl_stat_timeremaining
                           text: "0 min"
@@ -1774,7 +1774,7 @@ lvgl:
                           text_color: 0x38BDF8
                           align: top_left
                           x: 116
-                          y: 22
+                          y: 24
 
                       # =======================================================
                       # LINKE SPALTE: INPUTS (AC In, Solar In)
@@ -1786,7 +1786,7 @@ lvgl:
                           text_color: 0x38BDF8
                           align: top_left
                           x: 2
-                          y: 52
+                          y: 54
                       - label:
                           id: lbl_stat_ac_in
                           text: "0 W"
@@ -1794,7 +1794,7 @@ lvgl:
                           text_color: 0x38BDF8
                           align: top_left
                           x: 22
-                          y: 52
+                          y: 54
                       - label:
                           id: lbl_stat_ac_energy_today
                           text: "0 Wh"
@@ -1802,7 +1802,7 @@ lvgl:
                           text_color: 0x38BDF8
                           align: top_left
                           x: 22
-                          y: 68
+                          y: 70
 
                       # Solar In
                       - label:
@@ -1811,7 +1811,7 @@ lvgl:
                           text_color: 0x38BDF8
                           align: top_left
                           x: 2
-                          y: 104
+                          y: 106
                       - label:
                           id: lbl_stat_solar_in
                           text: "0 W"
@@ -1819,7 +1819,7 @@ lvgl:
                           text_color: 0x38BDF8
                           align: top_left
                           x: 22
-                          y: 104
+                          y: 106
                       - label:
                           id: lbl_stat_solar_energy_today
                           text: "0 Wh"
@@ -1827,7 +1827,7 @@ lvgl:
                           text_color: 0x38BDF8
                           align: top_left
                           x: 22
-                          y: 120
+                          y: 122
 
 
                       # =======================================================
@@ -1840,7 +1840,7 @@ lvgl:
                           text_color: 0x38BDF8
                           align: top_left
                           x: 96
-                          y: 52
+                          y: 54
                       - label:
                           id: lbl_stat_ac_out
                           text: "0 W"
@@ -1848,7 +1848,7 @@ lvgl:
                           text_color: 0x38BDF8
                           align: top_left
                           x: 116
-                          y: 52
+                          y: 54
                       - label:
                           id: lbl_stat_ac_energy_out_today
                           text: "0 Wh"
@@ -1856,7 +1856,7 @@ lvgl:
                           text_color: 0x38BDF8
                           align: top_left
                           x: 152
-                          y: 52
+                          y: 54
 
                       # 12V DC Out
                       - label:
@@ -1865,7 +1865,7 @@ lvgl:
                           text_color: 0x38BDF8
                           align: top_left
                           x: 96
-                          y: 80
+                          y: 82
                       - label:
                           id: lbl_stat_dc_out
                           text: "0 W"
@@ -1873,7 +1873,7 @@ lvgl:
                           text_color: 0x38BDF8
                           align: top_left
                           x: 116
-                          y: 80
+                          y: 82
                       - label:
                           id: lbl_stat_dc_energy_out_today
                           text: "0 Wh"
@@ -1881,7 +1881,7 @@ lvgl:
                           text_color: 0x38BDF8
                           align: top_left
                           x: 152
-                          y: 80
+                          y: 82
 
                       # USB Out
                       - label:
@@ -1890,7 +1890,7 @@ lvgl:
                           text_color: 0x38BDF8
                           align: top_left
                           x: 96
-                          y: 108
+                          y: 110
                       - label:
                           id: lbl_stat_usb_out
                           text: "0 W"
@@ -1898,7 +1898,7 @@ lvgl:
                           text_color: 0x38BDF8
                           align: top_left
                           x: 116
-                          y: 108
+                          y: 110
                       - label:
                           id: lbl_stat_usb_energy_today
                           text: "0 Wh"
@@ -1906,7 +1906,7 @@ lvgl:
                           text_color: 0x38BDF8
                           align: top_left
                           x: 152
-                          y: 108
+                          y: 110
 
                       # Total Out
                       - label:
@@ -1915,7 +1915,7 @@ lvgl:
                           text_color: 0x38BDF8
                           align: top_left
                           x: 96
-                          y: 136
+                          y: 138
                       - label:
                           id: lbl_stat_total_out
                           text: "0 W"
@@ -1923,7 +1923,7 @@ lvgl:
                           text_color: 0x38BDF8
                           align: top_left
                           x: 116
-                          y: 136
+                          y: 138
                       - label:
                           id: lbl_stat_total_energy_today
                           text: "0 Wh"
@@ -1931,7 +1931,7 @@ lvgl:
                           text_color: 0x38BDF8
                           align: top_left
                           x: 152
-                          y: 136
+                          y: 138
                           
 #-------------------------------------------------------------------
 # Rechte Seite unten (Back Button)
