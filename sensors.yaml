@@ -650,18 +650,17 @@ sensor:
     on_value:
       then:
         - lambda: |-
-            char buf[32];
-            // Falls x Minuten oder Stunden liefert, formatieren wir es sauber als Ganzzahl oder String
-            snprintf(buf, sizeof(buf), "%.0f min", x);
-            std::string t_str(buf);
-            
-            if (isnan(x) || x <= 0) {
+            std::string t_str = x;
+            if (t_str.empty() || x == "unavailable" || x == "unknown") {
               t_str = "--h --m";
             }
             
+            // Hauptbildschirm-Label aktualisieren
             lv_label_set_text(id(lbl_bat_remaining), t_str.c_str());
-            lv_label_set_text(id(lbl_stat_timeremaining), t_str.c_str());
             lv_obj_invalidate(id(lbl_bat_remaining));
+            
+            // Subscreen (Statistik) aktualisieren
+            lv_label_set_text(id(lbl_stat_timeremaining), t_str.c_str());
             lv_obj_invalidate(id(lbl_stat_timeremaining));
 
   # --- CSV STATS MAPPINGS (7 Zeilen) ---
