@@ -1744,108 +1744,187 @@ lvgl:
                           x: 2
                           y: 2
 
-                      # --- Zeile 1: SoC & Restlaufzeit (Header) ---
+                      # --- Zeile 1: SoC (e1a4) & Time to Full/Empty (e8b5) ---
                       - label:
-                          id: icon_det_soc
-                          text: "\uE1A4"
+                          text: "\U0000E1A4"
                           text_font: font_icons
                           text_color: 0xFBBF24
                           align: top_left
                           x: 2
-                          y: 22
+                          y: 20
                       - label:
-                          id: lbl_det_soc_val
-                          text: !lambda |-
-                            float soc = id(c1000_soc).state;
-                            char buf[16];
-                            sprintf(buf, "%.0f%%", isnan(soc) ? 0 : soc);
-                            return std::string(buf);
-                          text_font: font_bar
+                          id: lbl_stat_soc
+                          text: "0 %"
+                          text_font: font_card_header
                           text_color: 0xFBBF24
                           align: top_left
                           x: 22
-                          y: 22
-
+                          y: 20
                       - label:
-                          id: icon_det_time
-                          text: "\uE8AC"
+                          text: "\U0000E8B5"
                           text_font: font_icons
-                          text_color: 0x94A3B8
-                          align: top_right
-                          x: -64
-                          y: 22
-                      - label:
-                          id: lbl_det_time_val
-                          text: !lambda |-
-                            std::string time_str = id(bat_time_remaining).state;
-                            return time_str.empty() ? "--h --m" : time_str;
-                          text_font: font_bar
                           text_color: 0x38BDF8
-                          align: top_right
-                          x: -2
-                          y: 22
+                          align: top_left
+                          x: 114
+                          y: 20
+                      - label:
+                          id: lbl_stat_timeremaining
+                          text: "0 min"
+                          text_font: font_card_header
+                          text_color: 0x38BDF8
+                          align: top_left
+                          x: 134
+                          y: 20
 
-                      # Trennlinie
-                      - obj:
+                      # --- Zeile 2: AC Power In (e63c) & AC Energy Today ---
+                      - label:
+                          text: "\U0000E63C"
+                          text_font: font_icons
+                          text_color: 0x38BDF8
+                          align: top_left
                           x: 2
                           y: 42
-                          width: 220
-                          height: 1
-                          styles: style_card
-
-                      # --- Zeile 2: AC In (Power & Energy) ---
                       - label:
-                          id: icon_det_ac_in
-                          text: "\uE63C"
-                          text_font: font_icons
+                          id: lbl_stat_ac_in
+                          text: "0 W"
+                          text_font: font_card_header
+                          text_color: 0x38BDF8
+                          align: top_left
+                          x: 22
+                          y: 42
+                      - label:
+                          id: lbl_stat_ac_energy_today
+                          text: "0.00 kWh"
+                          text_font: font_card_header
                           text_color: 0x94A3B8
                           align: top_left
-                          x: 2
-                          y: 48
-                      - label: 
-                          id: lbl_det_ac_in
-                          text: "AC: -- W"
-                          text_font: font_bar
-                          text_color: 0x38BDF8
-                          align: top_right
-                          x: -2
-                          y: 48
+                          x: 134
+                          y: 42
 
-                      # --- Zeile 3: Solar In (Power & Energy) ---
+                      # --- Zeile 3: Solar Power In (ec0f) & Solar Energy Today ---
                       - label:
-                          id: icon_det_sol_in
-                          text: "\uE81A"
+                          text: "\U0000EC0F"
                           text_font: font_icons
                           text_color: 0xFBBF24
                           align: top_left
                           x: 2
-                          y: 74
-                      - label: 
-                          id: lbl_det_sol_in
-                          text: "Sol: -- W"
-                          text_font: font_bar
-                          text_color: 0xFBBF24
-                          align: top_right
-                          x: -2
-                          y: 74
-
-                      # --- Zeile 4: Total Output ---
+                          y: 64
                       - label:
-                          id: icon_det_out
-                          text: "\uE56C"
-                          text_font: font_icons
+                          id: lbl_stat_solar_in
+                          text: "0 W"
+                          text_font: font_card_header
+                          text_color: 0xFBBF24
+                          align: top_left
+                          x: 22
+                          y: 64
+                      - label:
+                          id: lbl_stat_solar_energy_today
+                          text: "0.00 kWh"
+                          text_font: font_card_header
                           text_color: 0x94A3B8
                           align: top_left
-                          x: 2
-                          y: 100
-                      - label: 
-                          id: lbl_det_total_out
-                          text: "Out: -- W"
-                          text_font: font_bar
+                          x: 134
+                          y: 64
+
+                      # --- Zeile 4: AC Power Out (f1d4) & AC Energy Out Today ---
+                      - label:
+                          text: "\U0000F1D4"
+                          text_font: font_icons
                           text_color: 0x38BDF8
-                          align: top_right
-                          x: -2
-                          y: 100
+                          align: top_left
+                          x: 2
+                          y: 86
+                      - label:
+                          id: lbl_stat_ac_out
+                          text: "0 W"
+                          text_font: font_card_header
+                          text_color: 0x38BDF8
+                          align: top_left
+                          x: 22
+                          y: 86
+                      - label:
+                          id: lbl_stat_ac_energy_out_today
+                          text: "0.00 kWh"
+                          text_font: font_card_header
+                          text_color: 0x94A3B8
+                          align: top_left
+                          x: 134
+                          y: 86
+
+                      # --- Zeile 5: 12V Power Out (e39e) & 12V Energy Out Today ---
+                      - label:
+                          text: "\U0000E39E"
+                          text_font: font_icons
+                          text_color: 0x38BDF8
+                          align: top_left
+                          x: 2
+                          y: 108
+                      - label:
+                          id: lbl_stat_dc_out
+                          text: "0 W"
+                          text_font: font_card_header
+                          text_color: 0x38BDF8
+                          align: top_left
+                          x: 22
+                          y: 108
+                      - label:
+                          id: lbl_stat_dc_energy_out_today
+                          text: "0.00 kWh"
+                          text_font: font_card_header
+                          text_color: 0x94A3B8
+                          align: top_left
+                          x: 134
+                          y: 108
+
+                      # --- Zeile 6: USB Power Out (e1e0) & USB Energy Out Today ---
+                      - label:
+                          text: "\U0000E1E0"
+                          text_font: font_icons
+                          text_color: 0x38BDF8
+                          align: top_left
+                          x: 2
+                          y: 130
+                      - label:
+                          id: lbl_stat_usb_out
+                          text: "0 W"
+                          text_font: font_card_header
+                          text_color: 0x38BDF8
+                          align: top_left
+                          x: 22
+                          y: 130
+                      - label:
+                          id: lbl_stat_usb_energy_today
+                          text: "0.00 kWh"
+                          text_font: font_card_header
+                          text_color: 0x94A3B8
+                          align: top_left
+                          x: 134
+                          y: 130
+
+                      # --- Zeile 7: Total Power Out (e24a) & Total Energy Out Today ---
+                      - label:
+                          text: "\U0000E24A"
+                          text_font: font_icons
+                          text_color: 0x38BDF8
+                          align: top_left
+                          x: 2
+                          y: 152
+                      - label:
+                          id: lbl_stat_total_out
+                          text: "0 W"
+                          text_font: font_card_header
+                          text_color: 0x38BDF8
+                          align: top_left
+                          x: 22
+                          y: 152
+                      - label:
+                          id: lbl_stat_total_energy_today
+                          text: "0.00 kWh"
+                          text_font: font_card_header
+                          text_color: 0x94A3B8
+                          align: top_left
+                          x: 134
+                          y: 152
                           
                 # Rechte Seite unten (Back Button)
                 - obj:
