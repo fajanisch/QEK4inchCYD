@@ -650,9 +650,13 @@ sensor:
     on_value:
       then:
         - lambda: |-
-            std::string t_str = x;
-            if (t_str.empty() || x == "unavailable" || x == "unknown") {
+            std::string t_str;
+            if (isnan(x) || x < 0) {
               t_str = "--h --m";
+            } else {
+              char buf[32];
+              snprintf(buf, sizeof(buf), "%.0f min", x);
+              t_str = std::string(buf);
             }
             
             // Hauptbildschirm-Label aktualisieren
@@ -662,7 +666,7 @@ sensor:
             // Subscreen (Statistik) aktualisieren
             lv_label_set_text(id(lbl_stat_timeremaining), t_str.c_str());
             lv_obj_invalidate(id(lbl_stat_timeremaining));
-
+            
   # --- CSV STATS MAPPINGS (7 Zeilen) ---
   - platform: homeassistant
     entity_id: sensor.anker_solix_c1000_ac_power_in
