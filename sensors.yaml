@@ -681,7 +681,7 @@ sensor:
       then:
         - lambda: |-
             char buf[32];
-            sprintf(buf, "%.2f kWh", x);
+            sprintf(buf, "%.2f Wh", x);
             lv_label_set_text(id(lbl_stat_ac_energy_today), buf);
             lv_obj_invalidate(id(lbl_stat_ac_energy_today));
 
@@ -703,7 +703,7 @@ sensor:
       then:
         - lambda: |-
             char buf[32];
-            sprintf(buf, "%.2f kWh", x);
+            sprintf(buf, "%.2f Wh", x);
             lv_label_set_text(id(lbl_stat_solar_energy_today), buf);
             lv_obj_invalidate(id(lbl_stat_solar_energy_today));
 
@@ -725,7 +725,7 @@ sensor:
       then:
         - lambda: |-
             char buf[32];
-            sprintf(buf, "%.2f kWh", x);
+            sprintf(buf, "%.2f Wh", x);
             lv_label_set_text(id(lbl_stat_ac_energy_out_today), buf);
             lv_obj_invalidate(id(lbl_stat_ac_energy_out_today));
 
@@ -747,7 +747,7 @@ sensor:
       then:
         - lambda: |-
             char buf[32];
-            sprintf(buf, "%.2f kWh", x);
+            sprintf(buf, "%.2f Wh", x);
             lv_label_set_text(id(lbl_stat_dc_energy_out_today), buf);
             lv_obj_invalidate(id(lbl_stat_dc_energy_out_today));
 
@@ -769,7 +769,7 @@ sensor:
       then:
         - lambda: |-
             char buf[32];
-            sprintf(buf, "%.2f kWh", x);
+            sprintf(buf, "%.2f Wh", x);
             lv_label_set_text(id(lbl_stat_usb_energy_today), buf);
             lv_obj_invalidate(id(lbl_stat_usb_energy_today));
 
@@ -791,7 +791,7 @@ sensor:
       then:
         - lambda: |-
             char buf[32];
-            sprintf(buf, "%.2f kWh", x);
+            sprintf(buf, "%.2f Wh", x);
             lv_label_set_text(id(lbl_stat_total_energy_today), buf);
             lv_obj_invalidate(id(lbl_stat_total_energy_today));
 
