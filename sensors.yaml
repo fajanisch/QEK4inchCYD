@@ -743,25 +743,28 @@ sensor:
 #-------------------------------------------------------------
   # 1. SoC & Restlaufzeit
   - platform: homeassistant
+    id: c1000_soc
     entity_id: sensor.anker_solix_c1000_battery_percentage
-    id: stat_c1000_soc
     on_value:
       then:
         - lambda: |-
-            char buf[32];
-            sprintf(buf, "%.0f %%", x);
-            lv_label_set_text(id(lbl_stat_soc), buf);
+            int soc = (int)x;
+            lv_label_set_text_fmt(id(lbl_bat_soc), "%d%%", soc);
+            lv_label_set_text_fmt(id(lbl_stat_soc), "%d%%", soc);
+            lv_obj_invalidate(id(lbl_bat_soc));
             lv_obj_invalidate(id(lbl_stat_soc));
 
   - platform: homeassistant
+    id: bat_time_remaining
     entity_id: sensor.qek_battery_time_remaining
-    id: stat_c1000_timeremaining
     on_value:
       then:
         - lambda: |-
-            char buf[32];
-            sprintf(buf, "%.0f min", x);
-            lv_label_set_text(id(lbl_stat_timeremaining), buf);
+            std::string t_str = x;
+            if (t_str.empty()) t_str = "-- min";
+            lv_label_set_text(id(lbl_bat_remaining), t_str.c_str());
+            lv_label_set_text(id(lbl_stat_timeremaining), t_str.c_str());
+            lv_obj_invalidate(id(lbl_bat_remaining));
             lv_obj_invalidate(id(lbl_stat_timeremaining));
 
   # 2. AC Power In & AC Energy Today
