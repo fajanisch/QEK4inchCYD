@@ -1926,7 +1926,6 @@ lvgl:
                           align: top_left
                           x: 142
                           y: 152
-                          
 
 #-------------------------------------------------------------------
 # Rechte Seite unten (Back Button)
