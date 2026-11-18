@@ -1217,7 +1217,7 @@ lvgl:
                       - label:
                           id: lbl_h1_time
                           text: "--:--"
-                          text_font: font_small
+                          text_font: font_sub
                           text_color: 0x64748B
                           align: top_left
                           x: 8
@@ -1243,7 +1243,7 @@ lvgl:
                       - label:
                           id: lbl_h2_time
                           text: "--:--"
-                          text_font: font_small
+                          text_font: font_sub
                           text_color: 0x64748B
                           align: top_left
                           x: 62
@@ -1269,7 +1269,7 @@ lvgl:
                       - label:
                           id: lbl_h3_time
                           text: "--:--"
-                          text_font: font_small
+                          text_font: font_sub
                           text_color: 0x64748B
                           align: top_left
                           x: 116
@@ -1295,7 +1295,7 @@ lvgl:
                       - label:
                           id: lbl_h4_time
                           text: "--:--"
-                          text_font: font_small
+                          text_font: font_sub
                           text_color: 0x64748B
                           align: top_left
                           x: 170
