@@ -281,6 +281,100 @@ text_sensor:
             // Subscreen (Statistik) aktualisieren
             lv_label_set_text(id(lbl_stat_timeremaining), t_str.c_str());
             lv_obj_invalidate(id(lbl_stat_timeremaining));
+
+#Weather Forecast
+
+  # --- STUNDE 1 ---
+  - platform: homeassistant
+    entity_id: sensor.qek_forecast_h1_time
+    on_value:
+      then:
+        - lambda: |-
+            if (id(forecast_mode) == 0) {
+              lv_label_set_text(id(lbl_h1_time), x.c_str());
+              lv_obj_invalidate(id(lbl_h1_time));
+            }
+
+  - platform: homeassistant
+    entity_id: sensor.qek_forecast_h1_temp
+    on_value:
+      then:
+        - lambda: |-
+            if (id(forecast_mode) == 0) {
+              char buf[32];
+              snprintf(buf, sizeof(buf), "%.0f°", atof(x.c_str()) + 0.5);
+              lv_label_set_text(id(lbl_h1_temp), buf);
+              lv_obj_invalidate(id(lbl_h1_temp));
+            }
+
+  # --- STUNDE 2 ---
+  - platform: homeassistant
+    entity_id: sensor.qek_forecast_h2_time
+    on_value:
+      then:
+        - lambda: |-
+            if (id(forecast_mode) == 0) {
+              lv_label_set_text(id(lbl_h2_time), x.c_str());
+              lv_obj_invalidate(id(lbl_h2_time));
+            }
+
+  - platform: homeassistant
+    entity_id: sensor.qek_forecast_h2_temp
+    on_value:
+      then:
+        - lambda: |-
+            if (id(forecast_mode) == 0) {
+              char buf[32];
+              snprintf(buf, sizeof(buf), "%.0f°", atof(x.c_str()) + 0.5);
+              lv_label_set_text(id(lbl_h2_temp), buf);
+              lv_obj_invalidate(id(lbl_h2_temp));
+            }
+
+  # --- STUNDE 3 ---
+  - platform: homeassistant
+    entity_id: sensor.qek_forecast_h3_time
+    on_value:
+      then:
+        - lambda: |-
+            if (id(forecast_mode) == 0) {
+              lv_label_set_text(id(lbl_h3_time), x.c_str());
+              lv_obj_invalidate(id(lbl_h3_time));
+            }
+
+  - platform: homeassistant
+    entity_id: sensor.qek_forecast_h3_temp
+    on_value:
+      then:
+        - lambda: |-
+            if (id(forecast_mode) == 0) {
+              char buf[32];
+              snprintf(buf, sizeof(buf), "%.0f°", atof(x.c_str()) + 0.5);
+              lv_label_set_text(id(lbl_h3_temp), buf);
+              lv_obj_invalidate(id(lbl_h3_temp));
+            }
+
+  # --- STUNDE 4 ---
+  - platform: homeassistant
+    entity_id: sensor.qek_forecast_h4_time
+    on_value:
+      then:
+        - lambda: |-
+            if (id(forecast_mode) == 0) {
+              lv_label_set_text(id(lbl_h4_time), x.c_str());
+              lv_obj_invalidate(id(lbl_h4_time));
+            }
+
+  - platform: homeassistant
+    entity_id: sensor.qek_forecast_h4_temp
+    on_value:
+      then:
+        - lambda: |-
+            if (id(forecast_mode) == 0) {
+              char buf[32];
+              snprintf(buf, sizeof(buf), "%.0f°", atof(x.c_str()) + 0.5);
+              lv_label_set_text(id(lbl_h4_temp), buf);
+              lv_obj_invalidate(id(lbl_h4_temp));
+            }
 #-------------------------------------------------------------
 # NUMERIC SENSORS
 #-------------------------------------------------------------
