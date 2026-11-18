@@ -650,8 +650,15 @@ sensor:
     on_value:
       then:
         - lambda: |-
-            std::string t_str = x;
-            if (t_str.empty()) t_str = "--h --m";
+            char buf[32];
+            // Falls x Minuten oder Stunden liefert, formatieren wir es sauber als Ganzzahl oder String
+            snprintf(buf, sizeof(buf), "%.0f min", x);
+            std::string t_str(buf);
+            
+            if (isnan(x) || x <= 0) {
+              t_str = "--h --m";
+            }
+            
             lv_label_set_text(id(lbl_bat_remaining), t_str.c_str());
             lv_label_set_text(id(lbl_stat_timeremaining), t_str.c_str());
             lv_obj_invalidate(id(lbl_bat_remaining));
