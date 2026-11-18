@@ -286,6 +286,7 @@ text_sensor:
 
   # --- STUNDE 1 ---
   - platform: homeassistant
+    id: forecast_h1_time
     entity_id: sensor.qek_forecast_h1_time
     on_value:
       then:
@@ -296,6 +297,7 @@ text_sensor:
             }
 
   - platform: homeassistant
+    id: forecast_h1_temp
     entity_id: sensor.qek_forecast_h1_temp
     on_value:
       then:
@@ -309,6 +311,7 @@ text_sensor:
 
   # --- STUNDE 2 ---
   - platform: homeassistant
+    id: forecast_h2_time
     entity_id: sensor.qek_forecast_h2_time
     on_value:
       then:
@@ -319,6 +322,7 @@ text_sensor:
             }
 
   - platform: homeassistant
+    id: forecast_h2_temp
     entity_id: sensor.qek_forecast_h2_temp
     on_value:
       then:
@@ -332,6 +336,7 @@ text_sensor:
 
   # --- STUNDE 3 ---
   - platform: homeassistant
+    id: forecast_h3_time
     entity_id: sensor.qek_forecast_h3_time
     on_value:
       then:
@@ -342,6 +347,7 @@ text_sensor:
             }
 
   - platform: homeassistant
+    id: forecast_h3_temp
     entity_id: sensor.qek_forecast_h3_temp
     on_value:
       then:
@@ -355,6 +361,7 @@ text_sensor:
 
   # --- STUNDE 4 ---
   - platform: homeassistant
+    id: forecast_h4_time
     entity_id: sensor.qek_forecast_h4_time
     on_value:
       then:
@@ -365,6 +372,7 @@ text_sensor:
             }
 
   - platform: homeassistant
+    id: forecast_h4_temp
     entity_id: sensor.qek_forecast_h4_temp
     on_value:
       then:
@@ -375,6 +383,7 @@ text_sensor:
               lv_label_set_text(id(lbl_h4_temp), buf);
               lv_obj_invalidate(id(lbl_h4_temp));
             }
+            
 #-------------------------------------------------------------
 # NUMERIC SENSORS
 #-------------------------------------------------------------
