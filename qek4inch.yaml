@@ -188,6 +188,11 @@ time:
                 strftime(buf, sizeof(buf), "%a, %d %b  %H:%M", timeinfo);
                 return std::string(buf);
 
+globals:
+  - id: forecast_mode
+    type: int
+    initial_value: '0'  # 0 = Stündlich (Hourly), 1 = Täglich (Daily)
+    
 packages:
   sensors: !include sensors.yaml
   scripts: !include scripts.yaml
