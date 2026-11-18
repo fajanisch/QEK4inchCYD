@@ -350,36 +350,36 @@ sensor:
             lv_obj_invalidate(id(lbl_in_dew_val));
                         
   # --- 2. BATTERY & POWER SENSORS ---
-  - platform: homeassistant
-    id: c1000_soc
-    entity_id: sensor.anker_solix_c1000_battery_percentage
-    on_value:
-      then:
-        - lambda: |-
-            int soc = (int)x;
-            lv_label_set_text_fmt(id(lbl_bat_soc), "%d%%", soc);
-            lv_label_set_text_fmt(id(lbl_det_soc_val), "%d%%", soc);
-
-            if (soc < 20) {
-              lv_obj_set_style_text_color(id(lbl_bat_soc), lv_color_hex(0xEF4444), LV_PART_MAIN);
-              lv_obj_set_style_text_color(id(icon_bat_card), lv_color_hex(0xEF4444), LV_PART_MAIN);
-              lv_obj_set_style_text_color(id(lbl_det_soc_val), lv_color_hex(0xEF4444), LV_PART_MAIN);
-              lv_obj_set_style_text_color(id(icon_det_soc), lv_color_hex(0xEF4444), LV_PART_MAIN);
-            } else if (soc < 30) {
-              lv_obj_set_style_text_color(id(lbl_bat_soc), lv_color_hex(0xFBBF24), LV_PART_MAIN);
-              lv_obj_set_style_text_color(id(icon_bat_card), lv_color_hex(0xFBBF24), LV_PART_MAIN);
-              lv_obj_set_style_text_color(id(lbl_det_soc_val), lv_color_hex(0xFBBF24), LV_PART_MAIN);
-              lv_obj_set_style_text_color(id(icon_det_soc), lv_color_hex(0xFBBF24), LV_PART_MAIN);
-            } else {
-              lv_obj_set_style_text_color(id(lbl_bat_soc), lv_color_hex(0x38BDF8), LV_PART_MAIN);
-              lv_obj_set_style_text_color(id(icon_bat_card), lv_color_hex(0x38BDF8), LV_PART_MAIN);
-              lv_obj_set_style_text_color(id(lbl_det_soc_val), lv_color_hex(0x38BDF8), LV_PART_MAIN);
-              lv_obj_set_style_text_color(id(icon_det_soc), lv_color_hex(0x38BDF8), LV_PART_MAIN);
-            }
-            lv_obj_invalidate(id(lbl_bat_soc));
-            lv_obj_invalidate(id(icon_bat_card));
-            lv_obj_invalidate(id(lbl_det_soc_val));
-            lv_obj_invalidate(id(icon_det_soc));
+#  - platform: homeassistant
+#    id: c1000_soc
+#    entity_id: sensor.anker_solix_c1000_battery_percentage
+#    on_value:
+#      then:
+#        - lambda: |-
+#            int soc = (int)x;
+#            lv_label_set_text_fmt(id(lbl_bat_soc), "%d%%", soc);
+#            lv_label_set_text_fmt(id(lbl_det_soc_val), "%d%%", soc);
+#
+#           if (soc < 20) {
+#              lv_obj_set_style_text_color(id(lbl_bat_soc), lv_color_hex(0xEF4444), LV_PART_MAIN);
+#              lv_obj_set_style_text_color(id(icon_bat_card), lv_color_hex(0xEF4444), LV_PART_MAIN);
+#              lv_obj_set_style_text_color(id(lbl_det_soc_val), lv_color_hex(0xEF4444), LV_PART_MAIN);
+#              lv_obj_set_style_text_color(id(icon_det_soc), lv_color_hex(0xEF4444), LV_PART_MAIN);
+#            } else if (soc < 30) {
+#              lv_obj_set_style_text_color(id(lbl_bat_soc), lv_color_hex(0xFBBF24), LV_PART_MAIN);
+#              lv_obj_set_style_text_color(id(icon_bat_card), lv_color_hex(0xFBBF24), LV_PART_MAIN);
+#              lv_obj_set_style_text_color(id(lbl_det_soc_val), lv_color_hex(0xFBBF24), LV_PART_MAIN);
+#              lv_obj_set_style_text_color(id(icon_det_soc), lv_color_hex(0xFBBF24), LV_PART_MAIN);
+#            } else {
+#              lv_obj_set_style_text_color(id(lbl_bat_soc), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+#              lv_obj_set_style_text_color(id(icon_bat_card), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+#              lv_obj_set_style_text_color(id(lbl_det_soc_val), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+#              lv_obj_set_style_text_color(id(icon_det_soc), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+#            }
+#            lv_obj_invalidate(id(lbl_bat_soc));
+#            lv_obj_invalidate(id(icon_bat_card));
+#            lv_obj_invalidate(id(lbl_det_soc_val));
+#            lv_obj_invalidate(id(icon_det_soc));
 
   - platform: homeassistant
     id: bat_sol_in
@@ -751,8 +751,27 @@ sensor:
             int soc = (int)x;
             lv_label_set_text_fmt(id(lbl_bat_soc), "%d%%", soc);
             lv_label_set_text_fmt(id(lbl_stat_soc), "%d%%", soc);
+
+            if (soc < 20) {
+              lv_obj_set_style_text_color(id(lbl_bat_soc), lv_color_hex(0xEF4444), LV_PART_MAIN);
+              lv_obj_set_style_text_color(id(icon_bat_card), lv_color_hex(0xEF4444), LV_PART_MAIN);
+              lv_obj_set_style_text_color(id(lbl_stat_soc), lv_color_hex(0xEF4444), LV_PART_MAIN);
+              lv_obj_set_style_text_color(id(icon_det_soc), lv_color_hex(0xEF4444), LV_PART_MAIN);
+            } else if (soc < 30) {
+              lv_obj_set_style_text_color(id(lbl_bat_soc), lv_color_hex(0xFBBF24), LV_PART_MAIN);
+              lv_obj_set_style_text_color(id(icon_bat_card), lv_color_hex(0xFBBF24), LV_PART_MAIN);
+              lv_obj_set_style_text_color(id(lbl_stat_soc), lv_color_hex(0xFBBF24), LV_PART_MAIN);
+              lv_obj_set_style_text_color(id(icon_det_soc), lv_color_hex(0xFBBF24), LV_PART_MAIN);
+            } else {
+              lv_obj_set_style_text_color(id(lbl_bat_soc), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+              lv_obj_set_style_text_color(id(icon_bat_card), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+              lv_obj_set_style_text_color(id(lbl_stat_soc), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+              lv_obj_set_style_text_color(id(icon_det_soc), lv_color_hex(0x38BDF8), LV_PART_MAIN);
+            }
             lv_obj_invalidate(id(lbl_bat_soc));
+            lv_obj_invalidate(id(icon_bat_card));
             lv_obj_invalidate(id(lbl_stat_soc));
+            lv_obj_invalidate(id(icon_det_soc));
 
   - platform: homeassistant
     id: bat_time_remaining
