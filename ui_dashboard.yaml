@@ -1799,7 +1799,7 @@ lvgl:
                           text_font: font_card_header
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 130
+                          x: 142
                           y: 42
 
                       # --- Zeile 3: Solar Power In & Solar Energy In (Wh) ---
@@ -1824,7 +1824,7 @@ lvgl:
                           text_font: font_card_header
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 130
+                          x: 142
                           y: 64
 
                       # --- Zeile 4: AC Power Out & AC Energy Out (Wh) ---
@@ -1849,7 +1849,7 @@ lvgl:
                           text_font: font_card_header
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 130
+                          x: 142
                           y: 86
 
                       # --- Zeile 5: 12V Power Out & 12V Energy Out (Wh) ---
@@ -1874,7 +1874,7 @@ lvgl:
                           text_font: font_card_header
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 130
+                          x: 142
                           y: 108
 
                       # --- Zeile 6: USB Power Out & USB Energy Out (Wh) ---
@@ -1899,7 +1899,7 @@ lvgl:
                           text_font: font_card_header
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 130
+                          x: 142
                           y: 130
 
                       # --- Zeile 7: Total Power Out & Total Energy Out (Wh) ---
@@ -1924,10 +1924,12 @@ lvgl:
                           text_font: font_card_header
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 130
+                          x: 142
                           y: 152
                           
-                # Rechte Seite unten (Back Button)
+
+#-------------------------------------------------------------------
+# Rechte Seite unten (Back Button)
                 - obj:
                     id: btn_sub_battery_back
                     x: 244
