@@ -1736,6 +1736,7 @@ lvgl:
                     scrollable: false
                     scrollbar_mode: "off"
                     widgets: 
+                      # --- Titel & SoC / Restlaufzeit oben ---
                       - label:
                           text: "Battery Stats"
                           text_font: font_sub_title
@@ -1743,8 +1744,6 @@ lvgl:
                           align: top_left
                           x: 2
                           y: 2
-
-                      # --- Zeile 1: SoC & Time ---
                       - label:
                           id: icon_det_soc
                           text: "\U0000E1A4"
@@ -1759,14 +1758,14 @@ lvgl:
                           text_font: font_card_header
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 26
+                          x: 22
                           y: 20
                       - label:
                           text: "\U0000E8B5"
                           text_font: font_icons
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 104
+                          x: 116
                           y: 20
                       - label:
                           id: lbl_stat_timeremaining
@@ -1774,159 +1773,183 @@ lvgl:
                           text_font: font_card_header
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 126
+                          x: 136
                           y: 20
 
-                      # --- Zeile 2: AC Power In & AC Energy In (Wh) ---
+                      # =======================================================
+                      # LINKE SPALTE: INPUTS (AC In, Solar In)
+                      # =======================================================
+                      - label:
+                          text: "Inputs"
+                          text_font: font_sub_title
+                          text_color: 0x64748B
+                          align: top_left
+                          x: 2
+                          y: 44
+
+                      # AC In (Zeile 1)
                       - label:
                           text: "\U0000E63C"
                           text_font: font_icons
                           text_color: 0x38BDF8
                           align: top_left
                           x: 2
-                          y: 42
+                          y: 64
                       - label:
                           id: lbl_stat_ac_in
                           text: "0 W"
                           text_font: font_card_header
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 26
-                          y: 42
+                          x: 22
+                          y: 64
                       - label:
                           id: lbl_stat_ac_energy_today
                           text: "0 Wh"
                           text_font: font_card_header
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 142
-                          y: 42
+                          x: 22
+                          y: 80
 
-                      # --- Zeile 3: Solar Power In & Solar Energy In (Wh) ---
+                      # Solar In (Zeile 2)
                       - label:
                           text: "\U0000EC0F"
                           text_font: font_icons
                           text_color: 0x38BDF8
                           align: top_left
                           x: 2
-                          y: 64
+                          y: 110
                       - label:
                           id: lbl_stat_solar_in
                           text: "0 W"
                           text_font: font_card_header
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 26
-                          y: 64
+                          x: 22
+                          y: 110
                       - label:
                           id: lbl_stat_solar_energy_today
                           text: "0 Wh"
                           text_font: font_card_header
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 142
-                          y: 64
+                          x: 22
+                          y: 126
 
-                      # --- Zeile 4: AC Power Out & AC Energy Out (Wh) ---
+
+                      # =======================================================
+                      # RECHTE SPALTE: OUTPUTS (AC Out, DC, USB, Total)
+                      # =======================================================
+                      - label:
+                          text: "Outputs"
+                          text_font: font_sub_title
+                          text_color: 0x64748B
+                          align: top_left
+                          x: 118
+                          y: 44
+
+                      # AC Out (Zeile 1)
                       - label:
                           text: "\U0000F1D4"
                           text_font: font_icons
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 2
-                          y: 86
+                          x: 118
+                          y: 60
                       - label:
                           id: lbl_stat_ac_out
                           text: "0 W"
                           text_font: font_card_header
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 26
-                          y: 86
+                          x: 138
+                          y: 60
                       - label:
                           id: lbl_stat_ac_energy_out_today
                           text: "0 Wh"
                           text_font: font_card_header
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 142
-                          y: 86
+                          x: 174
+                          y: 60
 
-                      # --- Zeile 5: 12V Power Out & 12V Energy Out (Wh) ---
+                      # 12V DC Out (Zeile 2)
                       - label:
                           text: "\U0000E39E"
                           text_font: font_icons
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 2
-                          y: 108
+                          x: 118
+                          y: 80
                       - label:
                           id: lbl_stat_dc_out
                           text: "0 W"
                           text_font: font_card_header
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 26
-                          y: 108
+                          x: 138
+                          y: 80
                       - label:
                           id: lbl_stat_dc_energy_out_today
                           text: "0 Wh"
                           text_font: font_card_header
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 142
-                          y: 108
+                          x: 174
+                          y: 80
 
-                      # --- Zeile 6: USB Power Out & USB Energy Out (Wh) ---
+                      # USB Out (Zeile 3)
                       - label:
                           text: "\U0000E1E0"
                           text_font: font_icons
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 2
-                          y: 130
+                          x: 118
+                          y: 100
                       - label:
                           id: lbl_stat_usb_out
                           text: "0 W"
                           text_font: font_card_header
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 26
-                          y: 130
+                          x: 138
+                          y: 100
                       - label:
                           id: lbl_stat_usb_energy_today
                           text: "0 Wh"
                           text_font: font_card_header
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 142
-                          y: 130
+                          x: 174
+                          y: 100
 
-                      # --- Zeile 7: Total Power Out & Total Energy Out (Wh) ---
+                      # Total Out (Zeile 4 - als Abschluss unten rechts)
                       - label:
                           text: "\U0000E24A"
                           text_font: font_icons
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 2
-                          y: 152
+                          x: 118
+                          y: 125
                       - label:
                           id: lbl_stat_total_out
                           text: "0 W"
                           text_font: font_card_header
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 26
-                          y: 152
+                          x: 138
+                          y: 125
                       - label:
                           id: lbl_stat_total_energy_today
                           text: "0 Wh"
                           text_font: font_card_header
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 142
-                          y: 152
+                          x: 174
+                          y: 125
 
+                          
 #-------------------------------------------------------------------
 # Rechte Seite unten (Back Button)
                 - obj:
