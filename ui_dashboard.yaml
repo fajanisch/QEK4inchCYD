@@ -1765,7 +1765,7 @@ lvgl:
                           text_font: font_icons
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 114
+                          x: 96
                           y: 22
                       - label:
                           id: lbl_stat_timeremaining
@@ -1773,7 +1773,7 @@ lvgl:
                           text_font: font_card_header
                           text_color: 0x38BDF8
                           align: top_left
-                          x: 134
+                          x: 116
                           y: 22
 
                       # =======================================================
