@@ -759,7 +759,11 @@ sensor:
       then:
         - lambda: |-
             char buf[32];
-            sprintf(buf, "%.2f Wh", x);
+            if (isnan(x)) {
+              snprintf(buf, sizeof(buf), "0 Wh");
+            } else {
+              snprintf(buf, sizeof(buf), "%.0f Wh", (x * 1000.0) + 0.5);
+            }
             lv_label_set_text(id(lbl_stat_dc_energy_out_today), buf);
             lv_obj_invalidate(id(lbl_stat_dc_energy_out_today));
 
@@ -775,13 +779,17 @@ sensor:
             lv_obj_invalidate(id(lbl_stat_usb_out));
 
   - platform: homeassistant
-    entity_id: sensor.qek_anker_solix_c1000_usb_energy_out_today
+    entity_id: sensor.qek_anker_solix_c1000_usb_energy_today
     id: stat_c1000_usb_energy_today
     on_value:
       then:
         - lambda: |-
             char buf[32];
-            sprintf(buf, "%.2f Wh", x);
+            if (isnan(x)) {
+              snprintf(buf, sizeof(buf), "0 Wh");
+            } else {
+              snprintf(buf, sizeof(buf), "%.0f Wh", (x * 1000.0) + 0.5);
+            }
             lv_label_set_text(id(lbl_stat_usb_energy_today), buf);
             lv_obj_invalidate(id(lbl_stat_usb_energy_today));
 
@@ -798,12 +806,16 @@ sensor:
 
   - platform: homeassistant
     entity_id: sensor.qek_anker_solix_c1000_total_energy_out_today
-    id: stat_c1000_total_energy_today
+    id: stat_c1000_total_energy_out_today
     on_value:
       then:
         - lambda: |-
             char buf[32];
-            sprintf(buf, "%.2f Wh", x);
+            if (isnan(x)) {
+              snprintf(buf, sizeof(buf), "0 Wh");
+            } else {
+              snprintf(buf, sizeof(buf), "%.0f Wh", (x * 1000.0) + 0.5);
+            }
             lv_label_set_text(id(lbl_stat_total_energy_today), buf);
             lv_obj_invalidate(id(lbl_stat_total_energy_today));
 
