@@ -390,7 +390,7 @@ script:
             if (cond == "clear-night") return "\U0000E3A9";
             if (cond == "partlycloudy") return "\U0000F172";
             if (cond == "cloudy" || cond == "fog") return "\U0000E2BD";
-            if (cond == "rainy" || cond == "pouring") return "\U0000E618";
+            if (cond == "rainy" || cond == "pouring") return "\U0000F176";
             if (cond == "snowy" || cond == "snowy-rainy") return "\U0000E2CD";
             if (cond == "lightning" || cond == "lightning-rainy") return "\U0000E63C";
             return "\U0000E2BD";
