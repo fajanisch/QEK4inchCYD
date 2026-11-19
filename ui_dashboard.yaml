@@ -72,8 +72,6 @@ font:
       - "\uEFD8" # Windy
       - "\uE2BD" # Default / Unknown
 
-lvgl:
-
   - file: "gfonts://Material+Symbols+Outlined"
     id: font_icons_sub
     size: 26
