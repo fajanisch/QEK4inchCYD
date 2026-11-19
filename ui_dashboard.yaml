@@ -63,7 +63,7 @@ font:
       - "\uE39E" # 12V Power Out
       - "\uE1E0" # USB Power Out
       - "\uE24A" # Total Power Out
-            - "\uE81A" # Sunny
+      - "\uE81A" # Sunny
       - "\uE51C" # Clear Night
       - "\uF172" # Partly Cloudy
       - "\uF176" # Rainy
