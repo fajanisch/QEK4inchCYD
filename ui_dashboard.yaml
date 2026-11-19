@@ -63,6 +63,16 @@ font:
       - "\uE39E" # 12V Power Out
       - "\uE1E0" # USB Power Out
       - "\uE24A" # Total Power Out
+            - "\uE81A" # Sunny
+      - "\uE51C" # Clear Night
+      - "\uF172" # Partly Cloudy
+      - "\uF176" # Rainy
+      - "\uEBDB" # Lightning
+      - "\uEB3B" # Snowy
+      - "\uEFD8" # Windy
+      - "\uE2BD" # Default / Unknown
+
+lvgl:
 
   - file: "gfonts://Material+Symbols+Outlined"
     id: font_icons_sub
