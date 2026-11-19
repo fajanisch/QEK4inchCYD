@@ -386,7 +386,7 @@ script:
     then:
       - lambda: |-
           auto cond_to_icon = [](const std::string& cond) -> const char* {
-            if (cond == "sunny" || cond == "clear-day") return "\U0000E430";
+            if (cond == "sunny" || cond == "clear-day") return "\U0000E81A";
             if (cond == "clear-night") return "\U0000E3A9";
             if (cond == "partlycloudy") return "\U0000F172";
             if (cond == "cloudy" || cond == "fog") return "\U0000E2BD";
