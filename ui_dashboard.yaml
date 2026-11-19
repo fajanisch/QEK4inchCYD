@@ -65,7 +65,7 @@ font:
       - "\uE24A" # Total Power Out
       #- "\uE81A" # Sunny
       #- "\uE51C" # Clear Night
-      - "\uF172" # Partly Cloudy
+      #- "\uF172" # Partly Cloudy
       - "\uF176" # Rainy
       #- "\uEBDB" # Lightning
       #- "\uEB3B" # Snowy
