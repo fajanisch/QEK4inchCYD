@@ -359,6 +359,7 @@ text_sensor:
     on_value:
       then:
         - script.execute: update_forecast_display
+        
 # --- DAILY: Spalte 1..4 ---
   - platform: homeassistant
     id: ha_f_d1_label
@@ -435,7 +436,7 @@ text_sensor:
     on_value:
       then:
         - script.execute: update_forecast_display
-                    
+
 #-------------------------------------------------------------
 # NUMERIC SENSORS
 #-------------------------------------------------------------
