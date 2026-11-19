@@ -70,7 +70,7 @@ font:
       - "\uEBDB" # Lightning
       - "\uEB3B" # Snowy
       - "\uEFD8" # Windy
-      - "\uE2BD" # Default / Unknown
+      #- "\uE2BD" # Default / Unknown
 #  (b'\\ueb3b'),  (b'\\ue2bd'),  (b'\\uebdb'),  (b'\\ue81a'),  (b'\\ue51c'),  (b'\\uf172'),  (b'\\uefd8'),  (b'\\uf176').
   - file: "gfonts://Material+Symbols+Outlined"
     id: font_icons_sub
