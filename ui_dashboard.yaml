@@ -68,7 +68,7 @@ font:
       - "\uF172" # Partly Cloudy
       - "\uF176" # Rainy
       - "\uEBDB" # Lightning
-      - "\uEB3B" # Snowy
+      #- "\uEB3B" # Snowy
       - "\uEFD8" # Windy
       #- "\uE2BD" # Default / Unknown
 #  (b'\\ueb3b'),  (b'\\ue2bd'),  (b'\\uebdb'),  (b'\\ue81a'),  (b'\\ue51c'),  (b'\\uf172'),  (b'\\uefd8'),  (b'\\uf176').
