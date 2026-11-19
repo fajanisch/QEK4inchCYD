@@ -382,17 +382,18 @@ script:
           hidden: true
 
 
-  - id: update_forecast_display
+   - id: update_forecast_display
     then:
       - lambda: |-
           auto cond_to_icon = [](const std::string& cond) -> const char* {
             if (cond == "sunny" || cond == "clear-day") return "\U0000E81A";
-            if (cond == "clear-night") return "\U0000E3A9";
+            if (cond == "clear-night") return "\U0000E51C";
             if (cond == "partlycloudy") return "\U0000F172";
+            if (cond == "rainy" || cond == "pouring") return "\U0000F176";
+            if (cond == "lightning" || cond == "lightning-rainy") return "\U0000EBDB";
+            if (cond == "snowy" || cond == "snowy-rainy") return "\U0000EB3B";
+            if (cond == "windy" || cond == "windy-variant") return "\U0000EFD8";
             if (cond == "cloudy" || cond == "fog") return "\U0000E2BD";
-            if (cond == "rainy" || cond == "pouring") return "\U0000E618";
-            if (cond == "snowy" || cond == "snowy-rainy") return "\U0000E2CD";
-            if (cond == "lightning" || cond == "lightning-rainy") return "\U0000E63C";
             return "\U0000E2BD";
           };
 
@@ -435,7 +436,7 @@ script:
           set_block(id(lbl_h4_time), id(icon_h4_cond), id(lbl_h4_temp),
                     id(ha_f_h4_time).state, id(ha_f_h4_temp).state, id(ha_f_h4_cond).state, "--:--", false);
 
-          // Daily unten (Max/Min)
+          // Daily unten (High/Low)
           set_block(id(lbl_d1_label), id(icon_d1_cond), id(lbl_d1_temp),
                     id(ha_f_d1_label).state, id(ha_f_d1_temp).state, id(ha_f_d1_cond).state, "--", true);
           set_block(id(lbl_d2_label), id(icon_d2_cond), id(lbl_d2_temp),
