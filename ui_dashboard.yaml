@@ -67,7 +67,7 @@ font:
       - "\uE51C" # Clear Night
       - "\uF172" # Partly Cloudy
       - "\uF176" # Rainy
-      - "\uEBDB" # Lightning
+      #- "\uEBDB" # Lightning
       #- "\uEB3B" # Snowy
       - "\uEFD8" # Windy
       #- "\uE2BD" # Default / Unknown
