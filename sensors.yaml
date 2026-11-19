@@ -284,105 +284,81 @@ text_sensor:
 
 #Weather Forecast
 
-  # --- STUNDE 1 ---
   - platform: homeassistant
-    id: forecast_h1_time
+    id: ha_f_h1_time
     entity_id: sensor.qek_forecast_h1_time
     on_value:
       then:
-        - lambda: |-
-            if (id(forecast_mode) == 0) {
-              lv_label_set_text(id(lbl_h1_time), x.c_str());
-              lv_obj_invalidate(id(lbl_h1_time));
-            }
-
+        - script.execute: update_forecast_display
   - platform: homeassistant
-    id: forecast_h1_temp
+    id: ha_f_h1_temp
     entity_id: sensor.qek_forecast_h1_temp
     on_value:
       then:
-        - lambda: |-
-            if (id(forecast_mode) == 0) {
-              char buf[32];
-              snprintf(buf, sizeof(buf), "%.0f°", atof(x.c_str()) + 0.5);
-              lv_label_set_text(id(lbl_h1_temp), buf);
-              lv_obj_invalidate(id(lbl_h1_temp));
-            }
-
-  # --- STUNDE 2 ---
+        - script.execute: update_forecast_display
   - platform: homeassistant
-    id: forecast_h2_time
+    id: ha_f_h1_cond
+    entity_id: sensor.qek_forecast_h1_cond
+    on_value:
+      then:
+        - script.execute: update_forecast_display
+
+  - platform: homeassistant
+    id: ha_f_h2_time
     entity_id: sensor.qek_forecast_h2_time
     on_value:
       then:
-        - lambda: |-
-            if (id(forecast_mode) == 0) {
-              lv_label_set_text(id(lbl_h2_time), x.c_str());
-              lv_obj_invalidate(id(lbl_h2_time));
-            }
-
+        - script.execute: update_forecast_display
   - platform: homeassistant
-    id: forecast_h2_temp
+    id: ha_f_h2_temp
     entity_id: sensor.qek_forecast_h2_temp
     on_value:
       then:
-        - lambda: |-
-            if (id(forecast_mode) == 0) {
-              char buf[32];
-              snprintf(buf, sizeof(buf), "%.0f°", atof(x.c_str()) + 0.5);
-              lv_label_set_text(id(lbl_h2_temp), buf);
-              lv_obj_invalidate(id(lbl_h2_temp));
-            }
-
-  # --- STUNDE 3 ---
+        - script.execute: update_forecast_display
   - platform: homeassistant
-    id: forecast_h3_time
+    id: ha_f_h2_cond
+    entity_id: sensor.qek_forecast_h2_cond
+    on_value:
+      then:
+        - script.execute: update_forecast_display
+
+  - platform: homeassistant
+    id: ha_f_h3_time
     entity_id: sensor.qek_forecast_h3_time
     on_value:
       then:
-        - lambda: |-
-            if (id(forecast_mode) == 0) {
-              lv_label_set_text(id(lbl_h3_time), x.c_str());
-              lv_obj_invalidate(id(lbl_h3_time));
-            }
-
+        - script.execute: update_forecast_display
   - platform: homeassistant
-    id: forecast_h3_temp
+    id: ha_f_h3_temp
     entity_id: sensor.qek_forecast_h3_temp
     on_value:
       then:
-        - lambda: |-
-            if (id(forecast_mode) == 0) {
-              char buf[32];
-              snprintf(buf, sizeof(buf), "%.0f°", atof(x.c_str()) + 0.5);
-              lv_label_set_text(id(lbl_h3_temp), buf);
-              lv_obj_invalidate(id(lbl_h3_temp));
-            }
-
-  # --- STUNDE 4 ---
+        - script.execute: update_forecast_display
   - platform: homeassistant
-    id: forecast_h4_time
+    id: ha_f_h3_cond
+    entity_id: sensor.qek_forecast_h3_cond
+    on_value:
+      then:
+        - script.execute: update_forecast_display
+
+  - platform: homeassistant
+    id: ha_f_h4_time
     entity_id: sensor.qek_forecast_h4_time
     on_value:
       then:
-        - lambda: |-
-            if (id(forecast_mode) == 0) {
-              lv_label_set_text(id(lbl_h4_time), x.c_str());
-              lv_obj_invalidate(id(lbl_h4_time));
-            }
-
+        - script.execute: update_forecast_display
   - platform: homeassistant
-    id: forecast_h4_temp
+    id: ha_f_h4_temp
     entity_id: sensor.qek_forecast_h4_temp
     on_value:
       then:
-        - lambda: |-
-            if (id(forecast_mode) == 0) {
-              char buf[32];
-              snprintf(buf, sizeof(buf), "%.0f°", atof(x.c_str()) + 0.5);
-              lv_label_set_text(id(lbl_h4_temp), buf);
-              lv_obj_invalidate(id(lbl_h4_temp));
-            }
+        - script.execute: update_forecast_display
+  - platform: homeassistant
+    id: ha_f_h4_cond
+    entity_id: sensor.qek_forecast_h4_cond
+    on_value:
+      then:
+        - script.execute: update_forecast_display
             
 #-------------------------------------------------------------
 # NUMERIC SENSORS
