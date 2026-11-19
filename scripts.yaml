@@ -380,3 +380,53 @@ script:
       - lvgl.widget.update:
           id: screen_climate_detail
           hidden: true
+
+
+  - id: update_forecast_display
+    then:
+      - lambda: |-
+          auto cond_to_icon = [](const std::string& cond) -> const char* {
+            if (cond == "sunny" || cond == "clear-day") return "\U0000E430";
+            if (cond == "clear-night") return "\U0000E3A9";
+            if (cond == "partlycloudy") return "\U0000F172";
+            if (cond == "cloudy" || cond == "fog") return "\U0000E2BD";
+            if (cond == "rainy" || cond == "pouring") return "\U0000E618";
+            if (cond == "snowy" || cond == "snowy-rainy") return "\U0000E2CD";
+            if (cond == "lightning" || cond == "lightning-rainy") return "\U0000E63C";
+            return "\U0000E2BD";
+          };
+
+          auto set_col = [&](lv_obj_t* lbl_top, lv_obj_t* lbl_icon, lv_obj_t* lbl_temp,
+                           const std::string& top_raw, const std::string& temp_raw,
+                           const std::string& cond_raw) {
+            std::string top_str = top_raw;
+            if (top_str.empty() || top_str == "unavailable" || top_str == "unknown") {
+              top_str = "--:--";
+            }
+            lv_label_set_text(lbl_top, top_str.c_str());
+
+            std::string temp_str;
+            if (temp_raw.empty() || temp_raw == "unavailable" || temp_raw == "unknown") {
+              temp_str = "--°";
+            } else {
+              char buf[16];
+              float t = atof(temp_raw.c_str());
+              snprintf(buf, sizeof(buf), "%.0f°", t + (t >= 0 ? 0.5 : -0.5));
+              temp_str = buf;
+            }
+            lv_label_set_text(lbl_temp, temp_str.c_str());
+            lv_label_set_text(lbl_icon, cond_to_icon(cond_raw));
+
+            lv_obj_invalidate(lbl_top);
+            lv_obj_invalidate(lbl_icon);
+            lv_obj_invalidate(lbl_temp);
+          };
+
+          set_col(id(lbl_h1_time), id(icon_h1_cond), id(lbl_h1_temp),
+                  id(ha_f_h1_time).state, id(ha_f_h1_temp).state, id(ha_f_h1_cond).state);
+          set_col(id(lbl_h2_time), id(icon_h2_cond), id(lbl_h2_temp),
+                  id(ha_f_h2_time).state, id(ha_f_h2_temp).state, id(ha_f_h2_cond).state);
+          set_col(id(lbl_h3_time), id(icon_h3_cond), id(lbl_h3_temp),
+                  id(ha_f_h3_time).state, id(ha_f_h3_temp).state, id(ha_f_h3_cond).state);
+          set_col(id(lbl_h4_time), id(icon_h4_cond), id(lbl_h4_temp),
+                  id(ha_f_h4_time).state, id(ha_f_h4_temp).state, id(ha_f_h4_cond).state);
