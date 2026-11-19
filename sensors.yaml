@@ -359,7 +359,83 @@ text_sensor:
     on_value:
       then:
         - script.execute: update_forecast_display
-            
+# --- DAILY: Spalte 1..4 ---
+  - platform: homeassistant
+    id: ha_f_d1_label
+    entity_id: sensor.qek_forecast_d1_label
+    on_value:
+      then:
+        - script.execute: update_forecast_display
+  - platform: homeassistant
+    id: ha_f_d1_temp
+    entity_id: sensor.qek_forecast_d1_temp
+    on_value:
+      then:
+        - script.execute: update_forecast_display
+  - platform: homeassistant
+    id: ha_f_d1_cond
+    entity_id: sensor.qek_forecast_d1_cond
+    on_value:
+      then:
+        - script.execute: update_forecast_display
+
+  - platform: homeassistant
+    id: ha_f_d2_label
+    entity_id: sensor.qek_forecast_d2_label
+    on_value:
+      then:
+        - script.execute: update_forecast_display
+  - platform: homeassistant
+    id: ha_f_d2_temp
+    entity_id: sensor.qek_forecast_d2_temp
+    on_value:
+      then:
+        - script.execute: update_forecast_display
+  - platform: homeassistant
+    id: ha_f_d2_cond
+    entity_id: sensor.qek_forecast_d2_cond
+    on_value:
+      then:
+        - script.execute: update_forecast_display
+
+  - platform: homeassistant
+    id: ha_f_d3_label
+    entity_id: sensor.qek_forecast_d3_label
+    on_value:
+      then:
+        - script.execute: update_forecast_display
+  - platform: homeassistant
+    id: ha_f_d3_temp
+    entity_id: sensor.qek_forecast_d3_temp
+    on_value:
+      then:
+        - script.execute: update_forecast_display
+  - platform: homeassistant
+    id: ha_f_d3_cond
+    entity_id: sensor.qek_forecast_d3_cond
+    on_value:
+      then:
+        - script.execute: update_forecast_display
+
+  - platform: homeassistant
+    id: ha_f_d4_label
+    entity_id: sensor.qek_forecast_d4_label
+    on_value:
+      then:
+        - script.execute: update_forecast_display
+  - platform: homeassistant
+    id: ha_f_d4_temp
+    entity_id: sensor.qek_forecast_d4_temp
+    on_value:
+      then:
+        - script.execute: update_forecast_display
+  - platform: homeassistant
+    id: ha_f_d4_cond
+    entity_id: sensor.qek_forecast_d4_cond
+    on_value:
+      then:
+        - script.execute: update_forecast_display
+                    
 #-------------------------------------------------------------
 # NUMERIC SENSORS
 #-------------------------------------------------------------
