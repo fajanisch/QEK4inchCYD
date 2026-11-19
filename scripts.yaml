@@ -382,7 +382,7 @@ script:
           hidden: true
 
 
-- id: update_forecast_display
+  - id: update_forecast_display
     then:
       - lambda: |-
           auto cond_to_icon = [](const std::string& cond) -> const char* {
